@@ -143,10 +143,6 @@ Blankenship`;
         utterance.onstart = () => {
           setIsReading(true);
           setIsPaused(false);
-          toast({
-            title: 'Reading Started',
-            description: 'The letter is being read aloud.',
-          });
         };
         
         utterance.onend = () => {
