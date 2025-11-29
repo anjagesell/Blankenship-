@@ -14,16 +14,16 @@ const IndexPage = () => {
   return (
     <div className="min-h-screen bg-white">
       {/* Header with Justicia statue */}
-      <div className="bg-white border-b border-gray-200 py-6">
+      <div className="bg-white border-b border-gray-200 py-4 sm:py-6">
         <div className="container mx-auto px-4">
-          <div className="flex justify-center mb-4">
+          <div className="flex justify-center mb-3 sm:mb-4">
             <img 
               src="https://images.unsplash.com/photo-1589994965851-a8f479c573a9?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzB8MHwxfHNlYXJjaHwxfHxMYWR5JTIwSnVzdGljZSUyMHN0YXR1ZXxlbnwwfHx8fDE3NjQ0MzcxNzZ8MA&ixlib=rb-4.1.0&q=85"
               alt="Justicia Bronze Statue"
-              className="h-32 w-auto object-contain"
+              className="h-20 sm:h-28 md:h-32 w-auto object-contain"
             />
           </div>
-          <h1 className="text-4xl font-bold text-center text-gray-900" style={{ fontFamily: 'Georgia, serif' }}>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center text-gray-900" style={{ fontFamily: 'Georgia, serif' }}>
             Blankenship
           </h1>
         </div>
