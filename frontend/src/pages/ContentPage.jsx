@@ -21,7 +21,7 @@ const ContentPage = () => {
         <div className="container mx-auto px-4">
           <div className="flex justify-center mb-4">
             <img 
-              src="https://images.pexels.com/photos/10320852/pexels-photo-10320852.jpeg"
+              src="https://images.unsplash.com/photo-1589994965851-a8f479c573a9?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzB8MHwxfHNlYXJjaHwxfHxMYWR5JTIwSnVzdGljZSUyMHN0YXR1ZXxlbnwwfHx8fDE3NjQ0MzcxNzZ8MA&ixlib=rb-4.1.0&q=85"
               alt="Justicia Bronze Statue"
               className="h-32 w-auto object-contain"
             />
