@@ -98,7 +98,12 @@ Blankenship`;
               voices = window.speechSynthesis.getVoices();
             }
             
-            console.log('Available voices:', voices.length, voices.map(v => v.name));
+            console.log('Available voices:', voices.length, voices.map(v => `${v.name} (${v.lang})`));
+            
+            // Check if any voices are available
+            if (voices.length === 0) {
+              console.warn('No voices available yet, attempting to use default voice');
+            }
             
             // Priority order: mature male voices
             const maleVoicePreferences = [
