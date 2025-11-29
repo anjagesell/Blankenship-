@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { indexEntries } from '../mock';
 import { Card } from '../components/ui/card';
@@ -6,6 +6,10 @@ import { Calendar } from 'lucide-react';
 
 const IndexPage = () => {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    document.title = 'Blankenship';
+  }, []);
 
   return (
     <div className="min-h-screen bg-white">
