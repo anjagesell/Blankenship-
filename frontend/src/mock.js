@@ -3,26 +3,26 @@ export const ENTRY_CODE = '05052017';
 
 // Mock index entries (15-20 items sorted by date)
 export const indexEntries = [
-  { id: 1, header: 'January 2017 Entry', date: '01/2017', description: 'First quarter update' },
-  { id: 2, header: 'February 2017 Entry', date: '02/2017', description: 'February documentation' },
-  { id: 3, header: 'March 2017 Entry', date: '03/2017', description: 'Spring season notes' },
-  { id: 4, header: 'April 2017 Entry', date: '04/2017', description: 'April records' },
-  { id: 5, header: 'May 2017 Entry', date: '05/2017', description: 'Mid-year overview' },
-  { id: 6, header: 'June 2017 Entry', date: '06/2017', description: 'Summer beginning' },
-  { id: 7, header: 'July 2017 Entry', date: '07/2017', description: 'Mid-year checkpoint' },
-  { id: 8, header: 'August 2017 Entry', date: '08/2017', description: 'August summary' },
-  { id: 9, header: 'September 2017 Entry', date: '09/2017', description: 'Fall season start' },
-  { id: 10, header: 'October 2017 Entry', date: '10/2017', description: 'October records' },
-  { id: 11, header: 'November 2017 Entry', date: '11/2017', description: 'Late year notes' },
-  { id: 12, header: 'December 2017 Entry', date: '12/2017', description: 'Year-end summary' },
-  { id: 13, header: 'January 2018 Entry', date: '01/2018', description: 'New year beginning' },
-  { id: 14, header: 'February 2018 Entry', date: '02/2018', description: 'Early 2018 notes' },
-  { id: 15, header: 'March 2018 Entry', date: '03/2018', description: 'Spring 2018' },
-  { id: 16, header: 'April 2018 Entry', date: '04/2018', description: 'April 2018 update' },
-  { id: 17, header: 'May 2018 Entry', date: '05/2018', description: 'Mid 2018 overview' },
-  { id: 18, header: 'June 2018 Entry', date: '06/2018', description: 'Summer 2018' },
-  { id: 19, header: 'July 2018 Entry', date: '07/2018', description: 'July 2018 records' },
-  { id: 20, header: 'August 2018 Entry', date: '08/2018', description: 'Late summer 2018' }
+  { id: 1, header: 'October 2013 Entry', date: '10/2013', description: 'October records' },
+  { id: 2, header: 'November 2013 Entry', date: '11/2013', description: 'November documentation' },
+  { id: 3, header: 'December 2013 Entry', date: '12/2013', description: 'Year-end notes' },
+  { id: 4, header: 'January 2014 Entry', date: '01/2014', description: 'New year beginning' },
+  { id: 5, header: 'February 2014 Entry', date: '02/2014', description: 'Winter records' },
+  { id: 6, header: 'March 2014 Entry', date: '03/2014', description: 'Spring season notes' },
+  { id: 7, header: 'April 2014 Entry', date: '04/2014', description: 'April update' },
+  { id: 8, header: 'May 2014 Entry', date: '05/2014', description: 'Spring summary' },
+  { id: 9, header: 'June 2014 Entry', date: '06/2014', description: 'Summer beginning' },
+  { id: 10, header: 'July 2014 Entry', date: '07/2014', description: 'Mid-year checkpoint' },
+  { id: 11, header: 'August 2014 Entry', date: '08/2014', description: 'August records' },
+  { id: 12, header: 'September 2014 Entry', date: '09/2014', description: 'Fall season start' },
+  { id: 13, header: 'October 2014 Entry', date: '10/2014', description: 'October notes' },
+  { id: 14, header: 'November 2014 Entry', date: '11/2014', description: 'Late year records' },
+  { id: 15, header: 'December 2014 Entry', date: '12/2014', description: 'Year-end summary' },
+  { id: 16, header: 'January 2015 Entry', date: '01/2015', description: 'New year 2015' },
+  { id: 17, header: 'February 2015 Entry', date: '02/2015', description: 'Early 2015 notes' },
+  { id: 18, header: 'March 2015 Entry', date: '03/2015', description: 'Spring 2015' },
+  { id: 19, header: 'April 2015 Entry', date: '04/2015', description: 'April 2015 update' },
+  { id: 20, header: 'May 2015 Entry', date: '05/2015', description: 'Mid 2015 overview' }
 ];
 
 // Mock content for individual pages
