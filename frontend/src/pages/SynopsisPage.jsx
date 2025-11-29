@@ -41,25 +41,48 @@ I present these records not in anger, but in the hope that truth, though delayed
 Respectfully,
 Blankenship`;
 
-  // Load voices for mobile compatibility
+  // Enhanced voice loading for all browsers
+  const [voicesLoaded, setVoicesLoaded] = useState(false);
+  const voicesRef = useRef([]);
+
   useEffect(() => {
-    // Mobile devices often require a delay to load voices
+    // Function to load and cache voices
     const loadVoices = () => {
-      return window.speechSynthesis.getVoices();
+      const voices = window.speechSynthesis.getVoices();
+      if (voices.length > 0) {
+        voicesRef.current = voices;
+        setVoicesLoaded(true);
+        console.log('Voices loaded:', voices.length);
+      }
+      return voices;
     };
     
-    // Load voices initially
+    // Initial load attempt
     loadVoices();
     
-    // Also load when voices change (important for mobile)
-    if (window.speechSynthesis.onvoiceschanged !== undefined) {
-      window.speechSynthesis.onvoiceschanged = loadVoices;
+    // Set up voice loading listener for browsers that load voices asynchronously
+    // (Chrome, Edge, and some mobile browsers)
+    if (window.speechSynthesis) {
+      window.speechSynthesis.onvoiceschanged = () => {
+        loadVoices();
+      };
+      
+      // Safari and Firefox may need a small delay
+      setTimeout(() => {
+        loadVoices();
+      }, 100);
+      
+      // Additional fallback for stubborn browsers
+      setTimeout(() => {
+        loadVoices();
+      }, 500);
     }
     
     // Cleanup on unmount
     return () => {
       if (window.speechSynthesis) {
         window.speechSynthesis.cancel();
+        window.speechSynthesis.onvoiceschanged = null;
       }
     };
   }, []);
