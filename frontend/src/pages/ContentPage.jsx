@@ -40,16 +40,16 @@ const ContentPage = () => {
           Back to Index
         </Button>
 
-        <div className="space-y-6">
-          <div className="border-b border-gray-200 pb-4">
-            <p className="text-sm text-gray-600 mb-2">{indexEntry?.date}</p>
-            <h1 className="text-4xl font-bold text-gray-900" style={{ fontFamily: 'Georgia, serif' }}>
+        <div className="space-y-4 sm:space-y-6">
+          <div className="border-b border-gray-200 pb-3 sm:pb-4">
+            <p className="text-xs sm:text-sm text-gray-600 mb-2">{indexEntry?.date}</p>
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900" style={{ fontFamily: 'Georgia, serif' }}>
               {entry.title}
             </h1>
           </div>
 
-          <div className="prose prose-lg max-w-none">
-            <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">
+          <div className="prose prose-sm sm:prose-base md:prose-lg max-w-none">
+            <p className="text-sm sm:text-base text-gray-700 leading-relaxed whitespace-pre-wrap">
               {entry.content}
             </p>
           </div>
