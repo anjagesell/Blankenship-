@@ -83,7 +83,7 @@ class StatusCheckCreate(BaseModel):
 
 # Add your routes to the router instead of directly to app
 @api_router.get("/")
-async def root():
+async def api_root():
     return {"message": "Hello World"}
 
 @api_router.post("/status", response_model=StatusCheck)
