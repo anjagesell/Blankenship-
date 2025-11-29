@@ -20,7 +20,7 @@ const IndexPage = () => {
             />
           </div>
           <h1 className="text-4xl font-bold text-center text-gray-900" style={{ fontFamily: 'Georgia, serif' }}>
-            Index
+            Blankenship
           </h1>
         </div>
       </div>
