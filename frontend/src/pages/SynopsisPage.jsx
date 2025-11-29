@@ -54,7 +54,15 @@ const SynopsisPage = () => {
             </p>
 
             <p className="indent-12">
-              In 72% of wrongful conviction cases, perjury or false accusations played a role. Official misconduct was present in over 70% of 2024 exonerations. These are not mere statistics—they represent systematic failures to honor the principle that it is better for ten guilty persons to escape than for one innocent to suffer.
+              In 72% of wrongful conviction cases, perjury or false accusations played a role. Official misconduct was present in over 70% of 2024 exonerations. But perhaps most disturbing is this: 15% of wrongful convictions involved false confessions—innocent people admitting to crimes they never committed. Among juveniles, this number climbs to over one-third of wrongful conviction cases.
+            </p>
+
+            <p className="indent-12">
+              How does an innocent person confess to something they did not do? Through interrogation techniques that exploit fear, confusion, and ignorance of legal ramifications. The vulnerable—the young, the mentally impaired, those who cannot comprehend their Miranda rights—are subjected to psychological manipulation, presented with false evidence, and worn down until they sign away their freedom, not understanding that their words will be used to destroy them. They confess because they are told it will help them, that cooperation will lead to leniency, that resistance is futile. They do not understand that once those words leave their lips, the presumption of innocence evaporates.
+            </p>
+
+            <p className="indent-12">
+              These are not mere statistics—they represent systematic failures to honor the principle that it is better for ten guilty persons to escape than for one innocent to suffer.
             </p>
 
             <p className="indent-12">
