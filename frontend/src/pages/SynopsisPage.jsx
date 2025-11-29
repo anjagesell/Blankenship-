@@ -58,7 +58,11 @@ const SynopsisPage = () => {
             </p>
 
             <p className="indent-12">
-              How does an innocent person confess to something they did not do? Through interrogation techniques that exploit fear, confusion, and ignorance of legal ramifications. The vulnerable—the young, the mentally impaired, those who cannot comprehend their Miranda rights—are subjected to psychological manipulation, presented with false evidence, and worn down until they sign away their freedom, not understanding that their words will be used to destroy them. They confess because they are told it will help them, that cooperation will lead to leniency, that resistance is futile. They do not understand that once those words leave their lips, the presumption of innocence evaporates.
+              How does an innocent person confess to something they did not do? Our law recognizes this danger. The Supreme Court declared in Brown v. Mississippi (1936) that confessions obtained through duress, coercion, or violence violate the Fourteenth Amendment's guarantee of due process. In Miranda v. Arizona (1966), the Court established that suspects must be informed of their constitutional rights before custodial interrogation. Federal law, 18 U.S.C. § 3501, requires that confessions be "voluntarily given" and mandates judges assess whether a defendant's will was overborne by coercion before admitting any confession as evidence.
+            </p>
+
+            <p className="indent-12">
+              These protections exist because our founders understood a fundamental truth: confessions obtained under duress are inherently unreliable and constitute a denial of justice. Yet despite these constitutional safeguards, the vulnerable—the young, the mentally impaired, those who cannot fully comprehend their Miranda rights—are subjected to psychological manipulation, presented with false evidence, isolated for hours, and worn down until they sign away their freedom. They confess because they are told it will help them, that cooperation will lead to leniency, that resistance is futile. They do not understand that once those words leave their lips, the presumption of innocence evaporates. They do not understand that the law's protections against coerced confessions often fail in practice, even when they exist in theory.
             </p>
 
             <p className="indent-12">
