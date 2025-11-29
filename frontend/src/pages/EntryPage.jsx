@@ -2,6 +2,9 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ENTRY_CODE } from '../mock';
 import { toast } from '../hooks/use-toast';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '../components/ui/dialog';
+import { ScrollArea } from '../components/ui/scroll-area';
+import { Building2, Scale, ShieldCheck } from 'lucide-react';
 
 const EntryPage = () => {
   const [code, setCode] = useState(['', '', '', '', '', '', '', '']);
