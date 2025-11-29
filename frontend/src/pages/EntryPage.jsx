@@ -39,7 +39,7 @@ const EntryPage = () => {
           title: 'Access Granted',
           description: 'Welcome to Blankenship',
         });
-        setTimeout(() => navigate('/index'), 500);
+        setTimeout(() => navigate('/synopsis'), 500);
       } else {
         toast({
           title: 'Access Denied',
