@@ -170,28 +170,28 @@ Blankenship`;
 
       {/* Letter Content */}
       <div className="container mx-auto px-4 py-12 max-w-4xl">
-        {/* Audio Controls */}
-        <div className="flex justify-center gap-4 mb-6">
+        {/* Audio Controls - Mobile Responsive */}
+        <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 mb-6 px-4">
           <Button
             onClick={handleReadAloud}
             size="lg"
             variant={isReading && !isPaused ? "default" : "outline"}
-            className="flex items-center gap-2"
+            className="flex items-center justify-center gap-2 w-full sm:w-auto text-base sm:text-lg py-6 touch-manipulation"
           >
             {isReading && !isPaused ? (
               <>
-                <Pause className="w-5 h-5" />
-                Pause Reading
+                <Pause className="w-5 h-5 sm:w-6 sm:h-6" />
+                <span>Pause Reading</span>
               </>
             ) : isPaused ? (
               <>
-                <Volume2 className="w-5 h-5" />
-                Resume Reading
+                <Volume2 className="w-5 h-5 sm:w-6 sm:h-6" />
+                <span>Resume Reading</span>
               </>
             ) : (
               <>
-                <Volume2 className="w-5 h-5" />
-                Read Aloud
+                <Volume2 className="w-5 h-5 sm:w-6 sm:h-6" />
+                <span>Read Aloud</span>
               </>
             )}
           </Button>
@@ -201,10 +201,10 @@ Blankenship`;
               onClick={handleStop}
               size="lg"
               variant="destructive"
-              className="flex items-center gap-2"
+              className="flex items-center justify-center gap-2 w-full sm:w-auto text-base sm:text-lg py-6 touch-manipulation"
             >
-              <Square className="w-5 h-5" />
-              Stop
+              <Square className="w-5 h-5 sm:w-6 sm:h-6" />
+              <span>Stop</span>
             </Button>
           )}
         </div>
