@@ -173,67 +173,33 @@ Blankenship`;
           
           console.log(`Available voices: ${voices.length}`, voices.slice(0, 3).map(v => v.name));
           
-          // Priority list for mature male voices across all browsers
-          const voicePreferences = [
-            // iOS/macOS
-            { name: 'Daniel', priority: 1 },       // iOS British male
-            { name: 'Alex', priority: 2 },         // macOS mature male
-            { name: 'Fred', priority: 3 },         // iOS American male
-            // Windows
-            { name: 'Microsoft David', priority: 4 },
-            { name: 'Microsoft Mark', priority: 5 },
-            { name: 'David', priority: 6 },
-            { name: 'Mark', priority: 7 },
-            // Google/Chrome
-            { name: 'Google US English Male', priority: 8 },
-            { name: 'Google UK English Male', priority: 9 },
-            // Android
-            { name: 'en-US-Wavenet-D', priority: 10 },
-            { name: 'en-US-Wavenet-A', priority: 11 },
-            { name: 'en-us-x-iob-local', priority: 12 },
-            { name: 'en-us-x-iom-local', priority: 13 },
-            // Generic patterns
-            { pattern: /male.*en-us/i, priority: 14 },
-            { pattern: /^en.*male/i, priority: 15 },
-          ];
-          
+          // Simplified voice selection for better mobile compatibility
           let selectedVoice = null;
-          let bestPriority = Infinity;
           
-          // Find best matching voice
-          for (const voice of voices) {
-            if (!voice.lang.startsWith('en')) continue;
+          if (voices.length > 0) {
+            // Try to find a male English voice (simple approach)
+            const maleVoiceNames = ['Daniel', 'Alex', 'Fred', 'David', 'Mark', 'Male'];
             
-            for (const pref of voicePreferences) {
-              let matches = false;
-              
-              if (pref.name && voice.name.includes(pref.name)) {
-                matches = true;
-              } else if (pref.pattern && pref.pattern.test(voice.name)) {
-                matches = true;
-              }
-              
-              if (matches && pref.priority < bestPriority) {
-                selectedVoice = voice;
-                bestPriority = pref.priority;
-                break;
-              }
+            for (const name of maleVoiceNames) {
+              selectedVoice = voices.find(v => 
+                v.name.includes(name) && v.lang.startsWith('en')
+              );
+              if (selectedVoice) break;
             }
-          }
-          
-          // Fallback: any English voice
-          if (!selectedVoice && voices.length > 0) {
-            selectedVoice = voices.find(v => v.lang.startsWith('en-US')) ||
-                           voices.find(v => v.lang.startsWith('en')) ||
-                           voices[0];
-          }
-          
-          // Set the selected voice
-          if (selectedVoice) {
-            utterance.voice = selectedVoice;
-            console.log(`Using voice: ${selectedVoice.name} (${selectedVoice.lang})`);
+            
+            // Fallback: any English voice
+            if (!selectedVoice) {
+              selectedVoice = voices.find(v => v.lang.startsWith('en-US')) ||
+                             voices.find(v => v.lang.startsWith('en')) ||
+                             voices[0];
+            }
+            
+            if (selectedVoice) {
+              utterance.voice = selectedVoice;
+              console.log(`Using voice: ${selectedVoice.name} (${selectedVoice.lang})`);
+            }
           } else {
-            console.log('Using default system voice');
+            console.log('No voices available, using system default');
           }
           
           // Event handlers
