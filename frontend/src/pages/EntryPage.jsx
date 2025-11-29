@@ -88,29 +88,30 @@ const EntryPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center relative px-4" style={{ backgroundColor: '#001f3f' }}>
-      <div className="text-center space-y-8 sm:space-y-12 w-full max-w-4xl">
-        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-wider" style={{ fontFamily: 'Georgia, serif' }}>
+    <div className="min-h-screen flex flex-col items-center justify-center relative px-3" style={{ backgroundColor: '#001f3f' }}>
+      <div className="text-center space-y-6 sm:space-y-8 md:space-y-12 w-full max-w-md sm:max-w-2xl md:max-w-4xl">
+        <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-wider px-2" style={{ fontFamily: 'Georgia, serif' }}>
           Blankenship
         </h1>
         
-        <div className="flex gap-2 sm:gap-3 justify-center flex-wrap">
+        <div className="flex gap-1.5 sm:gap-2 md:gap-3 justify-center">
           {code.map((digit, index) => (
             <input
               key={index}
               ref={(el) => (inputRefs.current[index] = el)}
               type="text"
+              inputMode="numeric"
               maxLength="1"
               value={digit}
               onChange={(e) => handleChange(index, e.target.value)}
               onKeyDown={(e) => handleKeyDown(index, e)}
               onPaste={handlePaste}
-              className="w-10 h-12 sm:w-14 sm:h-16 text-center text-xl sm:text-2xl font-semibold bg-white text-gray-900 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all"
+              className="w-9 h-11 sm:w-12 sm:h-14 md:w-14 md:h-16 text-center text-lg sm:text-xl md:text-2xl font-semibold bg-white text-gray-900 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all"
             />
           ))}
         </div>
         
-        <p className="text-white/70 text-xs sm:text-sm tracking-wide">Enter 8-digit access code</p>
+        <p className="text-white/70 text-xs sm:text-sm tracking-wide px-2">Enter 8-digit access code</p>
       </div>
 
       {/* Legal Information Icons */}
