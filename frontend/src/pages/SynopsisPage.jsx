@@ -88,136 +88,224 @@ Blankenship`;
   }, []);
 
   const handleReadAloud = () => {
-    if ('speechSynthesis' in window) {
-      if (isPaused) {
+    // Check for Web Speech API support
+    if (!('speechSynthesis' in window)) {
+      toast({
+        title: 'Not Supported',
+        description: 'Your browser does not support text-to-speech. Please try Chrome, Edge, Safari, or Firefox.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    // Handle pause/resume
+    if (isPaused) {
+      try {
         window.speechSynthesis.resume();
         setIsPaused(false);
         setIsReading(true);
-      } else if (isReading) {
+      } catch (error) {
+        console.error('Resume error:', error);
+        setIsReading(false);
+        setIsPaused(false);
+      }
+      return;
+    }
+
+    // Handle pause during reading
+    if (isReading) {
+      try {
         window.speechSynthesis.pause();
         setIsPaused(true);
-      } else {
+      } catch (error) {
+        console.error('Pause error:', error);
+      }
+      return;
+    }
+
+    // Start new reading
+    try {
+      // Cancel any ongoing speech
+      window.speechSynthesis.cancel();
+      
+      // Small delay to ensure cancellation is processed
+      setTimeout(() => {
         try {
-          // Cancel any ongoing speech (important for mobile)
-          window.speechSynthesis.cancel();
+          // Create utterance
+          const utterance = new SpeechSynthesisUtterance(letterText);
+          utteranceRef.current = utterance;
           
-          // Wait a moment to ensure voices are loaded
-          setTimeout(() => {
-            const utterance = new SpeechSynthesisUtterance(letterText);
-            utteranceRef.current = utterance;
+          // Configure voice settings for mature, calm tone
+          utterance.rate = 0.85;     // Slightly slower for clarity
+          utterance.pitch = 0.75;    // Lower pitch for mature voice
+          utterance.volume = 1.0;    // Full volume
+          utterance.lang = 'en-US';  // Explicitly set language
+          
+          // Get voices (use cached if available)
+          let voices = voicesRef.current.length > 0 ? voicesRef.current : window.speechSynthesis.getVoices();
+          
+          // If still no voices, try one more time (Firefox compatibility)
+          if (voices.length === 0) {
+            voices = window.speechSynthesis.getVoices();
+          }
+          
+          console.log(`Available voices: ${voices.length}`);
+          
+          // Priority list for mature male voices across all browsers
+          const voicePreferences = [
+            // iOS/macOS
+            { name: 'Daniel', priority: 1 },       // iOS British male
+            { name: 'Alex', priority: 2 },         // macOS mature male
+            { name: 'Fred', priority: 3 },         // iOS American male
+            // Windows
+            { name: 'Microsoft David', priority: 4 },
+            { name: 'Microsoft Mark', priority: 5 },
+            { name: 'David', priority: 6 },
+            { name: 'Mark', priority: 7 },
+            // Google/Chrome
+            { name: 'Google US English Male', priority: 8 },
+            { name: 'Google UK English Male', priority: 9 },
+            // Android
+            { name: 'en-US-Wavenet-D', priority: 10 },
+            { name: 'en-US-Wavenet-A', priority: 11 },
+            { name: 'en-us-x-iob-local', priority: 12 },
+            { name: 'en-us-x-iom-local', priority: 13 },
+            // Generic patterns
+            { pattern: /male.*en-us/i, priority: 14 },
+            { pattern: /^en.*male/i, priority: 15 },
+          ];
+          
+          let selectedVoice = null;
+          let bestPriority = Infinity;
+          
+          // Find best matching voice
+          for (const voice of voices) {
+            if (!voice.lang.startsWith('en')) continue;
             
-            // Configure voice settings for a mature, calm but earnest tone
-            utterance.rate = 0.85;
-            utterance.pitch = 0.75;
-            utterance.volume = 1.0;
-            utterance.lang = 'en-US';
+            for (const pref of voicePreferences) {
+              let matches = false;
+              
+              if (pref.name && voice.name.includes(pref.name)) {
+                matches = true;
+              } else if (pref.pattern && pref.pattern.test(voice.name)) {
+                matches = true;
+              }
+              
+              if (matches && pref.priority < bestPriority) {
+                selectedVoice = voice;
+                bestPriority = pref.priority;
+                break;
+              }
+            }
+          }
+          
+          // Fallback: any English voice
+          if (!selectedVoice && voices.length > 0) {
+            selectedVoice = voices.find(v => v.lang.startsWith('en-US')) ||
+                           voices.find(v => v.lang.startsWith('en')) ||
+                           voices[0];
+          }
+          
+          // Set the selected voice
+          if (selectedVoice) {
+            utterance.voice = selectedVoice;
+            console.log(`Using voice: ${selectedVoice.name} (${selectedVoice.lang})`);
+          } else {
+            console.log('Using default system voice');
+          }
+          
+          // Event handlers
+          utterance.onstart = () => {
+            console.log('Speech started');
+            setIsReading(true);
+            setIsPaused(false);
+          };
+          
+          utterance.onend = () => {
+            console.log('Speech ended normally');
+            setIsReading(false);
+            setIsPaused(false);
+          };
+          
+          utterance.onpause = () => {
+            console.log('Speech paused');
+          };
+          
+          utterance.onresume = () => {
+            console.log('Speech resumed');
+          };
+          
+          utterance.onerror = (event) => {
+            console.error('Speech error:', event.error, event);
+            setIsReading(false);
+            setIsPaused(false);
             
-            // Get available voices
-            let voices = window.speechSynthesis.getVoices();
-            
-            // If no voices yet, try to trigger voice loading
-            if (voices.length === 0) {
-              window.speechSynthesis.speak(new SpeechSynthesisUtterance(''));
-              voices = window.speechSynthesis.getVoices();
+            // Don't show error for user-initiated actions
+            if (event.error === 'canceled' || event.error === 'interrupted') {
+              return;
             }
             
-            console.log('Available voices:', voices.length, voices.map(v => `${v.name} (${v.lang})`));
-            
-            // Check if any voices are available
-            if (voices.length === 0) {
-              console.warn('No voices available yet, attempting to use default voice');
+            // Show user-friendly error messages
+            let errorMsg = 'Unable to read aloud.';
+            if (event.error === 'network') {
+              errorMsg = 'Network error. Please check your connection.';
+            } else if (event.error === 'synthesis-failed') {
+              errorMsg = 'Speech synthesis failed. Try refreshing the page.';
+            } else if (event.error === 'audio-busy') {
+              errorMsg = 'Audio is busy. Please try again.';
+            } else if (event.error === 'not-allowed') {
+              errorMsg = 'Browser blocked speech. Please enable in settings.';
             }
             
-            // Priority order: mature male voices
-            const maleVoicePreferences = [
-              'Daniel', 'Alex', 'Fred',
-              'Microsoft David', 'Microsoft Mark',
-              'Google US English Male', 'Google UK English Male',
-              'en-US-Wavenet-D', 'en-US-Wavenet-A',
-              'en-us-x-iob-local', 'en-us-x-iom-local'
-            ];
-            
-            // Find the best available voice
-            let selectedVoice = null;
-            
-            for (const prefName of maleVoicePreferences) {
-              selectedVoice = voices.find(voice => 
-                voice.name.includes(prefName) && voice.lang.startsWith('en')
-              );
-              if (selectedVoice) break;
-            }
-            
-            // Fallback: any male voice
-            if (!selectedVoice) {
-              selectedVoice = voices.find(voice => 
-                voice.lang.startsWith('en') && 
-                (voice.name.toLowerCase().includes('male') ||
-                 voice.name.toLowerCase().includes('man') ||
-                 voice.name.toLowerCase().includes('david') ||
-                 voice.name.toLowerCase().includes('daniel') ||
-                 voice.name.toLowerCase().includes('mark'))
-              );
-            }
-            
-            // Final fallback: first English voice
-            if (!selectedVoice && voices.length > 0) {
-              selectedVoice = voices.find(voice => voice.lang.startsWith('en')) || voices[0];
-            }
-            
-            if (selectedVoice) {
-              utterance.voice = selectedVoice;
-              console.log('Selected voice:', selectedVoice.name, selectedVoice.lang);
-            } else {
-              console.log('No voice selected, using default');
-            }
-            
-            utterance.onstart = () => {
-              console.log('Speech started');
-              setIsReading(true);
-              setIsPaused(false);
-            };
+            toast({
+              title: 'Read Aloud Error',
+              description: errorMsg,
+              variant: 'destructive',
+            });
+          };
+          
+          // Start speaking
+          console.log('Starting speech synthesis...');
+          window.speechSynthesis.speak(utterance);
+          
+          // Workaround for Chrome bug where speech stops after ~15 seconds
+          // Re-trigger every 14 seconds if still speaking
+          if (navigator.userAgent.includes('Chrome')) {
+            const keepAlive = setInterval(() => {
+              if (!window.speechSynthesis.speaking) {
+                clearInterval(keepAlive);
+              } else {
+                window.speechSynthesis.pause();
+                window.speechSynthesis.resume();
+              }
+            }, 14000);
             
             utterance.onend = () => {
-              console.log('Speech ended');
+              clearInterval(keepAlive);
               setIsReading(false);
               setIsPaused(false);
             };
-            
-            utterance.onerror = (event) => {
-              console.error('Speech synthesis error:', event.error, event);
-              setIsReading(false);
-              setIsPaused(false);
-              
-              // Only show error if it's not a cancellation
-              if (event.error !== 'canceled' && event.error !== 'interrupted') {
-                toast({
-                  title: 'Error',
-                  description: `Unable to read aloud: ${event.error}. Your browser may not support this feature.`,
-                  variant: 'destructive',
-                });
-              }
-            };
-            
-            // Start speaking
-            console.log('Starting speech synthesis...');
-            window.speechSynthesis.speak(utterance);
-            
-          }, 200);
-        } catch (error) {
-          console.error('Read aloud error:', error);
+          }
+          
+        } catch (innerError) {
+          console.error('Speech initialization error:', innerError);
           setIsReading(false);
           setIsPaused(false);
           toast({
             title: 'Error',
-            description: 'Unable to initialize text-to-speech. Please try again.',
+            description: 'Failed to start speech. Please try again.',
             variant: 'destructive',
           });
         }
-      }
-    } else {
+      }, 100);
+      
+    } catch (error) {
+      console.error('Read aloud outer error:', error);
+      setIsReading(false);
+      setIsPaused(false);
       toast({
-        title: 'Not Supported',
-        description: 'Your browser does not support text-to-speech.',
+        title: 'Error',
+        description: 'Unable to initialize text-to-speech.',
         variant: 'destructive',
       });
     }
