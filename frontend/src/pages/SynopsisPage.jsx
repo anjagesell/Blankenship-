@@ -34,9 +34,9 @@ const SynopsisPage = () => {
           <div 
             className="text-gray-800 space-y-6 leading-relaxed"
             style={{ 
-              fontFamily: "'Dancing Script', 'Brush Script MT', cursive",
-              fontSize: '1.5rem',
-              lineHeight: '2.5rem'
+              fontFamily: "'Kalam', cursive",
+              fontSize: '1.25rem',
+              lineHeight: '2rem'
             }}
           >
             <p className="mb-8">Dear Sir/Madam,</p>
