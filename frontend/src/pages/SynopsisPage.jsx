@@ -309,14 +309,14 @@ Blankenship`;
         </div>
 
         {/* Continue Button */}
-        <div className="flex justify-center mt-8">
+        <div className="flex justify-center mt-6 sm:mt-8 px-4">
           <Button
             onClick={() => navigate('/index')}
             size="lg"
-            className="text-lg px-8 py-6"
+            className="w-full sm:w-auto text-base sm:text-lg px-6 sm:px-8 py-5 sm:py-6"
           >
             Continue to Index
-            <ArrowRight className="w-5 h-5 ml-2" />
+            <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-2" />
           </Button>
         </div>
       </div>
