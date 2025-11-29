@@ -42,19 +42,34 @@ const SynopsisPage = () => {
             <p className="mb-8">Dear Sir/Madam,</p>
             
             <p className="indent-12">
-              [Your content will be placed here. This is a placeholder for the introduction text that will discuss the gravity of misrepresentation and the principles of justice.]
+              In the United States of America, our Constitution establishes a sacred principle through the Fifth and Fourteenth Amendments: no person shall be deprived of life, liberty, or property without due process of law. The Supreme Court declared in In re Winship, 397 U.S. 358 (1970), "We have no doubt that the Due Process Clause protects the accused against conviction except upon proof beyond a reasonable doubt of every fact necessary to constitute the crime with which he is charged."
             </p>
 
             <p className="indent-12">
-              [Additional paragraphs of content can be added here to complete your letter.]
+              Yet in 2024 alone, 147 innocent people were exonerated after spending an average of 13.5 years wrongfully imprisoned—nearly 2,000 years of human life stolen. Since 1989, there have been 3,646 documented exonerations in our nation. Behind each number is a shattered life, a devastated family, and a mockery of the justice we claim to uphold.
             </p>
 
             <p className="indent-12">
-              [The letter will continue with your serious-toned message about justice and due process.]
+              The intersection of Family and Criminal Law creates a particularly vulnerable space where accusations can destroy lives without the burden of proof our Constitution demands. When family disputes enter the criminal justice system, the presumption of innocence—that bedrock principle which should protect every citizen—often crumbles under the weight of emotion, bias, and procedural shortcuts.
+            </p>
+
+            <p className="indent-12">
+              In 72% of wrongful conviction cases, perjury or false accusations played a role. Official misconduct was present in over 70% of 2024 exonerations. These are not mere statistics—they represent systematic failures to honor the principle that it is better for ten guilty persons to escape than for one innocent to suffer.
+            </p>
+
+            <p className="indent-12">
+              The pages that follow document one such case—a case where the solemn promise of "innocent until proven guilty" became an empty phrase, where family law and criminal accusations intertwined to create injustice, where the very institutions meant to protect the innocent became instruments of persecution.
+            </p>
+
+            <p className="indent-12">
+              I present these records not in anger, but in the hope that truth, though delayed, will ultimately prevail. Justice demands it. The Constitution requires it. Human decency compels it.
             </p>
 
             <p className="mt-12">
               Respectfully,
+            </p>
+            <p className="mt-4" style={{ fontSize: '1.8rem' }}>
+              Blankenship
             </p>
           </div>
         </div>
