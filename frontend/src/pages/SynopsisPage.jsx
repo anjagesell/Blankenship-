@@ -284,26 +284,15 @@ Blankenship`;
           
           // Start speaking
           console.log('Starting speech synthesis...');
-          window.speechSynthesis.speak(utterance);
           
-          // Workaround for Chrome bug where speech stops after ~15 seconds
-          // Re-trigger every 14 seconds if still speaking
-          if (navigator.userAgent.includes('Chrome')) {
-            const keepAlive = setInterval(() => {
-              if (!window.speechSynthesis.speaking) {
-                clearInterval(keepAlive);
-              } else {
-                window.speechSynthesis.pause();
-                window.speechSynthesis.resume();
-              }
-            }, 14000);
-            
-            utterance.onend = () => {
-              clearInterval(keepAlive);
-              setIsReading(false);
-              setIsPaused(false);
-            };
+          // Check if speech synthesis is already speaking (safety check)
+          if (window.speechSynthesis.speaking) {
+            console.log('Already speaking, canceling...');
+            window.speechSynthesis.cancel();
           }
+          
+          // Speak the utterance
+          window.speechSynthesis.speak(utterance);
           
         } catch (innerError) {
           console.error('Speech initialization error:', innerError);
