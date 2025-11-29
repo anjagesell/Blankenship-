@@ -12,7 +12,8 @@ from datetime import datetime, timezone
 
 
 ROOT_DIR = Path(__file__).parent
-load_dotenv(ROOT_DIR / '.env')
+# Load .env file but don't override existing environment variables (K8s will set these)
+load_dotenv(ROOT_DIR / '.env', override=False)
 
 # MongoDB connection
 mongo_url = os.environ.get('MONGO_URL', 'mongodb://localhost:27017')
