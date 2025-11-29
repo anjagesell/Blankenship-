@@ -204,9 +204,9 @@ Blankenship`;
       </div>
 
       {/* Letter Content */}
-      <div className="container mx-auto px-4 py-12 max-w-4xl">
+      <div className="container mx-auto px-4 py-6 sm:py-8 md:py-12 max-w-4xl">
         {/* Audio Controls - Mobile Responsive */}
-        <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 mb-6 px-4">
+        <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 mb-6 px-2 sm:px-4">
           <Button
             onClick={handleReadAloud}
             size="lg"
