@@ -28,16 +28,34 @@ db = client[db_name]
 # Create the main app without a prefix
 app = FastAPI()
 
-# Health check endpoint (no prefix, for deployment health checks)
+# Root endpoint for basic health check (deployment systems often check this first)
+@app.get("/")
+async def root():
+    """Root endpoint - simple health check without DB dependency"""
+    return {"status": "ok", "service": "blankenship-backend"}
+
+# Comprehensive health check endpoint
 @app.get("/health")
 async def health_check():
-    """Health check endpoint for deployment system"""
+    """Health check endpoint with database connectivity check"""
     try:
-        # Check if MongoDB is accessible
-        await client.admin.command('ping')
-        return {"status": "healthy", "database": "connected"}
+        # Check if MongoDB is accessible with a timeout
+        await client.admin.command('ping', serverSelectionTimeoutMS=2000)
+        return {"status": "healthy", "database": "connected", "service": "blankenship-backend"}
     except Exception as e:
-        return {"status": "unhealthy", "error": str(e)}
+        # Return 200 but indicate DB is not ready (allows app to start even if DB is slow)
+        return {"status": "degraded", "database": "disconnected", "error": str(e), "service": "blankenship-backend"}
+
+# Readiness probe endpoint (strict check - fails if DB is not ready)
+@app.get("/ready")
+async def readiness_check():
+    """Readiness check - only returns success if fully operational"""
+    try:
+        await client.admin.command('ping', serverSelectionTimeoutMS=5000)
+        return {"status": "ready", "database": "connected"}
+    except Exception as e:
+        from fastapi import HTTPException
+        raise HTTPException(status_code=503, detail={"status": "not_ready", "error": str(e)})
 
 # Create a router with the /api prefix
 api_router = APIRouter(prefix="/api")
