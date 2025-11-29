@@ -159,15 +159,19 @@ Blankenship`;
           utterance.volume = 1.0;    // Full volume
           utterance.lang = 'en-US';  // Explicitly set language
           
-          // Get voices (use cached if available)
-          let voices = voicesRef.current.length > 0 ? voicesRef.current : window.speechSynthesis.getVoices();
+          // Get voices with multiple fallbacks
+          let voices = window.speechSynthesis.getVoices();
           
-          // If still no voices, try one more time (Firefox compatibility)
+          // If no voices yet, wait a bit and try again
           if (voices.length === 0) {
+            console.log('No voices yet, waiting...');
+            // Trigger voice loading
+            window.speechSynthesis.speak(new SpeechSynthesisUtterance(''));
+            window.speechSynthesis.cancel();
             voices = window.speechSynthesis.getVoices();
           }
           
-          console.log(`Available voices: ${voices.length}`);
+          console.log(`Available voices: ${voices.length}`, voices.slice(0, 3).map(v => v.name));
           
           // Priority list for mature male voices across all browsers
           const voicePreferences = [
