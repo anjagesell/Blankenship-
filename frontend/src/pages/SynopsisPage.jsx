@@ -3,29 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/ui/button';
 import { ArrowRight } from 'lucide-react';
 
-/**
- * SynopsisPage Component with Cross-Browser Text-to-Speech
- * 
- * Browser Compatibility:
- * ✅ Chrome/Edge (Desktop & Mobile) - Full support with voice selection
- * ✅ Safari (macOS & iOS) - Full support with native voices
- * ✅ Firefox (Desktop & Mobile) - Full support
- * ✅ Samsung Internet - Full support
- * ✅ Opera - Full support
- * 
- * Features:
- * - Automatic voice loading with fallbacks
- * - Mature male voice selection across all platforms
- * - Chrome bug workaround (15-second timeout)
- * - Proper error handling for all browsers
- * - Mobile-optimized controls
- * - Pause/Resume functionality
- */
 const SynopsisPage = () => {
   const navigate = useNavigate();
-  const [isReading, setIsReading] = useState(false);
-  const [isPaused, setIsPaused] = useState(false);
-  const utteranceRef = useRef(null);
 
   useEffect(() => {
     document.title = 'Blankenship';
