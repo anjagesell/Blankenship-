@@ -41,6 +41,29 @@ I present these records not in anger, but in the hope that truth, though delayed
 Respectfully,
 Blankenship`;
 
+  // Load voices for mobile compatibility
+  useEffect(() => {
+    // Mobile devices often require a delay to load voices
+    const loadVoices = () => {
+      return window.speechSynthesis.getVoices();
+    };
+    
+    // Load voices initially
+    loadVoices();
+    
+    // Also load when voices change (important for mobile)
+    if (window.speechSynthesis.onvoiceschanged !== undefined) {
+      window.speechSynthesis.onvoiceschanged = loadVoices;
+    }
+    
+    // Cleanup on unmount
+    return () => {
+      if (window.speechSynthesis) {
+        window.speechSynthesis.cancel();
+      }
+    };
+  }, []);
+
   const handleReadAloud = () => {
     if ('speechSynthesis' in window) {
       if (isPaused) {
@@ -51,6 +74,9 @@ Blankenship`;
         window.speechSynthesis.pause();
         setIsPaused(true);
       } else {
+        // Cancel any ongoing speech (important for mobile)
+        window.speechSynthesis.cancel();
+        
         const utterance = new SpeechSynthesisUtterance(letterText);
         utteranceRef.current = utterance;
         
@@ -61,11 +87,20 @@ Blankenship`;
         
         // Try to select a deeper, more authoritative voice if available
         const voices = window.speechSynthesis.getVoices();
+        
+        // Prioritize voices for different platforms
         const preferredVoice = voices.find(voice => 
-          voice.name.includes('Male') || 
-          voice.name.includes('Daniel') || 
-          voice.name.includes('Google US English')
+          // iOS voices
+          voice.name.includes('Daniel') ||
+          voice.name.includes('Fred') ||
+          // Android voices
+          voice.name.includes('Male') ||
+          voice.name.includes('en-US') ||
+          voice.name.includes('Google US English') ||
+          // Desktop voices
+          voice.lang.startsWith('en')
         );
+        
         if (preferredVoice) {
           utterance.voice = preferredVoice;
         }
@@ -73,6 +108,10 @@ Blankenship`;
         utterance.onstart = () => {
           setIsReading(true);
           setIsPaused(false);
+          toast({
+            title: 'Reading Started',
+            description: 'The letter is being read aloud.',
+          });
         };
         
         utterance.onend = () => {
@@ -80,17 +119,21 @@ Blankenship`;
           setIsPaused(false);
         };
         
-        utterance.onerror = () => {
+        utterance.onerror = (event) => {
           setIsReading(false);
           setIsPaused(false);
+          console.error('Speech synthesis error:', event);
           toast({
             title: 'Error',
-            description: 'Unable to read the letter aloud.',
+            description: 'Unable to read the letter aloud. Please try again.',
             variant: 'destructive',
           });
         };
         
-        window.speechSynthesis.speak(utterance);
+        // Small delay for mobile devices
+        setTimeout(() => {
+          window.speechSynthesis.speak(utterance);
+        }, 100);
       }
     } else {
       toast({
