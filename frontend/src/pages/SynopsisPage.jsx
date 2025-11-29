@@ -74,97 +74,117 @@ Blankenship`;
         window.speechSynthesis.pause();
         setIsPaused(true);
       } else {
-        // Cancel any ongoing speech (important for mobile)
-        window.speechSynthesis.cancel();
-        
-        const utterance = new SpeechSynthesisUtterance(letterText);
-        utteranceRef.current = utterance;
-        
-        // Configure voice settings for a mature, calm but earnest tone
-        utterance.rate = 0.85; // Slower, measured pace for gravitas and clarity
-        utterance.pitch = 0.75; // Lower pitch for deeper, mature male voice
-        utterance.volume = 1.0;
-        
-        // Select the best male voice available
-        const voices = window.speechSynthesis.getVoices();
-        
-        // Priority order: mature male voices with natural sound
-        const maleVoicePreferences = [
-          // iOS mature male voices
-          'Daniel',           // iOS - British male, deeper
-          'Alex',             // macOS - mature male
-          'Fred',             // iOS - mature American male
-          // Windows mature male voices
-          'Microsoft David',  // Windows - mature male
-          'Microsoft Mark',   // Windows - mature British male
-          // Google/Chrome mature male voices
-          'Google US English Male',
-          'Google UK English Male',
-          // Android male voices
-          'en-US-Wavenet-D',  // Google Cloud - deep male
-          'en-US-Wavenet-A',  // Google Cloud - male
-          'en-us-x-iob-local', // Android TTS male
-          'en-us-x-iom-local', // Android TTS male
-        ];
-        
-        // Find the best available male voice
-        let selectedVoice = null;
-        
-        // First, try to find preferred voices by name
-        for (const prefName of maleVoicePreferences) {
-          selectedVoice = voices.find(voice => 
-            voice.name.includes(prefName) && voice.lang.startsWith('en')
-          );
-          if (selectedVoice) break;
-        }
-        
-        // If no preferred voice found, look for any male voice
-        if (!selectedVoice) {
-          selectedVoice = voices.find(voice => 
-            voice.lang.startsWith('en') && 
-            (voice.name.toLowerCase().includes('male') ||
-             voice.name.toLowerCase().includes('man') ||
-             voice.name.toLowerCase().includes('david') ||
-             voice.name.toLowerCase().includes('daniel') ||
-             voice.name.toLowerCase().includes('mark'))
-          );
-        }
-        
-        // If still no voice, use first English voice
-        if (!selectedVoice) {
-          selectedVoice = voices.find(voice => voice.lang.startsWith('en'));
-        }
-        
-        if (selectedVoice) {
-          utterance.voice = selectedVoice;
-          console.log('Selected voice:', selectedVoice.name, selectedVoice.lang);
-        }
-        
-        utterance.onstart = () => {
-          setIsReading(true);
-          setIsPaused(false);
-        };
-        
-        utterance.onend = () => {
+        try {
+          // Cancel any ongoing speech (important for mobile)
+          window.speechSynthesis.cancel();
+          
+          // Wait a moment to ensure voices are loaded
+          setTimeout(() => {
+            const utterance = new SpeechSynthesisUtterance(letterText);
+            utteranceRef.current = utterance;
+            
+            // Configure voice settings for a mature, calm but earnest tone
+            utterance.rate = 0.85;
+            utterance.pitch = 0.75;
+            utterance.volume = 1.0;
+            utterance.lang = 'en-US';
+            
+            // Get available voices
+            let voices = window.speechSynthesis.getVoices();
+            
+            // If no voices yet, try to trigger voice loading
+            if (voices.length === 0) {
+              window.speechSynthesis.speak(new SpeechSynthesisUtterance(''));
+              voices = window.speechSynthesis.getVoices();
+            }
+            
+            console.log('Available voices:', voices.length, voices.map(v => v.name));
+            
+            // Priority order: mature male voices
+            const maleVoicePreferences = [
+              'Daniel', 'Alex', 'Fred',
+              'Microsoft David', 'Microsoft Mark',
+              'Google US English Male', 'Google UK English Male',
+              'en-US-Wavenet-D', 'en-US-Wavenet-A',
+              'en-us-x-iob-local', 'en-us-x-iom-local'
+            ];
+            
+            // Find the best available voice
+            let selectedVoice = null;
+            
+            for (const prefName of maleVoicePreferences) {
+              selectedVoice = voices.find(voice => 
+                voice.name.includes(prefName) && voice.lang.startsWith('en')
+              );
+              if (selectedVoice) break;
+            }
+            
+            // Fallback: any male voice
+            if (!selectedVoice) {
+              selectedVoice = voices.find(voice => 
+                voice.lang.startsWith('en') && 
+                (voice.name.toLowerCase().includes('male') ||
+                 voice.name.toLowerCase().includes('man') ||
+                 voice.name.toLowerCase().includes('david') ||
+                 voice.name.toLowerCase().includes('daniel') ||
+                 voice.name.toLowerCase().includes('mark'))
+              );
+            }
+            
+            // Final fallback: first English voice
+            if (!selectedVoice && voices.length > 0) {
+              selectedVoice = voices.find(voice => voice.lang.startsWith('en')) || voices[0];
+            }
+            
+            if (selectedVoice) {
+              utterance.voice = selectedVoice;
+              console.log('Selected voice:', selectedVoice.name, selectedVoice.lang);
+            } else {
+              console.log('No voice selected, using default');
+            }
+            
+            utterance.onstart = () => {
+              console.log('Speech started');
+              setIsReading(true);
+              setIsPaused(false);
+            };
+            
+            utterance.onend = () => {
+              console.log('Speech ended');
+              setIsReading(false);
+              setIsPaused(false);
+            };
+            
+            utterance.onerror = (event) => {
+              console.error('Speech synthesis error:', event.error, event);
+              setIsReading(false);
+              setIsPaused(false);
+              
+              // Only show error if it's not a cancellation
+              if (event.error !== 'canceled' && event.error !== 'interrupted') {
+                toast({
+                  title: 'Error',
+                  description: `Unable to read aloud: ${event.error}. Your browser may not support this feature.`,
+                  variant: 'destructive',
+                });
+              }
+            };
+            
+            // Start speaking
+            console.log('Starting speech synthesis...');
+            window.speechSynthesis.speak(utterance);
+            
+          }, 200);
+        } catch (error) {
+          console.error('Read aloud error:', error);
           setIsReading(false);
           setIsPaused(false);
-        };
-        
-        utterance.onerror = (event) => {
-          setIsReading(false);
-          setIsPaused(false);
-          console.error('Speech synthesis error:', event);
           toast({
             title: 'Error',
-            description: 'Unable to read the letter aloud. Please try again.',
+            description: 'Unable to initialize text-to-speech. Please try again.',
             variant: 'destructive',
           });
-        };
-        
-        // Small delay for mobile devices
-        setTimeout(() => {
-          window.speechSynthesis.speak(utterance);
-        }, 100);
+        }
       }
     } else {
       toast({
