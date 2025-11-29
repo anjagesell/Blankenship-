@@ -9,6 +9,8 @@ const EntryPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    // Set page title
+    document.title = 'Blankenship';
     // Focus first input on mount
     inputRefs.current[0]?.focus();
   }, []);
