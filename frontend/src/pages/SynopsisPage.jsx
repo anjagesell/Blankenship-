@@ -244,9 +244,7 @@ Blankenship`;
           <div 
             className="text-gray-800 space-y-4 sm:space-y-6 leading-relaxed"
             style={{ 
-              fontFamily: "'Kalam', cursive",
-              fontSize: '1rem',
-              lineHeight: '1.75rem'
+              fontFamily: "'Kalam', cursive"
             }}
           >
             <p className="mb-6 sm:mb-8 text-base sm:text-lg md:text-xl">Dear Sir/Madam,</p>
