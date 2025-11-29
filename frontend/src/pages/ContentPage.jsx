@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getEntryContent, indexEntries } from '../mock';
 import { Button } from '../components/ui/button';
@@ -9,6 +9,10 @@ const ContentPage = () => {
   const navigate = useNavigate();
   const entry = getEntryContent(id);
   const indexEntry = indexEntries.find(e => e.id === parseInt(id));
+
+  useEffect(() => {
+    document.title = `Blankenship - ${indexEntry?.header || 'Entry'}`;
+  }, [indexEntry]);
 
   return (
     <div className="min-h-screen bg-white">
