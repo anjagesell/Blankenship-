@@ -80,29 +80,64 @@ Blankenship`;
         const utterance = new SpeechSynthesisUtterance(letterText);
         utteranceRef.current = utterance;
         
-        // Configure voice settings for a serious, professional tone
-        utterance.rate = 0.9; // Slightly slower for gravitas
-        utterance.pitch = 0.8; // Lower pitch for authority
+        // Configure voice settings for a mature, calm but earnest tone
+        utterance.rate = 0.85; // Slower, measured pace for gravitas and clarity
+        utterance.pitch = 0.75; // Lower pitch for deeper, mature male voice
         utterance.volume = 1.0;
         
-        // Try to select a deeper, more authoritative voice if available
+        // Select the best male voice available
         const voices = window.speechSynthesis.getVoices();
         
-        // Prioritize voices for different platforms
-        const preferredVoice = voices.find(voice => 
-          // iOS voices
-          voice.name.includes('Daniel') ||
-          voice.name.includes('Fred') ||
-          // Android voices
-          voice.name.includes('Male') ||
-          voice.name.includes('en-US') ||
-          voice.name.includes('Google US English') ||
-          // Desktop voices
-          voice.lang.startsWith('en')
-        );
+        // Priority order: mature male voices with natural sound
+        const maleVoicePreferences = [
+          // iOS mature male voices
+          'Daniel',           // iOS - British male, deeper
+          'Alex',             // macOS - mature male
+          'Fred',             // iOS - mature American male
+          // Windows mature male voices
+          'Microsoft David',  // Windows - mature male
+          'Microsoft Mark',   // Windows - mature British male
+          // Google/Chrome mature male voices
+          'Google US English Male',
+          'Google UK English Male',
+          // Android male voices
+          'en-US-Wavenet-D',  // Google Cloud - deep male
+          'en-US-Wavenet-A',  // Google Cloud - male
+          'en-us-x-iob-local', // Android TTS male
+          'en-us-x-iom-local', // Android TTS male
+        ];
         
-        if (preferredVoice) {
-          utterance.voice = preferredVoice;
+        // Find the best available male voice
+        let selectedVoice = null;
+        
+        // First, try to find preferred voices by name
+        for (const prefName of maleVoicePreferences) {
+          selectedVoice = voices.find(voice => 
+            voice.name.includes(prefName) && voice.lang.startsWith('en')
+          );
+          if (selectedVoice) break;
+        }
+        
+        // If no preferred voice found, look for any male voice
+        if (!selectedVoice) {
+          selectedVoice = voices.find(voice => 
+            voice.lang.startsWith('en') && 
+            (voice.name.toLowerCase().includes('male') ||
+             voice.name.toLowerCase().includes('man') ||
+             voice.name.toLowerCase().includes('david') ||
+             voice.name.toLowerCase().includes('daniel') ||
+             voice.name.toLowerCase().includes('mark'))
+          );
+        }
+        
+        // If still no voice, use first English voice
+        if (!selectedVoice) {
+          selectedVoice = voices.find(voice => voice.lang.startsWith('en'));
+        }
+        
+        if (selectedVoice) {
+          utterance.voice = selectedVoice;
+          console.log('Selected voice:', selectedVoice.name, selectedVoice.lang);
         }
         
         utterance.onstart = () => {
