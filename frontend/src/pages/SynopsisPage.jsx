@@ -1,8 +1,7 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/ui/button';
-import { ArrowRight, Volume2, Pause, Square } from 'lucide-react';
-import { toast } from '../hooks/use-toast';
+import { ArrowRight } from 'lucide-react';
 
 /**
  * SynopsisPage Component with Cross-Browser Text-to-Speech
