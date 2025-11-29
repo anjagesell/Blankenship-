@@ -164,11 +164,11 @@ const EntryPage = () => {
         {/* Federal Law */}
         <Dialog>
           <DialogTrigger asChild>
-            <button className="flex flex-col items-center gap-2 text-white/80 hover:text-white transition-colors group">
-              <div className="w-16 h-16 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-all group-hover:scale-110">
-                <Scale className="w-8 h-8" />
+            <button className="flex flex-col items-center gap-1 sm:gap-2 text-white/80 hover:text-white transition-colors group">
+              <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-all group-hover:scale-110">
+                <Scale className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8" />
               </div>
-              <span className="text-xs font-medium">Federal Law</span>
+              <span className="text-[0.65rem] sm:text-xs font-medium">Federal Law</span>
             </button>
           </DialogTrigger>
           <DialogContent className="max-w-2xl max-h-[80vh]">
