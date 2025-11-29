@@ -127,6 +127,45 @@ Blankenship`;
 
       {/* Letter Content */}
       <div className="container mx-auto px-4 py-12 max-w-4xl">
+        {/* Audio Controls */}
+        <div className="flex justify-center gap-4 mb-6">
+          <Button
+            onClick={handleReadAloud}
+            size="lg"
+            variant={isReading && !isPaused ? "default" : "outline"}
+            className="flex items-center gap-2"
+          >
+            {isReading && !isPaused ? (
+              <>
+                <Pause className="w-5 h-5" />
+                Pause Reading
+              </>
+            ) : isPaused ? (
+              <>
+                <Volume2 className="w-5 h-5" />
+                Resume Reading
+              </>
+            ) : (
+              <>
+                <Volume2 className="w-5 h-5" />
+                Read Aloud
+              </>
+            )}
+          </Button>
+          
+          {(isReading || isPaused) && (
+            <Button
+              onClick={handleStop}
+              size="lg"
+              variant="destructive"
+              className="flex items-center gap-2"
+            >
+              <Square className="w-5 h-5" />
+              Stop
+            </Button>
+          )}
+        </div>
+
         <div className="bg-amber-50 p-12 rounded-lg shadow-lg border border-amber-200">
           <div 
             className="text-gray-800 space-y-6 leading-relaxed"
