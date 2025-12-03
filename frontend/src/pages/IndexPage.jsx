@@ -64,118 +64,224 @@ const IndexPage = () => {
         </div>
       </div>
 
-      {/* Wooden Crates by Year */}
-      <div className="container mx-auto px-4 py-6 sm:py-8 md:py-12 space-y-6">
+      {/* 3D Wooden Crates by Year */}
+      <div className="container mx-auto px-4 py-6 sm:py-8 md:py-12 space-y-12">
         {years.map((year) => {
           const isOpen = openYears[year];
           const yearEntries = entriesByYear[year];
           
           return (
-            <div key={year} className="overflow-hidden">
-              {/* Wooden Crate Header */}
-              <button
-                onClick={() => toggleYear(year)}
-                className="w-full relative group"
-              >
+            <div key={year} className="relative" style={{ perspective: '2000px' }}>
+              {/* 3D Wooden Crate Container */}
+              <div className="relative mx-auto max-w-4xl" style={{ transformStyle: 'preserve-3d' }}>
+                {/* Crate Body (Bottom Box) */}
                 <div 
-                  className="relative p-6 sm:p-8 rounded-lg transition-all duration-300 hover:shadow-2xl"
+                  className="relative rounded-lg overflow-hidden"
                   style={{
-                    background: 'linear-gradient(135deg, #8B4513 0%, #654321 50%, #4A2511 100%)',
-                    border: '4px solid #3E1F0F',
-                    boxShadow: 'inset 0 2px 10px rgba(0,0,0,0.5), 0 4px 20px rgba(0,0,0,0.3)',
+                    background: 'linear-gradient(145deg, #5C3317 0%, #4A2511 50%, #3E1F0F 100%)',
+                    boxShadow: `
+                      0 20px 60px rgba(0,0,0,0.5),
+                      inset 0 -5px 20px rgba(0,0,0,0.6),
+                      inset 0 5px 10px rgba(139,69,19,0.3)
+                    `,
+                    border: '6px solid #2C1810',
+                    minHeight: '120px',
                   }}
                 >
-                  {/* Wood grain texture overlay */}
+                  {/* Wood planks effect */}
                   <div 
-                    className="absolute inset-0 opacity-20 rounded-lg"
+                    className="absolute inset-0 opacity-30"
                     style={{
-                      backgroundImage: `repeating-linear-gradient(
-                        90deg,
-                        transparent,
-                        transparent 2px,
-                        rgba(0,0,0,0.1) 2px,
-                        rgba(0,0,0,0.1) 4px
-                      )`,
+                      backgroundImage: `
+                        repeating-linear-gradient(
+                          0deg,
+                          transparent,
+                          transparent 40px,
+                          rgba(0,0,0,0.3) 40px,
+                          rgba(0,0,0,0.3) 42px
+                        ),
+                        repeating-linear-gradient(
+                          90deg,
+                          rgba(139,69,19,0.1) 0px,
+                          rgba(101,67,33,0.1) 2px,
+                          transparent 2px,
+                          transparent 4px
+                        )
+                      `,
                     }}
                   />
                   
-                  {/* Crate metal corners */}
-                  <div className="absolute top-2 left-2 w-4 h-4 border-l-2 border-t-2 border-gray-400" />
-                  <div className="absolute top-2 right-2 w-4 h-4 border-r-2 border-t-2 border-gray-400" />
-                  <div className="absolute bottom-2 left-2 w-4 h-4 border-l-2 border-b-2 border-gray-400" />
-                  <div className="absolute bottom-2 right-2 w-4 h-4 border-r-2 border-b-2 border-gray-400" />
+                  {/* Metal straps */}
+                  <div className="absolute top-1/2 left-0 right-0 h-3 bg-gradient-to-b from-gray-400 via-gray-500 to-gray-600 opacity-70 -translate-y-1/2" 
+                       style={{ boxShadow: '0 2px 4px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.2)' }} />
+                  <div className="absolute top-1/4 left-0 right-0 h-2 bg-gradient-to-b from-gray-400 via-gray-500 to-gray-600 opacity-60" 
+                       style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.6)' }} />
+                  <div className="absolute top-3/4 left-0 right-0 h-2 bg-gradient-to-b from-gray-400 via-gray-500 to-gray-600 opacity-60" 
+                       style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.6)' }} />
                   
-                  {/* Content */}
-                  <div className="relative flex items-center justify-between">
-                    <div className="flex items-center gap-4">
-                      <Boxes className="w-8 h-8 sm:w-10 sm:h-10 text-amber-200" />
-                      <h2 
-                        className="text-2xl sm:text-3xl md:text-4xl font-bold text-amber-100"
-                        style={{ 
-                          fontFamily: 'Georgia, serif',
-                          textShadow: '2px 2px 4px rgba(0,0,0,0.7)'
+                  {/* Corner bolts */}
+                  {[
+                    'top-4 left-4', 'top-4 right-4', 
+                    'bottom-4 left-4', 'bottom-4 right-4',
+                    'top-1/2 left-4', 'top-1/2 right-4'
+                  ].map((pos, i) => (
+                    <div 
+                      key={i}
+                      className={`absolute ${pos} w-3 h-3 rounded-full bg-gradient-to-br from-gray-300 to-gray-600`}
+                      style={{ 
+                        boxShadow: 'inset 0 1px 2px rgba(255,255,255,0.3), 0 2px 4px rgba(0,0,0,0.8)',
+                        transform: 'translateZ(10px)'
+                      }}
+                    />
+                  ))}
+                  
+                  {/* Crate Lid - 3D Opening Animation */}
+                  <button
+                    onClick={() => toggleYear(year)}
+                    className="absolute inset-0 z-10 cursor-pointer"
+                  >
+                    <div 
+                      className="absolute inset-0 rounded-lg transition-all duration-700 ease-out"
+                      style={{
+                        background: 'linear-gradient(160deg, #6B4423 0%, #5C3317 40%, #4A2511 100%)',
+                        transformOrigin: 'top center',
+                        transform: isOpen ? 'rotateX(-120deg) translateY(-10px)' : 'rotateX(0deg)',
+                        transformStyle: 'preserve-3d',
+                        boxShadow: isOpen 
+                          ? '0 -10px 40px rgba(0,0,0,0.7), inset 0 5px 15px rgba(139,69,19,0.4)'
+                          : '0 5px 30px rgba(0,0,0,0.6), inset 0 -3px 10px rgba(0,0,0,0.5)',
+                        border: '5px solid #2C1810',
+                        zIndex: isOpen ? 20 : 10,
+                      }}
+                    >
+                      {/* Lid wood texture */}
+                      <div 
+                        className="absolute inset-0 opacity-40 rounded-lg"
+                        style={{
+                          backgroundImage: `
+                            repeating-linear-gradient(
+                              90deg,
+                              transparent,
+                              transparent 60px,
+                              rgba(0,0,0,0.2) 60px,
+                              rgba(0,0,0,0.2) 62px
+                            )
+                          `,
                         }}
-                      >
-                        {year}
-                      </h2>
-                      <span className="text-amber-200 text-sm sm:text-base">
-                        ({yearEntries.length} {yearEntries.length === 1 ? 'entry' : 'entries'})
-                      </span>
-                    </div>
-                    
-                    {isOpen ? (
-                      <ChevronUp className="w-6 h-6 sm:w-8 sm:h-8 text-amber-200 transition-transform" />
-                    ) : (
-                      <ChevronDown className="w-6 h-6 sm:w-8 sm:h-8 text-amber-200 transition-transform" />
-                    )}
-                  </div>
-                </div>
-              </button>
-              
-              {/* Expanded Content - Months inside the crate */}
-              <div 
-                className={`transition-all duration-500 ease-in-out overflow-hidden ${
-                  isOpen ? 'max-h-[5000px] opacity-100 mt-4' : 'max-h-0 opacity-0'
-                }`}
-              >
-                <div 
-                  className="p-4 sm:p-6 rounded-lg"
-                  style={{
-                    background: 'linear-gradient(to bottom, #D2691E 0%, #A0522D 100%)',
-                    border: '3px solid #654321',
-                    boxShadow: 'inset 0 2px 8px rgba(0,0,0,0.3)',
-                  }}
-                >
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4">
-                    {yearEntries.map((entry) => {
-                      const IconComponent = entry.icon ? iconMap[entry.icon] || FileText : FileText;
+                      />
                       
-                      return (
-                        <Card
-                          key={entry.id}
-                          onClick={() => navigate(`/entry/${entry.id}`)}
-                          className="p-4 sm:p-6 cursor-pointer hover:shadow-xl transition-all duration-300 border-2 border-gray-200 hover:border-blue-500 bg-white group"
-                        >
-                          <div className="space-y-3">
-                            <div className="flex items-center justify-between">
-                              <div className="flex items-center gap-2 text-sm text-gray-600">
-                                <Calendar className="w-4 h-4" />
-                                <span className="font-semibold">{entry.date || 'N/A'}</span>
-                              </div>
-                              <IconComponent className="w-6 h-6 text-blue-600 group-hover:text-blue-700" />
-                            </div>
-                            <h3 className="text-base sm:text-lg font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
-                              {entry.header}
-                            </h3>
-                            {entry.description && (
-                              <p className="text-sm text-gray-600 line-clamp-2">
-                                {entry.description}
-                              </p>
-                            )}
+                      {/* Lid metal hinges */}
+                      <div className="absolute top-2 left-1/4 w-12 h-4 bg-gradient-to-b from-gray-400 to-gray-600 rounded"
+                           style={{ boxShadow: '0 2px 4px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.3)' }} />
+                      <div className="absolute top-2 right-1/4 w-12 h-4 bg-gradient-to-b from-gray-400 to-gray-600 rounded"
+                           style={{ boxShadow: '0 2px 4px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.3)' }} />
+                      
+                      {/* Year Label on Lid */}
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="text-center">
+                          <div className="flex items-center justify-center gap-3 mb-2">
+                            <Boxes className="w-8 h-8 sm:w-10 sm:h-10 text-yellow-400 drop-shadow-lg" />
+                            <h2 
+                              className="text-3xl sm:text-4xl md:text-5xl font-bold text-yellow-400"
+                              style={{ 
+                                fontFamily: 'Georgia, serif',
+                                textShadow: '3px 3px 6px rgba(0,0,0,0.9), 0 0 20px rgba(255,215,0,0.3)',
+                                letterSpacing: '0.05em'
+                              }}
+                            >
+                              {year}
+                            </h2>
                           </div>
-                        </Card>
-                      );
-                    })}
+                          <div 
+                            className="text-yellow-200 text-sm sm:text-base font-semibold"
+                            style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.8)' }}
+                          >
+                            {isOpen ? 'Click to Close' : 'Click to Open'}
+                          </div>
+                          <div className="text-yellow-300/80 text-xs sm:text-sm mt-1">
+                            ({yearEntries.length} {yearEntries.length === 1 ? 'item' : 'items'})
+                          </div>
+                        </div>
+                      </div>
+                      
+                      {/* Lid lock/latch */}
+                      <div className="absolute bottom-4 left-1/2 -translate-x-1/2">
+                        <div 
+                          className="w-8 h-10 bg-gradient-to-b from-yellow-600 to-yellow-800 rounded-sm"
+                          style={{ 
+                            boxShadow: '0 3px 6px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,215,0,0.4)',
+                            clipPath: 'polygon(30% 0, 70% 0, 100% 100%, 0 100%)'
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </button>
+                  
+                  {/* Inside of Crate - Visible when open */}
+                  <div 
+                    className={`relative transition-all duration-700 ease-out ${
+                      isOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-10'
+                    }`}
+                    style={{
+                      paddingTop: '80px',
+                      paddingBottom: '30px',
+                      paddingLeft: '20px',
+                      paddingRight: '20px',
+                    }}
+                  >
+                    <div className="relative">
+                      {/* Glowing light effect from inside */}
+                      {isOpen && (
+                        <div 
+                          className="absolute -top-10 left-1/2 -translate-x-1/2 w-32 h-32 rounded-full"
+                          style={{
+                            background: 'radial-gradient(circle, rgba(255,215,0,0.3) 0%, transparent 70%)',
+                            filter: 'blur(20px)',
+                          }}
+                        />
+                      )}
+                      
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4">
+                        {yearEntries.map((entry, index) => {
+                          const IconComponent = entry.icon ? iconMap[entry.icon] || FileText : FileText;
+                          
+                          return (
+                            <Card
+                              key={entry.id}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                navigate(`/entry/${entry.id}`);
+                              }}
+                              className={`p-4 sm:p-6 cursor-pointer hover:shadow-xl transition-all duration-500 border-2 border-gray-200 hover:border-yellow-500 bg-white/95 backdrop-blur group ${
+                                isOpen ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
+                              }`}
+                              style={{
+                                transitionDelay: isOpen ? `${index * 50}ms` : '0ms',
+                                boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                              }}
+                            >
+                              <div className="space-y-3">
+                                <div className="flex items-center justify-between">
+                                  <div className="flex items-center gap-2 text-sm text-gray-600">
+                                    <Calendar className="w-4 h-4" />
+                                    <span className="font-semibold">{entry.date || 'N/A'}</span>
+                                  </div>
+                                  <IconComponent className="w-6 h-6 text-amber-600 group-hover:text-amber-700" />
+                                </div>
+                                <h3 className="text-base sm:text-lg font-bold text-gray-900 group-hover:text-amber-700 transition-colors">
+                                  {entry.header}
+                                </h3>
+                                {entry.description && (
+                                  <p className="text-sm text-gray-600 line-clamp-2">
+                                    {entry.description}
+                                  </p>
+                                )}
+                              </div>
+                            </Card>
+                          );
+                        })}
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
