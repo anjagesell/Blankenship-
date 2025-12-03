@@ -3,11 +3,11 @@ export const ENTRY_CODE = '05052017';
 
 // Mock index entries (15-20 items sorted by date)
 export const indexEntries = [
-  { id: 1, header: 'October 2013 Entry', date: '10/2013', description: 'The obvious set-up of events' },
-  { id: 2, header: 'November 2013 Entry', date: '11/2013', description: 'The setting up of Domino pieces to fall.' },
-  { id: 3, header: 'December 2013 Entry', date: '12/2013', description: 'The illegal Inquisition.' },
-  { id: 4, header: 'January 2014 Entry', date: '01/2014', description: 'New Year, new fear' },
-  { id: 5, header: 'February 2014 Entry', date: '02/2014', description: 'Valentine\'s Moment of horror. Gabriele\'s Birthday Gift.' },
+  { id: 1, header: 'October 2013 Entry', date: '10/2013', description: 'The obvious set-up of events', icon: 'PlayCircle' },
+  { id: 2, header: 'November 2013 Entry', date: '11/2013', description: 'The setting up of Domino pieces to fall.', icon: 'Boxes' },
+  { id: 3, header: 'December 2013 Entry', date: '12/2013', description: 'The illegal Inquisition.', icon: 'Scale' },
+  { id: 4, header: 'January 2014 Entry', date: '01/2014', description: 'New Year, new fear', icon: 'AlertTriangle' },
+  { id: 5, header: 'February 2014 Entry', date: '02/2014', description: 'Valentine\'s Moment of horror. Gabriele\'s Birthday Gift.', icon: 'HeartCrack' },
   { id: 6, header: 'March 2014 Entry', date: '03/2014', description: 'Spring season notes' },
   { id: 7, header: 'April 2014 Entry', date: '04/2014', description: 'April update' },
   { id: 8, header: 'May 2014 Entry', date: '05/2014', description: 'Spring summary' },
