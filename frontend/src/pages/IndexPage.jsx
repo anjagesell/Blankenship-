@@ -49,26 +49,33 @@ const IndexPage = () => {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4">
-          {indexEntries.map((entry) => (
-            <Card
-              key={entry.id}
-              onClick={() => navigate(`/entry/${entry.id}`)}
-              className="p-6 cursor-pointer hover:shadow-xl transition-all duration-300 border-2 border-gray-200 hover:border-blue-500 bg-white group"
-            >
-              <div className="space-y-3">
-                <div className="flex items-center gap-2 text-sm text-gray-600">
-                  <Calendar className="w-4 h-4" />
-                  <span className="font-semibold">{entry.date}</span>
+          {indexEntries.map((entry) => {
+            const IconComponent = entry.icon ? iconMap[entry.icon] || FileText : FileText;
+            
+            return (
+              <Card
+                key={entry.id}
+                onClick={() => navigate(`/entry/${entry.id}`)}
+                className="p-6 cursor-pointer hover:shadow-xl transition-all duration-300 border-2 border-gray-200 hover:border-blue-500 bg-white group"
+              >
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2 text-sm text-gray-600">
+                      <Calendar className="w-4 h-4" />
+                      <span className="font-semibold">{entry.date}</span>
+                    </div>
+                    <IconComponent className="w-6 h-6 text-blue-600 group-hover:text-blue-700" />
+                  </div>
+                  <h3 className="text-lg font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
+                    {entry.header}
+                  </h3>
+                  <p className="text-sm text-gray-600 line-clamp-2">
+                    {entry.description}
+                  </p>
                 </div>
-                <h3 className="text-lg font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
-                  {entry.header}
-                </h3>
-                <p className="text-sm text-gray-600 line-clamp-2">
-                  {entry.description}
-                </p>
-              </div>
-            </Card>
-          ))}
+              </Card>
+            );
+          })}
         </div>
       </div>
     </div>
