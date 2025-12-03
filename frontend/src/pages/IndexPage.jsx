@@ -64,8 +64,24 @@ const IndexPage = () => {
         </div>
       </div>
 
-      {/* 3D Wooden Crates by Year */}
-      <div className="container mx-auto px-4 py-6 sm:py-8 md:py-12 space-y-12">
+      {/* Premium 3D Wooden Crates by Year */}
+      <style dangerouslySetInnerHTML={{__html: `
+        @keyframes crateOpen {
+          0% { transform: perspective(1500px) rotateX(0deg) translateZ(0); }
+          100% { transform: perspective(1500px) rotateX(-115deg) translateZ(80px) translateY(-40px); }
+        }
+        @keyframes crateClosed {
+          0% { transform: perspective(1500px) rotateX(-115deg) translateZ(80px) translateY(-40px); }
+          100% { transform: perspective(1500px) rotateX(0deg) translateZ(0); }
+        }
+        .crate-lid-open {
+          animation: crateOpen 0.9s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+        }
+        .crate-lid-closed {
+          animation: crateClosed 0.7s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+        }
+      `}} />
+      <div className="container mx-auto px-4 py-6 sm:py-8 md:py-12 space-y-16">
         {years.map((year) => {
           const isOpen = openYears[year];
           const yearEntries = entriesByYear[year];
