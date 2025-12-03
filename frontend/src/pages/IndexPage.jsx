@@ -42,13 +42,6 @@ const IndexPage = () => {
 
       {/* Index Grid */}
       <div className="container mx-auto px-4 py-6 sm:py-8 md:py-12">
-        {/* Section Header: Pre-history */}
-        <div className="mb-6">
-          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 border-b-4 border-blue-600 pb-2 inline-block" style={{ fontFamily: 'Georgia, serif' }}>
-            Pre-history
-          </h2>
-        </div>
-
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4">
           {indexEntries.map((entry) => {
             const IconComponent = entry.icon ? iconMap[entry.icon] || FileText : FileText;
