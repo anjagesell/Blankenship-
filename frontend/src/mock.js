@@ -5,7 +5,7 @@ export const ENTRY_CODE = '05052017';
 export const indexEntries = [
   { id: 1, header: 'October 2013 Entry', date: '10/2013', description: 'The obvious set-up of events' },
   { id: 2, header: 'November 2013 Entry', date: '11/2013', description: 'The setting up of Domino pieces to fall.' },
-  { id: 3, header: 'December 2013 Entry', date: '12/2013', description: 'Year-end notes' },
+  { id: 3, header: 'December 2013 Entry', date: '12/2013', description: 'The illegal Inquisition.' },
   { id: 4, header: 'January 2014 Entry', date: '01/2014', description: 'New year beginning' },
   { id: 5, header: 'February 2014 Entry', date: '02/2014', description: 'Winter records' },
   { id: 6, header: 'March 2014 Entry', date: '03/2014', description: 'Spring season notes' },
