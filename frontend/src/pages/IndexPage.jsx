@@ -2,10 +2,11 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { indexEntries } from '../mock';
 import { Card } from '../components/ui/card';
-import { Calendar, PlayCircle, Boxes, Scale, AlertTriangle, HeartCrack, FileText } from 'lucide-react';
+import { Calendar, PlayCircle, Boxes, Scale, AlertTriangle, HeartCrack, FileText, History } from 'lucide-react';
 
 // Icon mapping
 const iconMap = {
+  'History': History,
   'PlayCircle': PlayCircle,
   'Boxes': Boxes,
   'Scale': Scale,
