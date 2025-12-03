@@ -85,6 +85,28 @@ Blankenship`;
 
       {/* Letter Content */}
       <div className="container mx-auto px-4 py-6 sm:py-8 md:py-12 max-w-4xl">
+        {/* Read Aloud Button */}
+        <div className="flex justify-center mb-6">
+          <Button
+            onClick={handleReadAloud}
+            size="lg"
+            variant={isReading ? "destructive" : "default"}
+            className="w-full sm:w-auto text-base sm:text-lg px-6 sm:px-8 py-5 sm:py-6"
+          >
+            {isReading ? (
+              <>
+                <Square className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
+                Stop Reading
+              </>
+            ) : (
+              <>
+                <Volume2 className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
+                Read Aloud
+              </>
+            )}
+          </Button>
+        </div>
+
         <div className="bg-amber-50 p-4 sm:p-8 md:p-12 rounded-lg shadow-lg border border-amber-200">
           <div 
             className="text-gray-800 space-y-4 sm:space-y-6 leading-relaxed"
