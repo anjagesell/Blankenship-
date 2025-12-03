@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { indexEntries } from '../mock';
 import { Card } from '../components/ui/card';
-import { Calendar, PlayCircle, Boxes, Scale, AlertTriangle, HeartCrack, FileText, History } from 'lucide-react';
+import { Calendar, PlayCircle, Boxes, Scale, AlertTriangle, HeartCrack, FileText, History, ChevronDown, ChevronUp } from 'lucide-react';
 
 // Icon mapping
 const iconMap = {
@@ -17,10 +17,34 @@ const iconMap = {
 
 const IndexPage = () => {
   const navigate = useNavigate();
+  const [openYears, setOpenYears] = useState({});
 
   useEffect(() => {
     document.title = 'Blankenship';
   }, []);
+
+  // Group entries by year
+  const entriesByYear = indexEntries.reduce((acc, entry) => {
+    if (entry.id === 0) {
+      // Pre-history goes to 2013
+      if (!acc['2013']) acc['2013'] = [];
+      acc['2013'].push(entry);
+    } else if (entry.date) {
+      const year = entry.date.split('/')[1];
+      if (!acc[year]) acc[year] = [];
+      acc[year].push(entry);
+    }
+    return acc;
+  }, {});
+
+  const years = Object.keys(entriesByYear).sort();
+
+  const toggleYear = (year) => {
+    setOpenYears(prev => ({
+      ...prev,
+      [year]: !prev[year]
+    }));
+  };
 
   return (
     <div className="min-h-screen bg-white">
