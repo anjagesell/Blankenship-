@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { indexEntries } from '../mock';
 import { Card } from '../components/ui/card';
-import { Calendar, PlayCircle, Boxes, Scale, AlertTriangle, HeartCrack, FileText, History, ChevronDown, ChevronUp } from 'lucide-react';
+import { Calendar, PlayCircle, Boxes, Scale, AlertTriangle, HeartCrack, FileText, History, Lock, LockOpen } from 'lucide-react';
 
 // Icon mapping
 const iconMap = {
@@ -12,7 +12,7 @@ const iconMap = {
   'Scale': Scale,
   'AlertTriangle': AlertTriangle,
   'HeartCrack': HeartCrack,
-  'FileText': FileText, // Default icon
+  'FileText': FileText,
 };
 
 const IndexPage = () => {
@@ -26,7 +26,6 @@ const IndexPage = () => {
   // Group entries by year
   const entriesByYear = indexEntries.reduce((acc, entry) => {
     if (entry.id === 0) {
-      // Pre-history goes to 2013
       if (!acc['2013']) acc['2013'] = [];
       acc['2013'].push(entry);
     } else if (entry.date) {
@@ -47,9 +46,9 @@ const IndexPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
       {/* Header with Justicia statue */}
-      <div className="bg-white border-b border-gray-200 py-4 sm:py-6">
+      <div className="bg-white border-b border-gray-200 py-4 sm:py-6 shadow-sm">
         <div className="container mx-auto px-4">
           <div className="flex justify-center mb-3 sm:mb-4">
             <img 
@@ -64,239 +63,269 @@ const IndexPage = () => {
         </div>
       </div>
 
-      {/* Premium 3D Wooden Crates by Year */}
-      <style dangerouslySetInnerHTML={{__html: `
-        @keyframes crateOpen {
-          0% { transform: perspective(1500px) rotateX(0deg) translateZ(0); }
-          100% { transform: perspective(1500px) rotateX(-115deg) translateZ(80px) translateY(-40px); }
-        }
-        @keyframes crateClosed {
-          0% { transform: perspective(1500px) rotateX(-115deg) translateZ(80px) translateY(-40px); }
-          100% { transform: perspective(1500px) rotateX(0deg) translateZ(0); }
-        }
-        .crate-lid-open {
-          animation: crateOpen 0.9s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
-        }
-        .crate-lid-closed {
-          animation: crateClosed 0.7s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
-        }
-      `}} />
-      <div className="container mx-auto px-4 py-6 sm:py-8 md:py-12 space-y-16">
+      {/* Premium Archive Boxes */}
+      <div className="container mx-auto px-4 py-12 sm:py-16 space-y-20">
         {years.map((year) => {
           const isOpen = openYears[year];
           const yearEntries = entriesByYear[year];
           
           return (
-            <div key={year} className="relative mb-20" style={{ perspective: '1500px', perspectiveOrigin: 'center top' }}>
-              {/* 3D Wooden Crate Container */}
-              <div className="relative mx-auto max-w-4xl" style={{ transformStyle: 'preserve-3d' }}>
-                {/* Crate Body (Bottom Box) */}
+            <div 
+              key={year} 
+              className="relative mx-auto max-w-5xl"
+              style={{ 
+                perspective: '2000px',
+                perspectiveOrigin: 'center 200px'
+              }}
+            >
+              {/* Archive Box Container */}
+              <div 
+                className="relative"
+                style={{ transformStyle: 'preserve-3d' }}
+              >
+                {/* Box Base - Dark Walnut Finish */}
                 <div 
-                  className="relative rounded-lg overflow-hidden"
+                  className="relative overflow-visible rounded-sm"
                   style={{
-                    background: 'linear-gradient(145deg, #5C3317 0%, #4A2511 50%, #3E1F0F 100%)',
-                    boxShadow: `
-                      0 20px 60px rgba(0,0,0,0.5),
-                      inset 0 -5px 20px rgba(0,0,0,0.6),
-                      inset 0 5px 10px rgba(139,69,19,0.3)
+                    background: `
+                      linear-gradient(145deg, 
+                        #3A2617 0%,
+                        #2B1810 25%,
+                        #1F120C 50%,
+                        #2B1810 75%,
+                        #3A2617 100%
+                      )
                     `,
-                    border: '6px solid #2C1810',
-                    minHeight: '120px',
+                    boxShadow: `
+                      0 30px 80px -20px rgba(0, 0, 0, 0.7),
+                      0 15px 40px -15px rgba(0, 0, 0, 0.5),
+                      inset 0 -8px 25px rgba(0, 0, 0, 0.6),
+                      inset 0 2px 4px rgba(90, 60, 40, 0.15),
+                      inset 0 0 60px rgba(0, 0, 0, 0.4)
+                    `,
+                    border: '1px solid #1A0F0A',
+                    minHeight: '180px',
+                    transform: 'translateZ(0)',
                   }}
                 >
-                  {/* Wood planks effect */}
+                  {/* Leather texture overlay */}
                   <div 
-                    className="absolute inset-0 opacity-30"
+                    className="absolute inset-0"
                     style={{
                       backgroundImage: `
+                        radial-gradient(ellipse at 30% 40%, rgba(70, 50, 35, 0.1) 0%, transparent 50%),
+                        radial-gradient(ellipse at 70% 60%, rgba(50, 35, 25, 0.1) 0%, transparent 50%),
                         repeating-linear-gradient(
-                          0deg,
+                          45deg,
                           transparent,
-                          transparent 40px,
-                          rgba(0,0,0,0.3) 40px,
-                          rgba(0,0,0,0.3) 42px
-                        ),
-                        repeating-linear-gradient(
-                          90deg,
-                          rgba(139,69,19,0.1) 0px,
-                          rgba(101,67,33,0.1) 2px,
-                          transparent 2px,
-                          transparent 4px
+                          transparent 1px,
+                          rgba(0, 0, 0, 0.03) 1px,
+                          rgba(0, 0, 0, 0.03) 2px
                         )
                       `,
+                      opacity: 0.6,
                     }}
                   />
-                  
-                  {/* Metal straps */}
-                  <div className="absolute top-1/2 left-0 right-0 h-3 bg-gradient-to-b from-gray-400 via-gray-500 to-gray-600 opacity-70 -translate-y-1/2" 
-                       style={{ boxShadow: '0 2px 4px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.2)' }} />
-                  <div className="absolute top-1/4 left-0 right-0 h-2 bg-gradient-to-b from-gray-400 via-gray-500 to-gray-600 opacity-60" 
-                       style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.6)' }} />
-                  <div className="absolute top-3/4 left-0 right-0 h-2 bg-gradient-to-b from-gray-400 via-gray-500 to-gray-600 opacity-60" 
-                       style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.6)' }} />
-                  
-                  {/* Corner bolts */}
-                  {[
-                    'top-4 left-4', 'top-4 right-4', 
-                    'bottom-4 left-4', 'bottom-4 right-4',
-                    'top-1/2 left-4', 'top-1/2 right-4'
-                  ].map((pos, i) => (
-                    <div 
-                      key={i}
-                      className={`absolute ${pos} w-3 h-3 rounded-full bg-gradient-to-br from-gray-300 to-gray-600`}
-                      style={{ 
-                        boxShadow: 'inset 0 1px 2px rgba(255,255,255,0.3), 0 2px 4px rgba(0,0,0,0.8)',
-                        transform: 'translateZ(10px)'
-                      }}
-                    />
-                  ))}
-                  
-                  {/* Crate Lid - 3D Opening Animation */}
-                  <button
-                    onClick={() => toggleYear(year)}
-                    className="absolute inset-0 z-10 cursor-pointer"
-                  >
-                    <div 
-                      className="absolute inset-0 rounded-lg transition-all duration-700 ease-out"
-                      style={{
-                        background: 'linear-gradient(160deg, #6B4423 0%, #5C3317 40%, #4A2511 100%)',
-                        transformOrigin: 'top center',
-                        transform: isOpen ? 'rotateX(-120deg) translateY(-10px)' : 'rotateX(0deg)',
-                        transformStyle: 'preserve-3d',
-                        boxShadow: isOpen 
-                          ? '0 -10px 40px rgba(0,0,0,0.7), inset 0 5px 15px rgba(139,69,19,0.4)'
-                          : '0 5px 30px rgba(0,0,0,0.6), inset 0 -3px 10px rgba(0,0,0,0.5)',
-                        border: '5px solid #2C1810',
-                        zIndex: isOpen ? 20 : 10,
-                      }}
-                    >
-                      {/* Lid wood texture */}
+
+                  {/* Brass corner protectors */}
+                  {['top-6 left-6', 'top-6 right-6', 'bottom-6 left-6', 'bottom-6 right-6'].map((pos, i) => (
+                    <div key={i} className={`absolute ${pos} w-6 h-6`}>
                       <div 
-                        className="absolute inset-0 opacity-40 rounded-lg"
+                        className="w-full h-full"
                         style={{
-                          backgroundImage: `
-                            repeating-linear-gradient(
-                              90deg,
-                              transparent,
-                              transparent 60px,
-                              rgba(0,0,0,0.2) 60px,
-                              rgba(0,0,0,0.2) 62px
-                            )
+                          background: 'linear-gradient(135deg, #B8860B 0%, #8B6914 50%, #6B5310 100%)',
+                          clipPath: i < 2 
+                            ? 'polygon(0 0, 100% 0, 100% 30%, 30% 30%, 30% 100%, 0 100%)'
+                            : 'polygon(0 0, 30% 0, 30% 70%, 100% 70%, 100% 100%, 0 100%)',
+                          boxShadow: `
+                            inset 0 1px 0 rgba(255, 215, 0, 0.3),
+                            0 2px 6px rgba(0, 0, 0, 0.5)
                           `,
                         }}
                       />
-                      
-                      {/* Lid metal hinges */}
-                      <div className="absolute top-2 left-1/4 w-12 h-4 bg-gradient-to-b from-gray-400 to-gray-600 rounded"
-                           style={{ boxShadow: '0 2px 4px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.3)' }} />
-                      <div className="absolute top-2 right-1/4 w-12 h-4 bg-gradient-to-b from-gray-400 to-gray-600 rounded"
-                           style={{ boxShadow: '0 2px 4px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.3)' }} />
-                      
-                      {/* Year Label on Lid */}
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="text-center">
-                          <div className="flex items-center justify-center gap-3 mb-2">
-                            <Boxes className="w-8 h-8 sm:w-10 sm:h-10 text-yellow-400 drop-shadow-lg" />
-                            <h2 
-                              className="text-3xl sm:text-4xl md:text-5xl font-bold text-yellow-400"
-                              style={{ 
-                                fontFamily: 'Georgia, serif',
-                                textShadow: '3px 3px 6px rgba(0,0,0,0.9), 0 0 20px rgba(255,215,0,0.3)',
-                                letterSpacing: '0.05em'
-                              }}
-                            >
-                              {year}
-                            </h2>
-                          </div>
-                          <div 
-                            className="text-yellow-200 text-sm sm:text-base font-semibold"
-                            style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.8)' }}
-                          >
-                            {isOpen ? 'Click to Close' : 'Click to Open'}
-                          </div>
-                          <div className="text-yellow-300/80 text-xs sm:text-sm mt-1">
-                            ({yearEntries.length} {yearEntries.length === 1 ? 'item' : 'items'})
-                          </div>
-                        </div>
-                      </div>
-                      
-                      {/* Lid lock/latch */}
-                      <div className="absolute bottom-4 left-1/2 -translate-x-1/2">
-                        <div 
-                          className="w-8 h-10 bg-gradient-to-b from-yellow-600 to-yellow-800 rounded-sm"
+                    </div>
+                  ))}
+
+                  {/* Brass center clasp */}
+                  <div className="absolute top-1/2 right-8 -translate-y-1/2">
+                    <div 
+                      className="relative"
+                      style={{
+                        width: '32px',
+                        height: '48px',
+                        background: 'linear-gradient(to right, #8B6914 0%, #B8860B 50%, #8B6914 100%)',
+                        borderRadius: '4px',
+                        boxShadow: `
+                          inset 0 1px 0 rgba(255, 215, 0, 0.4),
+                          0 3px 8px rgba(0, 0, 0, 0.6)
+                        `,
+                      }}
+                    >
+                      {isOpen ? (
+                        <LockOpen className="w-4 h-4 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-yellow-900" />
+                      ) : (
+                        <Lock className="w-4 h-4 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-yellow-900" />
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Box Lid with 3D opening */}
+                  <button
+                    onClick={() => toggleYear(year)}
+                    className="absolute inset-0 cursor-pointer focus:outline-none group"
+                  >
+                    <div 
+                      className="absolute inset-0 transition-all duration-1000 ease-out"
+                      style={{
+                        background: `
+                          linear-gradient(160deg,
+                            #4A3225 0%,
+                            #382416 30%,
+                            #2B1810 60%,
+                            #1F120C 100%
+                          )
+                        `,
+                        transformOrigin: 'top center',
+                        transform: isOpen 
+                          ? 'rotateX(-125deg) translateY(-20px) translateZ(100px) scale(1.02)'
+                          : 'rotateX(0deg) translateY(0) translateZ(20px)',
+                        transformStyle: 'preserve-3d',
+                        boxShadow: isOpen
+                          ? `
+                              0 -15px 60px rgba(0, 0, 0, 0.8),
+                              0 -5px 25px rgba(0, 0, 0, 0.6),
+                              inset 0 8px 20px rgba(60, 40, 25, 0.2),
+                              inset 0 -2px 10px rgba(0, 0, 0, 0.5)
+                            `
+                          : `
+                              0 15px 50px rgba(0, 0, 0, 0.6),
+                              0 8px 25px rgba(0, 0, 0, 0.4),
+                              inset 0 -6px 20px rgba(0, 0, 0, 0.5),
+                              inset 0 2px 6px rgba(70, 50, 35, 0.15)
+                            `,
+                        border: '1px solid #1A0F0A',
+                        borderRadius: '2px',
+                        zIndex: isOpen ? 30 : 10,
+                      }}
+                    >
+                      {/* Lid texture */}
+                      <div 
+                        className="absolute inset-0"
+                        style={{
+                          backgroundImage: `
+                            linear-gradient(90deg, transparent 48%, rgba(0, 0, 0, 0.1) 49%, rgba(0, 0, 0, 0.1) 51%, transparent 52%),
+                            radial-gradient(ellipse at 40% 30%, rgba(80, 55, 35, 0.08) 0%, transparent 60%)
+                          `,
+                          opacity: 0.7,
+                        }}
+                      />
+
+                      {/* Brass hinge detail on lid */}
+                      <div 
+                        className="absolute top-4 left-1/2 -translate-x-1/2 w-20 h-3 rounded-sm"
+                        style={{
+                          background: 'linear-gradient(to bottom, #B8860B 0%, #8B6914 100%)',
+                          boxShadow: `
+                            inset 0 1px 0 rgba(255, 215, 0, 0.4),
+                            0 2px 6px rgba(0, 0, 0, 0.6)
+                          `,
+                        }}
+                      />
+
+                      {/* Embossed year label */}
+                      <div className="absolute inset-0 flex flex-col items-center justify-center">
+                        <h2 
+                          className="text-4xl sm:text-5xl md:text-6xl font-bold mb-2 tracking-wider"
                           style={{ 
-                            boxShadow: '0 3px 6px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,215,0,0.4)',
-                            clipPath: 'polygon(30% 0, 70% 0, 100% 100%, 0 100%)'
+                            fontFamily: 'Georgia, serif',
+                            background: 'linear-gradient(to bottom, #D4AF37 0%, #AA8A2A 50%, #8B6914 100%)',
+                            WebkitBackgroundClip: 'text',
+                            WebkitTextFillColor: 'transparent',
+                            backgroundClip: 'text',
+                            textShadow: '0 2px 10px rgba(0, 0, 0, 0.5)',
+                            filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.6))',
                           }}
-                        />
+                        >
+                          {year}
+                        </h2>
+                        <div 
+                          className="text-yellow-700/80 text-sm font-medium uppercase tracking-widest"
+                          style={{ 
+                            textShadow: '0 1px 3px rgba(0, 0, 0, 0.8)',
+                            fontFamily: 'Georgia, serif'
+                          }}
+                        >
+                          {isOpen ? 'Archive Open' : 'Click to Open'}
+                        </div>
+                        <div className="text-yellow-800/60 text-xs mt-1">
+                          {yearEntries.length} Document{yearEntries.length !== 1 ? 's' : ''}
+                        </div>
                       </div>
                     </div>
                   </button>
-                  
-                  {/* Inside of Crate - Visible when open */}
+
+                  {/* Contents Inside Box */}
                   <div 
-                    className={`relative transition-all duration-700 ease-out ${
-                      isOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-10'
+                    className={`relative transition-all duration-1000 ${
+                      isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
                     }`}
                     style={{
-                      paddingTop: '80px',
-                      paddingBottom: '30px',
-                      paddingLeft: '20px',
-                      paddingRight: '20px',
+                      paddingTop: '100px',
+                      paddingBottom: '40px',
+                      paddingLeft: '30px',
+                      paddingRight: '30px',
                     }}
                   >
-                    <div className="relative">
-                      {/* Glowing light effect from inside */}
-                      {isOpen && (
-                        <div 
-                          className="absolute -top-10 left-1/2 -translate-x-1/2 w-32 h-32 rounded-full"
-                          style={{
-                            background: 'radial-gradient(circle, rgba(255,215,0,0.3) 0%, transparent 70%)',
-                            filter: 'blur(20px)',
-                          }}
-                        />
-                      )}
-                      
-                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4">
-                        {yearEntries.map((entry, index) => {
-                          const IconComponent = entry.icon ? iconMap[entry.icon] || FileText : FileText;
-                          
-                          return (
-                            <Card
-                              key={entry.id}
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                navigate(`/entry/${entry.id}`);
-                              }}
-                              className={`p-4 sm:p-6 cursor-pointer hover:shadow-xl transition-all duration-500 border-2 border-gray-200 hover:border-yellow-500 bg-white/95 backdrop-blur group ${
-                                isOpen ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
-                              }`}
-                              style={{
-                                transitionDelay: isOpen ? `${index * 50}ms` : '0ms',
-                                boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
-                              }}
-                            >
-                              <div className="space-y-3">
-                                <div className="flex items-center justify-between">
-                                  <div className="flex items-center gap-2 text-sm text-gray-600">
-                                    <Calendar className="w-4 h-4" />
-                                    <span className="font-semibold">{entry.date || 'N/A'}</span>
-                                  </div>
-                                  <IconComponent className="w-6 h-6 text-amber-600 group-hover:text-amber-700" />
+                    {/* Subtle glow from inside */}
+                    {isOpen && (
+                      <div 
+                        className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 pointer-events-none"
+                        style={{
+                          background: 'radial-gradient(ellipse, rgba(212, 175, 55, 0.08) 0%, transparent 60%)',
+                          filter: 'blur(40px)',
+                        }}
+                      />
+                    )}
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                      {yearEntries.map((entry, index) => {
+                        const IconComponent = entry.icon ? iconMap[entry.icon] || FileText : FileText;
+                        
+                        return (
+                          <Card
+                            key={entry.id}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              navigate(`/entry/${entry.id}`);
+                            }}
+                            className={`p-5 cursor-pointer transition-all duration-700 border border-gray-300 hover:border-yellow-700 bg-white hover:shadow-2xl group ${
+                              isOpen ? 'translate-y-0 opacity-100 scale-100' : 'translate-y-10 opacity-0 scale-95'
+                            }`}
+                            style={{
+                              transitionDelay: isOpen ? `${index * 80}ms` : '0ms',
+                              boxShadow: '0 4px 20px rgba(0, 0, 0, 0.15)',
+                            }}
+                          >
+                            <div className="space-y-3">
+                              <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-2 text-sm text-gray-600">
+                                  <Calendar className="w-4 h-4" />
+                                  <span className="font-semibold">{entry.date || 'Pre-history'}</span>
                                 </div>
-                                <h3 className="text-base sm:text-lg font-bold text-gray-900 group-hover:text-amber-700 transition-colors">
-                                  {entry.header}
-                                </h3>
-                                {entry.description && (
-                                  <p className="text-sm text-gray-600 line-clamp-2">
-                                    {entry.description}
-                                  </p>
-                                )}
+                                <IconComponent className="w-6 h-6 text-yellow-700 group-hover:text-yellow-800 transition-colors" />
                               </div>
-                            </Card>
-                          );
-                        })}
-                      </div>
+                              <h3 className="text-base font-bold text-gray-900 group-hover:text-yellow-800 transition-colors leading-tight">
+                                {entry.header}
+                              </h3>
+                              {entry.description && (
+                                <p className="text-sm text-gray-600 line-clamp-2 leading-relaxed">
+                                  {entry.description}
+                                </p>
+                              )}
+                            </div>
+                          </Card>
+                        );
+                      })}
                     </div>
                   </div>
                 </div>
