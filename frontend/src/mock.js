@@ -3,7 +3,7 @@ export const ENTRY_CODE = '05052017';
 
 // Mock index entries (15-20 items sorted by date)
 export const indexEntries = [
-  { id: 1, header: 'October 2013 Entry', date: '10/2013', description: 'October records' },
+  { id: 1, header: 'October 2013 Entry', date: '10/2013', description: 'The obvious set-up of events' },
   { id: 2, header: 'November 2013 Entry', date: '11/2013', description: 'November documentation' },
   { id: 3, header: 'December 2013 Entry', date: '12/2013', description: 'Year-end notes' },
   { id: 4, header: 'January 2014 Entry', date: '01/2014', description: 'New year beginning' },
