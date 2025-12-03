@@ -3,6 +3,7 @@ export const ENTRY_CODE = '05052017';
 
 // Mock index entries (15-20 items sorted by date)
 export const indexEntries = [
+  { id: 0, header: 'Pre-history', date: '', description: '', icon: 'History' },
   { id: 1, header: 'October 2013 Entry', date: '10/2013', description: 'The obvious set-up of events', icon: 'PlayCircle' },
   { id: 2, header: 'November 2013 Entry', date: '11/2013', description: 'The setting up of Domino pieces to fall.', icon: 'Boxes' },
   { id: 3, header: 'December 2013 Entry', date: '12/2013', description: 'The illegal Inquisition.', icon: 'Scale' },
