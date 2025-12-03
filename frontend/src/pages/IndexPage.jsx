@@ -87,7 +87,7 @@ const IndexPage = () => {
           const yearEntries = entriesByYear[year];
           
           return (
-            <div key={year} className="relative" style={{ perspective: '2000px' }}>
+            <div key={year} className="relative mb-20" style={{ perspective: '1500px', perspectiveOrigin: 'center top' }}>
               {/* 3D Wooden Crate Container */}
               <div className="relative mx-auto max-w-4xl" style={{ transformStyle: 'preserve-3d' }}>
                 {/* Crate Body (Bottom Box) */}
