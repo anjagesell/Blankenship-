@@ -2,7 +2,17 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { indexEntries } from '../mock';
 import { Card } from '../components/ui/card';
-import { Calendar } from 'lucide-react';
+import { Calendar, PlayCircle, Boxes, Scale, AlertTriangle, HeartCrack, FileText } from 'lucide-react';
+
+// Icon mapping
+const iconMap = {
+  'PlayCircle': PlayCircle,
+  'Boxes': Boxes,
+  'Scale': Scale,
+  'AlertTriangle': AlertTriangle,
+  'HeartCrack': HeartCrack,
+  'FileText': FileText, // Default icon
+};
 
 const IndexPage = () => {
   const navigate = useNavigate();
