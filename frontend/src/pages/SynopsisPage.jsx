@@ -114,7 +114,7 @@ Blankenship`;
               fontFamily: "'Kalam', cursive"
             }}
           >
-            <p className="mb-6 sm:mb-8 text-base sm:text-lg md:text-xl">Dear Sir/Madam,</p>
+            <p className="mb-6 sm:mb-8 text-base sm:text-lg md:text-xl">Dear Witness to These Events,</p>
             
             <p className="indent-8 sm:indent-12 text-sm sm:text-base md:text-lg">
               In the United States of America, our Constitution establishes a sacred principle through the Fifth and Fourteenth Amendments: no person shall be deprived of life, liberty, or property without due process of law. The Supreme Court declared in In re Winship, 397 U.S. 358 (1970), "We have no doubt that the Due Process Clause protects the accused against conviction except upon proof beyond a reasonable doubt of every fact necessary to constitute the crime with which he is charged."
