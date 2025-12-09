@@ -400,6 +400,100 @@ const IndexPage = () => {
                         }}
                       />
 
+                      {/* Vintage FedEx-Style Shipping Label - TOP LEFT */}
+                      <div 
+                        className="absolute top-6 sm:top-8 left-6 sm:left-8"
+                        style={{
+                          width: '100px',
+                          height: '60px',
+                          background: 'linear-gradient(135deg, #fff5e6 0%, #f5e6c8 50%, #e8d7b8 100%)',
+                          border: '3px solid rgba(0,0,0,0.5)',
+                          transform: 'rotate(-3deg)',
+                          boxShadow: '0 4px 15px rgba(0,0,0,0.7), inset 0 2px 4px rgba(255,255,255,0.5)',
+                          zIndex: 50,
+                        }}
+                      >
+                        {/* Heavy coffee stain/aging */}
+                        <div 
+                          className="absolute inset-0"
+                          style={{
+                            backgroundImage: `
+                              radial-gradient(circle at 30% 40%, rgba(139,69,19,0.4) 0%, transparent 55%),
+                              radial-gradient(circle at 70% 60%, rgba(0,0,0,0.3) 0%, transparent 50%),
+                              radial-gradient(circle at 50% 75%, rgba(139,69,19,0.25) 0%, transparent 45%)
+                            `,
+                          }}
+                        />
+                        {/* Corner wear */}
+                        <div 
+                          className="absolute top-0 right-0 w-5 h-5"
+                          style={{
+                            background: 'linear-gradient(135deg, transparent 40%, rgba(0,0,0,0.4) 40%)',
+                          }}
+                        />
+                        {/* Barcode - BOLD */}
+                        <div 
+                          className="absolute bottom-2 left-2 right-2 flex gap-px"
+                          style={{ height: '12px', opacity: 0.6 }}
+                        >
+                          {[1,0,1,1,0,1,0,0,1,1,0,1,0,1,1,0].map((bar, i) => (
+                            <div 
+                              key={i} 
+                              style={{ 
+                                flex: 1, 
+                                background: bar ? '#000' : 'transparent',
+                                borderRadius: '1px',
+                              }} 
+                            />
+                          ))}
+                        </div>
+                        {/* Year stamp - BIG & BOLD */}
+                        <div 
+                          className="absolute top-2 left-2 text-xs sm:text-sm font-black"
+                          style={{ 
+                            color: '#1a0f0a',
+                            fontFamily: 'Courier, monospace',
+                            textShadow: '0 1px 1px rgba(255,255,255,0.5)',
+                          }}
+                        >
+                          {year}
+                        </div>
+                        {/* "EVIDENCE" stamp - RED */}
+                        <div 
+                          className="absolute top-2 right-2 text-[10px] sm:text-xs font-black"
+                          style={{ 
+                            color: '#8b0000',
+                            fontFamily: 'Arial Black, sans-serif',
+                            transform: 'rotate(8deg)',
+                            textShadow: '0 1px 2px rgba(0,0,0,0.3)',
+                          }}
+                        >
+                          EVID
+                        </div>
+                        {/* "FROM:" text */}
+                        <div 
+                          className="absolute top-7 left-2 text-[8px] font-bold opacity-70"
+                          style={{ 
+                            color: '#3E2723',
+                            fontFamily: 'Arial, sans-serif',
+                          }}
+                        >
+                          LEGAL
+                        </div>
+                      </div>
+
+                      {/* Corner damage on lid - torn edge */}
+                      <div 
+                        className="absolute bottom-4 right-4"
+                        style={{
+                          width: '35px',
+                          height: '35px',
+                          background: 'linear-gradient(135deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 50%, transparent 70%)',
+                          clipPath: 'polygon(100% 0, 100% 100%, 0 100%, 45% 55%)',
+                          zIndex: 40,
+                        }}
+                      />
+
                       {/* Embossed year label */}
                       <div className="absolute inset-0 flex flex-col items-center justify-center">
                         <h2 
