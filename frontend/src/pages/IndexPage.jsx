@@ -292,15 +292,36 @@ const IndexPage = () => {
                         zIndex: isOpen ? 30 : 10,
                       }}
                     >
-                      {/* Lid texture */}
+                      {/* Lid texture with weathering */}
                       <div 
                         className="absolute inset-0"
                         style={{
                           backgroundImage: `
                             linear-gradient(90deg, transparent 48%, rgba(0, 0, 0, 0.1) 49%, rgba(0, 0, 0, 0.1) 51%, transparent 52%),
-                            radial-gradient(ellipse at 40% 30%, rgba(80, 55, 35, 0.08) 0%, transparent 60%)
+                            radial-gradient(ellipse at 40% 30%, rgba(80, 55, 35, 0.08) 0%, transparent 60%),
+                            radial-gradient(circle at 25% 60%, rgba(0, 0, 0, 0.15) 0%, transparent 10px),
+                            radial-gradient(circle at 75% 40%, rgba(0, 0, 0, 0.12) 0%, transparent 8px)
                           `,
                           opacity: 0.7,
+                        }}
+                      />
+
+                      {/* More visible tape line/perforation - horizontal across top */}
+                      <div 
+                        className="absolute top-4 left-0 right-0 h-8"
+                        style={{
+                          background: `
+                            linear-gradient(to bottom,
+                              transparent 0%,
+                              rgba(139, 90, 43, 0.3) 25%,
+                              rgba(160, 110, 60, 0.4) 50%,
+                              rgba(139, 90, 43, 0.3) 75%,
+                              transparent 100%
+                            )
+                          `,
+                          boxShadow: 'inset 0 1px 3px rgba(0,0,0,0.3)',
+                          borderTop: '1px dashed rgba(0, 0, 0, 0.2)',
+                          borderBottom: '1px dashed rgba(0, 0, 0, 0.2)',
                         }}
                       />
 
