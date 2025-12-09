@@ -406,6 +406,27 @@ const EntryPage = () => {
           </DialogContent>
         </Dialog>
       </div>
+
+      {/* Copyright Notice - Bottom of Page */}
+      <div 
+        className="absolute bottom-6 left-0 right-0 text-center px-4"
+        style={{ 
+          color: '#d4a574',
+          fontFamily: 'Garamond, serif',
+        }}
+      >
+        <div className="text-xs sm:text-sm space-y-1">
+          <div className="font-semibold" style={{ color: '#d4af37' }}>
+            © 2025 Blankenship Judicial Archives
+          </div>
+          <div className="text-[10px] sm:text-xs">
+            Private Evidence Documentation • Authorized Access Only
+          </div>
+          <div className="text-[10px] sm:text-xs">
+            All content is legally protected evidence. Unauthorized copying or distribution is prohibited.
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
