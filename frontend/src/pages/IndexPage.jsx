@@ -23,6 +23,8 @@ const IndexPage = () => {
   const [openYears, setOpenYears] = useState({});
   const [isMobile, setIsMobile] = useState(false);
   const [selectedMonth, setSelectedMonth] = useState(null);
+  const [showAdminLogin, setShowAdminLogin] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     document.title = 'Blankenship';
@@ -36,7 +38,24 @@ const IndexPage = () => {
     checkMobile();
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
+    
+    // Check if admin session exists
+    const adminSession = sessionStorage.getItem('blankenship_admin');
+    if (adminSession === 'true') {
+      setIsAdmin(true);
+    }
   }, []);
+
+  const handleAdminLogin = () => {
+    setIsAdmin(true);
+    sessionStorage.setItem('blankenship_admin', 'true');
+    setShowAdminLogin(false);
+  };
+
+  const handleAdminLogout = () => {
+    setIsAdmin(false);
+    sessionStorage.removeItem('blankenship_admin');
+  };
 
   // Group entries by year
   const entriesByYear = indexEntries.reduce((acc, entry) => {
