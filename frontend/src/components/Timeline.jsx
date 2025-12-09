@@ -1,7 +1,67 @@
-import React from 'react';
-import { timelineEntries } from '../mockTimeline';
+import React, { useState, useEffect } from 'react';
+import { Plus, Edit2, Trash2, Save, X } from 'lucide-react';
+import { getTimelineEntries, saveTimelineEntries } from '../mockTimeline';
 
-const Timeline = () => {
+const Timeline = ({ isAdmin }) => {
+  const [entries, setEntries] = useState([]);
+  const [editingId, setEditingId] = useState(null);
+  const [editForm, setEditForm] = useState({});
+
+  useEffect(() => {
+    setEntries(getTimelineEntries());
+  }, []);
+
+  const handleAdd = () => {
+    const newEntry = {
+      id: Date.now(),
+      date: '',
+      time: '',
+      witness: '',
+      description: '',
+      evidence: '',
+      notes: ''
+    };
+    setEditingId(newEntry.id);
+    setEditForm(newEntry);
+    setEntries([...entries, newEntry]);
+  };
+
+  const handleEdit = (entry) => {
+    setEditingId(entry.id);
+    setEditForm({ ...entry });
+  };
+
+  const handleSave = () => {
+    const updatedEntries = entries.map(e => 
+      e.id === editingId ? editForm : e
+    );
+    setEntries(updatedEntries);
+    saveTimelineEntries(updatedEntries);
+    setEditingId(null);
+    setEditForm({});
+  };
+
+  const handleCancel = () => {
+    if (!editForm.date && !editForm.time && !editForm.witness) {
+      // If it's a new empty entry, remove it
+      setEntries(entries.filter(e => e.id !== editingId));
+    }
+    setEditingId(null);
+    setEditForm({});
+  };
+
+  const handleDelete = (id) => {
+    if (window.confirm('Are you sure you want to delete this entry?')) {
+      const updatedEntries = entries.filter(e => e.id !== id);
+      setEntries(updatedEntries);
+      saveTimelineEntries(updatedEntries);
+    }
+  };
+
+  const handleChange = (field, value) => {
+    setEditForm({ ...editForm, [field]: value });
+  };
+
   return (
     <div className="w-full mb-12">
       {/* Timeline Header */}
