@@ -141,7 +141,7 @@ const IndexPage = () => {
                       inset 0 0 60px rgba(0, 0, 0, 0.4)
                     `,
                     border: '1px solid #1A0F0A',
-                    minHeight: window.innerWidth < 640 ? '140px' : '180px',
+                    minHeight: isMobile ? '120px' : '180px',
                     transform: 'translateZ(0)',
                   }}
                 >
