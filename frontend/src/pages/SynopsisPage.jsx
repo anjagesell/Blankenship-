@@ -9,6 +9,8 @@ const SynopsisPage = () => {
 
   useEffect(() => {
     document.title = 'Blankenship';
+    // Force scroll to top when page loads
+    window.scrollTo(0, 0);
   }, []);
 
   // Letter text for Read Aloud
