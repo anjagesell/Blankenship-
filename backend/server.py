@@ -30,6 +30,16 @@ db_name = db_name.strip('"').strip("'")
 client = AsyncIOMotorClient(mongo_url)
 db = client[db_name]
 
+# Create uploads directory
+UPLOAD_DIR = Path("/app/backend/uploads")
+UPLOAD_DIR.mkdir(exist_ok=True)
+
+# Admin password for upload verification
+ADMIN_PASSWORD = "02071951"
+
+# Security
+security = HTTPBearer()
+
 # Create the main app without a prefix
 app = FastAPI()
 
