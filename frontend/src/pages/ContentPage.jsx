@@ -11,6 +11,8 @@ const ContentPage = () => {
 
   useEffect(() => {
     document.title = `Blankenship - ${indexEntry?.header || 'Entry'}`;
+    // Force scroll to top when page loads
+    window.scrollTo(0, 0);
   }, [indexEntry]);
 
   return (
