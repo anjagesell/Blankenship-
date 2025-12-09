@@ -46,25 +46,51 @@ const IndexPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
+    <div 
+      className="min-h-screen relative overflow-hidden"
+      style={{
+        background: `
+          linear-gradient(135deg, rgba(26, 26, 46, 0.95) 0%, rgba(22, 33, 62, 0.98) 100%),
+          radial-gradient(ellipse at 30% 20%, rgba(139,69,19,0.12) 0%, transparent 50%),
+          radial-gradient(ellipse at 70% 80%, rgba(42,82,152,0.08) 0%, transparent 50%)
+        `,
+      }}
+    >
+      {/* Courthouse columns effect */}
+      <div className="absolute inset-0 opacity-5">
+        <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-white/30 to-transparent" />
+        <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-white/30 to-transparent" />
+      </div>
+
       {/* Header with Justicia statue */}
-      <div className="bg-white border-b border-gray-200 py-4 sm:py-6 shadow-sm">
+      <div className="relative z-10 border-b border-yellow-900/30 py-4 sm:py-6" style={{ background: 'rgba(0,0,0,0.2)' }}>
         <div className="container mx-auto px-4">
           <div className="flex justify-center mb-3 sm:mb-4">
-            <img 
-              src="https://images.unsplash.com/photo-1589994965851-a8f479c573a9?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzB8MHwxfHNlYXJjaHwxfHxMYWR5JTIwSnVzdGljZSUyMHN0YXR1ZXxlbnwwfHx8fDE3NjQ0MzcxNzZ8MA&ixlib=rb-4.1.0&q=85"
-              alt="Justicia Bronze Statue"
-              className="h-20 sm:h-28 md:h-32 w-auto object-contain"
-            />
+            <div className="relative">
+              <div 
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 rounded-full"
+                style={{
+                  background: 'radial-gradient(circle, rgba(212,175,55,0.3) 0%, transparent 70%)',
+                  filter: 'blur(30px)',
+                }}
+              />
+              <Scale className="w-16 h-16 sm:w-20 sm:h-20 relative z-10" style={{ color: '#d4af37', filter: 'drop-shadow(0 4px 12px rgba(212,175,55,0.6))' }} />
+            </div>
           </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center text-gray-900" style={{ fontFamily: 'Georgia, serif' }}>
-            Blankenship
+          <h1 
+            className="text-3xl sm:text-4xl md:text-5xl font-bold text-center tracking-wider gold-embossed"
+            style={{ fontFamily: 'Garamond, Georgia, serif', letterSpacing: '0.1em' }}
+          >
+            BLANKENSHIP
           </h1>
+          <div className="text-yellow-600/80 text-center text-xs sm:text-sm uppercase tracking-widest mt-2" style={{ fontFamily: 'Garamond, serif' }}>
+            Judicial Archives — Index
+          </div>
         </div>
       </div>
 
       {/* Premium Archive Boxes */}
-      <div className="container mx-auto px-4 py-12 sm:py-16 space-y-20">
+      <div className="container mx-auto px-4 py-12 sm:py-16 space-y-20 relative z-10">
         {years.map((year) => {
           const isOpen = openYears[year];
           const yearEntries = entriesByYear[year];
@@ -298,27 +324,33 @@ const IndexPage = () => {
                               e.stopPropagation();
                               navigate(`/entry/${entry.id}`);
                             }}
-                            className={`p-5 cursor-pointer transition-all duration-700 border border-gray-300 hover:border-yellow-700 bg-white hover:shadow-2xl group ${
+                            className={`p-5 cursor-pointer transition-all duration-700 group ${
                               isOpen ? 'translate-y-0 opacity-100 scale-100' : 'translate-y-10 opacity-0 scale-95'
                             }`}
                             style={{
                               transitionDelay: isOpen ? `${index * 80}ms` : '0ms',
-                              boxShadow: '0 4px 20px rgba(0, 0, 0, 0.15)',
+                              background: 'linear-gradient(145deg, #f4e8c1 0%, #e8dcc8 50%, #d4c5a9 100%)',
+                              border: '2px solid #8b6914',
+                              boxShadow: `
+                                0 8px 20px rgba(0, 0, 0, 0.4),
+                                inset 0 2px 4px rgba(255,255,255,0.3),
+                                inset 0 -2px 4px rgba(0,0,0,0.2)
+                              `,
                             }}
                           >
                             <div className="space-y-3">
                               <div className="flex items-center justify-between">
-                                <div className="flex items-center gap-2 text-sm text-gray-600">
+                                <div className="flex items-center gap-2 text-sm" style={{ color: '#3E2723' }}>
                                   <Calendar className="w-4 h-4" />
                                   <span className="font-semibold">{entry.date || 'Pre-history'}</span>
                                 </div>
-                                <IconComponent className="w-6 h-6 text-yellow-700 group-hover:text-yellow-800 transition-colors" />
+                                <IconComponent className="w-6 h-6 transition-colors" style={{ color: '#8b6914' }} />
                               </div>
-                              <h3 className="text-base font-bold text-gray-900 group-hover:text-yellow-800 transition-colors leading-tight">
+                              <h3 className="text-base font-bold leading-tight group-hover:opacity-80 transition-opacity" style={{ color: '#3E2723', fontFamily: 'Georgia, serif' }}>
                                 {entry.header}
                               </h3>
                               {entry.description && (
-                                <p className="text-sm text-gray-600 line-clamp-2 leading-relaxed">
+                                <p className="text-sm line-clamp-2 leading-relaxed" style={{ color: '#5D4037' }}>
                                   {entry.description}
                                 </p>
                               )}
