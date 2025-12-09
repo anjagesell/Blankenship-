@@ -179,10 +179,22 @@ const Timeline = ({ isAdmin }) => {
                 style={{ 
                   color: '#d4af37',
                   fontFamily: 'Arial, sans-serif',
+                  borderRight: isAdmin ? '1px solid #8b6914' : 'none',
                 }}
               >
                 Notes
               </th>
+              {isAdmin && (
+                <th 
+                  className="px-3 py-3 text-center text-xs sm:text-sm font-bold uppercase tracking-wider"
+                  style={{ 
+                    color: '#d4af37',
+                    fontFamily: 'Arial, sans-serif',
+                  }}
+                >
+                  Actions
+                </th>
+              )}
             </tr>
           </thead>
           <tbody>
