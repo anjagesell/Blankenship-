@@ -40,28 +40,114 @@ Respectfully,
 Blankenship`;
 
   const handleReadAloud = () => {
+    // Check if speech synthesis is supported
     if (!('speechSynthesis' in window)) {
-      alert('Sorry, your browser does not support text-to-speech.');
+      alert('Sorry, your browser does not support text-to-speech. This feature works best on desktop browsers like Chrome, Firefox, Safari, or Edge.');
       return;
     }
 
     if (isReading) {
       // Stop reading
-      window.speechSynthesis.cancel();
-      setIsReading(false);
-    } else {
-      // Start reading
-      const utterance = new SpeechSynthesisUtterance(letterText);
-      utterance.rate = 0.9;
-      utterance.pitch = 0.8;
-      utterance.lang = 'en-US';
-      
-      utterance.onend = () => {
+      try {
+        window.speechSynthesis.cancel();
         setIsReading(false);
+      } catch (error) {
+        console.error('Error stopping speech:', error);
+        setIsReading(false);
+      }
+      return;
+    }
+
+    // Start reading - with improved error handling
+    try {
+      // Cancel any ongoing speech first
+      window.speechSynthesis.cancel();
+      
+      // Wait a bit for voices to load (especially important on mobile)
+      const startSpeech = () => {
+        const utterance = new SpeechSynthesisUtterance(letterText);
+        
+        // Configure speech
+        utterance.rate = 0.9;
+        utterance.pitch = 0.8;
+        utterance.lang = 'en-US';
+        utterance.volume = 1.0;
+        
+        // Get available voices and prefer a good quality one
+        const voices = window.speechSynthesis.getVoices();
+        if (voices.length > 0) {
+          // Try to find a good English voice
+          const preferredVoice = voices.find(voice => 
+            voice.lang.startsWith('en') && (voice.name.includes('Google') || voice.name.includes('Enhanced'))
+          ) || voices.find(voice => voice.lang.startsWith('en')) || voices[0];
+          utterance.voice = preferredVoice;
+        }
+        
+        // Event handlers
+        utterance.onstart = () => {
+          console.log('Speech started');
+          setIsReading(true);
+        };
+        
+        utterance.onend = () => {
+          console.log('Speech ended');
+          setIsReading(false);
+        };
+        
+        utterance.onerror = (event) => {
+          console.error('Speech error:', event.error, event);
+          setIsReading(false);
+          
+          // Provide user-friendly error messages
+          let errorMessage = 'An error occurred with the text-to-speech feature. ';
+          if (event.error === 'not-allowed') {
+            errorMessage += 'Please make sure you have allowed audio playback in your browser settings.';
+          } else if (event.error === 'network') {
+            errorMessage += 'Network error. Please check your internet connection.';
+          } else if (event.error === 'synthesis-failed') {
+            errorMessage += 'Speech synthesis failed. This feature may not be fully supported in your current browser or app.';
+          } else {
+            errorMessage += `Error: ${event.error}. This feature works best on desktop browsers.`;
+          }
+          
+          alert(errorMessage);
+        };
+        
+        // Speak
+        window.speechSynthesis.speak(utterance);
+        
+        // Backup check - if still not speaking after 2 seconds, show error
+        setTimeout(() => {
+          if (!window.speechSynthesis.speaking && isReading) {
+            setIsReading(false);
+            alert('Text-to-speech could not start. This feature may not work properly in this app/browser. It works best in Chrome, Firefox, Safari, or Edge on desktop.');
+          }
+        }, 2000);
       };
       
-      window.speechSynthesis.speak(utterance);
-      setIsReading(true);
+      // Check if voices are already loaded
+      const voices = window.speechSynthesis.getVoices();
+      if (voices.length > 0) {
+        startSpeech();
+      } else {
+        // Wait for voices to load (important for Chrome/Edge)
+        window.speechSynthesis.onvoiceschanged = () => {
+          startSpeech();
+        };
+        
+        // Fallback: try anyway after 500ms if voices still not loaded
+        setTimeout(() => {
+          if (window.speechSynthesis.getVoices().length === 0) {
+            console.warn('Voices not loaded, attempting speech anyway');
+          }
+          startSpeech();
+        }, 500);
+      }
+      
+    } catch (error) {
+      console.error('Error initializing speech:', error);
+      setIsReading(false);
+      alert('Failed to initialize text-to-speech. This feature may not be supported in your current browser or viewing environment. It works best on desktop browsers like Chrome, Firefox, Safari, or Edge.');
     }
   };
 
