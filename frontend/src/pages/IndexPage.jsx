@@ -400,86 +400,132 @@ const IndexPage = () => {
                         }}
                       />
 
-                      {/* Vintage FedEx-Style Shipping Label - TOP LEFT */}
+                      {/* PROPER Shipping Label - Like FedEx/UPS */}
                       <div 
-                        className="absolute top-6 sm:top-8 left-6 sm:left-8"
+                        className="absolute top-4 sm:top-6 left-6 sm:left-8"
                         style={{
-                          width: '100px',
-                          height: '60px',
-                          background: 'linear-gradient(135deg, #fff5e6 0%, #f5e6c8 50%, #e8d7b8 100%)',
-                          border: '3px solid rgba(0,0,0,0.5)',
-                          transform: 'rotate(-3deg)',
-                          boxShadow: '0 4px 15px rgba(0,0,0,0.7), inset 0 2px 4px rgba(255,255,255,0.5)',
+                          width: '120px',
+                          height: '80px',
+                          background: 'linear-gradient(to bottom, #ffffff 0%, #fff8e8 100%)',
+                          border: '3px solid #000',
+                          transform: 'rotate(-2deg)',
+                          boxShadow: '0 5px 20px rgba(0,0,0,0.8), inset 0 1px 2px rgba(255,255,255,0.8)',
                           zIndex: 50,
+                          padding: '4px',
                         }}
                       >
-                        {/* Heavy coffee stain/aging */}
+                        {/* Coffee stains and aging */}
                         <div 
                           className="absolute inset-0"
                           style={{
                             backgroundImage: `
-                              radial-gradient(circle at 30% 40%, rgba(139,69,19,0.4) 0%, transparent 55%),
-                              radial-gradient(circle at 70% 60%, rgba(0,0,0,0.3) 0%, transparent 50%),
-                              radial-gradient(circle at 50% 75%, rgba(139,69,19,0.25) 0%, transparent 45%)
+                              radial-gradient(circle at 25% 30%, rgba(139,69,19,0.35) 0%, transparent 45%),
+                              radial-gradient(circle at 75% 70%, rgba(0,0,0,0.25) 0%, transparent 40%),
+                              radial-gradient(circle at 50% 85%, rgba(139,69,19,0.2) 0%, transparent 35%)
                             `,
+                            pointerEvents: 'none',
                           }}
                         />
-                        {/* Corner wear */}
+                        
+                        {/* Shipping label header bar (orange/red like FedEx) */}
                         <div 
-                          className="absolute top-0 right-0 w-5 h-5"
                           style={{
-                            background: 'linear-gradient(135deg, transparent 40%, rgba(0,0,0,0.4) 40%)',
+                            background: 'linear-gradient(to right, #ff6600 0%, #ff8533 100%)',
+                            height: '8px',
+                            width: '100%',
+                            marginBottom: '2px',
                           }}
                         />
-                        {/* Barcode - BOLD */}
-                        <div 
-                          className="absolute bottom-2 left-2 right-2 flex gap-px"
-                          style={{ height: '12px', opacity: 0.6 }}
-                        >
-                          {[1,0,1,1,0,1,0,0,1,1,0,1,0,1,1,0].map((bar, i) => (
-                            <div 
-                              key={i} 
-                              style={{ 
-                                flex: 1, 
-                                background: bar ? '#000' : 'transparent',
-                                borderRadius: '1px',
-                              }} 
-                            />
-                          ))}
+                        
+                        {/* TO: Section */}
+                        <div style={{ marginBottom: '2px' }}>
+                          <div 
+                            className="text-[7px] font-bold"
+                            style={{ 
+                              color: '#000',
+                              fontFamily: 'Arial, sans-serif',
+                              lineHeight: '1.1',
+                            }}
+                          >
+                            TO: JUDICIAL ARCHIVES
+                          </div>
+                          <div 
+                            className="text-[6px]"
+                            style={{ 
+                              color: '#333',
+                              fontFamily: 'Arial, sans-serif',
+                              lineHeight: '1.1',
+                            }}
+                          >
+                            EVIDENCE DEPT - {year}
+                          </div>
                         </div>
-                        {/* Year stamp - BIG & BOLD */}
-                        <div 
-                          className="absolute top-2 left-2 text-xs sm:text-sm font-black"
-                          style={{ 
-                            color: '#1a0f0a',
-                            fontFamily: 'Courier, monospace',
-                            textShadow: '0 1px 1px rgba(255,255,255,0.5)',
-                          }}
-                        >
-                          {year}
+                        
+                        {/* FROM: Section */}
+                        <div style={{ marginBottom: '3px' }}>
+                          <div 
+                            className="text-[6px] font-bold"
+                            style={{ 
+                              color: '#000',
+                              fontFamily: 'Arial, sans-serif',
+                              lineHeight: '1.1',
+                            }}
+                          >
+                            FROM: LEGAL RECORDS
+                          </div>
                         </div>
-                        {/* "EVIDENCE" stamp - RED */}
+                        
+                        {/* Tracking/Barcode */}
+                        <div style={{ marginTop: '3px' }}>
+                          <div 
+                            className="text-[5px] font-bold mb-[2px]"
+                            style={{ 
+                              color: '#666',
+                              fontFamily: 'Courier, monospace',
+                              letterSpacing: '0.5px',
+                            }}
+                          >
+                            TRK# {year}0{year.slice(-1)}BC{Math.floor(Math.random() * 99)}
+                          </div>
+                          <div 
+                            className="flex gap-[1px]"
+                            style={{ height: '10px' }}
+                          >
+                            {[1,0,1,1,0,1,0,0,1,1,0,1,0,1,1,0,1,0].map((bar, i) => (
+                              <div 
+                                key={i} 
+                                style={{ 
+                                  flex: 1, 
+                                  background: bar ? '#000' : 'transparent',
+                                }} 
+                              />
+                            ))}
+                          </div>
+                        </div>
+                        
+                        {/* Red EVIDENCE stamp overlaid */}
                         <div 
-                          className="absolute top-2 right-2 text-[10px] sm:text-xs font-black"
+                          className="absolute top-1/2 right-2 text-[11px] font-black"
                           style={{ 
-                            color: '#8b0000',
-                            fontFamily: 'Arial Black, sans-serif',
-                            transform: 'rotate(8deg)',
-                            textShadow: '0 1px 2px rgba(0,0,0,0.3)',
+                            color: '#cc0000',
+                            fontFamily: 'Impact, sans-serif',
+                            transform: 'rotate(12deg)',
+                            opacity: 0.7,
+                            border: '2px solid #cc0000',
+                            padding: '1px 3px',
+                            background: 'rgba(255,255,255,0.3)',
                           }}
                         >
                           EVID
                         </div>
-                        {/* "FROM:" text */}
+                        
+                        {/* Worn corner */}
                         <div 
-                          className="absolute top-7 left-2 text-[8px] font-bold opacity-70"
-                          style={{ 
-                            color: '#3E2723',
-                            fontFamily: 'Arial, sans-serif',
+                          className="absolute top-0 right-0 w-4 h-4"
+                          style={{
+                            background: 'linear-gradient(135deg, transparent 45%, rgba(0,0,0,0.5) 45%)',
                           }}
-                        >
-                          LEGAL
-                        </div>
+                        />
                       </div>
 
                       {/* Corner damage on lid - torn edge */}
