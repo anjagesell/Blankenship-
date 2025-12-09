@@ -18,11 +18,20 @@ const iconMap = {
 const IndexPage = () => {
   const navigate = useNavigate();
   const [openYears, setOpenYears] = useState({});
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     document.title = 'Blankenship';
     // Force scroll to top when page loads (especially important on mobile)
     window.scrollTo(0, 0);
+    
+    // Detect mobile screen size
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 640);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
   // Group entries by year
