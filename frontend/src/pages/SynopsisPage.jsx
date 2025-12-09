@@ -198,7 +198,7 @@ Blankenship`;
       {/* Letter Content */}
       <div className="container mx-auto px-4 py-8 sm:py-12 md:py-16 max-w-5xl relative z-10">
         {/* Read Aloud Button */}
-        <div className="flex justify-center mb-8">
+        <div className="flex flex-col items-center mb-8 gap-3">
           <button
             onClick={handleReadAloud}
             className={`brass-button px-8 py-4 rounded text-base sm:text-lg font-semibold uppercase tracking-wider transition-all ${
@@ -221,6 +221,9 @@ Blankenship`;
               </>
             )}
           </button>
+          <p className="text-yellow-600/70 text-xs sm:text-sm text-center italic px-4" style={{ fontFamily: 'Garamond, serif' }}>
+            Note: This feature works best on desktop browsers (Chrome, Firefox, Safari, Edge)
+          </p>
         </div>
 
         {/* Parchment Letter Box */}
