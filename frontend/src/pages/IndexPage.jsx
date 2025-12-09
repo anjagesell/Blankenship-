@@ -136,57 +136,81 @@ const IndexPage = () => {
                     transform: 'translateZ(0)',
                   }}
                 >
-                  {/* Weathered texture overlay with scratches and dents */}
+                  {/* HEAVY weathering - scratches, dents, scuffs */}
                   <div 
                     className="absolute inset-0"
                     style={{
                       backgroundImage: `
-                        radial-gradient(ellipse at 30% 40%, rgba(70, 50, 35, 0.1) 0%, transparent 50%),
-                        radial-gradient(ellipse at 70% 60%, rgba(50, 35, 25, 0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 15% 25%, rgba(0, 0, 0, 0.3) 0%, transparent 8px),
-                        radial-gradient(circle at 85% 75%, rgba(0, 0, 0, 0.25) 0%, transparent 12px),
-                        radial-gradient(circle at 45% 90%, rgba(0, 0, 0, 0.2) 0%, transparent 6px),
-                        linear-gradient(120deg, transparent 48%, rgba(0, 0, 0, 0.15) 49%, transparent 50%),
-                        linear-gradient(95deg, transparent 65%, rgba(0, 0, 0, 0.12) 66%, transparent 67%),
-                        repeating-linear-gradient(
-                          45deg,
-                          transparent,
-                          transparent 1px,
-                          rgba(0, 0, 0, 0.03) 1px,
-                          rgba(0, 0, 0, 0.03) 2px
-                        )
+                        radial-gradient(ellipse at 30% 40%, rgba(70, 50, 35, 0.2) 0%, transparent 50%),
+                        radial-gradient(ellipse at 70% 60%, rgba(50, 35, 25, 0.2) 0%, transparent 50%),
+                        radial-gradient(circle at 20% 30%, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.4) 15px, transparent 25px),
+                        radial-gradient(circle at 80% 70%, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.3) 20px, transparent 35px),
+                        radial-gradient(circle at 50% 85%, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.2) 12px, transparent 20px),
+                        radial-gradient(circle at 10% 60%, rgba(0, 0, 0, 0.45) 0%, transparent 15px),
+                        linear-gradient(110deg, transparent 48%, rgba(0, 0, 0, 0.3) 49%, rgba(0, 0, 0, 0.15) 50%, transparent 51%),
+                        linear-gradient(85deg, transparent 62%, rgba(0, 0, 0, 0.25) 63%, rgba(0, 0, 0, 0.1) 64%, transparent 65%),
+                        linear-gradient(160deg, transparent 75%, rgba(0, 0, 0, 0.2) 76%, transparent 77%)
                       `,
-                      opacity: 0.7,
+                      opacity: 0.85,
                     }}
                   />
 
-                  {/* Vintage shipping label */}
+                  {/* Corner damage - torn/ripped effect bottom right */}
+                  <div 
+                    className="absolute bottom-4 right-4"
+                    style={{
+                      width: '30px',
+                      height: '30px',
+                      background: 'linear-gradient(135deg, rgba(0,0,0,0.7) 0%, transparent 50%)',
+                      clipPath: 'polygon(100% 0, 100% 100%, 0 100%, 40% 60%)',
+                    }}
+                  />
+
+                  {/* Corner damage - scuff top left */}
+                  <div 
+                    className="absolute top-5 left-5"
+                    style={{
+                      width: '25px',
+                      height: '25px',
+                      background: 'radial-gradient(circle, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.3) 50%, transparent 70%)',
+                    }}
+                  />
+
+                  {/* Vintage shipping label - MORE VISIBLE */}
                   <div 
                     className="absolute top-8 sm:top-10 left-8 sm:left-12"
                     style={{
-                      width: '80px',
-                      height: '50px',
-                      background: 'linear-gradient(135deg, #e8d7b8 0%, #d4c5a0 100%)',
-                      border: '1px solid rgba(0,0,0,0.3)',
-                      transform: 'rotate(-3deg)',
-                      boxShadow: '0 2px 8px rgba(0,0,0,0.4), inset 0 1px 2px rgba(255,255,255,0.3)',
-                      opacity: 0.8,
+                      width: '90px',
+                      height: '55px',
+                      background: 'linear-gradient(135deg, #f5e6c8 0%, #e8d7b8 50%, #d4c5a0 100%)',
+                      border: '2px solid rgba(0,0,0,0.4)',
+                      transform: 'rotate(-4deg)',
+                      boxShadow: '0 3px 12px rgba(0,0,0,0.6), inset 0 1px 3px rgba(255,255,255,0.4)',
+                      opacity: 0.95,
                     }}
                   >
-                    {/* Label wear/age marks */}
+                    {/* Heavy label wear/stains */}
                     <div 
                       className="absolute inset-0"
                       style={{
                         backgroundImage: `
-                          radial-gradient(circle at 20% 30%, rgba(139,69,19,0.15) 0%, transparent 40%),
-                          radial-gradient(circle at 80% 70%, rgba(0,0,0,0.1) 0%, transparent 35%)
+                          radial-gradient(circle at 25% 35%, rgba(139,69,19,0.35) 0%, transparent 50%),
+                          radial-gradient(circle at 75% 65%, rgba(0,0,0,0.25) 0%, transparent 45%),
+                          radial-gradient(circle at 50% 80%, rgba(139,69,19,0.2) 0%, transparent 40%)
                         `,
                       }}
                     />
-                    {/* Barcode suggestion */}
+                    {/* Corner fold effect */}
                     <div 
-                      className="absolute bottom-1 left-1 right-1 flex gap-px opacity-30"
-                      style={{ height: '8px' }}
+                      className="absolute top-0 right-0 w-4 h-4"
+                      style={{
+                        background: 'linear-gradient(135deg, transparent 50%, rgba(0,0,0,0.3) 50%)',
+                      }}
+                    />
+                    {/* Barcode - more visible */}
+                    <div 
+                      className="absolute bottom-2 left-2 right-2 flex gap-px opacity-50"
+                      style={{ height: '10px' }}
                     >
                       {[1,0,1,1,0,1,0,0,1,1,0,1,0,1].map((bar, i) => (
                         <div 
@@ -198,16 +222,29 @@ const IndexPage = () => {
                         />
                       ))}
                     </div>
-                    {/* Year stamp */}
+                    {/* Year stamp - BOLD */}
                     <div 
-                      className="absolute top-1 left-1 text-[8px] font-bold"
+                      className="absolute top-2 left-2 text-[10px] font-bold"
                       style={{ 
-                        color: '#3E2723',
+                        color: '#1a0f0a',
                         fontFamily: 'Courier, monospace',
-                        opacity: 0.6,
+                        opacity: 0.8,
+                        textShadow: '0 1px 0 rgba(255,255,255,0.3)',
                       }}
                     >
                       {year}
+                    </div>
+                    {/* "EVIDENCE" stamp */}
+                    <div 
+                      className="absolute top-2 right-2 text-[9px] font-bold"
+                      style={{ 
+                        color: '#8b0000',
+                        fontFamily: 'Arial, sans-serif',
+                        opacity: 0.6,
+                        transform: 'rotate(5deg)',
+                      }}
+                    >
+                      EVID
                     </div>
                   </div>
 
