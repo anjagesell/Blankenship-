@@ -274,7 +274,10 @@ const MonthlyDetail = ({ monthDate, isAdmin, onClose }) => {
               borderRadius: '4px',
             }}
           >
-            Each row represents a specific event. Click "Upload" to attach documents, photos, videos, or audio files.
+            {isAdmin 
+              ? 'Each row represents a specific event. Click "Upload" to attach documents, photos, videos, or audio files.'
+              : 'Each row represents a specific event documented in the investigation. Admin access required for uploads.'
+            }
           </div>
         </div>
       </div>
