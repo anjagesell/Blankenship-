@@ -66,25 +66,45 @@ const Timeline = ({ isAdmin }) => {
     <div className="w-full mb-12">
       {/* Timeline Header */}
       <div 
-        className="p-4 sm:p-6 mb-4"
+        className="p-4 sm:p-6 mb-4 flex items-center justify-between"
         style={{
           background: 'linear-gradient(135deg, #2c3e50 0%, #1a252f 100%)',
           border: '3px solid #d4af37',
           boxShadow: '0 8px 24px rgba(0,0,0,0.6)',
         }}
       >
-        <h2 
-          className="text-xl sm:text-2xl md:text-3xl font-bold text-center gold-embossed mb-2"
-          style={{ fontFamily: 'Georgia, serif' }}
-        >
-          EVIDENCE TIMELINE
-        </h2>
-        <p 
-          className="text-yellow-600/80 text-xs sm:text-sm text-center uppercase tracking-wider"
-          style={{ fontFamily: 'Garamond, serif' }}
-        >
-          Chronological Record of Events
-        </p>
+        <div className="flex-1">
+          <h2 
+            className="text-xl sm:text-2xl md:text-3xl font-bold text-center gold-embossed mb-2"
+            style={{ fontFamily: 'Georgia, serif' }}
+          >
+            EVIDENCE TIMELINE
+          </h2>
+          <p 
+            className="text-yellow-600/80 text-xs sm:text-sm text-center uppercase tracking-wider"
+            style={{ fontFamily: 'Garamond, serif' }}
+          >
+            Chronological Record of Events - Key Highlights
+          </p>
+        </div>
+        {isAdmin && (
+          <button
+            onClick={handleAdd}
+            className="ml-4 px-4 py-2 rounded flex items-center gap-2 transition-all hover:scale-105"
+            style={{
+              background: 'linear-gradient(145deg, #d4af37 0%, #c5a028 50%, #9c7a1f 100%)',
+              color: '#1a0f0a',
+              border: '2px solid #8b6914',
+              boxShadow: '0 4px 12px rgba(0,0,0,0.6)',
+              fontFamily: 'Arial, sans-serif',
+              fontWeight: 'bold',
+              fontSize: '14px',
+            }}
+          >
+            <Plus className="w-4 h-4" />
+            Add Entry
+          </button>
+        )}
       </div>
 
       {/* Excel-Style Table */}
