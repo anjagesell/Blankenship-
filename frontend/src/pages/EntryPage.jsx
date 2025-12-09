@@ -73,6 +73,14 @@ const EntryPage = () => {
       
       if (pastedData.length === 8) {
         if (pastedData === ENTRY_CODE) {
+          if (!termsAccepted) {
+            toast({
+              title: 'Terms Required',
+              description: 'Please acknowledge the Terms of Use to proceed',
+              variant: 'destructive',
+            });
+            return;
+          }
           toast({
             title: 'Access Granted',
             description: 'Welcome to Blankenship Archives',
@@ -84,7 +92,7 @@ const EntryPage = () => {
             description: 'Invalid entry code',
             variant: 'destructive',
           });
-          setCode(['', '', '', '', '', '', '', '']);
+          setCode(['', '', '', '', '', '', '']);
           inputRefs.current[0]?.focus();
         }
       }
