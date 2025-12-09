@@ -92,7 +92,7 @@ const IndexPage = () => {
       </div>
 
       {/* Premium Archive Boxes */}
-      <div className="container mx-auto px-4 py-12 sm:py-16 space-y-20 relative z-10">
+      <div className="container mx-auto px-4 py-8 sm:py-12 md:py-16 space-y-12 sm:space-y-16 md:space-y-20 relative z-10">
         {years.map((year) => {
           const isOpen = openYears[year];
           const yearEntries = entriesByYear[year];
