@@ -178,6 +178,71 @@ const EntryPage = () => {
         <p className="text-yellow-600/70 text-xs sm:text-sm tracking-wide px-2 uppercase" style={{ fontFamily: 'Garamond, serif' }}>
           Enter 8-Digit Access Code
         </p>
+
+        {/* Terms of Use - Required Acknowledgement */}
+        <div 
+          className="mt-8 p-6 sm:p-8 rounded mx-4"
+          style={{
+            background: 'linear-gradient(145deg, rgba(212,175,55,0.1) 0%, rgba(139,105,20,0.1) 100%)',
+            border: '2px solid #8b6914',
+            boxShadow: '0 4px 16px rgba(0,0,0,0.4)',
+          }}
+        >
+          <h3 
+            className="text-lg sm:text-xl font-bold mb-4 text-center"
+            style={{ 
+              color: '#d4af37',
+              fontFamily: 'Georgia, serif',
+            }}
+          >
+            TERMS OF USE
+          </h3>
+          <div 
+            className="text-xs sm:text-sm space-y-3 mb-4 text-left"
+            style={{ 
+              color: '#f5e6c8',
+              fontFamily: 'Garamond, serif',
+              lineHeight: '1.6',
+            }}
+          >
+            <p>
+              <strong>Access Restrictions:</strong> This website contains legally protected evidence and documentation. Access is restricted to authorized individuals only. By entering this site, you acknowledge that:
+            </p>
+            <ul className="list-disc pl-6 space-y-2">
+              <li>You are accessing private, password-protected judicial archives</li>
+              <li>All content is protected by copyright and constitutes legal evidence</li>
+              <li>Unauthorized copying, downloading, distribution, or reproduction of any content is strictly prohibited</li>
+              <li>You will not share access credentials with unauthorized parties</li>
+              <li>You understand that misuse of this evidence may result in legal consequences</li>
+              <li>This site is for investigative and judicial documentation purposes only</li>
+            </ul>
+            <p>
+              <strong>Disclaimer:</strong> The information contained within this archive is provided for documentary and investigative purposes. This website is maintained by private individuals exercising their constitutional rights under the First Amendment.
+            </p>
+          </div>
+          
+          {/* Checkbox for acknowledgement */}
+          <label 
+            className="flex items-start gap-3 cursor-pointer group"
+            style={{
+              color: '#f5e6c8',
+              fontFamily: 'Georgia, serif',
+            }}
+          >
+            <input
+              type="checkbox"
+              checked={termsAccepted}
+              onChange={(e) => setTermsAccepted(e.target.checked)}
+              className="mt-1 w-5 h-5 cursor-pointer"
+              style={{
+                accentColor: '#d4af37',
+              }}
+            />
+            <span className="text-sm sm:text-base font-semibold group-hover:text-yellow-400 transition-colors">
+              I have read and agree to the Terms of Use, and I acknowledge that all content is legally protected evidence.
+            </span>
+          </label>
+        </div>
       </div>
 
       {/* Legal Information Icons - Refined */}
