@@ -597,44 +597,169 @@ const IndexPage = () => {
                         const IconComponent = entry.icon ? iconMap[entry.icon] || FileText : FileText;
                         
                         return (
-                          <Card
+                          <div
                             key={entry.id}
                             onClick={(e) => {
                               e.stopPropagation();
                               navigate(`/entry/${entry.id}`);
                             }}
-                            className={`p-5 cursor-pointer transition-all duration-700 group ${
+                            className={`relative cursor-pointer transition-all duration-700 group ${
                               isOpen ? 'translate-y-0 opacity-100 scale-100' : 'translate-y-10 opacity-0 scale-95'
                             }`}
                             style={{
                               transitionDelay: isOpen ? `${index * 80}ms` : '0ms',
-                              background: 'linear-gradient(145deg, #f4e8c1 0%, #e8dcc8 50%, #d4c5a9 100%)',
-                              border: '2px solid #8b6914',
-                              boxShadow: `
-                                0 8px 20px rgba(0, 0, 0, 0.4),
-                                inset 0 2px 4px rgba(255,255,255,0.3),
-                                inset 0 -2px 4px rgba(0,0,0,0.2)
-                              `,
                             }}
                           >
-                            <div className="space-y-3">
-                              <div className="flex items-center justify-between">
-                                <div className="flex items-center gap-2 text-sm" style={{ color: '#3E2723' }}>
-                                  <Calendar className="w-4 h-4" />
-                                  <span className="font-semibold">{entry.date || 'Pre-history'}</span>
-                                </div>
-                                <IconComponent className="w-6 h-6 transition-colors" style={{ color: '#8b6914' }} />
-                              </div>
-                              <h3 className="text-base font-bold leading-tight group-hover:opacity-80 transition-opacity" style={{ color: '#3E2723', fontFamily: 'Georgia, serif' }}>
-                                {entry.header}
-                              </h3>
-                              {entry.description && (
-                                <p className="text-sm line-clamp-2 leading-relaxed" style={{ color: '#5D4037' }}>
-                                  {entry.description}
-                                </p>
-                              )}
+                            {/* Manila Folder Tab */}
+                            <div 
+                              className="absolute -top-3 left-8 h-6 px-4 flex items-center"
+                              style={{
+                                background: 'linear-gradient(to bottom, #d4a574 0%, #c49563 100%)',
+                                clipPath: 'polygon(8% 0%, 92% 0%, 100% 100%, 0% 100%)',
+                                boxShadow: '0 2px 4px rgba(0,0,0,0.3)',
+                                zIndex: 10,
+                              }}
+                            >
+                              <span 
+                                className="text-[10px] font-bold uppercase"
+                                style={{ 
+                                  color: '#3E2723',
+                                  fontFamily: 'Courier, monospace',
+                                }}
+                              >
+                                {entry.date || 'PRE'}
+                              </span>
                             </div>
-                          </Card>
+
+                            {/* Manila Folder Body */}
+                            <div
+                              className="relative p-4"
+                              style={{
+                                background: 'linear-gradient(135deg, #d9b991 0%, #c8a882 50%, #b89773 100%)',
+                                border: '1px solid #8b6914',
+                                boxShadow: `
+                                  0 6px 16px rgba(0, 0, 0, 0.4),
+                                  inset 0 1px 2px rgba(255,255,255,0.3),
+                                  inset 0 -1px 2px rgba(0,0,0,0.2)
+                                `,
+                                minHeight: '120px',
+                              }}
+                            >
+                              {/* Coffee stain on folder */}
+                              <div 
+                                className="absolute top-2 right-3"
+                                style={{
+                                  width: '30px',
+                                  height: '30px',
+                                  borderRadius: '50%',
+                                  background: 'radial-gradient(circle, rgba(101,67,33,0.4) 0%, rgba(101,67,33,0.2) 50%, transparent 70%)',
+                                }}
+                              />
+
+                              {/* Paperclip */}
+                              <div 
+                                className="absolute -top-1 right-6"
+                                style={{
+                                  width: '8px',
+                                  height: '24px',
+                                  border: '2px solid #silver',
+                                  borderRadius: '6px 6px 0 0',
+                                  borderBottom: 'none',
+                                  boxShadow: '1px 2px 3px rgba(0,0,0,0.4)',
+                                  background: 'linear-gradient(to right, #c0c0c0 0%, #d0d0d0 50%, #b0b0b0 100%)',
+                                }}
+                              />
+
+                              {/* Evidence tag hanging off side */}
+                              <div 
+                                className="absolute -right-2 top-8"
+                                style={{
+                                  width: '35px',
+                                  height: '20px',
+                                  background: '#fff8dc',
+                                  border: '1px solid #000',
+                                  boxShadow: '2px 2px 4px rgba(0,0,0,0.5)',
+                                  transform: 'rotate(8deg)',
+                                }}
+                              >
+                                <div 
+                                  className="text-[6px] font-bold text-center pt-[2px]"
+                                  style={{ 
+                                    color: '#000',
+                                    fontFamily: 'Arial, sans-serif',
+                                  }}
+                                >
+                                  CASE
+                                </div>
+                                <div 
+                                  className="text-[5px] text-center"
+                                  style={{ 
+                                    color: '#666',
+                                    fontFamily: 'Courier, monospace',
+                                  }}
+                                >
+                                  {entry.id}
+                                </div>
+                                {/* String hole */}
+                                <div 
+                                  className="absolute -left-1 top-1"
+                                  style={{
+                                    width: '3px',
+                                    height: '3px',
+                                    background: '#000',
+                                    borderRadius: '50%',
+                                  }}
+                                />
+                              </div>
+
+                              {/* Folder content */}
+                              <div className="space-y-2 relative z-10">
+                                <div className="flex items-center gap-2">
+                                  <IconComponent className="w-4 h-4" style={{ color: '#5D4037' }} />
+                                  <span 
+                                    className="text-xs font-bold uppercase"
+                                    style={{ 
+                                      color: '#3E2723',
+                                      fontFamily: 'Courier, monospace',
+                                    }}
+                                  >
+                                    {entry.date || 'Pre-history'}
+                                  </span>
+                                </div>
+                                <h3 
+                                  className="text-sm font-bold leading-tight group-hover:opacity-80 transition-opacity"
+                                  style={{ 
+                                    color: '#2c1810',
+                                    fontFamily: 'Arial, sans-serif',
+                                  }}
+                                >
+                                  {entry.header}
+                                </h3>
+                                {entry.description && (
+                                  <p 
+                                    className="text-xs line-clamp-2 leading-relaxed"
+                                    style={{ color: '#3E2723' }}
+                                  >
+                                    {entry.description}
+                                  </p>
+                                )}
+                              </div>
+
+                              {/* Handwritten "CONFIDENTIAL" stamp */}
+                              <div 
+                                className="absolute bottom-2 left-2 text-[10px] font-bold opacity-40"
+                                style={{ 
+                                  color: '#cc0000',
+                                  fontFamily: 'Impact, sans-serif',
+                                  transform: 'rotate(-5deg)',
+                                  border: '2px solid #cc0000',
+                                  padding: '2px 6px',
+                                }}
+                              >
+                                EVIDENCE
+                              </div>
+                            </div>
+                          </div>
                         );
                       })}
                     </div>
