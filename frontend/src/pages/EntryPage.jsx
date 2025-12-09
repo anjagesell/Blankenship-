@@ -8,6 +8,7 @@ import { Scale, Shield, Gavel } from 'lucide-react';
 
 const EntryPage = () => {
   const [code, setCode] = useState(['', '', '', '', '', '', '', '']);
+  const [termsAccepted, setTermsAccepted] = useState(false);
   const inputRefs = useRef([]);
   const navigate = useNavigate();
 
