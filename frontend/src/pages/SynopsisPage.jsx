@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button } from '../components/ui/button';
-import { ArrowRight, Volume2, Square, Scale } from 'lucide-react';
+import { ArrowRight, Scale } from 'lucide-react';
 
 const SynopsisPage = () => {
   const navigate = useNavigate();
-  const [isReading, setIsReading] = useState(false);
 
   useEffect(() => {
     document.title = 'Blankenship';
