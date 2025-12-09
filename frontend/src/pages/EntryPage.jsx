@@ -179,6 +179,9 @@ const EntryPage = () => {
         <p className="text-yellow-600/70 text-xs sm:text-sm tracking-wide px-2 uppercase" style={{ fontFamily: 'Garamond, serif' }}>
           Enter 8-Digit Access Code
         </p>
+        <p className="text-yellow-600/60 text-[10px] sm:text-xs tracking-wide px-2 mt-1 italic" style={{ fontFamily: 'Garamond, serif' }}>
+          (After acknowledgment of Terms)
+        </p>
 
         {/* Terms of Use Requirement - Required Acknowledgement */}
         <div 
