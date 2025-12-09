@@ -5,6 +5,43 @@ const ContentProtection = () => {
     // Disable right-click context menu
     const handleContextMenu = (e) => {
       e.preventDefault();
+      
+      // Show warning message
+      const warningDiv = document.createElement('div');
+      warningDiv.innerHTML = `
+        <div style="
+          position: fixed;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          background: linear-gradient(135deg, #2c3e50 0%, #1a252f 100%);
+          border: 3px solid #d4af37;
+          padding: 30px 40px;
+          border-radius: 8px;
+          box-shadow: 0 20px 60px rgba(0,0,0,0.9);
+          z-index: 10000;
+          font-family: Georgia, serif;
+          text-align: center;
+        ">
+          <div style="color: #d4af37; font-size: 24px; font-weight: bold; margin-bottom: 10px;">
+            ⚠️ PROTECTED CONTENT
+          </div>
+          <div style="color: #f5e6c8; font-size: 16px; margin-bottom: 5px;">
+            This content is legally protected evidence.
+          </div>
+          <div style="color: #d4a574; font-size: 14px;">
+            Downloading, copying, or distributing is prohibited.
+          </div>
+        </div>
+      `;
+      
+      document.body.appendChild(warningDiv);
+      
+      // Remove warning after 3 seconds
+      setTimeout(() => {
+        document.body.removeChild(warningDiv);
+      }, 3000);
+      
       return false;
     };
 
