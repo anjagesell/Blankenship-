@@ -329,36 +329,53 @@ const IndexPage = () => {
                         zIndex: isOpen ? 30 : 10,
                       }}
                     >
-                      {/* Lid texture with weathering */}
+                      {/* Lid texture with HEAVY weathering */}
                       <div 
                         className="absolute inset-0"
                         style={{
                           backgroundImage: `
-                            linear-gradient(90deg, transparent 48%, rgba(0, 0, 0, 0.1) 49%, rgba(0, 0, 0, 0.1) 51%, transparent 52%),
-                            radial-gradient(ellipse at 40% 30%, rgba(80, 55, 35, 0.08) 0%, transparent 60%),
-                            radial-gradient(circle at 25% 60%, rgba(0, 0, 0, 0.15) 0%, transparent 10px),
-                            radial-gradient(circle at 75% 40%, rgba(0, 0, 0, 0.12) 0%, transparent 8px)
+                            linear-gradient(90deg, transparent 48%, rgba(0, 0, 0, 0.2) 49%, rgba(0, 0, 0, 0.2) 51%, transparent 52%),
+                            radial-gradient(ellipse at 40% 30%, rgba(80, 55, 35, 0.15) 0%, transparent 60%),
+                            radial-gradient(circle at 30% 65%, rgba(0, 0, 0, 0.35) 0%, rgba(0,0,0,0.2) 15px, transparent 25px),
+                            radial-gradient(circle at 70% 45%, rgba(0, 0, 0, 0.3) 0%, rgba(0,0,0,0.15) 12px, transparent 20px),
+                            radial-gradient(circle at 15% 80%, rgba(0, 0, 0, 0.25) 0%, transparent 18px)
                           `,
-                          opacity: 0.7,
+                          opacity: 0.85,
                         }}
                       />
 
-                      {/* More visible tape line/perforation - horizontal across top */}
+                      {/* VERY visible tape line/perforation - horizontal across top */}
                       <div 
-                        className="absolute top-4 left-0 right-0 h-8"
+                        className="absolute top-3 left-0 right-0 h-10"
                         style={{
                           background: `
                             linear-gradient(to bottom,
                               transparent 0%,
-                              rgba(139, 90, 43, 0.3) 25%,
-                              rgba(160, 110, 60, 0.4) 50%,
-                              rgba(139, 90, 43, 0.3) 75%,
+                              rgba(160, 120, 70, 0.5) 20%,
+                              rgba(180, 140, 85, 0.7) 50%,
+                              rgba(160, 120, 70, 0.5) 80%,
                               transparent 100%
                             )
                           `,
-                          boxShadow: 'inset 0 1px 3px rgba(0,0,0,0.3)',
-                          borderTop: '1px dashed rgba(0, 0, 0, 0.2)',
-                          borderBottom: '1px dashed rgba(0, 0, 0, 0.2)',
+                          boxShadow: `
+                            inset 0 2px 5px rgba(0,0,0,0.4),
+                            inset 0 -2px 5px rgba(0,0,0,0.4),
+                            0 1px 3px rgba(0,0,0,0.3)
+                          `,
+                          borderTop: '2px dashed rgba(0, 0, 0, 0.35)',
+                          borderBottom: '2px dashed rgba(0, 0, 0, 0.35)',
+                        }}
+                      />
+
+                      {/* Tape edge peeling effect */}
+                      <div 
+                        className="absolute top-3 right-8"
+                        style={{
+                          width: '20px',
+                          height: '12px',
+                          background: 'linear-gradient(90deg, rgba(180, 140, 85, 0.8) 0%, transparent 100%)',
+                          transform: 'rotate(-8deg)',
+                          boxShadow: '0 2px 4px rgba(0,0,0,0.5)',
                         }}
                       />
 
