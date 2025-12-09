@@ -21,6 +21,7 @@ const IndexPage = () => {
   const navigate = useNavigate();
   const [openYears, setOpenYears] = useState({});
   const [isMobile, setIsMobile] = useState(false);
+  const [selectedMonth, setSelectedMonth] = useState(null);
 
   useEffect(() => {
     document.title = 'Blankenship';
