@@ -185,7 +185,7 @@ const EntryPage = () => {
 
         {/* Terms of Use Requirement - Required Acknowledgement */}
         <div 
-          className="mt-8 p-6 sm:p-8 rounded mx-4"
+          className="mt-8 p-5 sm:p-6 rounded mx-4"
           style={{
             background: 'linear-gradient(145deg, rgba(212,175,55,0.1) 0%, rgba(139,105,20,0.1) 100%)',
             border: '2px solid #8b6914',
@@ -193,7 +193,7 @@ const EntryPage = () => {
           }}
         >
           <h3 
-            className="text-lg sm:text-xl font-bold mb-4 text-center"
+            className="text-base sm:text-lg font-bold mb-3 text-center"
             style={{ 
               color: '#d4af37',
               fontFamily: 'Georgia, serif',
@@ -202,7 +202,7 @@ const EntryPage = () => {
             TERMS OF USE REQUIREMENT
           </h3>
           
-          {/* Scrollable Terms Container */}
+          {/* Scrollable Terms Container - Smaller */}
           <div 
             onScroll={(e) => {
               const element = e.target;
@@ -211,27 +211,27 @@ const EntryPage = () => {
                 setTermsScrolled(true);
               }
             }}
-            className="overflow-y-auto mb-4 pr-2"
+            className="overflow-y-auto mb-3 pr-2"
             style={{
-              maxHeight: '200px',
+              maxHeight: '140px',
               border: '1px solid #8b6914',
               background: 'rgba(0,0,0,0.2)',
               borderRadius: '4px',
-              padding: '12px',
+              padding: '10px',
             }}
           >
             <div 
-              className="text-xs sm:text-sm space-y-3 text-left"
+              className="text-[11px] sm:text-xs space-y-2 text-left"
               style={{ 
                 color: '#f5e6c8',
                 fontFamily: 'Garamond, serif',
-                lineHeight: '1.6',
+                lineHeight: '1.5',
               }}
             >
               <p>
                 <strong>Access Restrictions:</strong> This website contains legally protected evidence and documentation. Access is restricted to authorized individuals only. By entering this site, you acknowledge that:
               </p>
-              <ul className="list-disc pl-6 space-y-2">
+              <ul className="list-disc pl-5 space-y-1">
                 <li>You are accessing private, password-protected judicial archives</li>
                 <li>All content is protected by copyright and constitutes legal evidence</li>
                 <li>Unauthorized copying, downloading, distribution, or reproduction of any content is strictly prohibited</li>
@@ -248,7 +248,7 @@ const EntryPage = () => {
           {/* Scroll instruction */}
           {!termsScrolled && (
             <p 
-              className="text-xs text-center mb-2 italic"
+              className="text-[10px] sm:text-xs text-center mb-2 italic"
               style={{ color: '#d4a574' }}
             >
               Please scroll to the bottom to continue ↓
@@ -257,7 +257,7 @@ const EntryPage = () => {
           
           {/* Checkbox for acknowledgement - only enabled after scrolling */}
           <label 
-            className={`flex items-start gap-3 ${termsScrolled ? 'cursor-pointer' : 'cursor-not-allowed opacity-50'} group`}
+            className={`flex items-start gap-2 ${termsScrolled ? 'cursor-pointer' : 'cursor-not-allowed opacity-50'} group mt-3`}
             style={{
               color: '#f5e6c8',
               fontFamily: 'Georgia, serif',
@@ -268,13 +268,13 @@ const EntryPage = () => {
               checked={termsAccepted}
               onChange={(e) => setTermsAccepted(e.target.checked)}
               disabled={!termsScrolled}
-              className="mt-1 w-5 h-5"
+              className="mt-0.5 w-4 h-4 flex-shrink-0"
               style={{
                 accentColor: '#d4af37',
                 cursor: termsScrolled ? 'pointer' : 'not-allowed',
               }}
             />
-            <span className={`text-sm sm:text-base font-semibold ${termsScrolled ? 'group-hover:text-yellow-400' : ''} transition-colors`}>
+            <span className={`text-xs sm:text-sm font-semibold ${termsScrolled ? 'group-hover:text-yellow-400' : ''} transition-colors leading-relaxed`}>
               I have read and agree to the Terms of Use Requirement, and I acknowledge that all content is legally protected evidence.
             </span>
           </label>
