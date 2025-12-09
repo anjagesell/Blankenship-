@@ -282,7 +282,7 @@ const EntryPage = () => {
       </div>
 
       {/* Legal Information Icons - Refined */}
-      <div className="absolute bottom-20 sm:bottom-24 left-0 right-0 flex justify-center gap-4 sm:gap-6 md:gap-8 px-4 z-10">
+      <div className="mt-8 mb-6 flex justify-center gap-4 sm:gap-6 md:gap-8 px-4 z-10">
         {/* NC State Law */}
         <Dialog>
           <DialogTrigger asChild>
