@@ -242,7 +242,7 @@ test_plan:
     - "Global Styles - Judicial Theme"
   stuck_tasks:
     - "Synopsis Page - Read Aloud Feature"
-  test_all: true
+  test_all: false
   test_priority: "high_first"
 
 agent_communication:
