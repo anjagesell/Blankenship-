@@ -6,10 +6,12 @@ import SynopsisPage from './pages/SynopsisPage';
 import IndexPage from './pages/IndexPage';
 import ContentPage from './pages/ContentPage';
 import { Toaster } from './components/ui/toaster';
+import ContentProtection from './components/ContentProtection';
 
 function App() {
   return (
     <div className="App">
+      <ContentProtection />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<EntryPage />} />
