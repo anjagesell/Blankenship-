@@ -235,26 +235,28 @@ const MonthlyDetail = ({ monthDate, isAdmin, onClose }) => {
                         style={{ 
                           color: '#5D4037',
                           fontFamily: 'Arial, sans-serif',
-                          borderRight: '1px solid rgba(139,105,20,0.3)',
+                          borderRight: isAdmin ? '1px solid rgba(139,105,20,0.3)' : 'none',
                         }}
                       >
                         {entry.notes}
                       </td>
-                      <td className="px-3 py-3 text-center">
-                        <button
-                          onClick={() => handleUpload(entry.id)}
-                          className="inline-flex items-center gap-1 px-3 py-1 text-xs font-semibold rounded transition-all hover:scale-105"
-                          style={{
-                            background: 'linear-gradient(145deg, #d4af37 0%, #c5a028 50%, #9c7a1f 100%)',
-                            color: '#1a0f0a',
-                            border: '1px solid #8b6914',
-                            boxShadow: '0 2px 6px rgba(0,0,0,0.4)',
-                          }}
-                        >
-                          <Upload className="w-3 h-3" />
-                          Upload
-                        </button>
-                      </td>
+                      {isAdmin && (
+                        <td className="px-3 py-3 text-center">
+                          <button
+                            onClick={() => handleUpload(entry.id)}
+                            className="inline-flex items-center gap-1 px-3 py-1 text-xs font-semibold rounded transition-all hover:scale-105"
+                            style={{
+                              background: 'linear-gradient(145deg, #d4af37 0%, #c5a028 50%, #9c7a1f 100%)',
+                              color: '#1a0f0a',
+                              border: '1px solid #8b6914',
+                              boxShadow: '0 2px 6px rgba(0,0,0,0.4)',
+                            }}
+                          >
+                            <Upload className="w-3 h-3" />
+                            Upload
+                          </button>
+                        </td>
+                      )}
                     </tr>
                   ))
                 )}
