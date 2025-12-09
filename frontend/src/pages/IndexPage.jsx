@@ -101,6 +101,11 @@ const IndexPage = () => {
         </div>
       </div>
 
+      {/* Timeline Section */}
+      <div className="container mx-auto px-4 py-8 sm:py-12 relative z-10">
+        <Timeline />
+      </div>
+
       {/* Premium Archive Boxes */}
       <div className="container mx-auto px-4 py-8 sm:py-12 md:py-16 space-y-12 sm:space-y-16 md:space-y-20 relative z-10">
         {years.map((year) => {
