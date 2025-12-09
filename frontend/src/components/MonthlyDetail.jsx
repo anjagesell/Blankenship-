@@ -2,7 +2,7 @@ import React from 'react';
 import { X, Upload } from 'lucide-react';
 import { monthlyDetails } from '../monthlyDetails';
 
-const MonthlyDetail = ({ monthDate, onClose }) => {
+const MonthlyDetail = ({ monthDate, isAdmin, onClose }) => {
   const entries = monthlyDetails[monthDate] || [];
   const [month, year] = monthDate.split('/');
   const monthNames = ['', 'January', 'February', 'March', 'April', 'May', 'June', 
