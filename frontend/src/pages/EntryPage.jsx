@@ -179,7 +179,7 @@ const EntryPage = () => {
           Enter 8-Digit Access Code
         </p>
 
-        {/* Terms of Use - Required Acknowledgement */}
+        {/* Terms of Use Requirement - Required Acknowledgement */}
         <div 
           className="mt-8 p-6 sm:p-8 rounded mx-4"
           style={{
@@ -195,35 +195,65 @@ const EntryPage = () => {
               fontFamily: 'Georgia, serif',
             }}
           >
-            TERMS OF USE
+            TERMS OF USE REQUIREMENT
           </h3>
+          
+          {/* Scrollable Terms Container */}
           <div 
-            className="text-xs sm:text-sm space-y-3 mb-4 text-left"
-            style={{ 
-              color: '#f5e6c8',
-              fontFamily: 'Garamond, serif',
-              lineHeight: '1.6',
+            onScroll={(e) => {
+              const element = e.target;
+              const isAtBottom = element.scrollHeight - element.scrollTop <= element.clientHeight + 10;
+              if (isAtBottom && !termsScrolled) {
+                setTermsScrolled(true);
+              }
+            }}
+            className="overflow-y-auto mb-4 pr-2"
+            style={{
+              maxHeight: '200px',
+              border: '1px solid #8b6914',
+              background: 'rgba(0,0,0,0.2)',
+              borderRadius: '4px',
+              padding: '12px',
             }}
           >
-            <p>
-              <strong>Access Restrictions:</strong> This website contains legally protected evidence and documentation. Access is restricted to authorized individuals only. By entering this site, you acknowledge that:
-            </p>
-            <ul className="list-disc pl-6 space-y-2">
-              <li>You are accessing private, password-protected judicial archives</li>
-              <li>All content is protected by copyright and constitutes legal evidence</li>
-              <li>Unauthorized copying, downloading, distribution, or reproduction of any content is strictly prohibited</li>
-              <li>You will not share access credentials with unauthorized parties</li>
-              <li>You understand that misuse of this evidence may result in legal consequences</li>
-              <li>This site is for investigative and judicial documentation purposes only</li>
-            </ul>
-            <p>
-              <strong>Disclaimer:</strong> The information contained within this archive is provided for documentary and investigative purposes. This website is maintained by private individuals exercising their constitutional rights under the First Amendment.
-            </p>
+            <div 
+              className="text-xs sm:text-sm space-y-3 text-left"
+              style={{ 
+                color: '#f5e6c8',
+                fontFamily: 'Garamond, serif',
+                lineHeight: '1.6',
+              }}
+            >
+              <p>
+                <strong>Access Restrictions:</strong> This website contains legally protected evidence and documentation. Access is restricted to authorized individuals only. By entering this site, you acknowledge that:
+              </p>
+              <ul className="list-disc pl-6 space-y-2">
+                <li>You are accessing private, password-protected judicial archives</li>
+                <li>All content is protected by copyright and constitutes legal evidence</li>
+                <li>Unauthorized copying, downloading, distribution, or reproduction of any content is strictly prohibited</li>
+                <li>You will not share access credentials with unauthorized parties</li>
+                <li>You understand that misuse of this evidence may result in legal consequences</li>
+                <li>This site is for investigative and judicial documentation purposes only</li>
+              </ul>
+              <p>
+                <strong>Disclaimer:</strong> The information contained within this archive is provided for documentary and investigative purposes. This website is maintained by private individuals exercising their constitutional rights under the First Amendment.
+              </p>
+            </div>
           </div>
           
-          {/* Checkbox for acknowledgement */}
+          {/* Scroll instruction */}
+          {!termsScrolled && (
+            <p 
+              className="text-xs text-center mb-2 italic"
+              style={{ color: '#d4a574' }}
+            >
+              Please scroll to the bottom to continue ↓
+            </p>
+          )}
+          
+          {/* Checkbox for acknowledgement - only enabled after scrolling */}
           <label 
-            className="flex items-start gap-3 cursor-pointer group"
+            className={`flex items-start gap-3 ${termsScrolled ? 'cursor-pointer' : 'cursor-not-allowed opacity-50'} group`}
             style={{
               color: '#f5e6c8',
               fontFamily: 'Georgia, serif',
@@ -233,13 +263,15 @@ const EntryPage = () => {
               type="checkbox"
               checked={termsAccepted}
               onChange={(e) => setTermsAccepted(e.target.checked)}
-              className="mt-1 w-5 h-5 cursor-pointer"
+              disabled={!termsScrolled}
+              className="mt-1 w-5 h-5"
               style={{
                 accentColor: '#d4af37',
+                cursor: termsScrolled ? 'pointer' : 'not-allowed',
               }}
             />
-            <span className="text-sm sm:text-base font-semibold group-hover:text-yellow-400 transition-colors">
-              I have read and agree to the Terms of Use, and I acknowledge that all content is legally protected evidence.
+            <span className={`text-sm sm:text-base font-semibold ${termsScrolled ? 'group-hover:text-yellow-400' : ''} transition-colors`}>
+              I have read and agree to the Terms of Use Requirement, and I acknowledge that all content is legally protected evidence.
             </span>
           </label>
         </div>
