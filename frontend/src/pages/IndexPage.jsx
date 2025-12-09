@@ -21,6 +21,8 @@ const IndexPage = () => {
 
   useEffect(() => {
     document.title = 'Blankenship';
+    // Force scroll to top when page loads (especially important on mobile)
+    window.scrollTo(0, 0);
   }, []);
 
   // Group entries by year
