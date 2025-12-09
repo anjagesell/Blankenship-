@@ -161,7 +161,7 @@ const MonthlyDetail = ({ monthDate, isAdmin, onClose }) => {
               <tbody>
                 {entries.length === 0 ? (
                   <tr>
-                    <td colSpan="7" className="px-3 py-6 text-center text-sm italic" style={{ color: '#5D4037' }}>
+                    <td colSpan={isAdmin ? "7" : "6"} className="px-3 py-6 text-center text-sm italic" style={{ color: '#5D4037' }}>
                       No detailed entries for this month yet. Data will be added.
                     </td>
                   </tr>
