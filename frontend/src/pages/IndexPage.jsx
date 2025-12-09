@@ -802,10 +802,53 @@ const IndexPage = () => {
         })}
       </div>
 
+      {/* Admin Login Button - Bottom Right */}
+      {!isAdmin ? (
+        <button
+          onClick={() => setShowAdminLogin(true)}
+          className="fixed bottom-6 right-6 p-3 rounded-full transition-all hover:scale-110 z-40"
+          style={{
+            background: 'linear-gradient(145deg, #d4af37 0%, #c5a028 50%, #9c7a1f 100%)',
+            border: '2px solid #8b6914',
+            boxShadow: '0 4px 16px rgba(212, 175, 55, 0.6)',
+          }}
+          title="Admin Login"
+        >
+          <Shield className="w-5 h-5" style={{ color: '#1a0f0a' }} />
+        </button>
+      ) : (
+        <button
+          onClick={handleAdminLogout}
+          className="fixed bottom-6 right-6 px-4 py-2 rounded transition-all hover:scale-105 z-40 flex items-center gap-2"
+          style={{
+            background: 'linear-gradient(145deg, #8b0000 0%, #660000 100%)',
+            border: '2px solid #440000',
+            boxShadow: '0 4px 16px rgba(139, 0, 0, 0.6)',
+            color: '#fff',
+            fontFamily: 'Arial, sans-serif',
+            fontSize: '12px',
+            fontWeight: 'bold',
+          }}
+          title="Logout Admin"
+        >
+          <Shield className="w-4 h-4" />
+          ADMIN
+        </button>
+      )}
+
+      {/* Admin Login Modal */}
+      {showAdminLogin && (
+        <AdminLogin 
+          onAdminLogin={handleAdminLogin}
+          onClose={() => setShowAdminLogin(false)}
+        />
+      )}
+
       {/* Monthly Detail Modal */}
       {selectedMonth && (
         <MonthlyDetail 
           monthDate={selectedMonth}
+          isAdmin={isAdmin}
           onClose={() => setSelectedMonth(null)}
         />
       )}
