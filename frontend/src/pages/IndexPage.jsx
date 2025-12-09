@@ -781,6 +781,14 @@ const IndexPage = () => {
           );
         })}
       </div>
+
+      {/* Monthly Detail Modal */}
+      {selectedMonth && (
+        <MonthlyDetail 
+          monthDate={selectedMonth}
+          onClose={() => setSelectedMonth(null)}
+        />
+      )}
     </div>
   );
 };
