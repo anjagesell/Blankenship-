@@ -136,13 +136,18 @@ const IndexPage = () => {
                     transform: 'translateZ(0)',
                   }}
                 >
-                  {/* Leather texture overlay */}
+                  {/* Weathered texture overlay with scratches and dents */}
                   <div 
                     className="absolute inset-0"
                     style={{
                       backgroundImage: `
                         radial-gradient(ellipse at 30% 40%, rgba(70, 50, 35, 0.1) 0%, transparent 50%),
                         radial-gradient(ellipse at 70% 60%, rgba(50, 35, 25, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 15% 25%, rgba(0, 0, 0, 0.3) 0%, transparent 8px),
+                        radial-gradient(circle at 85% 75%, rgba(0, 0, 0, 0.25) 0%, transparent 12px),
+                        radial-gradient(circle at 45% 90%, rgba(0, 0, 0, 0.2) 0%, transparent 6px),
+                        linear-gradient(120deg, transparent 48%, rgba(0, 0, 0, 0.15) 49%, transparent 50%),
+                        linear-gradient(95deg, transparent 65%, rgba(0, 0, 0, 0.12) 66%, transparent 67%),
                         repeating-linear-gradient(
                           45deg,
                           transparent,
@@ -151,9 +156,60 @@ const IndexPage = () => {
                           rgba(0, 0, 0, 0.03) 2px
                         )
                       `,
-                      opacity: 0.6,
+                      opacity: 0.7,
                     }}
                   />
+
+                  {/* Vintage shipping label */}
+                  <div 
+                    className="absolute top-8 sm:top-10 left-8 sm:left-12"
+                    style={{
+                      width: '80px',
+                      height: '50px',
+                      background: 'linear-gradient(135deg, #e8d7b8 0%, #d4c5a0 100%)',
+                      border: '1px solid rgba(0,0,0,0.3)',
+                      transform: 'rotate(-3deg)',
+                      boxShadow: '0 2px 8px rgba(0,0,0,0.4), inset 0 1px 2px rgba(255,255,255,0.3)',
+                      opacity: 0.8,
+                    }}
+                  >
+                    {/* Label wear/age marks */}
+                    <div 
+                      className="absolute inset-0"
+                      style={{
+                        backgroundImage: `
+                          radial-gradient(circle at 20% 30%, rgba(139,69,19,0.15) 0%, transparent 40%),
+                          radial-gradient(circle at 80% 70%, rgba(0,0,0,0.1) 0%, transparent 35%)
+                        `,
+                      }}
+                    />
+                    {/* Barcode suggestion */}
+                    <div 
+                      className="absolute bottom-1 left-1 right-1 flex gap-px opacity-30"
+                      style={{ height: '8px' }}
+                    >
+                      {[1,0,1,1,0,1,0,0,1,1,0,1,0,1].map((bar, i) => (
+                        <div 
+                          key={i} 
+                          style={{ 
+                            flex: 1, 
+                            background: bar ? '#000' : 'transparent' 
+                          }} 
+                        />
+                      ))}
+                    </div>
+                    {/* Year stamp */}
+                    <div 
+                      className="absolute top-1 left-1 text-[8px] font-bold"
+                      style={{ 
+                        color: '#3E2723',
+                        fontFamily: 'Courier, monospace',
+                        opacity: 0.6,
+                      }}
+                    >
+                      {year}
+                    </div>
+                  </div>
 
                   {/* Brass corner protectors */}
                   {['top-6 left-6', 'top-6 right-6', 'bottom-6 left-6', 'bottom-6 right-6'].map((pos, i) => (
