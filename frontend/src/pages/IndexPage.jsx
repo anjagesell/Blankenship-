@@ -609,7 +609,10 @@ const IndexPage = () => {
                             key={entry.id}
                             onClick={(e) => {
                               e.stopPropagation();
-                              navigate(`/entry/${entry.id}`);
+                              // Open monthly detail view instead of navigating
+                              if (entry.date) {
+                                setSelectedMonth(entry.date);
+                              }
                             }}
                             className={`relative cursor-pointer transition-all duration-700 group ${
                               isOpen ? 'translate-y-0 opacity-100 scale-100' : 'translate-y-10 opacity-0 scale-95'
