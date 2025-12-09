@@ -445,7 +445,7 @@ const EntryPage = () => {
 
       {/* Copyright Notice - Bottom of Page */}
       <div 
-        className="absolute bottom-6 left-0 right-0 text-center px-4"
+        className="mt-6 mb-8 text-center px-4"
         style={{ 
           color: '#d4a574',
           fontFamily: 'Garamond, serif',
