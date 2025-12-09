@@ -233,15 +233,8 @@ metadata:
   run_ui: true
 
 test_plan:
-  current_focus:
-    - "Entry Page - Password Protection"
-    - "Synopsis Page - Introduction Letter"
-    - "Index Page - Year-Based Archive Boxes"
-    - "Content Page - Document Display"
-    - "Routing and Navigation"
-    - "Global Styles - Judicial Theme"
-  stuck_tasks:
-    - "Synopsis Page - Read Aloud Feature"
+  current_focus: []
+  stuck_tasks: []
   test_all: false
   test_priority: "high_first"
 
