@@ -263,7 +263,7 @@ const IndexPage = () => {
                       {/* Embossed year label */}
                       <div className="absolute inset-0 flex flex-col items-center justify-center">
                         <h2 
-                          className="text-4xl sm:text-5xl md:text-6xl font-bold mb-2 tracking-wider"
+                          className="text-3xl sm:text-5xl md:text-6xl font-bold mb-1 sm:mb-2 tracking-wider"
                           style={{ 
                             fontFamily: 'Georgia, serif',
                             background: 'linear-gradient(to bottom, #D4AF37 0%, #AA8A2A 50%, #8B6914 100%)',
@@ -277,16 +277,13 @@ const IndexPage = () => {
                           {year}
                         </h2>
                         <div 
-                          className="text-yellow-700/80 text-sm font-medium uppercase tracking-widest"
+                          className="text-yellow-700/80 text-xs sm:text-sm font-medium uppercase tracking-widest"
                           style={{ 
                             textShadow: '0 1px 3px rgba(0, 0, 0, 0.8)',
                             fontFamily: 'Georgia, serif'
                           }}
                         >
                           {isOpen ? 'Archive Open' : 'Click to Open'}
-                        </div>
-                        <div className="text-yellow-800/60 text-xs mt-1">
-                          {yearEntries.length} Document{yearEntries.length !== 1 ? 's' : ''}
                         </div>
                       </div>
                     </div>
