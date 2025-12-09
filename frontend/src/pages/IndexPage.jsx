@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { indexEntries } from '../mock';
 import { Card } from '../components/ui/card';
 import { Calendar, PlayCircle, Boxes, Scale, AlertTriangle, HeartCrack, FileText, History, Lock, LockOpen } from 'lucide-react';
+import Timeline from '../components/Timeline';
 
 // Icon mapping
 const iconMap = {
