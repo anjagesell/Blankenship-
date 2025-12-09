@@ -4,6 +4,7 @@ import { indexEntries } from '../mock';
 import { Card } from '../components/ui/card';
 import { Calendar, PlayCircle, Boxes, Scale, AlertTriangle, HeartCrack, FileText, History, Lock, LockOpen } from 'lucide-react';
 import Timeline from '../components/Timeline';
+import MonthlyDetail from '../components/MonthlyDetail';
 
 // Icon mapping
 const iconMap = {
