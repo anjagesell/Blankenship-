@@ -142,6 +142,212 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+# ============================================
+# FILE UPLOAD SYSTEM
+# ============================================
+
+# Models for file uploads
+class FileUploadResponse(BaseModel):
+    file_id: str
+    filename: str
+    file_type: str
+    file_size: int
+    upload_date: str
+    entry_id: str
+
+class FileInfo(BaseModel):
+    file_id: str
+    filename: str
+    file_type: str
+    file_size: int
+    upload_date: str
+    entry_id: str
+
+# Admin verification function
+def verify_admin_password(password: str):
+    if password != ADMIN_PASSWORD:
+        raise HTTPException(status_code=403, detail="Invalid admin password")
+    return True
+
+# Allowed file types
+ALLOWED_EXTENSIONS = {
+    # Documents
+    'pdf': 'application/pdf',
+    # Images
+    'jpg': 'image/jpeg',
+    'jpeg': 'image/jpeg',
+    'png': 'image/png',
+    'gif': 'image/gif',
+    'webp': 'image/webp',
+    'heic': 'image/heic',
+    'heif': 'image/heif',
+    # Video
+    'mp4': 'video/mp4',
+    'mov': 'video/quicktime',
+    'avi': 'video/x-msvideo',
+    'wmv': 'video/x-ms-wmv',
+    'mpeg': 'video/mpeg',
+    'mpg': 'video/mpeg',
+    'flv': 'video/x-flv',
+    # Audio
+    'mp3': 'audio/mpeg',
+    'wav': 'audio/wav',
+    'aac': 'audio/aac',
+    'ogg': 'audio/ogg',
+    'flac': 'audio/flac',
+    'aiff': 'audio/aiff',
+}
+
+def get_file_extension(filename: str) -> str:
+    return filename.split('.')[-1].lower() if '.' in filename else ''
+
+def validate_file_type(filename: str) -> bool:
+    ext = get_file_extension(filename)
+    return ext in ALLOWED_EXTENSIONS
+
+# File upload endpoint
+@api_router.post("/upload", response_model=FileUploadResponse)
+async def upload_file(
+    file: UploadFile = File(...),
+    entry_id: str = Form(...),
+    admin_password: str = Form(...)
+):
+    """
+    Upload a file (PDF, image, video, or audio) for a specific timeline/monthly entry.
+    Requires admin password.
+    """
+    # Verify admin password
+    verify_admin_password(admin_password)
+    
+    # Validate file type
+    if not validate_file_type(file.filename):
+        raise HTTPException(
+            status_code=400, 
+            detail=f"File type not allowed. Allowed types: {', '.join(ALLOWED_EXTENSIONS.keys())}"
+        )
+    
+    # Generate unique file ID
+    file_id = str(uuid.uuid4())
+    file_extension = get_file_extension(file.filename)
+    stored_filename = f"{file_id}.{file_extension}"
+    
+    # Create directory structure: uploads/{entry_id}/
+    entry_dir = UPLOAD_DIR / entry_id
+    entry_dir.mkdir(exist_ok=True)
+    
+    file_path = entry_dir / stored_filename
+    
+    try:
+        # Save file
+        with open(file_path, "wb") as buffer:
+            shutil.copyfileobj(file.file, buffer)
+        
+        # Get file size
+        file_size = file_path.stat().st_size
+        
+        # Create file record in database
+        file_record = {
+            "file_id": file_id,
+            "filename": file.filename,
+            "stored_filename": stored_filename,
+            "file_type": file_extension,
+            "file_size": file_size,
+            "entry_id": entry_id,
+            "upload_date": datetime.now(timezone.utc).isoformat(),
+            "file_path": str(file_path)
+        }
+        
+        await db.uploaded_files.insert_one(file_record)
+        
+        return FileUploadResponse(
+            file_id=file_id,
+            filename=file.filename,
+            file_type=file_extension,
+            file_size=file_size,
+            upload_date=file_record["upload_date"],
+            entry_id=entry_id
+        )
+    
+    except Exception as e:
+        # Clean up file if database insert fails
+        if file_path.exists():
+            file_path.unlink()
+        raise HTTPException(status_code=500, detail=f"Upload failed: {str(e)}")
+
+# Get files for a specific entry
+@api_router.get("/files/{entry_id}", response_model=List[FileInfo])
+async def get_files_for_entry(entry_id: str):
+    """Get all uploaded files for a specific timeline/monthly entry"""
+    files = await db.uploaded_files.find(
+        {"entry_id": entry_id},
+        {"_id": 0}
+    ).to_list(1000)
+    
+    return [
+        FileInfo(
+            file_id=f["file_id"],
+            filename=f["filename"],
+            file_type=f["file_type"],
+            file_size=f["file_size"],
+            upload_date=f["upload_date"],
+            entry_id=f["entry_id"]
+        ) for f in files
+    ]
+
+# Download/view a file
+@api_router.get("/file/{file_id}")
+async def download_file(file_id: str):
+    """Download or view an uploaded file"""
+    # Get file record from database
+    file_record = await db.uploaded_files.find_one(
+        {"file_id": file_id},
+        {"_id": 0}
+    )
+    
+    if not file_record:
+        raise HTTPException(status_code=404, detail="File not found")
+    
+    file_path = Path(file_record["file_path"])
+    
+    if not file_path.exists():
+        raise HTTPException(status_code=404, detail="File not found on server")
+    
+    # Determine media type
+    ext = file_record["file_type"]
+    media_type = ALLOWED_EXTENSIONS.get(ext, "application/octet-stream")
+    
+    return FileResponse(
+        path=file_path,
+        media_type=media_type,
+        filename=file_record["filename"]
+    )
+
+# Delete a file (admin only)
+@api_router.delete("/file/{file_id}")
+async def delete_file(file_id: str, admin_password: str = Form(...)):
+    """Delete an uploaded file (admin only)"""
+    # Verify admin password
+    verify_admin_password(admin_password)
+    
+    # Get file record
+    file_record = await db.uploaded_files.find_one(
+        {"file_id": file_id},
+        {"_id": 0}
+    )
+    
+    if not file_record:
+        raise HTTPException(status_code=404, detail="File not found")
+    
+    # Delete file from filesystem
+    file_path = Path(file_record["file_path"])
+    if file_path.exists():
+        file_path.unlink()
+    
+    # Delete record from database
+    await db.uploaded_files.delete_one({"file_id": file_id})
+    
+    return {"status": "success", "message": "File deleted"}
+
 @app.on_event("shutdown")
 async def shutdown_db_client():
     client.close()
