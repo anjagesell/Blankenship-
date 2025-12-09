@@ -31,6 +31,14 @@ const EntryPage = () => {
     if (index === 7 && value) {
       const enteredCode = newCode.join('');
       if (enteredCode === ENTRY_CODE) {
+        if (!termsAccepted) {
+          toast({
+            title: 'Terms Required',
+            description: 'Please acknowledge the Terms of Use to proceed',
+            variant: 'destructive',
+          });
+          return;
+        }
         toast({
           title: 'Access Granted',
           description: 'Welcome to Blankenship Archives',
