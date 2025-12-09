@@ -145,15 +145,17 @@ const MonthlyDetail = ({ monthDate, isAdmin, onClose }) => {
                   >
                     Notes
                   </th>
-                  <th 
-                    className="px-3 py-3 text-center text-xs sm:text-sm font-bold uppercase tracking-wider"
-                    style={{ 
-                      color: '#d4af37',
-                      fontFamily: 'Arial, sans-serif',
-                    }}
-                  >
-                    Upload
-                  </th>
+                  {isAdmin && (
+                    <th 
+                      className="px-3 py-3 text-center text-xs sm:text-sm font-bold uppercase tracking-wider"
+                      style={{ 
+                        color: '#d4af37',
+                        fontFamily: 'Arial, sans-serif',
+                      }}
+                    >
+                      Upload
+                    </th>
+                  )}
                 </tr>
               </thead>
               <tbody>
