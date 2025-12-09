@@ -8,10 +8,56 @@ const MonthlyDetail = ({ monthDate, isAdmin, onClose }) => {
   const monthNames = ['', 'January', 'February', 'March', 'April', 'May', 'June', 
                       'July', 'August', 'September', 'October', 'November', 'December'];
   const monthName = monthNames[parseInt(month)];
+  const [uploading, setUploading] = React.useState(false);
+  const [uploadingFor, setUploadingFor] = React.useState(null);
 
-  const handleUpload = (entryId) => {
-    // Placeholder for upload functionality
-    alert(`Upload files for entry ${entryId}\n\nUpload system will be built in next phase.`);
+  const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
+
+  const handleUpload = async (entryId) => {
+    // Create file input element
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.multiple = true;
+    fileInput.accept = '.pdf,.jpg,.jpeg,.png,.gif,.webp,.heic,.heif,.mp4,.mov,.avi,.wmv,.mpeg,.mpg,.flv,.mp3,.wav,.aac,.ogg,.flac,.aiff';
+    
+    fileInput.onchange = async (e) => {
+      const files = Array.from(e.target.files);
+      if (files.length === 0) return;
+      
+      setUploadingFor(entryId);
+      setUploading(true);
+      
+      try {
+        const adminPassword = '02071951'; // Admin password
+        
+        // Upload each file
+        for (const file of files) {
+          const formData = new FormData();
+          formData.append('file', file);
+          formData.append('entry_id', entryId);
+          formData.append('admin_password', adminPassword);
+          
+          const response = await fetch(`${BACKEND_URL}/api/upload`, {
+            method: 'POST',
+            body: formData,
+          });
+          
+          if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.detail || 'Upload failed');
+          }
+        }
+        
+        alert(`Successfully uploaded ${files.length} file(s)!`);
+      } catch (error) {
+        alert(`Upload failed: ${error.message}`);
+      } finally {
+        setUploading(false);
+        setUploadingFor(null);
+      }
+    };
+    
+    fileInput.click();
   };
 
   return (
