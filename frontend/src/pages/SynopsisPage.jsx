@@ -197,35 +197,6 @@ Blankenship`;
 
       {/* Letter Content */}
       <div className="container mx-auto px-4 py-8 sm:py-12 md:py-16 max-w-5xl relative z-10">
-        {/* Read Aloud Button */}
-        <div className="flex flex-col items-center mb-8 gap-3">
-          <button
-            onClick={handleReadAloud}
-            className={`brass-button px-8 py-4 rounded text-base sm:text-lg font-semibold uppercase tracking-wider transition-all ${
-              isReading ? 'bg-red-800' : ''
-            }`}
-            style={{
-              fontFamily: 'Garamond, serif',
-              color: '#1a0f0a',
-            }}
-          >
-            {isReading ? (
-              <>
-                <Square className="w-4 h-4 sm:w-5 sm:h-5 inline-block mr-2" />
-                Stop Reading
-              </>
-            ) : (
-              <>
-                <Volume2 className="w-4 h-4 sm:w-5 sm:h-5 inline-block mr-2" />
-                Read Aloud
-              </>
-            )}
-          </button>
-          <p className="text-yellow-600/70 text-xs sm:text-sm text-center italic px-4" style={{ fontFamily: 'Garamond, serif' }}>
-            Note: This feature works best on desktop browsers (Chrome, Firefox, Safari, Edge)
-          </p>
-        </div>
-
         {/* Parchment Letter Box */}
         <div 
           className="parchment-bg p-6 sm:p-10 md:p-16 rounded shadow-2xl relative"
