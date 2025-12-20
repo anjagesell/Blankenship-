@@ -593,6 +593,8 @@ const Genogram = ({ onClose }) => {
             <span className="text-gray-300">Has Exhibits</span>
           </div>
         </div>
+          </>
+        )}
       </div>
     </div>
   );
