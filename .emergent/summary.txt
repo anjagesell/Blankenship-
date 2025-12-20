@@ -1,98 +1,113 @@
 <analysis>**original_problem_statement:**
-The user wants to build a private, password-protected website named Blankenship. The project's purpose is to document evidence of a wrongful conviction.
+The user wants to build a private, password-protected website named Blankenship to document evidence of a wrongful conviction.
 
 **PRODUCT REQUIREMENTS:**
-1.  **Entry Page:** A password-protected entry page with the code . The design should be navy blue and feature clickable icons providing legal information about data privacy, wrongful convictions, and due process.
-2.  **Synopsis Page:** An intermediate page displayed after successful login. It contains a powerful, collaboratively-written letter detailing the context of the case, including constitutional principles, legal statutes, and statistics on miscarriages of justice. The page should have a serious, handwritten-style font and an (optional, currently buggy) Read Aloud feature.
-3.  **Index Page:** A Table of Contents page that organizes evidence by date. The user has requested a sophisticated judicial or courthouse aesthetic, featuring interactive, 3D-style archival boxes/crates for each year (e.g., 2013, 2014) that open to reveal the monthly entries within.
-4.  **Content Pages:** Individual pages for each monthly entry, where scanned documents and textual evidence will be displayed.
-5.  **Aesthetic:** A serious, authoritative, and sophisticated design suitable for presenting legal evidence. The current direction is a courthouse/legal chamber theme using marble textures, mahogany wood tones, and brass/gold accents.
-6.  **Core Narrative:** The website tells the story of the user's nephew, Zackary Blankenship, who was wrongfully imprisoned, and his younger brother, Jacob, who provided the evidence of innocence before tragically taking his own life. The website's goal is to present this evidence to seek justice.
+1.  **Entry Page:** A password-protected entry page () with a mandatory, scroll-to-accept Terms of Use agreement.
+2.  **Synopsis Page:** An intermediate page after login with a letter detailing the case context.
+3.  **Investigative Structure:** A two-tier evidence system on the main page:
+    *   A top-level, Excel-style Highlights Timeline.
+    *   Interactive yearly archives (e.g., 2013, 2014) that reveal detailed monthly logs.
+4.  **Admin & Upload Functionality:**
+    *   A secure admin section (password: ) for content management.
+    *   Admin can add, edit, and delete entries in timelines.
+    *   Admin can upload evidence files (PDFs, images, video, audio) associated with events.
+5.  **Aesthetic:** A serious, courthouse/legal chamber design with marble, mahogany, and brass/gold accents.
+6.  **Content Protection:** Measures to prevent casual downloading (e.g., disabling right-click, screenshot warnings).
+7.  **Core Narrative:** To present evidence of Zackary Blankenship's wrongful imprisonment and honor his late brother, Jacob.
 
 **User's preferred language**: English
 
 **what currently exists?**
-A full-stack React/FastAPI/MongoDB application has been set up. The frontend consists of an Entry Page, a Synopsis Page with a detailed letter, an Index Page, and a template for Content Pages. All data is currently mocked in . The Index Page's design has undergone several iterations and the agent has just begun a complete judicial overhaul to give it a more serious, courthouse-like feel, having already rewritten  and . The backend is minimal, with a health-check endpoint added to fix previous deployment issues, but no application-specific logic has been implemented.
+The application is a fully-featured React/FastAPI/MongoDB evidence management system with a judicial courthouse theme.
+- **Data Persistence:** All timeline entries and uploaded files are now stored directly in MongoDB, ensuring data persists across deployments and sessions. The critical  issue has been resolved.
+- **Entry Page:** Features a mandatory Acknowledgement Notice that must be scrolled and accepted *before* the password can be entered. A friendly popup guides users who try to skip this step.
+- **Index Page / Timelines:**
+    - The main evidence timeline is fully responsive, showing a table on desktops/tablets and a card-based view on mobile.
+    - **Features:** Line numbers for each entry, a Search bar, a date Sort toggle, and a Print Report button that generates a formatted PDF.
+    - **Admin Controls:** Admins see buttons to Add Entry, Edit, and Delete rows. A red Clear Files button was added to purge old, broken exhibit records.
+- **Exhibit Management:**
+    - The Evidence column has been renamed to Exhibit.
+    - Admins can upload files (JPEG, PDF) for each timeline entry.
+    - Clicking an exhibit badge opens a lightbox viewer for images/PDFs.
+- **Visual Case Map (Genogram):** A new feature that displays the entire case history as an interactive, clickable tree diagram, rooted in the initial event from October 2013.
+- **Content Protection:** Robust measures are in place, including disabling right-click, copy/paste, and dev tools, plus a dismissible, humorous warning popup for screenshot attempts.
+- **UI Enhancements:** The yearly archive boxes have been replaced with elegant envelope icons, now featuring CONFIDENTIAL stamps and EVIDENCE tags for authenticity.
 
 **Last working item**:
-*   **Last item agent was working**: The agent was in the middle of a major frontend redesign called the Judicial Design Overhaul. This was requested by the user to make the website's appearance more serious, authoritative, and sophisticated, suitable for presenting legal evidence. The agent had just started by rewriting  and  to implement a new courthouse-inspired aesthetic. The user agreed to fork the session to give the agent better processing capacity for this significant redesign.
-*   **Status**: IN PROGRESS
+*   **Last item agent was working**: The user requested two final changes before forking: adding line numbers to the timeline and a button to clear all exhibit files (to solve the broken files issue). The agent implemented both.
+*   **Status**: USER VERIFICATION PENDING
 *   **Agent Testing Done**: N
-*   **Which testing method agent to use?** Frontend testing agent after the redesign is complete. Use the screenshot tool frequently to show the new design to the user for approval.
+*   **Which testing method agent to use?** Manual testing by the user after deployment. The user needs to:
+    1.  Log in as admin.
+    2.  Click the red Clear Files button to purge old, broken exhibit records.
+    3.  Confirm the line numbers appear correctly in the timeline table.
+    4.  Re-upload an exhibit to ensure it works correctly with the new database storage system.
 *   **User Testing Done**: N
 
 **All Pending/In progress Issue list**:
-*   **Issue 1**: Read Aloud feature is buggy. (P0)
-*   **Issue 2**: Legal research on using real names is pending. (P1)
+*   **Issue 1**: Exhibit files uploaded before the database storage fix are broken. (P0)
+*   **Issue 2**: MS Word uploads (, ) are not working. (P2)
 
 **Issues Detail**:
-*   **Issue 1**:
-    *   **Description**: The Read Aloud feature on the Synopsis Page is not working reliably for the user, particularly on mobile and within the Emergent app's webview. The user has reported that the button does nothing or shows an error. This is a critical accessibility feature.
-    *   **Attempted fixes**: The feature was initially implemented using the browser's Web Speech API. After bug reports, it was removed and then re-implemented with simpler, more robust code designed for mobile compatibility. The issue persists, likely due to webview limitations. The user has requested to keep the feature for now, hoping it works on a deployed site in a standard browser.
+*   **Issue 1: Broken Exhibit Files from Filesystem Storage**
+    *   **Description**: The user reported that clicking on an exhibit results in a File not found on server error. This is because files were previously stored on the ephemeral filesystem, which is wiped on deployment. The file records exist in the DB, but the file content is gone.
+    *   **Attempted fixes**: The agent correctly diagnosed the issue and re-architected the file handling system to store file content directly in MongoDB. To clean up the old, broken records, the agent added a  endpoint and a red Clear Files button to the admin UI.
     *   **Next debug checklist**:
-        1.  After the judicial redesign is complete and deployed by the user, ask for another test in a standard mobile browser (Chrome/Safari) outside the Emergent app.
-        2.  If it still fails, add more robust error logging to capture the exact failure reason ( from the SpeechSynthesisUtterance).
-        3.  Consider replacing the native Web Speech API with a lightweight, third-party text-to-speech library that has better cross-browser support.
-    *   **Why fix this issue and what will be achieved with the fix?**: The user feels strongly that this is a critical accessibility feature, required by law in many places. Fixing it will make the content accessible and fulfill a key user requirement.
-    *   **Status**: IN PROGRESS
-    *   **Is recurring issue?**: Y
-    *   **Should Test frontend/backend/both after fix?**: Frontend
-    *   **Blocked on other issue**: None
-
-*   **Issue 2**:
-    *   **Description**: The user asked for legal guidance on whether they are allowed to use real names (Zackary, Gabi, Keith, etc.) on the password-protected website. The agent started research but the conversation was forked before providing an answer.
-    *   **Attempted fixes**: None.
+        1.  Instruct the user to **Save and Deploy** the latest changes.
+        2.  Guide the user to log in as admin and click the red Clear Files button.
+        3.  Confirm that the old exhibit badges disappear.
+        4.  Guide the user to re-upload an exhibit and verify it can be viewed correctly.
+    *   **Why fix this issue and what will be achieved with the fix?**: This is critical for the application's core functionality. Fixing it will make the evidence upload feature reliable and persistent.
+    *   **Status**: USER VERIFICATION PENDING
+    *   **Is recurring issue?**: N (The architectural fix prevents recurrence).
+    *   **Should Test frontend/backend/both after fix?**: Both.
+    *   **Blocked on other issue**: None.
+*   **Issue 2: MS Word Upload Failure**
+    *   **Description**: The user mentioned that while JPEG and PDF uploads work, MS Word documents fail to upload.
+    *   **Attempted fixes**: The agent acknowledged the issue but deprioritized it at the user's request. No fix has been attempted.
     *   **Next debug checklist**:
-        1.  Resume the web search for publishing names and legal documents as evidence of wrongful conviction on a private, password-protected website in the US.
-        2.  Focus on defamation law (libel), privacy torts (public disclosure of private facts), and any protections related to truth as an absolute defense or matters of public concern.
-        3.  Summarize the findings for the user, including the standard disclaimer that this is not legal advice and they should consult a qualified attorney.
-    *   **Why fix this issue and what will be achieved with the fix?**: This is a blocker for the user to decide on the content strategy and how to present the evidence. Answering this will allow content creation to proceed.
+        1.  Verify the  and MIME type mapping in  includes  and .
+        2.  Review the file upload logic to ensure it can handle these file types.
+        3.  Test uploading a  file and inspect backend logs for errors.
+    *   **Why fix this issue and what will be achieved with the fix?**: It will complete the file type support requested by the user, making the exhibit upload feature more versatile.
     *   **Status**: NOT STARTED
-    *   **Is recurring issue?**: N
-    *   **Should Test frontend/backend/both after fix?**: N/A
-    *   **Blocked on other issue**: None
+    *   **Is recurring issue?**: N/A
+    *   **Should Test frontend/backend/both after fix?**: Both.
+    *   **Blocked on other issue**: None.
 
 **In progress Task List**:
-*   **Task 1**: Complete the Judicial Design Overhaul. (P0)
-
-**Task Detail**:
-*   **Task 1**:
-    *   **Where to resume**: The agent has already rewritten  and . The next step is to apply the same courthouse aesthetic (marble, mahogany, brass, engraved buttons, legal icons) to the remaining pages: , , and . The design for the  should transform the list of entries into interactive, 3D-style archival boxes for each year.
-    *   **What will be achieved with this?**: A sophisticated, serious, and professional design that meets the user's explicit aesthetic requirements for presenting sensitive legal evidence.
-    *   **Status**: IN PROGRESS
-    *   **Should Test frontend/backend/both after fix?**: Frontend
-    *   **Blocked on something**: No.
+*   None.
 
 **Upcoming and Future Tasks**
 *   **Upcoming Tasks**:
-    *   (P1) Get user input for the remaining 15 month descriptions (March 2014 - May 2015) to update .
-    *   (P1) Clarify and implement the additional tabs at the bottom that the user mentioned.
-    *   (P2) Begin backend development for a document/evidence upload system. This includes designing file storage strategy (e.g., S3 bucket) and database models.
+    *   (P0) Add individual delete (X) buttons for each exhibit badge in the timeline, so the user doesn't have to clear all files to remove one.
+    *   (P1) Fix the MS Word (, ) upload functionality.
+    *   (P2) Connect the main file upload buttons in the  modal to the backend.
+    *   (P2) Get the real data from the user to populate the timelines.
 *   **Future Tasks**:
-    *   (P2) Implement the frontend UI for uploading and managing evidence.
-    *   (P2) Create the full backend (DB models and API endpoints) to replace all mocked data in .
-    *   (P2) Integrate the frontend with the live backend API, removing all mock data handling.
+    *   (P3) Build a simple admin interface for viewing and managing all uploaded evidence files in one place.
 
 **Completed work in this session**
-- **Initial Frontend Scaffolding**: Created Entry, Synopsis, Index, and Content pages with routing and mock data.
-- **Password Protection**: Implemented the 8-digit code entry feature on the landing page.
-- **Legal Content & Features**: Researched legal statutes and added this information into clickable dialogs on the entry page. Collaboratively drafted the powerful introduction letter on the Synopsis page.
-- **Design & UX Iteration**:
-    - Iterated through multiple designs for the Index page (grid -> 2D crates -> 3D crates -> premium archival boxes).
-    - Fixed numerous mobile responsiveness issues across all pages based on user-provided screenshots.
-    - Updated fonts and changed the Justicia statue to one with a transparent background.
-- **Content Population**: Updated the first 5 months of entries (Oct 2013 - Feb 2014) with user-provided custom descriptions and added a Pre-history entry.
-- **Deployment & Bug Fixes**:
-    - Resolved a critical deployment issue by implementing a backend health check endpoint.
-    - Attempted multiple fixes for the buggy Read Aloud feature.
-- **User Support**: Assisted the user with a critical billing issue by helping them identify 8 unwanted deployments and draft a support request, which was ultimately resolved by human support.
+- **Data Persistence Overhaul**: Migrated timeline and file storage from /filesystem to MongoDB, making all data permanent and solving the critical data loss issue.
+- **UI Enhancement (Envelopes)**: Replaced yearly archive boxes with elegant envelope icons, complete with CONFIDENTIAL stamps and EVIDENCE tags.
+- **Cache-Busting Implemented**: Added meta tags and a version-based script to ensure users always see the latest version of the site.
+- **Timeline Feature Pack**:
+    - **Search**: Added a real-time search bar.
+    - **Sorting**: Implemented a date sort toggle button.
+    - **Line Numbers**: Added a # column for numbered entries.
+    - **Wider Notes**: Expanded the notes column for better readability.
+- **Exhibit Management Upgrade**:
+    - Renamed Evidence column to Exhibit.
+    - Added an Upload button to each timeline row.
+    - Implemented a lightbox-style Exhibit Viewer for images and PDFs.
+    - Added a Clear Files button for admins to purge old file records.
+- **Genogram (Visual Case Map)**: Created a new, interactive tree diagram that visualizes the case timeline, with clickable nodes that show entry details.
+- **Full Responsiveness**: Reworked the timeline to use a card-based layout on mobile devices, ensuring usability across all screen sizes.
+- **Content Protection Hardening**: Added a dismissible, humorous popup warning to deter screenshots.
+- **Entry Page UX Improvement**: Moved the Acknowledgement Notice above the password fields and made them disabled until the notice is accepted.
 
 **Earlier issues found/mentioned but not fixed**
-*   **Issue 1**: The Read Aloud feature on the synopsis page is not working reliably for the user on mobile, which is a major accessibility concern for them.
-    *   **Debug checklist**: Check if the feature works in a standard mobile browser (not the Emergent webview). If it fails, log specific error codes from the Web Speech API. Consider using a third-party library for better reliability.
-    *   **Why to solve this issue and what will be achieved with this?**: It's a critical accessibility requirement for the user.
-    *   **Should Test frontend/backend/both after fix**: Frontend.
-    *   **Is recurring issue?**: Y
+*   **MS Word upload failure**: As detailed in the All Pending/In progress Issue list, this was acknowledged but not addressed.
 
 **Known issue recurrence from previous fork**
 *   N/A
@@ -101,75 +116,81 @@ A full-stack React/FastAPI/MongoDB application has been set up. The frontend con
 
 
 **Key Technical Concepts**
-*   **Frontend**: React, React Router, TailwindCSS, Lucide-react for icons, Web Speech API.
-*   **Backend**: FastAPI, Motor (async MongoDB driver), Pydantic.
-*   **Database**: MongoDB.
-*   **Deployment**: Emergent's native Kubernetes deployment system.
+*   **Frontend**: React (Hooks), TailwindCSS, Responsive Design (Card-based mobile layout),  &  for PDF generation,  (or similar) for the Genogram.
+*   **Backend**: FastAPI, Pydantic, MongoDB ().
+*   **Database**: MongoDB. File storage was moved from the filesystem into MongoDB collections (as Base64-encoded strings).
+*   **Data Persistence**: All user-generated content (timeline entries, uploaded files) is now stored in MongoDB, ensuring it persists across deployments.
 
 **key DB schema**
-*   : {id: str, client_name: str, timestamp: datetime} (Example schema, not for app use)
-*   No application-specific schemas have been defined yet.
+*   : 
+*   :  (The  field is new and critical).
 
 **changes in tech stack**
-*   None.
+*   **File Storage**: Moved from storing files on the local filesystem () to storing them as Base64-encoded strings directly within MongoDB documents.
 
 **All files of reference**
-*   : Key file for the main content display, currently undergoing a major redesign.
-*   : Contains the important introductory letter and the buggy Read Aloud feature.
-*   : The password-protected entry point to the site.
-*   : Contains all the placeholder content for the website's entries.
-*   : Contains the new global styles for the judicial overhaul.
-*   : The main backend file, containing health checks and API routing.
+*   : The most heavily modified file, contains logic for the search, sort, print, exhibit viewer, upload buttons, line numbers, clear files button, and Genogram integration. **CRITICAL FILE.**
+*   : The second most critical file. Contains all new API endpoints for timeline CRUD, file upload/download from MongoDB, and the endpoint to clear file records.
+*   : Modified to enforce the Acknowledge First workflow.
+*   : New component for the visual case map.
+*   : Modified to add stamps/tags to the envelope icons.
+*   : Modified to add a dismissible screenshot warning.
 
-**Areas that need refactoring**
-*   The  needs a clean implementation of the new judicial design, removing remnants of previous design attempts (crates, etc.).
-*   The 's Read Aloud implementation is fragile and should be revisited for better reliability, possibly with a third-party library.
+**Areas that need refactoring**:
+*   The file deletion mechanism is currently all or nothing. A more granular approach is needed by implementing individual delete buttons for each exhibit, as requested by the user.
 
 **key api endpoints**
-*   : A simple health check endpoint for Kubernetes.
-*   : A health check that also verifies the database connection.
-*   No application-specific API endpoints have been implemented yet.
+*   : Fetches all timeline entries.
+*   : Creates/updates a timeline entry.
+*   : Deletes a timeline entry.
+*   : Uploads a file and stores its content in MongoDB.
+*   : Fetches file metadata for a timeline entry.
+*   : Serves the content of a specific file from MongoDB.
+*   : Deletes a specific file.
+*   : **(New)** Deletes all records from the  collection. Requires admin password.
 
 **Critical Info for New Agent**
-*   **Handle with Extreme Sensitivity**: The project is a tool for justice for the user's wrongfully imprisoned nephew (Zackary) and deceased nephew (Jacob). The agent must maintain a compassionate and respectful tone.
-*   **Mobile-First Mindset**: The user works exclusively on a mobile device and has faced significant UI/UX challenges with the Emergent platform (can't copy-paste, download files, etc.). Solutions must be simple and mobile-friendly.
-*   **High Design Standards**: The user is very particular about aesthetics. The current task is a major judicial overhaul to create a serious, authoritative design. Do not proceed with playful or simple designs; think courthouse legal chamber.
-*   **Acknowledge Past Frustrations**: The user has had frustrating experiences with platform support and previous agents. Be clear, reliable, and patient.
-*   **Forking**: The user has agreed to fork the session to improve performance for the major redesign. When you start, confirm you are continuing the Blankenship judicial website redesign.
+*   **TOP PRIORITY:** The user MUST use the new Clear Files button after deployment to purge old, broken file records. The previous file uploads are lost due to the filesystem being ephemeral. Guide the user through this process: **Deploy → Log in as Admin → Click Clear Files → Re-upload exhibits.**
+*   **PENDING REQUEST:** The user has asked for a way to delete exhibits individually. Implementing an X button next to each exhibit badge in  should be your first upcoming task.
+*   **KNOWN BUG:** MS Word uploads do not work. This is a lower-priority but known issue to be addressed.
+*   **Project Sensitivity**: Maintain a respectful, professional, and supportive tone. The project is deeply personal and emotionally significant to the user.
 
-**documents created in this job**
-*   
-*   
+**documents and test_reports created in this job**
+*   None.
 
-**Last 10 User Messages and any pending user messages**
-1.  **User**: Likes the recommendation for font icons. (Completed)
-2.  **User**: Asks if the Read Aloud button works in preview. (Agent explained it should).
-3.  **User**: Reports Read Aloud does nothing in the preview via the Emergent app. (Pending Issue).
-4.  **User**: Clarifies that Pre-history should be a clickable card, not a header. (Completed).
-5.  **User**: Confirms Pre-history fix and expresses frustration about the Read Aloud feature being a recurring issue on Emergent, asking the agent to pass on the feedback about accessibility laws. (Agent passed on feedback).
-6.  **User**: Agrees to keep the buggy Read Aloud button for now. (Decision made).
-7.  **User**: Proposes a new design idea for the index page: year-based treasure chests that open to reveal months. (Leads to current redesign task).
-8.  **User**: Confirms the redesign idea, wants brown old cracked wood crates. (Agent implemented a version).
-9.  **User**: Expresses extreme disappointment with the crate design after deploying, calling it 2D and low quality. (User saw an old deployment).
-10. **User**: After seeing the updated preview, is still unhappy with the quality, calling it childish and not serious, and asks for a more sophisticated, photorealistic 3D animation. (This prompted the final Judicial Overhaul request).
+**Last 10 User Messages and any pending HUMAN messages**
+10. **User**: Yes, go ahead and **fork**! 🍴...
+9.  **User**: System is telling me to fork.
+8.  **User**: The changes have been implemented... Please save and deploy these changes and test the functionality...
+7.  **User**: (Agent confirming implementation of line numbers)
+6.  **User**: Great questions! Currently it clears ALL... Would you like me to also add a small X button... Adding that now! 📝
+5.  **User**: Um, hold on.. this clear files Button.... Does it clear all files or just those I am interested in targeting to clear? And second question before I save. Please add line number next to the line entrys infront of the date column please 🙏
+4.  **User**: Wait! Let me quickly add the Clear Old Files button first so you can tap it on your phone! It'll just take 30 seconds:
+3.  **User**: I'll save and redeploy now
+2.  **User**: No problem! Let me add a Clear Old Files button right in the admin interface so you can tap it directly on your phone! 📱
+1.  **User**: I'm on mobile so can't use those links up there. Phone won't copy that.
 
 **Project Health Check:**
 *   **Broken**:
-    *   The Read Aloud feature on the Synopsis page is unreliable on mobile and within the Emergent app's webview.
+    *   Exhibit records pointing to files uploaded before the database storage fix. These records must be purged using the new Clear Files button.
 *   **Mocked**:
-    *   All application data (entries, descriptions, document paths) is mocked in . The backend has no functionality for the core application.
+    *   The timeline data is still limited to a few test entries created by the agent. The user needs to populate it with the real case data.
 
 **3rd Party Integrations**
-*   **Google Fonts**: For 'Dancing Script' and 'Kalam' fonts. More may be added with the new design.
+*   **Google Fonts**: For 'Kalam' and 'Garamond' fonts.
+*   **Lucide-react**: Used for icons.
+*   **jspdf & html2canvas**: Used for the Print Report PDF generation feature.
+*   **react-flow-renderer** (or similar): Inferred library used to create the interactive Genogram visualization.
 
 **Testing status**
-*   **Testing agent used**: NO
-*   **Troubleshoot agent used**: YES (deployment_agent and support_agent were used for platform-level issues).
+*   **Testing agent used after significant changes**: NO
+*   **Troubleshoot agent used after agent stuck in loop**: NO
 *   **Test files created**: None.
-*   **Known regressions**: The Read Aloud feature was implemented, found to be buggy, removed, and then re-added in a simpler form which is still not working reliably for the user.
+*   **Known regressions**: None.
 
 **Credentials to test flow:**
-*   **Entry Code**: 
+*   **Site Entry Code**: 
+*   **Admin Login Password**: 
 
 **What agent forgot to execute**
-*   The agent did not provide the results of the legal research on using real names on a password-protected website, which it promised to do before the conversation forked. This is a pending task that is blocking the user's content strategy.</analysis>
+*   The agent acknowledged the user's request to add individual delete buttons (X) for each exhibit but did not implement it before the session forked. This should be prioritized in the next session.</analysis>
