@@ -1,6 +1,84 @@
 import { useEffect } from 'react';
 
 const ContentProtection = () => {
+  // Function to show the sassy screenshot warning
+  const showScreenshotWarning = () => {
+    const warningDiv = document.createElement('div');
+    warningDiv.id = 'screenshot-warning';
+    warningDiv.innerHTML = `
+      <div style="
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0,0,0,0.85);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 99999;
+        animation: fadeIn 0.2s ease-out;
+      ">
+        <div style="
+          background: linear-gradient(135deg, #8b0000 0%, #5c0000 100%);
+          border: 4px solid #d4af37;
+          padding: 40px 50px;
+          border-radius: 12px;
+          box-shadow: 0 20px 60px rgba(0,0,0,0.9), 0 0 100px rgba(139,0,0,0.5);
+          font-family: Georgia, serif;
+          text-align: center;
+          max-width: 500px;
+          animation: popIn 0.3s ease-out;
+        ">
+          <div style="font-size: 60px; margin-bottom: 15px;">
+            🚨📸🚫
+          </div>
+          <div style="color: #d4af37; font-size: 28px; font-weight: bold; margin-bottom: 15px; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">
+            CAUGHT YOU!
+          </div>
+          <div style="color: #f5e6c8; font-size: 18px; margin-bottom: 10px; line-height: 1.5;">
+            What did your mother tell you about taking other people's stuff?
+          </div>
+          <div style="color: #ff6b6b; font-size: 22px; font-weight: bold; margin-bottom: 15px;">
+            Stop that! 😤
+          </div>
+          <div style="color: #d4a574; font-size: 12px; font-style: italic;">
+            This content is protected evidence. Screenshots are monitored.
+          </div>
+        </div>
+      </div>
+      <style>
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        @keyframes popIn {
+          from { transform: scale(0.8); opacity: 0; }
+          to { transform: scale(1); opacity: 1; }
+        }
+      </style>
+    `;
+    
+    // Remove any existing warning first
+    const existing = document.getElementById('screenshot-warning');
+    if (existing) {
+      document.body.removeChild(existing);
+    }
+    
+    document.body.appendChild(warningDiv);
+    
+    // Remove warning after 3 seconds with fade out
+    setTimeout(() => {
+      warningDiv.style.transition = 'opacity 0.5s ease-out';
+      warningDiv.style.opacity = '0';
+      setTimeout(() => {
+        if (document.body.contains(warningDiv)) {
+          document.body.removeChild(warningDiv);
+        }
+      }, 500);
+    }, 3000);
+  };
+
   useEffect(() => {
     // Disable right-click context menu
     const handleContextMenu = (e) => {
@@ -45,9 +123,37 @@ const ContentProtection = () => {
       return false;
     };
 
-    // Disable specific keyboard shortcuts
+    // Disable specific keyboard shortcuts AND detect screenshots
     const handleKeyDown = (e) => {
-      // Disable Ctrl+S (Save), Ctrl+C (Copy), Ctrl+U (View Source), F12 (DevTools), Ctrl+Shift+I (DevTools)
+      // Screenshot detection - Windows PrintScreen
+      if (e.key === 'PrintScreen') {
+        e.preventDefault();
+        showScreenshotWarning();
+        return false;
+      }
+      
+      // Screenshot detection - Mac: Cmd+Shift+3, Cmd+Shift+4, Cmd+Shift+5
+      if (e.metaKey && e.shiftKey && (e.key === '3' || e.key === '4' || e.key === '5')) {
+        e.preventDefault();
+        showScreenshotWarning();
+        return false;
+      }
+      
+      // Screenshot detection - Windows: Win+Shift+S (Snipping Tool)
+      if (e.metaKey && e.shiftKey && e.key.toLowerCase() === 's') {
+        e.preventDefault();
+        showScreenshotWarning();
+        return false;
+      }
+      
+      // Screenshot detection - Windows: Win+PrtScn
+      if (e.metaKey && e.key === 'PrintScreen') {
+        e.preventDefault();
+        showScreenshotWarning();
+        return false;
+      }
+      
+      // Disable Ctrl+S (Save), Ctrl+U (View Source), DevTools shortcuts
       if (
         (e.ctrlKey && e.key === 's') || // Save
         (e.ctrlKey && e.key === 'u') || // View Source
@@ -57,8 +163,7 @@ const ContentProtection = () => {
         (e.ctrlKey && e.shiftKey && e.key === 'j') || // DevTools Console
         (e.ctrlKey && e.shiftKey && e.key === 'C') || // DevTools Inspect
         (e.ctrlKey && e.shiftKey && e.key === 'c') || // DevTools Inspect
-        e.key === 'F12' || // DevTools
-        e.key === 'PrintScreen' // Screenshot (limited effectiveness)
+        e.key === 'F12' // DevTools
       ) {
         e.preventDefault();
         return false;
