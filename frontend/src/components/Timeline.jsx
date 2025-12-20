@@ -8,11 +8,14 @@ const ADMIN_PASSWORD = '02071951';
 // Exhibit Viewer Modal Component
 const ExhibitViewer = ({ file, onClose }) => {
   const [zoom, setZoom] = useState(100);
+  const [imageError, setImageError] = useState(false);
+  const [loading, setLoading] = useState(true);
   
   if (!file) return null;
   
-  const isImage = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'heic', 'heif'].includes(file.file_type?.toLowerCase());
-  const isPdf = file.file_type?.toLowerCase() === 'pdf';
+  const fileType = file.file_type?.toLowerCase() || '';
+  const isImage = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'heic', 'heif'].includes(fileType);
+  const isPdf = fileType === 'pdf';
   const fileUrl = `${BACKEND_URL}/api/file/${file.file_id}`;
   
   return (
@@ -37,11 +40,11 @@ const ExhibitViewer = ({ file, onClose }) => {
           <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
             <FileText className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" style={{ color: '#d4af37' }} />
             <span className="text-white font-semibold text-sm sm:text-base truncate" style={{ fontFamily: 'Georgia, serif' }}>
-              {file.filename}
+              {file.filename || 'Unknown File'}
             </span>
           </div>
           <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
-            {isImage && (
+            {isImage && !imageError && (
               <>
                 <button onClick={() => setZoom(z => Math.max(25, z - 25))} className="p-1.5 sm:p-2 rounded hover:bg-white/10 transition-colors" style={{ color: '#d4af37' }} title="Zoom Out">
                   <ZoomOut className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -71,13 +74,51 @@ const ExhibitViewer = ({ file, onClose }) => {
             minHeight: '300px',
           }}
         >
-          {isImage ? (
-            <img src={fileUrl} alt={file.filename} style={{ maxWidth: '100%', maxHeight: '60vh', transform: `scale(${zoom / 100})`, transition: 'transform 0.2s ease' }} />
+          {loading && isImage && (
+            <div className="absolute inset-0 flex items-center justify-center">
+              <Loader2 className="w-8 h-8 animate-spin" style={{ color: '#d4af37' }} />
+            </div>
+          )}
+          
+          {isImage && !imageError ? (
+            <img 
+              src={fileUrl} 
+              alt={file.filename || 'Exhibit'}
+              onLoad={() => setLoading(false)}
+              onError={() => { setImageError(true); setLoading(false); }}
+              style={{ 
+                maxWidth: '100%', 
+                maxHeight: '60vh', 
+                transform: `scale(${zoom / 100})`, 
+                transition: 'transform 0.2s ease',
+                display: loading ? 'none' : 'block'
+              }} 
+            />
           ) : isPdf ? (
             <iframe src={fileUrl} title={file.filename} className="w-full h-full" style={{ minHeight: '60vh', background: '#fff' }} />
           ) : (
             <div className="text-center p-6 sm:p-8">
               <FileText className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-4" style={{ color: '#d4af37' }} />
+              <p className="text-white mb-2 text-sm sm:text-base">
+                {imageError ? 'Unable to load image preview.' : 'Preview not available for this file type.'}
+              </p>
+              <p className="text-gray-400 mb-4 text-xs">File type: {fileType || 'unknown'}</p>
+              <a 
+                href={fileUrl} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="inline-flex items-center gap-2 px-4 py-2 rounded text-sm sm:text-base" 
+                style={{ background: 'linear-gradient(145deg, #d4af37 0%, #9c7a1f 100%)', color: '#1a0f0a', fontWeight: 'bold' }}
+              >
+                <Download className="w-4 h-4" /> Open File
+              </a>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
               <p className="text-white mb-4 text-sm sm:text-base">Preview not available for this file type.</p>
               <a href={fileUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-4 py-2 rounded text-sm sm:text-base" style={{ background: 'linear-gradient(145deg, #d4af37 0%, #9c7a1f 100%)', color: '#1a0f0a', fontWeight: 'bold' }}>
                 <Download className="w-4 h-4" /> Open File
