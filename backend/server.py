@@ -1,5 +1,5 @@
 from fastapi import FastAPI, APIRouter, UploadFile, File, Form, HTTPException, Depends
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, Response
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
@@ -13,6 +13,7 @@ import uuid
 from datetime import datetime, timezone
 import shutil
 import mimetypes
+import base64
 
 
 ROOT_DIR = Path(__file__).parent
