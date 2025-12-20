@@ -128,40 +128,77 @@ const IndexPage = () => {
         <Timeline isAdmin={isAdmin} />
       </div>
 
-      {/* Compact Year Envelopes */}
-      <div className="container mx-auto px-4 py-8 sm:py-12 md:py-16 space-y-8 relative z-10">
+      {/* Compact Year Envelope Icons */}
+      <div className="container mx-auto px-4 py-8 sm:py-12 relative z-10">
+        {/* Year Envelopes Row */}
+        <div className="flex flex-wrap justify-center gap-4 sm:gap-6 md:gap-8 mb-8">
+          {years.map((year) => {
+            const isOpen = openYears[year];
+            
+            return (
+              <button
+                key={`envelope-${year}`}
+                onClick={() => toggleYear(year)}
+                className={`group flex flex-col items-center gap-2 p-4 rounded-lg transition-all duration-300 hover:scale-110 ${
+                  isOpen ? 'scale-105' : ''
+                }`}
+                style={{
+                  background: isOpen 
+                    ? 'linear-gradient(145deg, rgba(212,175,55,0.2) 0%, rgba(139,105,20,0.15) 100%)'
+                    : 'transparent',
+                  border: isOpen ? '1px solid rgba(212,175,55,0.4)' : '1px solid transparent',
+                  borderRadius: '12px',
+                }}
+              >
+                {/* Envelope Icon */}
+                <div 
+                  className="relative"
+                  style={{
+                    filter: isOpen ? 'drop-shadow(0 4px 12px rgba(212,175,55,0.6))' : 'drop-shadow(0 2px 6px rgba(0,0,0,0.4))',
+                  }}
+                >
+                  <Mail 
+                    className={`w-12 h-12 sm:w-14 sm:h-14 transition-all duration-300 ${
+                      isOpen ? 'text-yellow-400' : 'text-yellow-600/80 group-hover:text-yellow-500'
+                    }`}
+                    style={{
+                      stroke: isOpen ? '#d4af37' : '#b8860b',
+                      strokeWidth: 1.5,
+                    }}
+                  />
+                  {/* Open/Closed indicator */}
+                  {isOpen ? (
+                    <ChevronUp className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-4 h-4 text-yellow-400" />
+                  ) : (
+                    <ChevronDown className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-4 h-4 text-yellow-600/60 group-hover:text-yellow-500" />
+                  )}
+                </div>
+                {/* Year Label */}
+                <span 
+                  className={`text-lg sm:text-xl font-bold tracking-wide transition-colors ${
+                    isOpen ? 'text-yellow-400' : 'text-yellow-600/80 group-hover:text-yellow-500'
+                  }`}
+                  style={{ 
+                    fontFamily: 'Georgia, serif',
+                    textShadow: isOpen ? '0 2px 8px rgba(212,175,55,0.5)' : 'none',
+                  }}
+                >
+                  {year}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Expanded Year Contents */}
         {years.map((year) => {
           const isOpen = openYears[year];
           const yearEntries = entriesByYear[year];
           
+          if (!isOpen) return null;
+          
           return (
-            <div key={year} className="relative mx-auto max-w-5xl">
-              {/* Envelope Container */}
-              <button
-                onClick={() => toggleYear(year)}
-                className="w-full p-6 sm:p-8 flex items-center justify-between rounded cursor-pointer hover:scale-[1.02] transition-all"
-                style={{
-                  background: 'linear-gradient(135deg, #d4a574 0%, #c49563 50%, #b89773 100%)',
-                  border: '3px solid #8b6914',
-                  boxShadow: '0 8px 24px rgba(0,0,0,0.5)',
-                }}
-              >
-                <h2 
-                  className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-wider"
-                  style={{ 
-                    fontFamily: 'Georgia, serif',
-                    background: 'linear-gradient(to bottom, #D4AF37 0%, #AA8A2A 50%, #8B6914 100%)',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    backgroundClip: 'text',
-                  }}
-                >
-                  {year}
-                </h2>
-                <div className="text-yellow-700/80 text-sm font-medium uppercase" style={{ fontFamily: 'Georgia, serif' }}>
-                  {isOpen ? 'Open' : 'Click to Open'}
-                </div>
-              </button>
+            <div key={year} className="relative mx-auto max-w-5xl mb-8">
 
               {/* Contents */}
               {isOpen && (
