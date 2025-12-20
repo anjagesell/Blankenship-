@@ -830,6 +830,15 @@ const MonthlyDetail = ({ monthDate, isAdmin, onClose }) => {
           </div>
         </div>
       </div>
+      
+      {/* Exhibit Viewer Modal */}
+      {viewingFile && (
+        <ExhibitViewer 
+          file={viewingFile} 
+          onClose={() => setViewingFile(null)} 
+          isAdmin={isAdmin}
+        />
+      )}
     </div>
   );
 };
