@@ -725,25 +725,24 @@ const MonthlyDetail = ({ monthDate, isAdmin, onClose }) => {
                           {/* Exhibits column - visible to ALL users */}
                           <td className="px-2 py-2">
                             <div className="flex flex-wrap items-center gap-1">
-                              {/* Show uploaded files to everyone */}
+                              {/* Show uploaded files to everyone - opens in popup viewer */}
                               {(exhibitFiles[entry.id] || []).map((file, fileIndex) => (
                                 <div key={file.file_id} className="inline-flex items-center">
-                                  <a
-                                    href={`${BACKEND_URL}/api/file/${file.file_id}`}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="inline-flex items-center gap-1 px-2 py-1 text-[10px] hover:opacity-80"
+                                  <button
+                                    onClick={() => setViewingFile(file)}
+                                    className="inline-flex items-center gap-1 px-2 py-1 text-[10px] hover:opacity-80 cursor-pointer"
                                     style={{ 
                                       background: 'linear-gradient(145deg, #d4af37 0%, #9c7a1f 100%)', 
                                       color: '#1a0f0a', 
                                       fontWeight: 'bold',
-                                      borderRadius: isAdmin ? '4px 0 0 4px' : '4px'
+                                      borderRadius: isAdmin ? '4px 0 0 4px' : '4px',
+                                      border: 'none'
                                     }}
-                                    title={file.filename}
+                                    title={`View ${file.filename}`}
                                   >
                                     <FileText className="w-3 h-3" />
                                     Ex.{fileIndex + 1}
-                                  </a>
+                                  </button>
                                   {/* Delete button - admin only */}
                                   {isAdmin && (
                                     <button
