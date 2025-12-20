@@ -414,20 +414,39 @@ const Genogram = ({ onClose }) => {
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseUp}
       >
-        {/* Instructions */}
-        <div className="absolute top-4 left-4 text-xs text-yellow-600/60 flex items-center gap-2 z-10">
-          <Move className="w-4 h-4" /> Drag to pan • Scroll to zoom
-        </div>
-        
-        {/* SVG Tree */}
-        <svg
-          ref={svgRef}
-          width="100%"
-          height="100%"
-          style={{
-            cursor: isDragging ? 'grabbing' : 'grab',
-          }}
-        >
+        {/* Loading State */}
+        {loading ? (
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="text-center">
+              <div className="text-4xl mb-4">🌳</div>
+              <p className="text-yellow-600 text-lg" style={{ fontFamily: 'Georgia, serif' }}>Loading Case Data...</p>
+              <p className="text-yellow-600/60 text-sm mt-2">Fetching entries from Monthly Detailed Logs</p>
+            </div>
+          </div>
+        ) : entries.length === 0 ? (
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="text-center">
+              <div className="text-4xl mb-4">📁</div>
+              <p className="text-yellow-600 text-lg" style={{ fontFamily: 'Georgia, serif' }}>No Entries Yet</p>
+              <p className="text-yellow-600/60 text-sm mt-2">Add entries in the Monthly Detailed Logs to see them here</p>
+            </div>
+          </div>
+        ) : (
+          <>
+            {/* Instructions */}
+            <div className="absolute top-4 left-4 text-xs text-yellow-600/60 flex items-center gap-2 z-10">
+              <Move className="w-4 h-4" /> Drag to pan • Scroll to zoom • {entries.length} entries loaded
+            </div>
+            
+            {/* SVG Tree */}
+            <svg
+              ref={svgRef}
+              width="100%"
+              height="100%"
+              style={{
+                cursor: isDragging ? 'grabbing' : 'grab',
+              }}
+            >
           <defs>
             {/* Gradients */}
             <linearGradient id="rootGradient" x1="0%" y1="0%" x2="0%" y2="100%">
