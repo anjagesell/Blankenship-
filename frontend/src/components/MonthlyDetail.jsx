@@ -240,13 +240,33 @@ const MonthlyDetail = ({ monthDate, isAdmin, onClose }) => {
               Complete day-by-day record for cross-reference investigation
             </p>
           </div>
-          <button
-            onClick={onClose}
-            className="p-2 hover:bg-yellow-900/30 rounded transition-colors"
-            style={{ color: '#d4af37' }}
-          >
-            <X className="w-6 h-6" />
-          </button>
+          <div className="flex items-center gap-2">
+            {isAdmin && (
+              <button
+                onClick={handleAdd}
+                className="px-3 py-2 rounded flex items-center gap-2 transition-all hover:scale-105"
+                style={{
+                  background: 'linear-gradient(145deg, #d4af37 0%, #c5a028 50%, #9c7a1f 100%)',
+                  color: '#1a0f0a',
+                  border: '2px solid #8b6914',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.6)',
+                  fontFamily: 'Arial, sans-serif',
+                  fontWeight: 'bold',
+                  fontSize: '12px',
+                }}
+              >
+                <Plus className="w-4 h-4" />
+                Add Entry
+              </button>
+            )}
+            <button
+              onClick={onClose}
+              className="p-2 hover:bg-yellow-900/30 rounded transition-colors"
+              style={{ color: '#d4af37' }}
+            >
+              <X className="w-6 h-6" />
+            </button>
+          </div>
         </div>
 
         {/* Scrollable Table */}
