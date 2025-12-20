@@ -38,13 +38,14 @@ const IndexPage = () => {
     };
     checkMobile();
     window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
     
     // Check if admin session exists
     const adminSession = sessionStorage.getItem('blankenship_admin');
     if (adminSession === 'true') {
       setIsAdmin(true);
     }
+    
+    return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
   const handleAdminLogin = () => {
