@@ -552,9 +552,21 @@ const Timeline = ({ isAdmin }) => {
               <span className="hidden sm:inline">Print</span>
             </button>
             {isAdmin && (
-              <button onClick={handleAdd} className="px-3 sm:px-4 py-1.5 sm:py-2 rounded flex items-center gap-1 sm:gap-2 transition-all hover:scale-105 text-xs sm:text-sm" style={{ background: 'linear-gradient(145deg, #d4af37 0%, #c5a028 50%, #9c7a1f 100%)', color: '#1a0f0a', border: '2px solid #8b6914', fontFamily: 'Arial, sans-serif', fontWeight: 'bold' }}>
-                <Plus className="w-3 h-3 sm:w-4 sm:h-4" /> Add
-              </button>
+              <>
+                <button 
+                  onClick={handleClearOldFiles}
+                  disabled={clearingFiles}
+                  className="px-2 sm:px-3 py-1.5 sm:py-2 rounded flex items-center gap-1 sm:gap-2 transition-all hover:scale-105 text-xs sm:text-sm disabled:opacity-50" 
+                  style={{ background: 'linear-gradient(145deg, #dc3545 0%, #a71d2a 100%)', color: '#fff', border: '2px solid #a71d2a', fontFamily: 'Arial, sans-serif', fontWeight: 'bold' }}
+                  title="Clear old broken exhibit files"
+                >
+                  <Trash2 className="w-3 h-3 sm:w-4 sm:h-4" />
+                  <span className="hidden sm:inline">{clearingFiles ? '...' : 'Clear Files'}</span>
+                </button>
+                <button onClick={handleAdd} className="px-3 sm:px-4 py-1.5 sm:py-2 rounded flex items-center gap-1 sm:gap-2 transition-all hover:scale-105 text-xs sm:text-sm" style={{ background: 'linear-gradient(145deg, #d4af37 0%, #c5a028 50%, #9c7a1f 100%)', color: '#1a0f0a', border: '2px solid #8b6914', fontFamily: 'Arial, sans-serif', fontWeight: 'bold' }}>
+                  <Plus className="w-3 h-3 sm:w-4 sm:h-4" /> Add
+                </button>
+              </>
             )}
           </div>
         </div>
