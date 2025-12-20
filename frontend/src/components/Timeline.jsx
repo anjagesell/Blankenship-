@@ -447,6 +447,31 @@ const Timeline = ({ isAdmin }) => {
     <div className="w-full mb-8 sm:mb-12">
       {viewingExhibit && <ExhibitViewer file={viewingExhibit} onClose={() => setViewingExhibit(null)} />}
       {showPrintModal && <PrintReport entries={sortedEntries} exhibitFiles={exhibitFiles} onClose={() => setShowPrintModal(false)} />}
+      {showGenogram && <Genogram entries={sortedEntries} exhibitFiles={exhibitFiles} onClose={() => setShowGenogram(false)} />}
+
+      {/* Genogram Button - Above Timeline */}
+      <div className="mb-3 sm:mb-4 flex justify-center">
+        <button
+          onClick={() => setShowGenogram(true)}
+          className="px-4 sm:px-6 py-2 sm:py-3 rounded-lg flex items-center gap-2 sm:gap-3 transition-all hover:scale-105 shadow-lg"
+          style={{
+            background: 'linear-gradient(145deg, #2c3e50 0%, #1a252f 100%)',
+            color: '#d4af37',
+            border: '3px solid #d4af37',
+            fontFamily: 'Georgia, serif',
+            fontWeight: 'bold',
+            fontSize: '14px',
+            boxShadow: '0 4px 20px rgba(212,175,55,0.3)',
+          }}
+        >
+          <span className="text-xl sm:text-2xl">🌳</span>
+          <div className="text-left">
+            <div className="text-sm sm:text-base">View Genogram</div>
+            <div className="text-[10px] sm:text-xs text-yellow-600/70 font-normal">Visual Case Map</div>
+          </div>
+          <GitBranch className="w-4 h-4 sm:w-5 sm:h-5 ml-1" />
+        </button>
+      </div>
 
       {/* Timeline Header */}
       <div className="p-3 sm:p-4 md:p-6 mb-3 sm:mb-4" style={{ background: 'linear-gradient(135deg, #2c3e50 0%, #1a252f 100%)', border: '3px solid #d4af37', boxShadow: '0 8px 24px rgba(0,0,0,0.6)' }}>
