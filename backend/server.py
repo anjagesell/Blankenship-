@@ -291,7 +291,7 @@ async def get_files_for_entry(entry_id: str):
 # Download/view a file
 @api_router.get("/file/{file_id}")
 async def download_file(file_id: str):
-    """Download or view an uploaded file"""
+    """Download or view an uploaded file from MongoDB storage"""
     # Get file record from database
     file_record = await db.uploaded_files.find_one(
         {"file_id": file_id},
@@ -301,26 +301,50 @@ async def download_file(file_id: str):
     if not file_record:
         raise HTTPException(status_code=404, detail="File not found")
     
-    file_path = Path(file_record["file_path"])
+    # Check if file content is stored in MongoDB (new method)
+    if "file_content" in file_record:
+        # Decode base64 content
+        try:
+            file_content = base64.b64decode(file_record["file_content"])
+        except Exception as e:
+            raise HTTPException(status_code=500, detail="Failed to decode file content")
+        
+        # Determine media type
+        ext = file_record["file_type"]
+        media_type = ALLOWED_EXTENSIONS.get(ext, "application/octet-stream")
+        
+        # Return file from MongoDB
+        return Response(
+            content=file_content,
+            media_type=media_type,
+            headers={
+                "Content-Disposition": f'inline; filename="{file_record["filename"]}"',
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Expose-Headers": "Content-Disposition",
+                "Cache-Control": "public, max-age=3600"
+            }
+        )
     
-    if not file_path.exists():
-        raise HTTPException(status_code=404, detail="File not found on server")
+    # Fallback: Try filesystem (for backward compatibility with old uploads)
+    if "file_path" in file_record:
+        file_path = Path(file_record["file_path"])
+        
+        if file_path.exists():
+            ext = file_record["file_type"]
+            media_type = ALLOWED_EXTENSIONS.get(ext, "application/octet-stream")
+            
+            return FileResponse(
+                path=file_path,
+                media_type=media_type,
+                filename=file_record["filename"],
+                headers={
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Expose-Headers": "Content-Disposition",
+                    "Cache-Control": "public, max-age=3600"
+                }
+            )
     
-    # Determine media type
-    ext = file_record["file_type"]
-    media_type = ALLOWED_EXTENSIONS.get(ext, "application/octet-stream")
-    
-    # Return file with proper headers for cross-origin access
-    return FileResponse(
-        path=file_path,
-        media_type=media_type,
-        filename=file_record["filename"],
-        headers={
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Expose-Headers": "Content-Disposition",
-            "Cache-Control": "public, max-age=3600"
-        }
-    )
+    raise HTTPException(status_code=404, detail="File content not found")
 
 # Delete a file (admin only)
 @api_router.delete("/file/{file_id}")
