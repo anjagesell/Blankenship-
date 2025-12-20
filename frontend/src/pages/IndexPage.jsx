@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { indexEntries } from '../mock';
 import { Card } from '../components/ui/card';
-import { Calendar, PlayCircle, Boxes, Scale, AlertTriangle, HeartCrack, FileText, History, Lock, LockOpen, Shield, Mail, ChevronDown, ChevronUp } from 'lucide-react';
+import { Calendar, PlayCircle, Boxes, Scale, AlertTriangle, HeartCrack, FileText, History, Lock, LockOpen, Shield, Mail, ChevronDown, ChevronUp, GitBranch } from 'lucide-react';
 import MonthlyDetail from '../components/MonthlyDetail';
 import AdminLogin from '../components/AdminLogin';
+import Genogram from '../components/Genogram';
 
 // Icon mapping
 const iconMap = {
@@ -24,6 +25,7 @@ const IndexPage = () => {
   const [selectedMonth, setSelectedMonth] = useState(null);
   const [showAdminLogin, setShowAdminLogin] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [showGenogram, setShowGenogram] = useState(false);
 
   useEffect(() => {
     document.title = 'Blankenship';
