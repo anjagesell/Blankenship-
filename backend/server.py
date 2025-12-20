@@ -348,7 +348,7 @@ async def download_file(file_id: str):
 
 # Delete a file (admin only)
 @api_router.delete("/file/{file_id}")
-async def delete_file(file_id: str, admin_password: str = Form(...)):
+async def delete_file(file_id: str, admin_password: str):
     """Delete an uploaded file (admin only)"""
     # Verify admin password
     verify_admin_password(admin_password)
