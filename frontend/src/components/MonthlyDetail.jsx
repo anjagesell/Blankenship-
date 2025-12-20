@@ -510,6 +510,12 @@ const MonthlyDetail = ({ monthDate, isAdmin, onClose }) => {
                         // View Mode
                         <>
                           <td 
+                            className="px-2 py-3 text-center text-xs sm:text-sm font-bold"
+                            style={{ color: '#8b6914', fontFamily: 'Courier, monospace', borderRight: '1px solid rgba(139,105,20,0.3)' }}
+                          >
+                            {index + 1}
+                          </td>
+                          <td 
                             className="px-3 py-3 text-xs sm:text-sm font-semibold whitespace-nowrap"
                             style={{ color: '#3E2723', fontFamily: 'Courier, monospace', borderRight: '1px solid rgba(139,105,20,0.3)' }}
                           >
