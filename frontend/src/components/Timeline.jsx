@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Edit2, Trash2, Save, X, Loader2 } from 'lucide-react';
+import { Plus, Edit2, Trash2, Save, X, Loader2, ArrowUpDown, Upload, FileText } from 'lucide-react';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
 const ADMIN_PASSWORD = '02071951';
@@ -10,11 +10,23 @@ const Timeline = ({ isAdmin }) => {
   const [editForm, setEditForm] = useState({});
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [sortOrder, setSortOrder] = useState('asc'); // 'asc' = earliest first, 'desc' = latest first
+  const [uploadingFor, setUploadingFor] = useState(null);
+  const [exhibitFiles, setExhibitFiles] = useState({}); // Store files per entry
 
   // Fetch timeline entries from backend
   useEffect(() => {
     fetchEntries();
   }, []);
+
+  // Fetch exhibit files for all entries
+  useEffect(() => {
+    if (entries.length > 0) {
+      entries.forEach(entry => {
+        fetchExhibitFiles(entry.id);
+      });
+    }
+  }, [entries.length]);
 
   const fetchEntries = async () => {
     try {
@@ -29,6 +41,43 @@ const Timeline = ({ isAdmin }) => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const fetchExhibitFiles = async (entryId) => {
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/files/${entryId}`);
+      if (response.ok) {
+        const files = await response.json();
+        setExhibitFiles(prev => ({ ...prev, [entryId]: files }));
+      }
+    } catch (error) {
+      console.error('Failed to fetch exhibit files:', error);
+    }
+  };
+
+  // Sort entries by date
+  const sortedEntries = [...entries].sort((a, b) => {
+    const parseDate = (dateStr) => {
+      if (!dateStr) return new Date(0);
+      const parts = dateStr.split('/');
+      if (parts.length === 3) {
+        // MM/DD/YYYY format
+        return new Date(parts[2], parts[0] - 1, parts[1]);
+      } else if (parts.length === 2) {
+        // MM/YYYY format
+        return new Date(parts[1], parts[0] - 1, 1);
+      }
+      return new Date(0);
+    };
+    
+    const dateA = parseDate(a.date);
+    const dateB = parseDate(b.date);
+    
+    return sortOrder === 'asc' ? dateA - dateB : dateB - dateA;
+  });
+
+  const toggleSortOrder = () => {
+    setSortOrder(prev => prev === 'asc' ? 'desc' : 'asc');
   };
 
   const handleAdd = () => {
@@ -58,7 +107,6 @@ const Timeline = ({ isAdmin }) => {
       const isNew = editForm.isNew || editForm.id.startsWith('temp-');
       
       if (isNew) {
-        // Create new entry
         const response = await fetch(`${BACKEND_URL}/api/timeline/create?admin_password=${ADMIN_PASSWORD}`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -81,7 +129,6 @@ const Timeline = ({ isAdmin }) => {
           throw new Error('Failed to save entry');
         }
       } else {
-        // Update existing entry
         const response = await fetch(`${BACKEND_URL}/api/timeline/${editForm.id}?admin_password=${ADMIN_PASSWORD}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
@@ -117,7 +164,6 @@ const Timeline = ({ isAdmin }) => {
 
   const handleCancel = () => {
     if (editForm.isNew || editForm.id?.startsWith('temp-')) {
-      // If it's a new empty entry, remove it
       setEntries(entries.filter(e => e.id !== editingId));
     }
     setEditingId(null);
@@ -147,6 +193,75 @@ const Timeline = ({ isAdmin }) => {
     setEditForm({ ...editForm, [field]: value });
   };
 
+  // Handle exhibit file upload
+  const handleExhibitUpload = async (entryId) => {
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.multiple = true;
+    fileInput.accept = '.pdf,.doc,.docx,.jpg,.jpeg,.png,.gif,.webp,.heic,.heif';
+    
+    fileInput.onchange = async (e) => {
+      const files = Array.from(e.target.files);
+      if (files.length === 0) return;
+      
+      setUploadingFor(entryId);
+      
+      try {
+        for (const file of files) {
+          const formData = new FormData();
+          formData.append('file', file);
+          formData.append('entry_id', entryId);
+          formData.append('admin_password', ADMIN_PASSWORD);
+          
+          const response = await fetch(`${BACKEND_URL}/api/upload`, {
+            method: 'POST',
+            body: formData,
+          });
+          
+          if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.detail || 'Upload failed');
+          }
+        }
+        
+        // Refresh files for this entry
+        await fetchExhibitFiles(entryId);
+        alert(`Successfully uploaded ${files.length} exhibit(s)!`);
+      } catch (error) {
+        alert(`Upload failed: ${error.message}`);
+      } finally {
+        setUploadingFor(null);
+      }
+    };
+    
+    fileInput.click();
+  };
+
+  // Get exhibit number for display
+  const getExhibitDisplay = (entryId) => {
+    const files = exhibitFiles[entryId] || [];
+    if (files.length === 0) return null;
+    
+    return files.map((file, index) => (
+      <a
+        key={file.file_id}
+        href={`${BACKEND_URL}/api/file/${file.file_id}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-flex items-center gap-1 mr-2 mb-1 px-2 py-1 rounded text-[10px] hover:opacity-80 transition-opacity"
+        style={{
+          background: 'linear-gradient(145deg, #d4af37 0%, #9c7a1f 100%)',
+          color: '#1a0f0a',
+          fontWeight: 'bold',
+        }}
+        title={file.filename}
+      >
+        <FileText className="w-3 h-3" />
+        Ex. {index + 1}
+      </a>
+    ));
+  };
+
   return (
     <div className="w-full mb-12">
       {/* Timeline Header */}
@@ -158,7 +273,26 @@ const Timeline = ({ isAdmin }) => {
           boxShadow: '0 8px 24px rgba(0,0,0,0.6)',
         }}
       >
-        <div className="flex-1">
+        {/* Sort Toggle Button - Left Side */}
+        <button
+          onClick={toggleSortOrder}
+          className="px-3 py-2 rounded flex items-center gap-2 transition-all hover:scale-105"
+          style={{
+            background: 'linear-gradient(145deg, #4a5568 0%, #2d3748 100%)',
+            color: '#d4af37',
+            border: '2px solid #8b6914',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.4)',
+            fontFamily: 'Arial, sans-serif',
+            fontWeight: 'bold',
+            fontSize: '11px',
+          }}
+          title={sortOrder === 'asc' ? 'Currently: Earliest First' : 'Currently: Latest First'}
+        >
+          <ArrowUpDown className="w-4 h-4" />
+          {sortOrder === 'asc' ? 'Earliest →' : 'Latest →'}
+        </button>
+
+        <div className="flex-1 mx-4">
           <h2 
             className="text-xl sm:text-2xl md:text-3xl font-bold text-center gold-embossed mb-2"
             style={{ fontFamily: 'Georgia, serif' }}
@@ -172,10 +306,11 @@ const Timeline = ({ isAdmin }) => {
             Chronological Record of Events - Key Highlights
           </p>
         </div>
+
         {isAdmin && (
           <button
             onClick={handleAdd}
-            className="ml-4 px-4 py-2 rounded flex items-center gap-2 transition-all hover:scale-105"
+            className="px-4 py-2 rounded flex items-center gap-2 transition-all hover:scale-105"
             style={{
               background: 'linear-gradient(145deg, #d4af37 0%, #c5a028 50%, #9c7a1f 100%)',
               color: '#1a0f0a',
@@ -201,7 +336,16 @@ const Timeline = ({ isAdmin }) => {
           boxShadow: '0 8px 24px rgba(0,0,0,0.5)',
         }}
       >
-        <table className="w-full border-collapse">
+        <table className="w-full border-collapse" style={{ tableLayout: 'fixed' }}>
+          <colgroup>
+            <col style={{ width: '10%' }} /> {/* Date */}
+            <col style={{ width: '7%' }} /> {/* Time */}
+            <col style={{ width: '12%' }} /> {/* Witness */}
+            <col style={{ width: '20%' }} /> {/* Description */}
+            <col style={{ width: '15%' }} /> {/* Exhibit */}
+            <col style={{ width: isAdmin ? '26%' : '36%' }} /> {/* Notes - WIDER */}
+            {isAdmin && <col style={{ width: '10%' }} />} {/* Actions */}
+          </colgroup>
           <thead>
             <tr 
               style={{
@@ -211,71 +355,44 @@ const Timeline = ({ isAdmin }) => {
             >
               <th 
                 className="px-3 py-3 text-left text-xs sm:text-sm font-bold uppercase tracking-wider"
-                style={{ 
-                  color: '#d4af37',
-                  fontFamily: 'Arial, sans-serif',
-                  borderRight: '1px solid #8b6914',
-                }}
+                style={{ color: '#d4af37', fontFamily: 'Arial, sans-serif', borderRight: '1px solid #8b6914' }}
               >
                 Date
               </th>
               <th 
                 className="px-3 py-3 text-left text-xs sm:text-sm font-bold uppercase tracking-wider"
-                style={{ 
-                  color: '#d4af37',
-                  fontFamily: 'Arial, sans-serif',
-                  borderRight: '1px solid #8b6914',
-                }}
+                style={{ color: '#d4af37', fontFamily: 'Arial, sans-serif', borderRight: '1px solid #8b6914' }}
               >
                 Time
               </th>
               <th 
                 className="px-3 py-3 text-left text-xs sm:text-sm font-bold uppercase tracking-wider"
-                style={{ 
-                  color: '#d4af37',
-                  fontFamily: 'Arial, sans-serif',
-                  borderRight: '1px solid #8b6914',
-                }}
+                style={{ color: '#d4af37', fontFamily: 'Arial, sans-serif', borderRight: '1px solid #8b6914' }}
               >
                 Witness/Person
               </th>
               <th 
                 className="px-3 py-3 text-left text-xs sm:text-sm font-bold uppercase tracking-wider"
-                style={{ 
-                  color: '#d4af37',
-                  fontFamily: 'Arial, sans-serif',
-                  borderRight: '1px solid #8b6914',
-                }}
+                style={{ color: '#d4af37', fontFamily: 'Arial, sans-serif', borderRight: '1px solid #8b6914' }}
               >
                 Description
               </th>
               <th 
                 className="px-3 py-3 text-left text-xs sm:text-sm font-bold uppercase tracking-wider"
-                style={{ 
-                  color: '#d4af37',
-                  fontFamily: 'Arial, sans-serif',
-                  borderRight: '1px solid #8b6914',
-                }}
+                style={{ color: '#d4af37', fontFamily: 'Arial, sans-serif', borderRight: '1px solid #8b6914' }}
               >
-                Evidence
+                Exhibit
               </th>
               <th 
                 className="px-3 py-3 text-left text-xs sm:text-sm font-bold uppercase tracking-wider"
-                style={{ 
-                  color: '#d4af37',
-                  fontFamily: 'Arial, sans-serif',
-                  borderRight: isAdmin ? '1px solid #8b6914' : 'none',
-                }}
+                style={{ color: '#d4af37', fontFamily: 'Arial, sans-serif', borderRight: isAdmin ? '1px solid #8b6914' : 'none' }}
               >
                 Notes
               </th>
               {isAdmin && (
                 <th 
                   className="px-3 py-3 text-center text-xs sm:text-sm font-bold uppercase tracking-wider"
-                  style={{ 
-                    color: '#d4af37',
-                    fontFamily: 'Arial, sans-serif',
-                  }}
+                  style={{ color: '#d4af37', fontFamily: 'Arial, sans-serif' }}
                 >
                   Actions
                 </th>
@@ -294,7 +411,7 @@ const Timeline = ({ isAdmin }) => {
                   </div>
                 </td>
               </tr>
-            ) : entries.length === 0 ? (
+            ) : sortedEntries.length === 0 ? (
               <tr>
                 <td colSpan={isAdmin ? "7" : "6"} className="px-3 py-8 text-center">
                   <p className="text-yellow-700/80 text-sm mb-2" style={{ fontFamily: 'Garamond, serif' }}>
@@ -306,7 +423,7 @@ const Timeline = ({ isAdmin }) => {
                 </td>
               </tr>
             ) : (
-              entries.map((entry, index) => (
+              sortedEntries.map((entry, index) => (
                 <tr 
                   key={entry.id}
                   style={{
@@ -325,12 +442,7 @@ const Timeline = ({ isAdmin }) => {
                           onChange={(e) => handleChange('date', e.target.value)}
                           placeholder="MM/DD/YYYY"
                           className="w-full px-2 py-1 text-xs rounded"
-                          style={{
-                            background: '#fff',
-                            border: '1px solid #8b6914',
-                            color: '#3E2723',
-                            fontFamily: 'Courier, monospace',
-                          }}
+                          style={{ background: '#fff', border: '1px solid #8b6914', color: '#3E2723', fontFamily: 'Courier, monospace' }}
                         />
                       </td>
                       <td className="px-2 py-2" style={{ borderRight: '1px solid rgba(139,105,20,0.3)' }}>
@@ -340,12 +452,7 @@ const Timeline = ({ isAdmin }) => {
                           onChange={(e) => handleChange('time', e.target.value)}
                           placeholder="HH:MM"
                           className="w-full px-2 py-1 text-xs rounded"
-                          style={{
-                            background: '#fff',
-                            border: '1px solid #8b6914',
-                            color: '#3E2723',
-                            fontFamily: 'Courier, monospace',
-                          }}
+                          style={{ background: '#fff', border: '1px solid #8b6914', color: '#3E2723', fontFamily: 'Courier, monospace' }}
                         />
                       </td>
                       <td className="px-2 py-2" style={{ borderRight: '1px solid rgba(139,105,20,0.3)' }}>
@@ -355,11 +462,7 @@ const Timeline = ({ isAdmin }) => {
                           onChange={(e) => handleChange('witness', e.target.value)}
                           placeholder="Name"
                           className="w-full px-2 py-1 text-xs rounded"
-                          style={{
-                            background: '#fff',
-                            border: '1px solid #8b6914',
-                            color: '#3E2723',
-                          }}
+                          style={{ background: '#fff', border: '1px solid #8b6914', color: '#3E2723' }}
                         />
                       </td>
                       <td className="px-2 py-2" style={{ borderRight: '1px solid rgba(139,105,20,0.3)' }}>
@@ -369,11 +472,7 @@ const Timeline = ({ isAdmin }) => {
                           placeholder="Description"
                           rows="2"
                           className="w-full px-2 py-1 text-xs rounded"
-                          style={{
-                            background: '#fff',
-                            border: '1px solid #8b6914',
-                            color: '#3E2723',
-                          }}
+                          style={{ background: '#fff', border: '1px solid #8b6914', color: '#3E2723' }}
                         />
                       </td>
                       <td className="px-2 py-2" style={{ borderRight: '1px solid rgba(139,105,20,0.3)' }}>
@@ -381,27 +480,19 @@ const Timeline = ({ isAdmin }) => {
                           type="text"
                           value={editForm.evidence}
                           onChange={(e) => handleChange('evidence', e.target.value)}
-                          placeholder="Evidence ref"
+                          placeholder="Exhibit description"
                           className="w-full px-2 py-1 text-xs rounded"
-                          style={{
-                            background: '#fff',
-                            border: '1px solid #8b6914',
-                            color: '#8b0000',
-                          }}
+                          style={{ background: '#fff', border: '1px solid #8b6914', color: '#8b0000' }}
                         />
                       </td>
                       <td className="px-2 py-2" style={{ borderRight: '1px solid rgba(139,105,20,0.3)' }}>
                         <textarea
                           value={editForm.notes}
                           onChange={(e) => handleChange('notes', e.target.value)}
-                          placeholder="Notes"
-                          rows="2"
+                          placeholder="Notes - additional context and observations..."
+                          rows="3"
                           className="w-full px-2 py-1 text-xs rounded"
-                          style={{
-                            background: '#fff',
-                            border: '1px solid #8b6914',
-                            color: '#5D4037',
-                          }}
+                          style={{ background: '#fff', border: '1px solid #8b6914', color: '#5D4037', minWidth: '200px' }}
                         />
                       </td>
                       <td className="px-2 py-2 text-center">
@@ -410,10 +501,7 @@ const Timeline = ({ isAdmin }) => {
                             onClick={handleSave}
                             disabled={saving}
                             className="p-1 rounded hover:scale-110 transition-all disabled:opacity-50"
-                            style={{
-                              background: '#28a745',
-                              color: '#fff',
-                            }}
+                            style={{ background: '#28a745', color: '#fff' }}
                             title="Save"
                           >
                             {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
@@ -422,10 +510,7 @@ const Timeline = ({ isAdmin }) => {
                             onClick={handleCancel}
                             disabled={saving}
                             className="p-1 rounded hover:scale-110 transition-all disabled:opacity-50"
-                            style={{
-                              background: '#dc3545',
-                              color: '#fff',
-                            }}
+                            style={{ background: '#dc3545', color: '#fff' }}
                             title="Cancel"
                           >
                             <X className="w-4 h-4" />
@@ -438,63 +523,73 @@ const Timeline = ({ isAdmin }) => {
                     <>
                       <td 
                         className="px-3 py-3 text-xs sm:text-sm font-semibold whitespace-nowrap"
-                        style={{ 
-                          color: '#3E2723',
-                          fontFamily: 'Courier, monospace',
-                          borderRight: '1px solid rgba(139,105,20,0.3)',
-                        }}
+                        style={{ color: '#3E2723', fontFamily: 'Courier, monospace', borderRight: '1px solid rgba(139,105,20,0.3)' }}
                       >
                         {entry.date}
                       </td>
                       <td 
                         className="px-3 py-3 text-xs sm:text-sm whitespace-nowrap"
-                        style={{ 
-                          color: '#3E2723',
-                          fontFamily: 'Courier, monospace',
-                          borderRight: '1px solid rgba(139,105,20,0.3)',
-                        }}
+                        style={{ color: '#3E2723', fontFamily: 'Courier, monospace', borderRight: '1px solid rgba(139,105,20,0.3)' }}
                       >
                         {entry.time}
                       </td>
                       <td 
                         className="px-3 py-3 text-xs sm:text-sm font-semibold"
-                        style={{ 
-                          color: '#2c1810',
-                          fontFamily: 'Arial, sans-serif',
-                          borderRight: '1px solid rgba(139,105,20,0.3)',
-                        }}
+                        style={{ color: '#2c1810', fontFamily: 'Arial, sans-serif', borderRight: '1px solid rgba(139,105,20,0.3)' }}
                       >
                         {entry.witness}
                       </td>
                       <td 
                         className="px-3 py-3 text-xs sm:text-sm"
-                        style={{ 
-                          color: '#3E2723',
-                          fontFamily: 'Arial, sans-serif',
-                          borderRight: '1px solid rgba(139,105,20,0.3)',
-                        }}
+                        style={{ color: '#3E2723', fontFamily: 'Arial, sans-serif', borderRight: '1px solid rgba(139,105,20,0.3)' }}
                       >
                         {entry.description}
                       </td>
                       <td 
-                        className="px-3 py-3 text-xs sm:text-sm font-medium"
-                        style={{ 
-                          color: '#8b0000',
-                          fontFamily: 'Arial, sans-serif',
-                          borderRight: '1px solid rgba(139,105,20,0.3)',
-                        }}
+                        className="px-3 py-3 text-xs sm:text-sm"
+                        style={{ color: '#8b0000', fontFamily: 'Arial, sans-serif', borderRight: '1px solid rgba(139,105,20,0.3)' }}
                       >
-                        {entry.evidence}
+                        <div className="flex flex-wrap items-center gap-1">
+                          {/* Display uploaded exhibits */}
+                          {getExhibitDisplay(entry.id)}
+                          
+                          {/* Exhibit description text */}
+                          {entry.evidence && (
+                            <span className="text-xs font-medium block w-full mt-1">{entry.evidence}</span>
+                          )}
+                          
+                          {/* Upload button for admin */}
+                          {isAdmin && (
+                            <button
+                              onClick={() => handleExhibitUpload(entry.id)}
+                              disabled={uploadingFor === entry.id}
+                              className="inline-flex items-center gap-1 px-2 py-1 rounded text-[10px] transition-all hover:scale-105 disabled:opacity-50 mt-1"
+                              style={{
+                                background: uploadingFor === entry.id ? '#999' : 'linear-gradient(145deg, #28a745 0%, #1e7e34 100%)',
+                                color: '#fff',
+                                border: '1px solid #1e7e34',
+                                fontWeight: 'bold',
+                              }}
+                              title="Upload PDF, Word Doc, or Image"
+                            >
+                              <Upload className="w-3 h-3" />
+                              {uploadingFor === entry.id ? '...' : 'Upload'}
+                            </button>
+                          )}
+                        </div>
                       </td>
                       <td 
-                        className="px-3 py-3 text-xs sm:text-sm italic"
+                        className="px-3 py-3 text-xs sm:text-sm"
                         style={{ 
-                          color: '#5D4037',
-                          fontFamily: 'Arial, sans-serif',
+                          color: '#5D4037', 
+                          fontFamily: 'Arial, sans-serif', 
                           borderRight: isAdmin ? '1px solid rgba(139,105,20,0.3)' : 'none',
+                          lineHeight: '1.5',
                         }}
                       >
-                        {entry.notes}
+                        <div style={{ maxWidth: '100%', wordWrap: 'break-word' }}>
+                          {entry.notes}
+                        </div>
                       </td>
                       {isAdmin && (
                         <td className="px-2 py-2 text-center">
@@ -502,10 +597,7 @@ const Timeline = ({ isAdmin }) => {
                             <button
                               onClick={() => handleEdit(entry)}
                               className="p-1 rounded hover:scale-110 transition-all"
-                              style={{
-                                background: '#ffc107',
-                                color: '#000',
-                              }}
+                              style={{ background: '#ffc107', color: '#000' }}
                               title="Edit"
                             >
                               <Edit2 className="w-3 h-3" />
@@ -513,10 +605,7 @@ const Timeline = ({ isAdmin }) => {
                             <button
                               onClick={() => handleDelete(entry.id)}
                               className="p-1 rounded hover:scale-110 transition-all"
-                              style={{
-                                background: '#dc3545',
-                                color: '#fff',
-                              }}
+                              style={{ background: '#dc3545', color: '#fff' }}
                               title="Delete"
                             >
                               <Trash2 className="w-3 h-3" />
@@ -536,12 +625,9 @@ const Timeline = ({ isAdmin }) => {
       {/* Table footer note */}
       <div 
         className="mt-2 px-4 py-2 text-xs sm:text-sm italic text-center"
-        style={{ 
-          color: '#d4af37',
-          fontFamily: 'Garamond, serif',
-        }}
+        style={{ color: '#d4af37', fontFamily: 'Garamond, serif' }}
       >
-        Timeline entries documented in chronological order
+        Timeline entries documented in chronological order • Click sort button to toggle date order
       </div>
     </div>
   );
