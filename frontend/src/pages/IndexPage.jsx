@@ -528,6 +528,11 @@ const IndexPage = () => {
           onClose={() => setSelectedMonth(null)}
         />
       )}
+
+      {/* Genogram Modal */}
+      {showGenogram && (
+        <Genogram onClose={() => setShowGenogram(false)} />
+      )}
     </div>
   );
 };
