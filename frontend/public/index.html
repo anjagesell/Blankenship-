@@ -4,7 +4,13 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#000000" />
-        <meta name="description" content="A product of emergent.sh" />
+        <meta name="description" content="Blankenship Judicial Archives - Private Evidence Documentation" />
+        
+        <!-- Cache Control: Force browsers to always check for fresh content -->
+        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+        <meta http-equiv="Pragma" content="no-cache" />
+        <meta http-equiv="Expires" content="0" />
+        
         <!--
       manifest.json provides metadata used when your web app is installed on a
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
@@ -18,11 +24,40 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-        <title>Emergent | Fullstack App</title>
+        <title>Blankenship | Judicial Archives</title>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&display=swap" rel="stylesheet">
         <script src="https://assets.emergent.sh/scripts/emergent-main.js"></script>
+        
+        <!-- Cache Buster: Clear old localStorage data from previous versions -->
+        <script>
+            (function() {
+                var APP_VERSION = '2.0.0'; // Increment this when you want to force a cache clear
+                var storedVersion = localStorage.getItem('blankenship_app_version');
+                
+                if (storedVersion !== APP_VERSION) {
+                    // Clear old cached data from localStorage
+                    var keysToRemove = [];
+                    for (var i = 0; i < localStorage.length; i++) {
+                        var key = localStorage.key(i);
+                        // Remove old timeline data that was stored in localStorage
+                        if (key && key.startsWith('blankenship_')) {
+                            keysToRemove.push(key);
+                        }
+                    }
+                    keysToRemove.forEach(function(key) {
+                        if (key !== 'blankenship_app_version' && key !== 'blankenship_admin') {
+                            localStorage.removeItem(key);
+                        }
+                    });
+                    
+                    // Store new version
+                    localStorage.setItem('blankenship_app_version', APP_VERSION);
+                    console.log('Blankenship: Cache cleared, updated to version ' + APP_VERSION);
+                }
+            })();
+        </script>
     </head>
     <body>
         <noscript>You need to enable JavaScript to run this app.</noscript>
