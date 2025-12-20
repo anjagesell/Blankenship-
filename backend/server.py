@@ -373,6 +373,30 @@ async def delete_file(file_id: str, admin_password: str = Form(...)):
     
     return {"status": "success", "message": "File deleted"}
 
+
+# Clear all old broken files (admin only) - one-time cleanup
+@api_router.delete("/files/clear-all")
+async def clear_all_files(admin_password: str):
+    """
+    Clear all uploaded file records from database.
+    Use this to remove old broken files that weren't stored in MongoDB.
+    Requires admin password.
+    """
+    verify_admin_password(admin_password)
+    
+    # Count files before deletion
+    count = await db.uploaded_files.count_documents({})
+    
+    # Delete all file records
+    result = await db.uploaded_files.delete_many({})
+    
+    return {
+        "status": "success", 
+        "message": f"Cleared {result.deleted_count} file records. You can now re-upload your exhibits.",
+        "deleted_count": result.deleted_count
+    }
+
+
 # ============================================
 # TIMELINE DATA PERSISTENCE
 # ============================================
