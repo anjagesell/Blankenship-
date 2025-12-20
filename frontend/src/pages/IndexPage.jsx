@@ -148,11 +148,67 @@ const IndexPage = () => {
                     : 'transparent',
                   border: isOpen ? '1px solid rgba(212,175,55,0.4)' : '1px solid transparent',
                   borderRadius: '12px',
+                  position: 'relative',
                 }}
               >
+                {/* CONFIDENTIAL Stamp - Top */}
+                <div 
+                  className="absolute -top-2 left-1/2 -translate-x-1/2 px-2 py-0.5 text-[8px] sm:text-[9px] font-bold tracking-wider"
+                  style={{
+                    background: 'linear-gradient(145deg, #8b0000 0%, #5c0000 100%)',
+                    color: '#fff',
+                    border: '1px solid #ff0000',
+                    borderRadius: '2px',
+                    fontFamily: 'Impact, sans-serif',
+                    transform: 'translateX(-50%) rotate(-3deg)',
+                    boxShadow: '1px 1px 3px rgba(0,0,0,0.5)',
+                    textShadow: '1px 1px 1px rgba(0,0,0,0.5)',
+                    zIndex: 10,
+                  }}
+                >
+                  CONFIDENTIAL
+                </div>
+
+                {/* Evidence Tag - Right side */}
+                <div 
+                  className="absolute -right-3 top-6 sm:top-8"
+                  style={{
+                    width: '28px',
+                    height: '18px',
+                    background: '#fff8dc',
+                    border: '1px solid #8b6914',
+                    boxShadow: '2px 2px 4px rgba(0,0,0,0.4)',
+                    transform: 'rotate(12deg)',
+                    zIndex: 10,
+                  }}
+                >
+                  <div 
+                    className="text-[5px] font-bold text-center pt-[2px]"
+                    style={{ color: '#8b0000', fontFamily: 'Arial, sans-serif' }}
+                  >
+                    EVIDENCE
+                  </div>
+                  <div 
+                    className="text-[6px] font-bold text-center"
+                    style={{ color: '#3E2723', fontFamily: 'Courier, monospace' }}
+                  >
+                    {year}
+                  </div>
+                  {/* String hole */}
+                  <div 
+                    className="absolute -left-0.5 top-1"
+                    style={{
+                      width: '3px',
+                      height: '3px',
+                      background: '#333',
+                      borderRadius: '50%',
+                    }}
+                  />
+                </div>
+
                 {/* Envelope Icon */}
                 <div 
-                  className="relative"
+                  className="relative mt-2"
                   style={{
                     filter: isOpen ? 'drop-shadow(0 4px 12px rgba(212,175,55,0.6))' : 'drop-shadow(0 2px 6px rgba(0,0,0,0.4))',
                   }}
