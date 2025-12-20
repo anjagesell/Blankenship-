@@ -594,7 +594,7 @@ const MonthlyDetail = ({ monthDate, isAdmin, onClose }) => {
                           </td>
                           <td 
                             className="px-3 py-3 text-xs sm:text-sm italic"
-                            style={{ color: '#5D4037', fontFamily: 'Arial, sans-serif', borderRight: '1px solid rgba(139,105,20,0.3)' }}
+                            style={{ color: '#5D4037', fontFamily: 'Arial, sans-serif', borderRight: '1px solid rgba(139,105,20,0.3)', minWidth: '300px', maxWidth: '400px', lineHeight: '1.6' }}
                           >
                             {entry.notes}
                           </td>
