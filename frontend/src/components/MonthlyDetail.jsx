@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, Upload, Plus, Edit2, Trash2, Save, Loader2 } from 'lucide-react';
+import { X, Upload, Plus, Edit2, Trash2, Save, Loader2, FileText } from 'lucide-react';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
 const ADMIN_PASSWORD = '02071951';
@@ -16,11 +16,50 @@ const MonthlyDetail = ({ monthDate, isAdmin, onClose }) => {
   const monthName = monthNames[parseInt(month)];
   const [uploading, setUploading] = useState(false);
   const [uploadingFor, setUploadingFor] = useState(null);
+  const [exhibitFiles, setExhibitFiles] = useState({});
+  const [viewingFile, setViewingFile] = useState(null);
 
   // Fetch entries from backend
   useEffect(() => {
     fetchEntries();
   }, [monthDate]);
+
+  // Fetch exhibit files when entries change
+  useEffect(() => {
+    if (entries.length > 0) {
+      entries.forEach(entry => {
+        if (entry.id && !entry.id.startsWith('temp-')) {
+          fetchExhibitFiles(entry.id);
+        }
+      });
+    }
+  }, [entries]);
+
+  const fetchExhibitFiles = async (entryId) => {
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/files/${entryId}`);
+      if (response.ok) {
+        const files = await response.json();
+        setExhibitFiles(prev => ({ ...prev, [entryId]: files }));
+      }
+    } catch (error) {
+      console.error('Failed to fetch exhibit files:', error);
+    }
+  };
+
+  const handleDeleteFile = async (fileId, entryId) => {
+    if (!window.confirm('Delete this file?')) return;
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/file/${fileId}?admin_password=${ADMIN_PASSWORD}`, {
+        method: 'DELETE'
+      });
+      if (response.ok) {
+        await fetchExhibitFiles(entryId);
+      }
+    } catch (error) {
+      alert('Failed to delete file');
+    }
+  };
 
   const fetchEntries = async () => {
     try {
