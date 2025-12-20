@@ -408,18 +408,20 @@ const Timeline = ({ isAdmin }) => {
                         <div className="flex gap-1 justify-center">
                           <button
                             onClick={handleSave}
-                            className="p-1 rounded hover:scale-110 transition-all"
+                            disabled={saving}
+                            className="p-1 rounded hover:scale-110 transition-all disabled:opacity-50"
                             style={{
                               background: '#28a745',
                               color: '#fff',
                             }}
                             title="Save"
                           >
-                            <Save className="w-4 h-4" />
+                            {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
                           </button>
                           <button
                             onClick={handleCancel}
-                            className="p-1 rounded hover:scale-110 transition-all"
+                            disabled={saving}
+                            className="p-1 rounded hover:scale-110 transition-all disabled:opacity-50"
                             style={{
                               background: '#dc3545',
                               color: '#fff',
