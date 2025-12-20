@@ -483,7 +483,7 @@ const MonthlyDetail = ({ monthDate, isAdmin, onClose }) => {
                               style={{ background: '#fff', border: '1px solid #8b6914', color: '#5D4037' }}
                             />
                           </td>
-                          <td className="px-2 py-2 text-center" colSpan="2">
+                          <td className="px-2 py-2 text-center">
                             <div className="flex gap-1 justify-center">
                               <button
                                 onClick={handleSave}
@@ -504,6 +504,9 @@ const MonthlyDetail = ({ monthDate, isAdmin, onClose }) => {
                                 <X className="w-4 h-4" />
                               </button>
                             </div>
+                          </td>
+                          <td className="px-2 py-2 text-center">
+                            <span className="text-[10px] italic" style={{ color: '#8b6914' }}>Save first</span>
                           </td>
                         </>
                       ) : (
