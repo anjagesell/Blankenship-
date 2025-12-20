@@ -39,13 +39,15 @@ const IndexPage = () => {
     checkMobile();
     window.addEventListener('resize', checkMobile);
     
-    // Check if admin session exists
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Check if admin session exists on mount
+  useEffect(() => {
     const adminSession = sessionStorage.getItem('blankenship_admin');
     if (adminSession === 'true') {
       setIsAdmin(true);
     }
-    
-    return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
   const handleAdminLogin = () => {
