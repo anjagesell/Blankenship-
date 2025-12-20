@@ -119,17 +119,6 @@ const ExhibitViewer = ({ file, onClose }) => {
     </div>
   );
 };
-              <p className="text-white mb-4 text-sm sm:text-base">Preview not available for this file type.</p>
-              <a href={fileUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-4 py-2 rounded text-sm sm:text-base" style={{ background: 'linear-gradient(145deg, #d4af37 0%, #9c7a1f 100%)', color: '#1a0f0a', fontWeight: 'bold' }}>
-                <Download className="w-4 h-4" /> Open File
-              </a>
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-};
 
 // Print Report Component
 const PrintReport = ({ entries, exhibitFiles, onClose }) => {
