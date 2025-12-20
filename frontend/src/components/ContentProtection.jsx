@@ -184,10 +184,20 @@ const ContentProtection = () => {
       if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
         return true;
       }
+      // Allow selection in SVG elements (for Genogram)
+      if (e.target.tagName === 'svg' || e.target.tagName === 'SVG' || 
+          e.target.closest && e.target.closest('svg')) {
+        return true;
+      }
       // Prevent selection on images and documents
-      if (e.target.tagName === 'IMG' || e.target.closest('.protected-content')) {
-        e.preventDefault();
-        return false;
+      try {
+        if (e.target.tagName === 'IMG' || (e.target.closest && e.target.closest('.protected-content'))) {
+          e.preventDefault();
+          return false;
+        }
+      } catch (err) {
+        // Handle cases where closest is not available (SVG elements)
+        return true;
       }
     };
 
