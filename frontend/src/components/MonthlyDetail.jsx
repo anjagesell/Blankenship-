@@ -678,16 +678,6 @@ const MonthlyDetail = ({ monthDate, isAdmin, onClose }) => {
                               </td>
                             </>
                           )}
-                                      border: '1px solid #1e7e34',
-                                    }}
-                                  >
-                                    <Upload className="w-3 h-3" />
-                                    {uploading && uploadingFor === entry.id ? '...' : '+'}
-                                  </button>
-                                </div>
-                              </td>
-                            </>
-                          )}
                         </>
                       )}
                     </tr>
