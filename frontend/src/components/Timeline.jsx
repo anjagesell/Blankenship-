@@ -641,16 +641,18 @@ const Timeline = ({ isAdmin }) => {
         <div className="overflow-x-auto" style={{ background: 'linear-gradient(to bottom, #f4e8c1 0%, #e8dcc8 100%)', border: '3px solid #8b6914', boxShadow: '0 8px 24px rgba(0,0,0,0.5)' }}>
           <table className="w-full border-collapse" style={{ tableLayout: 'fixed' }}>
             <colgroup>
-              <col style={{ width: '10%' }} />
-              <col style={{ width: '7%' }} />
-              <col style={{ width: '12%' }} />
-              <col style={{ width: '20%' }} />
-              <col style={{ width: '15%' }} />
-              <col style={{ width: isAdmin ? '26%' : '36%' }} />
-              {isAdmin && <col style={{ width: '10%' }} />}
+              <col style={{ width: '4%' }} /> {/* Line # */}
+              <col style={{ width: '9%' }} /> {/* Date */}
+              <col style={{ width: '6%' }} /> {/* Time */}
+              <col style={{ width: '11%' }} /> {/* Witness */}
+              <col style={{ width: '19%' }} /> {/* Description */}
+              <col style={{ width: '15%' }} /> {/* Exhibit */}
+              <col style={{ width: isAdmin ? '26%' : '36%' }} /> {/* Notes */}
+              {isAdmin && <col style={{ width: '10%' }} />} {/* Actions */}
             </colgroup>
             <thead>
               <tr style={{ background: 'linear-gradient(to bottom, #3a2617 0%, #2b1810 100%)', borderBottom: '2px solid #8b6914' }}>
+                <th className="px-2 py-3 text-center text-xs sm:text-sm font-bold uppercase" style={{ color: '#d4af37', fontFamily: 'Arial', borderRight: '1px solid #8b6914' }}>#</th>
                 <th className="px-3 py-3 text-left text-xs sm:text-sm font-bold uppercase" style={{ color: '#d4af37', fontFamily: 'Arial', borderRight: '1px solid #8b6914' }}>Date</th>
                 <th className="px-3 py-3 text-left text-xs sm:text-sm font-bold uppercase" style={{ color: '#d4af37', fontFamily: 'Arial', borderRight: '1px solid #8b6914' }}>Time</th>
                 <th className="px-3 py-3 text-left text-xs sm:text-sm font-bold uppercase" style={{ color: '#d4af37', fontFamily: 'Arial', borderRight: '1px solid #8b6914' }}>Witness</th>
@@ -662,9 +664,9 @@ const Timeline = ({ isAdmin }) => {
             </thead>
             <tbody>
               {loading ? (
-                <tr><td colSpan={isAdmin ? 7 : 6} className="px-3 py-8 text-center"><div className="flex items-center justify-center gap-2"><Loader2 className="w-5 h-5 animate-spin" style={{ color: '#d4af37' }} /><span style={{ color: '#5D4037' }}>Loading...</span></div></td></tr>
+                <tr><td colSpan={isAdmin ? 8 : 7} className="px-3 py-8 text-center"><div className="flex items-center justify-center gap-2"><Loader2 className="w-5 h-5 animate-spin" style={{ color: '#d4af37' }} /><span style={{ color: '#5D4037' }}>Loading...</span></div></td></tr>
               ) : sortedEntries.length === 0 ? (
-                <tr><td colSpan={isAdmin ? 7 : 6} className="px-3 py-8 text-center" style={{ color: '#5D4037' }}>{searchQuery ? `No entries matching "${searchQuery}"` : isAdmin ? 'Click "Add" to create an entry.' : 'No entries yet.'}</td></tr>
+                <tr><td colSpan={isAdmin ? 8 : 7} className="px-3 py-8 text-center" style={{ color: '#5D4037' }}>{searchQuery ? `No entries matching "${searchQuery}"` : isAdmin ? 'Click "Add" to create an entry.' : 'No entries yet.'}</td></tr>
               ) : (
                 sortedEntries.map((entry, index) => (
                   <tr key={entry.id} style={{ background: index % 2 === 0 ? 'rgba(255,255,255,0.3)' : 'rgba(244,232,193,0.4)', borderBottom: '1px solid #8b6914' }} className="hover:bg-yellow-100/50 transition-colors">
