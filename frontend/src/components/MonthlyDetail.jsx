@@ -1,17 +1,158 @@
-import React from 'react';
-import { X, Upload } from 'lucide-react';
-import { monthlyDetails } from '../monthlyDetails';
+import React, { useState, useEffect } from 'react';
+import { X, Upload, Plus, Edit2, Trash2, Save, Loader2 } from 'lucide-react';
+
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
+const ADMIN_PASSWORD = '02071951';
 
 const MonthlyDetail = ({ monthDate, isAdmin, onClose }) => {
-  const entries = monthlyDetails[monthDate] || [];
+  const [entries, setEntries] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [editingId, setEditingId] = useState(null);
+  const [editForm, setEditForm] = useState({});
+  const [saving, setSaving] = useState(false);
   const [month, year] = monthDate.split('/');
   const monthNames = ['', 'January', 'February', 'March', 'April', 'May', 'June', 
                       'July', 'August', 'September', 'October', 'November', 'December'];
   const monthName = monthNames[parseInt(month)];
-  const [uploading, setUploading] = React.useState(false);
-  const [uploadingFor, setUploadingFor] = React.useState(null);
+  const [uploading, setUploading] = useState(false);
+  const [uploadingFor, setUploadingFor] = useState(null);
 
-  const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
+  // Fetch entries from backend
+  useEffect(() => {
+    fetchEntries();
+  }, [monthDate]);
+
+  const fetchEntries = async () => {
+    try {
+      setLoading(true);
+      // Replace / with - for URL
+      const monthKey = monthDate.replace('/', '-');
+      const response = await fetch(`${BACKEND_URL}/api/monthly/${monthKey}`);
+      if (response.ok) {
+        const data = await response.json();
+        setEntries(data);
+      }
+    } catch (error) {
+      console.error('Failed to fetch monthly entries:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleAdd = () => {
+    const newEntry = {
+      id: `temp-${Date.now()}`,
+      month_key: monthDate,
+      date: '',
+      time: '',
+      witness: '',
+      description: '',
+      evidence: '',
+      notes: '',
+      isNew: true
+    };
+    setEditingId(newEntry.id);
+    setEditForm(newEntry);
+    setEntries([...entries, newEntry]);
+  };
+
+  const handleEdit = (entry) => {
+    setEditingId(entry.id);
+    setEditForm({ ...entry });
+  };
+
+  const handleSave = async () => {
+    setSaving(true);
+    try {
+      const isNew = editForm.isNew || editForm.id?.startsWith('temp-');
+      
+      if (isNew) {
+        const response = await fetch(`${BACKEND_URL}/api/monthly/create?admin_password=${ADMIN_PASSWORD}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            month_key: monthDate,
+            date: editForm.date,
+            time: editForm.time,
+            witness: editForm.witness,
+            description: editForm.description,
+            evidence: editForm.evidence,
+            notes: editForm.notes
+          })
+        });
+        
+        if (response.ok) {
+          const savedEntry = await response.json();
+          setEntries(entries.map(e => 
+            e.id === editingId ? savedEntry : e
+          ));
+        } else {
+          throw new Error('Failed to save entry');
+        }
+      } else {
+        const response = await fetch(`${BACKEND_URL}/api/monthly/${editForm.id}?admin_password=${ADMIN_PASSWORD}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            date: editForm.date,
+            time: editForm.time,
+            witness: editForm.witness,
+            description: editForm.description,
+            evidence: editForm.evidence,
+            notes: editForm.notes
+          })
+        });
+        
+        if (response.ok) {
+          const updatedEntry = await response.json();
+          setEntries(entries.map(e => 
+            e.id === editingId ? updatedEntry : e
+          ));
+        } else {
+          throw new Error('Failed to update entry');
+        }
+      }
+      
+      setEditingId(null);
+      setEditForm({});
+    } catch (error) {
+      console.error('Save error:', error);
+      alert('Failed to save entry. Please try again.');
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleCancel = () => {
+    if (editForm.isNew || editForm.id?.startsWith('temp-')) {
+      setEntries(entries.filter(e => e.id !== editingId));
+    }
+    setEditingId(null);
+    setEditForm({});
+  };
+
+  const handleDelete = async (id) => {
+    if (window.confirm('Are you sure you want to delete this entry?')) {
+      try {
+        const response = await fetch(`${BACKEND_URL}/api/monthly/${id}?admin_password=${ADMIN_PASSWORD}`, {
+          method: 'DELETE'
+        });
+        
+        if (response.ok) {
+          setEntries(entries.filter(e => e.id !== id));
+        } else {
+          throw new Error('Failed to delete entry');
+        }
+      } catch (error) {
+        console.error('Delete error:', error);
+        alert('Failed to delete entry. Please try again.');
+      }
+    }
+  };
+
+  const handleChange = (field, value) => {
+    setEditForm({ ...editForm, [field]: value });
+  };
 
   const handleUpload = async (entryId) => {
     // Create file input element
