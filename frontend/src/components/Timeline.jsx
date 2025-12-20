@@ -272,9 +272,16 @@ const MobileEntryCard = ({ entry, index, isAdmin, exhibitFiles, onEdit, onDelete
         <span className="text-xs uppercase font-bold" style={{ color: '#8b6914' }}>Exhibit:</span>
         <div className="flex flex-wrap items-center gap-1 mt-1">
           {files.map((file, i) => (
-            <button key={file.file_id} onClick={() => onViewExhibit(file)} className="inline-flex items-center gap-1 px-2 py-1 rounded text-xs" style={{ background: 'linear-gradient(145deg, #d4af37 0%, #9c7a1f 100%)', color: '#1a0f0a', fontWeight: 'bold' }}>
-              <FileText className="w-3 h-3" /> Ex. {i + 1}
-            </button>
+            <div key={file.file_id} className="inline-flex items-center">
+              <button onClick={() => onViewExhibit(file)} className="inline-flex items-center gap-1 px-2 py-1 text-xs" style={{ background: 'linear-gradient(145deg, #d4af37 0%, #9c7a1f 100%)', color: '#1a0f0a', fontWeight: 'bold', borderRadius: isAdmin ? '4px 0 0 4px' : '4px' }}>
+                <FileText className="w-3 h-3" /> Ex. {i + 1}
+              </button>
+              {isAdmin && (
+                <button onClick={() => onDeleteExhibit(file.file_id, entry.id)} className="px-1.5 py-1 text-xs" style={{ background: '#dc3545', color: '#fff', borderRadius: '0 4px 4px 0' }}>
+                  <X className="w-3 h-3" />
+                </button>
+              )}
+            </div>
           ))}
           {entry.evidence && <span className="text-xs font-medium" style={{ color: '#8b0000' }}>{entry.evidence}</span>}
           {isAdmin && (
