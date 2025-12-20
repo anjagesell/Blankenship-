@@ -348,6 +348,211 @@ async def delete_file(file_id: str, admin_password: str = Form(...)):
     
     return {"status": "success", "message": "File deleted"}
 
+# ============================================
+# TIMELINE DATA PERSISTENCE
+# ============================================
+
+# Models for timeline entries
+class TimelineEntry(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+    
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    date: str = ""
+    time: str = ""
+    witness: str = ""
+    description: str = ""
+    evidence: str = ""
+    notes: str = ""
+    created_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+    updated_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+
+class TimelineEntryCreate(BaseModel):
+    date: str = ""
+    time: str = ""
+    witness: str = ""
+    description: str = ""
+    evidence: str = ""
+    notes: str = ""
+
+class TimelineEntryUpdate(BaseModel):
+    date: Optional[str] = None
+    time: Optional[str] = None
+    witness: Optional[str] = None
+    description: Optional[str] = None
+    evidence: Optional[str] = None
+    notes: Optional[str] = None
+
+# Monthly detail entry models
+class MonthlyEntry(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+    
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    month_key: str  # Format: "MM/YYYY" e.g., "10/2013"
+    date: str = ""
+    time: str = ""
+    witness: str = ""
+    description: str = ""
+    evidence: str = ""
+    notes: str = ""
+    created_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+    updated_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+
+class MonthlyEntryCreate(BaseModel):
+    month_key: str
+    date: str = ""
+    time: str = ""
+    witness: str = ""
+    description: str = ""
+    evidence: str = ""
+    notes: str = ""
+
+class MonthlyEntryUpdate(BaseModel):
+    date: Optional[str] = None
+    time: Optional[str] = None
+    witness: Optional[str] = None
+    description: Optional[str] = None
+    evidence: Optional[str] = None
+    notes: Optional[str] = None
+
+
+# ========== TIMELINE ENDPOINTS ==========
+
+# Get all timeline entries (main highlights)
+@api_router.get("/timeline", response_model=List[TimelineEntry])
+async def get_timeline_entries():
+    """Get all timeline entries for the main highlights section"""
+    entries = await db.timeline_entries.find({}, {"_id": 0}).to_list(1000)
+    return entries
+
+# Create a new timeline entry (admin only)
+@api_router.post("/timeline", response_model=TimelineEntry)
+async def create_timeline_entry(entry: TimelineEntryCreate, admin_password: str = Form(...)):
+    """Create a new timeline entry (admin only)"""
+    verify_admin_password(admin_password)
+    
+    new_entry = TimelineEntry(
+        id=str(uuid.uuid4()),
+        **entry.model_dump(),
+        created_at=datetime.now(timezone.utc).isoformat(),
+        updated_at=datetime.now(timezone.utc).isoformat()
+    )
+    
+    await db.timeline_entries.insert_one(new_entry.model_dump())
+    return new_entry
+
+# Create timeline entry with JSON body (alternative endpoint)
+@api_router.post("/timeline/create")
+async def create_timeline_entry_json(entry: TimelineEntryCreate, admin_password: str):
+    """Create a new timeline entry with JSON body (admin only)"""
+    verify_admin_password(admin_password)
+    
+    new_entry = TimelineEntry(
+        id=str(uuid.uuid4()),
+        **entry.model_dump(),
+        created_at=datetime.now(timezone.utc).isoformat(),
+        updated_at=datetime.now(timezone.utc).isoformat()
+    )
+    
+    await db.timeline_entries.insert_one(new_entry.model_dump())
+    return new_entry.model_dump()
+
+# Update a timeline entry (admin only)
+@api_router.put("/timeline/{entry_id}")
+async def update_timeline_entry(entry_id: str, entry: TimelineEntryUpdate, admin_password: str):
+    """Update a timeline entry (admin only)"""
+    verify_admin_password(admin_password)
+    
+    # Get existing entry
+    existing = await db.timeline_entries.find_one({"id": entry_id}, {"_id": 0})
+    if not existing:
+        raise HTTPException(status_code=404, detail="Timeline entry not found")
+    
+    # Update only provided fields
+    update_data = {k: v for k, v in entry.model_dump().items() if v is not None}
+    update_data["updated_at"] = datetime.now(timezone.utc).isoformat()
+    
+    await db.timeline_entries.update_one(
+        {"id": entry_id},
+        {"$set": update_data}
+    )
+    
+    updated = await db.timeline_entries.find_one({"id": entry_id}, {"_id": 0})
+    return updated
+
+# Delete a timeline entry (admin only)
+@api_router.delete("/timeline/{entry_id}")
+async def delete_timeline_entry(entry_id: str, admin_password: str):
+    """Delete a timeline entry (admin only)"""
+    verify_admin_password(admin_password)
+    
+    result = await db.timeline_entries.delete_one({"id": entry_id})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Timeline entry not found")
+    
+    return {"status": "success", "message": "Timeline entry deleted"}
+
+
+# ========== MONTHLY DETAIL ENDPOINTS ==========
+
+# Get all entries for a specific month
+@api_router.get("/monthly/{month_key}", response_model=List[MonthlyEntry])
+async def get_monthly_entries(month_key: str):
+    """Get all entries for a specific month (e.g., '10/2013')"""
+    # URL decode the month_key since it may contain /
+    decoded_key = month_key.replace("-", "/")
+    entries = await db.monthly_entries.find({"month_key": decoded_key}, {"_id": 0}).to_list(1000)
+    return entries
+
+# Create a new monthly entry (admin only)
+@api_router.post("/monthly/create")
+async def create_monthly_entry(entry: MonthlyEntryCreate, admin_password: str):
+    """Create a new monthly detail entry (admin only)"""
+    verify_admin_password(admin_password)
+    
+    new_entry = MonthlyEntry(
+        id=str(uuid.uuid4()),
+        **entry.model_dump(),
+        created_at=datetime.now(timezone.utc).isoformat(),
+        updated_at=datetime.now(timezone.utc).isoformat()
+    )
+    
+    await db.monthly_entries.insert_one(new_entry.model_dump())
+    return new_entry.model_dump()
+
+# Update a monthly entry (admin only)
+@api_router.put("/monthly/{entry_id}")
+async def update_monthly_entry(entry_id: str, entry: MonthlyEntryUpdate, admin_password: str):
+    """Update a monthly detail entry (admin only)"""
+    verify_admin_password(admin_password)
+    
+    existing = await db.monthly_entries.find_one({"id": entry_id}, {"_id": 0})
+    if not existing:
+        raise HTTPException(status_code=404, detail="Monthly entry not found")
+    
+    update_data = {k: v for k, v in entry.model_dump().items() if v is not None}
+    update_data["updated_at"] = datetime.now(timezone.utc).isoformat()
+    
+    await db.monthly_entries.update_one(
+        {"id": entry_id},
+        {"$set": update_data}
+    )
+    
+    updated = await db.monthly_entries.find_one({"id": entry_id}, {"_id": 0})
+    return updated
+
+# Delete a monthly entry (admin only)
+@api_router.delete("/monthly/{entry_id}")
+async def delete_monthly_entry(entry_id: str, admin_password: str):
+    """Delete a monthly detail entry (admin only)"""
+    verify_admin_password(admin_password)
+    
+    result = await db.monthly_entries.delete_one({"id": entry_id})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Monthly entry not found")
+    
+    return {"status": "success", "message": "Monthly entry deleted"}
+
+
 @app.on_event("shutdown")
 async def shutdown_db_client():
     client.close()
