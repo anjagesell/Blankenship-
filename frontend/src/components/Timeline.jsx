@@ -675,7 +675,7 @@ const Timeline = ({ isAdmin }) => {
               )}
               {/* Entry Cards */}
               {sortedEntries.filter(e => e.id !== editingId).map((entry, index) => (
-                <MobileEntryCard key={entry.id} entry={entry} index={index} isAdmin={isAdmin} exhibitFiles={exhibitFiles} onEdit={handleEdit} onDelete={handleDelete} onUpload={handleExhibitUpload} uploadingFor={uploadingFor} onViewExhibit={setViewingExhibit} />
+                <MobileEntryCard key={entry.id} entry={entry} index={index} isAdmin={isAdmin} exhibitFiles={exhibitFiles} onEdit={handleEdit} onDelete={handleDelete} onUpload={handleExhibitUpload} uploadingFor={uploadingFor} onViewExhibit={setViewingExhibit} onDeleteExhibit={handleDeleteExhibit} />
               ))}
             </>
           )}
