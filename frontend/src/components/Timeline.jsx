@@ -491,13 +491,50 @@ const Timeline = ({ isAdmin }) => {
     }
   };
 
-  const getExhibitDisplay = (entryId) => {
+  // Delete individual exhibit file
+  const handleDeleteExhibit = async (fileId, entryId) => {
+    if (!window.confirm('Delete this exhibit file?')) return;
+    
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/file/${fileId}?admin_password=${ADMIN_PASSWORD}`, {
+        method: 'DELETE'
+      });
+      
+      if (response.ok) {
+        // Refresh exhibit files for this entry
+        await fetchExhibitFiles(entryId);
+      } else {
+        throw new Error('Failed to delete');
+      }
+    } catch (error) {
+      alert(`Delete failed: ${error.message}`);
+    }
+  };
+
+  const getExhibitDisplay = (entryId, showDeleteBtn = false) => {
     const files = exhibitFiles[entryId] || [];
     if (files.length === 0) return null;
     return files.map((file, index) => (
-      <button key={file.file_id} onClick={() => setViewingExhibit(file)} className="inline-flex items-center gap-1 mr-1 mb-1 px-2 py-1 rounded text-[10px] hover:opacity-80 cursor-pointer" style={{ background: 'linear-gradient(145deg, #d4af37 0%, #9c7a1f 100%)', color: '#1a0f0a', fontWeight: 'bold', border: 'none' }} title={`View ${file.filename}`}>
-        <FileText className="w-3 h-3" /> Ex. {index + 1}
-      </button>
+      <div key={file.file_id} className="inline-flex items-center mr-1 mb-1">
+        <button 
+          onClick={() => setViewingExhibit(file)} 
+          className="inline-flex items-center gap-1 px-2 py-1 rounded-l text-[10px] hover:opacity-80 cursor-pointer" 
+          style={{ background: 'linear-gradient(145deg, #d4af37 0%, #9c7a1f 100%)', color: '#1a0f0a', fontWeight: 'bold', border: 'none', borderRadius: showDeleteBtn ? '4px 0 0 4px' : '4px' }} 
+          title={`View ${file.filename}`}
+        >
+          <FileText className="w-3 h-3" /> Ex. {index + 1}
+        </button>
+        {showDeleteBtn && (
+          <button
+            onClick={(e) => { e.stopPropagation(); handleDeleteExhibit(file.file_id, entryId); }}
+            className="px-1.5 py-1 text-[10px] hover:bg-red-700 transition-colors"
+            style={{ background: '#dc3545', color: '#fff', borderRadius: '0 4px 4px 0' }}
+            title="Delete this exhibit"
+          >
+            <X className="w-3 h-3" />
+          </button>
+        )}
+      </div>
     ));
   };
 
