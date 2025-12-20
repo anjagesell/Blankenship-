@@ -727,7 +727,7 @@ const Timeline = ({ isAdmin }) => {
                         <td className="px-3 py-3 text-xs sm:text-sm" style={{ color: '#3E2723', fontFamily: 'Arial', borderRight: '1px solid rgba(139,105,20,0.3)' }}>{entry.description}</td>
                         <td className="px-3 py-3 text-xs sm:text-sm" style={{ color: '#8b0000', fontFamily: 'Arial', borderRight: '1px solid rgba(139,105,20,0.3)' }}>
                           <div className="flex flex-wrap items-center gap-1">
-                            {getExhibitDisplay(entry.id)}
+                            {getExhibitDisplay(entry.id, isAdmin)}
                             {entry.evidence && <span className="text-xs font-medium block w-full mt-1">{entry.evidence}</span>}
                             {isAdmin && <button onClick={() => handleExhibitUpload(entry.id)} disabled={uploadingFor === entry.id} className="inline-flex items-center gap-1 px-2 py-1 rounded text-[10px] mt-1" style={{ background: uploadingFor === entry.id ? '#999' : 'linear-gradient(145deg, #28a745 0%, #1e7e34 100%)', color: '#fff', border: '1px solid #1e7e34', fontWeight: 'bold' }}><Upload className="w-3 h-3" />{uploadingFor === entry.id ? '...' : 'Upload'}</button>}
                           </div>
