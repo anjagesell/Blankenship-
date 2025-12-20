@@ -4,21 +4,42 @@ import { ENTRY_CODE } from '../mock';
 import { toast } from '../hooks/use-toast';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '../components/ui/dialog';
 import { ScrollArea } from '../components/ui/scroll-area';
-import { Scale, Shield, Gavel } from 'lucide-react';
+import { Scale, Shield, Gavel, Info } from 'lucide-react';
 
 const EntryPage = () => {
   const [code, setCode] = useState(['', '', '', '', '', '', '', '']);
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [termsScrolled, setTermsScrolled] = useState(false);
+  const [showAccessReminder, setShowAccessReminder] = useState(false);
   const inputRefs = useRef([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     document.title = 'Blankenship';
-    inputRefs.current[0]?.focus();
   }, []);
 
+  // Focus first input only after terms are accepted
+  useEffect(() => {
+    if (termsAccepted) {
+      inputRefs.current[0]?.focus();
+    }
+  }, [termsAccepted]);
+
+  const handleInputFocus = (index) => {
+    if (!termsAccepted) {
+      setShowAccessReminder(true);
+      // Auto-hide after 4 seconds
+      setTimeout(() => setShowAccessReminder(false), 4000);
+    }
+  };
+
   const handleChange = (index, value) => {
+    if (!termsAccepted) {
+      setShowAccessReminder(true);
+      setTimeout(() => setShowAccessReminder(false), 4000);
+      return;
+    }
+    
     if (value && !/^[0-9]$/.test(value)) return;
 
     const newCode = [...code];
@@ -32,14 +53,6 @@ const EntryPage = () => {
     if (index === 7 && value) {
       const enteredCode = newCode.join('');
       if (enteredCode === ENTRY_CODE) {
-        if (!termsAccepted) {
-          toast({
-            title: 'Terms Required',
-            description: 'Please acknowledge the Terms of Use to proceed',
-            variant: 'destructive',
-          });
-          return;
-        }
         toast({
           title: 'Access Granted',
           description: 'Welcome to Blankenship Archives',
@@ -58,6 +71,11 @@ const EntryPage = () => {
   };
 
   const handleKeyDown = (index, e) => {
+    if (!termsAccepted) {
+      setShowAccessReminder(true);
+      setTimeout(() => setShowAccessReminder(false), 4000);
+      return;
+    }
     if (e.key === 'Backspace' && !code[index] && index > 0) {
       inputRefs.current[index - 1]?.focus();
     }
@@ -65,6 +83,12 @@ const EntryPage = () => {
 
   const handlePaste = (e) => {
     e.preventDefault();
+    if (!termsAccepted) {
+      setShowAccessReminder(true);
+      setTimeout(() => setShowAccessReminder(false), 4000);
+      return;
+    }
+    
     const pastedData = e.clipboardData.getData('text').slice(0, 8);
     if (/^[0-9]+$/.test(pastedData)) {
       const newCode = pastedData.split('').concat(Array(8 - pastedData.length).fill(''));
@@ -74,14 +98,6 @@ const EntryPage = () => {
       
       if (pastedData.length === 8) {
         if (pastedData === ENTRY_CODE) {
-          if (!termsAccepted) {
-            toast({
-              title: 'Terms Required',
-              description: 'Please acknowledge the Terms of Use to proceed',
-              variant: 'destructive',
-            });
-            return;
-          }
           toast({
             title: 'Access Granted',
             description: 'Welcome to Blankenship Archives',
@@ -111,6 +127,77 @@ const EntryPage = () => {
         `,
       }}
     >
+      {/* Friendly Access Reminder Popup */}
+      {showAccessReminder && (
+        <div 
+          className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 animate-fadeIn"
+          style={{
+            animation: 'fadeIn 0.3s ease-out',
+          }}
+        >
+          <div
+            className="p-6 sm:p-8 rounded-lg shadow-2xl max-w-sm mx-4 text-center"
+            style={{
+              background: 'linear-gradient(145deg, #f4e8c1 0%, #e8dcc8 100%)',
+              border: '3px solid #d4af37',
+              boxShadow: '0 20px 60px rgba(0,0,0,0.5), 0 0 40px rgba(212,175,55,0.2)',
+            }}
+          >
+            <div className="mb-4">
+              <Info className="w-12 h-12 mx-auto" style={{ color: '#8b6914' }} />
+            </div>
+            <h3 
+              className="text-lg sm:text-xl font-bold mb-3"
+              style={{ 
+                color: '#3E2723',
+                fontFamily: 'Georgia, serif',
+              }}
+            >
+              Just a Friendly Reminder
+            </h3>
+            <p 
+              className="text-sm sm:text-base mb-2"
+              style={{ 
+                color: '#5D4037',
+                fontFamily: 'Garamond, serif',
+                lineHeight: 1.6,
+              }}
+            >
+              If you do not acknowledge reading the notice, the Site entry is off limits for you.
+            </p>
+            <p 
+              className="text-xs sm:text-sm italic"
+              style={{ 
+                color: '#8b6914',
+                fontFamily: 'Garamond, serif',
+              }}
+            >
+              Please scroll through and check the box above. ☝️
+            </p>
+            <button
+              onClick={() => setShowAccessReminder(false)}
+              className="mt-4 px-4 py-2 rounded text-sm font-semibold transition-all hover:scale-105"
+              style={{
+                background: 'linear-gradient(145deg, #d4af37 0%, #9c7a1f 100%)',
+                color: '#1a0f0a',
+                border: '2px solid #8b6914',
+              }}
+            >
+              Got it!
+            </button>
+          </div>
+        </div>
+      )}
+      
+      {/* Overlay when reminder is shown */}
+      {showAccessReminder && (
+        <div 
+          className="fixed inset-0 z-40"
+          style={{ background: 'rgba(0,0,0,0.6)' }}
+          onClick={() => setShowAccessReminder(false)}
+        />
+      )}
+
       {/* Courthouse columns effect */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-white/20 to-transparent" />
@@ -118,9 +205,9 @@ const EntryPage = () => {
       </div>
 
       {/* Main content */}
-      <div className="text-center space-y-6 sm:space-y-8 md:space-y-12 w-full max-w-md sm:max-w-2xl md:max-w-4xl relative z-10">
+      <div className="text-center space-y-4 sm:space-y-6 w-full max-w-md sm:max-w-2xl md:max-w-4xl relative z-10">
         {/* Justicia symbol with dramatic lighting */}
-        <div className="mb-6 relative">
+        <div className="mb-4 relative">
           <div 
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 rounded-full"
             style={{
@@ -128,7 +215,7 @@ const EntryPage = () => {
               filter: 'blur(30px)',
             }}
           />
-          <Scale className="w-16 h-16 sm:w-20 sm:h-20 mx-auto relative z-10" style={{ color: '#d4af37', filter: 'drop-shadow(0 4px 12px rgba(212,175,55,0.6))' }} />
+          <Scale className="w-14 h-14 sm:w-16 sm:h-16 mx-auto relative z-10" style={{ color: '#d4af37', filter: 'drop-shadow(0 4px 12px rgba(212,175,55,0.6))' }} />
         </div>
 
         {/* Title with gold embossing */}
@@ -146,63 +233,29 @@ const EntryPage = () => {
           Judicial Archives
         </div>
 
-        {/* Code entry boxes with brass styling */}
-        <div className="flex gap-1.5 sm:gap-2 md:gap-3 justify-center px-2">
-          {code.map((digit, index) => (
-            <input
-              key={index}
-              ref={(el) => (inputRefs.current[index] = el)}
-              type="text"
-              inputMode="numeric"
-              maxLength="1"
-              value={digit}
-              onChange={(e) => handleChange(index, e.target.value)}
-              onKeyDown={(e) => handleKeyDown(index, e)}
-              onPaste={handlePaste}
-              className="w-9 h-11 sm:w-12 sm:h-14 md:w-14 md:h-16 text-center text-lg sm:text-xl md:text-2xl font-bold transition-all"
-              style={{
-                background: 'linear-gradient(145deg, #f4e8c1 0%, #e8dcc8 50%, #d4c5a9 100%)',
-                color: '#3E2723',
-                border: '2px solid #8b6914',
-                borderRadius: '4px',
-                boxShadow: `
-                  inset 0 2px 4px rgba(0,0,0,0.2),
-                  inset 0 -2px 4px rgba(255,255,255,0.3),
-                  0 4px 12px rgba(0,0,0,0.3)
-                `,
-                fontFamily: 'Garamond, serif',
-              }}
-            />
-          ))}
-        </div>
-        
-        <p className="text-yellow-600/70 text-xs sm:text-sm tracking-wide px-2 uppercase" style={{ fontFamily: 'Garamond, serif' }}>
-          Enter 8-Digit Access Code
-        </p>
-        <p className="text-yellow-600/60 text-[10px] sm:text-xs tracking-wide px-2 mt-1 italic" style={{ fontFamily: 'Garamond, serif' }}>
-          (After acknowledgment of Terms)
-        </p>
-
-        {/* Terms of Use Requirement - Required Acknowledgement */}
+        {/* Terms of Use Requirement - NOW ABOVE PASSWORD BOXES */}
         <div 
-          className="mt-8 p-5 sm:p-6 rounded mx-4"
+          className="mt-4 p-4 sm:p-5 rounded mx-2 sm:mx-4"
           style={{
             background: 'linear-gradient(145deg, rgba(212,175,55,0.1) 0%, rgba(139,105,20,0.1) 100%)',
-            border: '2px solid #8b6914',
-            boxShadow: '0 4px 16px rgba(0,0,0,0.4)',
+            border: termsAccepted ? '2px solid #28a745' : '2px solid #8b6914',
+            boxShadow: termsAccepted 
+              ? '0 4px 16px rgba(40,167,69,0.3)' 
+              : '0 4px 16px rgba(0,0,0,0.4)',
+            transition: 'all 0.3s ease',
           }}
         >
           <h3 
-            className="text-base sm:text-lg font-bold mb-3 text-center"
+            className="text-sm sm:text-base font-bold mb-2 text-center"
             style={{ 
-              color: '#d4af37',
+              color: termsAccepted ? '#28a745' : '#d4af37',
               fontFamily: 'Georgia, serif',
             }}
           >
-            TERMS OF USE REQUIREMENT
+            {termsAccepted ? '✓ TERMS ACKNOWLEDGED' : 'ACKNOWLEDGEMENT NOTICE'}
           </h3>
           
-          {/* Scrollable Terms Container - Smaller */}
+          {/* Scrollable Terms Container */}
           <div 
             onScroll={(e) => {
               const element = e.target;
@@ -211,17 +264,17 @@ const EntryPage = () => {
                 setTermsScrolled(true);
               }
             }}
-            className="overflow-y-auto mb-3 pr-2"
+            className="overflow-y-auto mb-2 pr-2"
             style={{
-              maxHeight: '140px',
+              maxHeight: '120px',
               border: '1px solid #8b6914',
               background: 'rgba(0,0,0,0.2)',
               borderRadius: '4px',
-              padding: '10px',
+              padding: '8px',
             }}
           >
             <div 
-              className="text-[11px] sm:text-xs space-y-2 text-left"
+              className="text-[10px] sm:text-xs space-y-2 text-left"
               style={{ 
                 color: '#f5e6c8',
                 fontFamily: 'Garamond, serif',
@@ -255,9 +308,9 @@ const EntryPage = () => {
             </p>
           )}
           
-          {/* Checkbox for acknowledgement - only enabled after scrolling */}
+          {/* Checkbox for acknowledgement */}
           <label 
-            className={`flex items-start gap-2 ${termsScrolled ? 'cursor-pointer' : 'cursor-not-allowed opacity-50'} group mt-3`}
+            className={`flex items-start gap-2 ${termsScrolled ? 'cursor-pointer' : 'cursor-not-allowed opacity-50'} group`}
             style={{
               color: '#f5e6c8',
               fontFamily: 'Georgia, serif',
@@ -274,21 +327,75 @@ const EntryPage = () => {
                 cursor: termsScrolled ? 'pointer' : 'not-allowed',
               }}
             />
-            <span className={`text-xs sm:text-sm font-semibold ${termsScrolled ? 'group-hover:text-yellow-400' : ''} transition-colors leading-relaxed`}>
+            <span className={`text-[11px] sm:text-xs font-semibold ${termsScrolled ? 'group-hover:text-yellow-400' : ''} transition-colors leading-relaxed`}>
               I have read and agree to the Terms of Use Requirement, and I acknowledge that all content is legally protected evidence.
             </span>
           </label>
         </div>
+
+        {/* Code entry boxes - NOW BELOW ACKNOWLEDGEMENT */}
+        <div className="mt-6">
+          <div 
+            className={`flex gap-1.5 sm:gap-2 md:gap-3 justify-center px-2 transition-all ${!termsAccepted ? 'opacity-50' : ''}`}
+          >
+            {code.map((digit, index) => (
+              <input
+                key={index}
+                ref={(el) => (inputRefs.current[index] = el)}
+                type="text"
+                inputMode="numeric"
+                maxLength="1"
+                value={digit}
+                onChange={(e) => handleChange(index, e.target.value)}
+                onKeyDown={(e) => handleKeyDown(index, e)}
+                onFocus={() => handleInputFocus(index)}
+                onPaste={handlePaste}
+                className="w-9 h-11 sm:w-12 sm:h-14 md:w-14 md:h-16 text-center text-lg sm:text-xl md:text-2xl font-bold transition-all"
+                style={{
+                  background: termsAccepted 
+                    ? 'linear-gradient(145deg, #f4e8c1 0%, #e8dcc8 50%, #d4c5a9 100%)'
+                    : 'linear-gradient(145deg, #999 0%, #888 50%, #777 100%)',
+                  color: termsAccepted ? '#3E2723' : '#555',
+                  border: termsAccepted ? '2px solid #8b6914' : '2px solid #666',
+                  borderRadius: '4px',
+                  boxShadow: `
+                    inset 0 2px 4px rgba(0,0,0,0.2),
+                    inset 0 -2px 4px rgba(255,255,255,0.3),
+                    0 4px 12px rgba(0,0,0,0.3)
+                  `,
+                  fontFamily: 'Garamond, serif',
+                  cursor: termsAccepted ? 'text' : 'not-allowed',
+                }}
+              />
+            ))}
+          </div>
+          
+          <p 
+            className={`text-xs sm:text-sm tracking-wide px-2 uppercase mt-3 ${!termsAccepted ? 'opacity-50' : ''}`} 
+            style={{ fontFamily: 'Garamond, serif', color: '#d4af37' }}
+          >
+            Enter 8-Digit Access Code
+          </p>
+          
+          {!termsAccepted && (
+            <p 
+              className="text-[10px] sm:text-xs tracking-wide px-2 mt-1 italic" 
+              style={{ fontFamily: 'Garamond, serif', color: '#d4a574' }}
+            >
+              (Please acknowledge the notice above first)
+            </p>
+          )}
+        </div>
       </div>
 
       {/* Legal Information Icons - Refined */}
-      <div className="mt-8 mb-6 flex justify-center gap-4 sm:gap-6 md:gap-8 px-4 z-10">
+      <div className="mt-6 mb-4 flex justify-center gap-4 sm:gap-6 md:gap-8 px-4 z-10">
         {/* NC State Law */}
         <Dialog>
           <DialogTrigger asChild>
             <button className="flex flex-col items-center gap-1 sm:gap-2 text-yellow-600/80 hover:text-yellow-500 transition-all group">
               <div 
-                className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded flex items-center justify-center transition-all group-hover:scale-110"
+                className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded flex items-center justify-center transition-all group-hover:scale-110"
                 style={{
                   background: 'linear-gradient(145deg, #3a3a3a 0%, #2a2a2a 100%)',
                   boxShadow: `
@@ -299,9 +406,9 @@ const EntryPage = () => {
                   border: '1px solid #8b6914',
                 }}
               >
-                <Gavel className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8" style={{ color: '#d4af37' }} />
+                <Gavel className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" style={{ color: '#d4af37' }} />
               </div>
-              <span className="text-[0.65rem] sm:text-xs font-medium uppercase tracking-wider" style={{ fontFamily: 'Garamond, serif' }}>NC State Law</span>
+              <span className="text-[0.6rem] sm:text-xs font-medium uppercase tracking-wider" style={{ fontFamily: 'Garamond, serif' }}>NC Law</span>
             </button>
           </DialogTrigger>
           <DialogContent className="max-w-2xl max-h-[80vh] parchment-bg">
@@ -343,7 +450,7 @@ const EntryPage = () => {
           <DialogTrigger asChild>
             <button className="flex flex-col items-center gap-1 sm:gap-2 text-yellow-600/80 hover:text-yellow-500 transition-all group">
               <div 
-                className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded flex items-center justify-center transition-all group-hover:scale-110"
+                className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded flex items-center justify-center transition-all group-hover:scale-110"
                 style={{
                   background: 'linear-gradient(145deg, #3a3a3a 0%, #2a2a2a 100%)',
                   boxShadow: `
@@ -354,9 +461,9 @@ const EntryPage = () => {
                   border: '1px solid #8b6914',
                 }}
               >
-                <Scale className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8" style={{ color: '#d4af37' }} />
+                <Scale className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" style={{ color: '#d4af37' }} />
               </div>
-              <span className="text-[0.65rem] sm:text-xs font-medium uppercase tracking-wider" style={{ fontFamily: 'Garamond, serif' }}>Federal Law</span>
+              <span className="text-[0.6rem] sm:text-xs font-medium uppercase tracking-wider" style={{ fontFamily: 'Garamond, serif' }}>Federal</span>
             </button>
           </DialogTrigger>
           <DialogContent className="max-w-2xl max-h-[80vh] parchment-bg">
@@ -392,7 +499,7 @@ const EntryPage = () => {
           <DialogTrigger asChild>
             <button className="flex flex-col items-center gap-1 sm:gap-2 text-yellow-600/80 hover:text-yellow-500 transition-all group">
               <div 
-                className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded flex items-center justify-center transition-all group-hover:scale-110"
+                className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded flex items-center justify-center transition-all group-hover:scale-110"
                 style={{
                   background: 'linear-gradient(145deg, #3a3a3a 0%, #2a2a2a 100%)',
                   boxShadow: `
@@ -403,9 +510,9 @@ const EntryPage = () => {
                   border: '1px solid #8b6914',
                 }}
               >
-                <Shield className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8" style={{ color: '#d4af37' }} />
+                <Shield className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" style={{ color: '#d4af37' }} />
               </div>
-              <span className="text-[0.65rem] sm:text-xs font-medium uppercase tracking-wider" style={{ fontFamily: 'Garamond, serif' }}>Your Rights</span>
+              <span className="text-[0.6rem] sm:text-xs font-medium uppercase tracking-wider" style={{ fontFamily: 'Garamond, serif' }}>Rights</span>
             </button>
           </DialogTrigger>
           <DialogContent className="max-w-2xl max-h-[80vh] parchment-bg">
@@ -445,7 +552,7 @@ const EntryPage = () => {
 
       {/* Copyright Notice - Bottom of Page */}
       <div 
-        className="mt-6 mb-8 text-center px-4"
+        className="mt-4 mb-6 text-center px-4"
         style={{ 
           color: '#d4a574',
           fontFamily: 'Garamond, serif',
@@ -457,9 +564,6 @@ const EntryPage = () => {
           </div>
           <div className="text-[10px] sm:text-xs">
             Private Evidence Documentation • Authorized Access Only
-          </div>
-          <div className="text-[10px] sm:text-xs">
-            All content is legally protected evidence. Unauthorized copying or distribution is prohibited.
           </div>
         </div>
       </div>
