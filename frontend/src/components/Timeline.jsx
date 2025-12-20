@@ -283,7 +283,18 @@ const Timeline = ({ isAdmin }) => {
             </tr>
           </thead>
           <tbody>
-            {entries.length === 0 ? (
+            {loading ? (
+              <tr>
+                <td colSpan={isAdmin ? "7" : "6"} className="px-3 py-8 text-center">
+                  <div className="flex items-center justify-center gap-2">
+                    <Loader2 className="w-5 h-5 animate-spin" style={{ color: '#d4af37' }} />
+                    <p className="text-yellow-700/80 text-sm" style={{ fontFamily: 'Garamond, serif' }}>
+                      Loading timeline entries...
+                    </p>
+                  </div>
+                </td>
+              </tr>
+            ) : entries.length === 0 ? (
               <tr>
                 <td colSpan={isAdmin ? "7" : "6"} className="px-3 py-8 text-center">
                   <p className="text-yellow-700/80 text-sm mb-2" style={{ fontFamily: 'Garamond, serif' }}>
