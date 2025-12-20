@@ -202,7 +202,7 @@ const EntryDetailPanel = ({ entry, onClose, exhibitFiles }) => {
   );
 };
 
-const Genogram = ({ entries, exhibitFiles, onClose }) => {
+const Genogram = ({ onClose }) => {
   const svgRef = useRef(null);
   const containerRef = useRef(null);
   const [zoom, setZoom] = useState(1);
@@ -210,15 +210,63 @@ const Genogram = ({ entries, exhibitFiles, onClose }) => {
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
   const [selectedEntry, setSelectedEntry] = useState(null);
-  
-  // Root entry - The beginning
-  const rootEntry = {
-    id: 'root',
-    date: 'October 2013',
-    witness: 'Gabriele',
-    description: 'The Threat — Where It All Began',
-    isRoot: true,
-  };
+  const [entries, setEntries] = useState([]);
+  const [exhibitFiles, setExhibitFiles] = useState({});
+  const [loading, setLoading] = useState(true);
+
+  // Fetch ALL entries from Monthly Detailed Logs
+  useEffect(() => {
+    const fetchAllMonthlyEntries = async () => {
+      setLoading(true);
+      try {
+        // Fetch entries from all months (2013-2015)
+        const months = [
+          '10-2013', '11-2013', '12-2013',
+          '01-2014', '02-2014', '03-2014', '04-2014', '05-2014', '06-2014', 
+          '07-2014', '08-2014', '09-2014', '10-2014', '11-2014', '12-2014',
+          '01-2015', '02-2015', '03-2015', '04-2015', '05-2015', '06-2015',
+          '07-2015', '08-2015', '09-2015', '10-2015', '11-2015', '12-2015'
+        ];
+        
+        const allEntries = [];
+        
+        for (const monthKey of months) {
+          try {
+            const response = await fetch(`${BACKEND_URL}/api/monthly/${monthKey}`);
+            if (response.ok) {
+              const monthEntries = await response.json();
+              allEntries.push(...monthEntries);
+            }
+          } catch (err) {
+            // Skip months with no data
+          }
+        }
+        
+        setEntries(allEntries);
+        
+        // Fetch exhibit files for each entry
+        for (const entry of allEntries) {
+          if (entry.id) {
+            try {
+              const filesResponse = await fetch(`${BACKEND_URL}/api/files/${entry.id}`);
+              if (filesResponse.ok) {
+                const files = await filesResponse.json();
+                setExhibitFiles(prev => ({ ...prev, [entry.id]: files }));
+              }
+            } catch (err) {
+              // Skip if no files
+            }
+          }
+        }
+      } catch (error) {
+        console.error('Failed to fetch entries:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    fetchAllMonthlyEntries();
+  }, []);
   
   // Sort entries by date
   const sortedEntries = [...entries].sort((a, b) => {
@@ -232,8 +280,16 @@ const Genogram = ({ entries, exhibitFiles, onClose }) => {
     return parseDate(a.date) - parseDate(b.date);
   });
   
+  // Get the first entry as root (if exists)
+  const rootEntry = sortedEntries.length > 0 
+    ? { ...sortedEntries[0], isRoot: true }
+    : { id: 'empty', date: 'No Data', witness: '', description: 'No entries yet. Add entries in the Monthly Detailed Logs.', isRoot: true };
+  
+  // Remaining entries (excluding the first/root)
+  const remainingEntries = sortedEntries.slice(1);
+  
   // Add exhibit info to entries
-  const entriesWithExhibits = sortedEntries.map(entry => ({
+  const entriesWithExhibits = remainingEntries.map(entry => ({
     ...entry,
     hasExhibits: (exhibitFiles[entry.id] || []).length > 0,
   }));
@@ -256,7 +312,7 @@ const Genogram = ({ entries, exhibitFiles, onClose }) => {
   
   // Calculate positions
   const treeWidth = Math.max(800, years.length * (nodeWidth + siblingGap) + 200);
-  const treeHeight = Math.max(600, (Math.max(...years.map(y => entriesByYear[y].length)) + 2) * levelGap);
+  const treeHeight = Math.max(600, (Math.max(...years.map(y => entriesByYear[y]?.length || 1), 1) + 2) * levelGap);
   
   // Root position
   const rootX = treeWidth / 2;
