@@ -366,10 +366,22 @@ const MonthlyDetail = ({ monthDate, isAdmin, onClose }) => {
                 </tr>
               </thead>
               <tbody>
-                {entries.length === 0 ? (
+                {loading ? (
                   <tr>
-                    <td colSpan={isAdmin ? "7" : "6"} className="px-3 py-6 text-center text-sm italic" style={{ color: '#5D4037' }}>
-                      No detailed entries for this month yet. Data will be added.
+                    <td colSpan={isAdmin ? "8" : "6"} className="px-3 py-6 text-center">
+                      <div className="flex items-center justify-center gap-2">
+                        <Loader2 className="w-5 h-5 animate-spin" style={{ color: '#d4af37' }} />
+                        <span className="text-sm italic" style={{ color: '#5D4037' }}>Loading entries...</span>
+                      </div>
+                    </td>
+                  </tr>
+                ) : entries.length === 0 ? (
+                  <tr>
+                    <td colSpan={isAdmin ? "8" : "6"} className="px-3 py-6 text-center text-sm italic" style={{ color: '#5D4037' }}>
+                      {isAdmin 
+                        ? 'No entries yet. Click "Add Entry" to begin documenting this month.'
+                        : 'No detailed entries for this month yet.'
+                      }
                     </td>
                   </tr>
                 ) : (
@@ -382,90 +394,174 @@ const MonthlyDetail = ({ monthDate, isAdmin, onClose }) => {
                       }}
                       className="hover:bg-yellow-100/50 transition-colors"
                     >
-                      <td 
-                        className="px-3 py-3 text-xs sm:text-sm font-semibold whitespace-nowrap"
-                        style={{ 
-                          color: '#3E2723',
-                          fontFamily: 'Courier, monospace',
-                          borderRight: '1px solid rgba(139,105,20,0.3)',
-                        }}
-                      >
-                        {entry.date}
-                      </td>
-                      <td 
-                        className="px-3 py-3 text-xs sm:text-sm whitespace-nowrap"
-                        style={{ 
-                          color: '#3E2723',
-                          fontFamily: 'Courier, monospace',
-                          borderRight: '1px solid rgba(139,105,20,0.3)',
-                        }}
-                      >
-                        {entry.time}
-                      </td>
-                      <td 
-                        className="px-3 py-3 text-xs sm:text-sm font-semibold"
-                        style={{ 
-                          color: '#2c1810',
-                          fontFamily: 'Arial, sans-serif',
-                          borderRight: '1px solid rgba(139,105,20,0.3)',
-                        }}
-                      >
-                        {entry.witness}
-                      </td>
-                      <td 
-                        className="px-3 py-3 text-xs sm:text-sm"
-                        style={{ 
-                          color: '#3E2723',
-                          fontFamily: 'Arial, sans-serif',
-                          borderRight: '1px solid rgba(139,105,20,0.3)',
-                        }}
-                      >
-                        {entry.description}
-                      </td>
-                      <td 
-                        className="px-3 py-3 text-xs sm:text-sm font-medium"
-                        style={{ 
-                          color: '#8b0000',
-                          fontFamily: 'Arial, sans-serif',
-                          borderRight: '1px solid rgba(139,105,20,0.3)',
-                        }}
-                      >
-                        {entry.evidence}
-                        {entry.files && entry.files.length > 0 && (
-                          <span className="ml-2 text-[10px] bg-green-600 text-white px-2 py-1 rounded">
-                            {entry.files.length} file{entry.files.length !== 1 ? 's' : ''}
-                          </span>
-                        )}
-                      </td>
-                      <td 
-                        className="px-3 py-3 text-xs sm:text-sm italic"
-                        style={{ 
-                          color: '#5D4037',
-                          fontFamily: 'Arial, sans-serif',
-                          borderRight: isAdmin ? '1px solid rgba(139,105,20,0.3)' : 'none',
-                        }}
-                      >
-                        {entry.notes}
-                      </td>
-                      {isAdmin && (
-                        <td className="px-3 py-3 text-center">
-                          <button
-                            onClick={() => handleUpload(entry.id)}
-                            disabled={uploading && uploadingFor === entry.id}
-                            className="inline-flex items-center gap-1 px-3 py-1 text-xs font-semibold rounded transition-all hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
-                            style={{
-                              background: uploading && uploadingFor === entry.id 
-                                ? '#999' 
-                                : 'linear-gradient(145deg, #d4af37 0%, #c5a028 50%, #9c7a1f 100%)',
-                              color: '#1a0f0a',
-                              border: '1px solid #8b6914',
-                              boxShadow: '0 2px 6px rgba(0,0,0,0.4)',
-                            }}
+                      {editingId === entry.id ? (
+                        // Edit Mode
+                        <>
+                          <td className="px-2 py-2" style={{ borderRight: '1px solid rgba(139,105,20,0.3)' }}>
+                            <input
+                              type="text"
+                              value={editForm.date}
+                              onChange={(e) => handleChange('date', e.target.value)}
+                              placeholder="MM/DD/YYYY"
+                              className="w-full px-2 py-1 text-xs rounded"
+                              style={{ background: '#fff', border: '1px solid #8b6914', color: '#3E2723', fontFamily: 'Courier, monospace' }}
+                            />
+                          </td>
+                          <td className="px-2 py-2" style={{ borderRight: '1px solid rgba(139,105,20,0.3)' }}>
+                            <input
+                              type="text"
+                              value={editForm.time}
+                              onChange={(e) => handleChange('time', e.target.value)}
+                              placeholder="HH:MM"
+                              className="w-full px-2 py-1 text-xs rounded"
+                              style={{ background: '#fff', border: '1px solid #8b6914', color: '#3E2723', fontFamily: 'Courier, monospace' }}
+                            />
+                          </td>
+                          <td className="px-2 py-2" style={{ borderRight: '1px solid rgba(139,105,20,0.3)' }}>
+                            <input
+                              type="text"
+                              value={editForm.witness}
+                              onChange={(e) => handleChange('witness', e.target.value)}
+                              placeholder="Name"
+                              className="w-full px-2 py-1 text-xs rounded"
+                              style={{ background: '#fff', border: '1px solid #8b6914', color: '#3E2723' }}
+                            />
+                          </td>
+                          <td className="px-2 py-2" style={{ borderRight: '1px solid rgba(139,105,20,0.3)' }}>
+                            <textarea
+                              value={editForm.description}
+                              onChange={(e) => handleChange('description', e.target.value)}
+                              placeholder="Description"
+                              rows="2"
+                              className="w-full px-2 py-1 text-xs rounded"
+                              style={{ background: '#fff', border: '1px solid #8b6914', color: '#3E2723' }}
+                            />
+                          </td>
+                          <td className="px-2 py-2" style={{ borderRight: '1px solid rgba(139,105,20,0.3)' }}>
+                            <input
+                              type="text"
+                              value={editForm.evidence}
+                              onChange={(e) => handleChange('evidence', e.target.value)}
+                              placeholder="Evidence ref"
+                              className="w-full px-2 py-1 text-xs rounded"
+                              style={{ background: '#fff', border: '1px solid #8b6914', color: '#8b0000' }}
+                            />
+                          </td>
+                          <td className="px-2 py-2" style={{ borderRight: '1px solid rgba(139,105,20,0.3)' }}>
+                            <textarea
+                              value={editForm.notes}
+                              onChange={(e) => handleChange('notes', e.target.value)}
+                              placeholder="Notes"
+                              rows="2"
+                              className="w-full px-2 py-1 text-xs rounded"
+                              style={{ background: '#fff', border: '1px solid #8b6914', color: '#5D4037' }}
+                            />
+                          </td>
+                          <td className="px-2 py-2 text-center" colSpan="2">
+                            <div className="flex gap-1 justify-center">
+                              <button
+                                onClick={handleSave}
+                                disabled={saving}
+                                className="p-1 rounded hover:scale-110 transition-all disabled:opacity-50"
+                                style={{ background: '#28a745', color: '#fff' }}
+                                title="Save"
+                              >
+                                {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
+                              </button>
+                              <button
+                                onClick={handleCancel}
+                                disabled={saving}
+                                className="p-1 rounded hover:scale-110 transition-all disabled:opacity-50"
+                                style={{ background: '#dc3545', color: '#fff' }}
+                                title="Cancel"
+                              >
+                                <X className="w-4 h-4" />
+                              </button>
+                            </div>
+                          </td>
+                        </>
+                      ) : (
+                        // View Mode
+                        <>
+                          <td 
+                            className="px-3 py-3 text-xs sm:text-sm font-semibold whitespace-nowrap"
+                            style={{ color: '#3E2723', fontFamily: 'Courier, monospace', borderRight: '1px solid rgba(139,105,20,0.3)' }}
                           >
-                            <Upload className="w-3 h-3" />
-                            {uploading && uploadingFor === entry.id ? 'Uploading...' : 'Upload'}
-                          </button>
-                        </td>
+                            {entry.date}
+                          </td>
+                          <td 
+                            className="px-3 py-3 text-xs sm:text-sm whitespace-nowrap"
+                            style={{ color: '#3E2723', fontFamily: 'Courier, monospace', borderRight: '1px solid rgba(139,105,20,0.3)' }}
+                          >
+                            {entry.time}
+                          </td>
+                          <td 
+                            className="px-3 py-3 text-xs sm:text-sm font-semibold"
+                            style={{ color: '#2c1810', fontFamily: 'Arial, sans-serif', borderRight: '1px solid rgba(139,105,20,0.3)' }}
+                          >
+                            {entry.witness}
+                          </td>
+                          <td 
+                            className="px-3 py-3 text-xs sm:text-sm"
+                            style={{ color: '#3E2723', fontFamily: 'Arial, sans-serif', borderRight: '1px solid rgba(139,105,20,0.3)' }}
+                          >
+                            {entry.description}
+                          </td>
+                          <td 
+                            className="px-3 py-3 text-xs sm:text-sm font-medium"
+                            style={{ color: '#8b0000', fontFamily: 'Arial, sans-serif', borderRight: '1px solid rgba(139,105,20,0.3)' }}
+                          >
+                            {entry.evidence}
+                          </td>
+                          <td 
+                            className="px-3 py-3 text-xs sm:text-sm italic"
+                            style={{ color: '#5D4037', fontFamily: 'Arial, sans-serif', borderRight: isAdmin ? '1px solid rgba(139,105,20,0.3)' : 'none' }}
+                          >
+                            {entry.notes}
+                          </td>
+                          {isAdmin && (
+                            <>
+                              <td className="px-2 py-2 text-center" style={{ borderRight: '1px solid rgba(139,105,20,0.3)' }}>
+                                <div className="flex gap-1 justify-center">
+                                  <button
+                                    onClick={() => handleEdit(entry)}
+                                    className="p-1 rounded hover:scale-110 transition-all"
+                                    style={{ background: '#ffc107', color: '#000' }}
+                                    title="Edit"
+                                  >
+                                    <Edit2 className="w-3 h-3" />
+                                  </button>
+                                  <button
+                                    onClick={() => handleDelete(entry.id)}
+                                    className="p-1 rounded hover:scale-110 transition-all"
+                                    style={{ background: '#dc3545', color: '#fff' }}
+                                    title="Delete"
+                                  >
+                                    <Trash2 className="w-3 h-3" />
+                                  </button>
+                                </div>
+                              </td>
+                              <td className="px-3 py-3 text-center">
+                                <button
+                                  onClick={() => handleUpload(entry.id)}
+                                  disabled={uploading && uploadingFor === entry.id}
+                                  className="inline-flex items-center gap-1 px-3 py-1 text-xs font-semibold rounded transition-all hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
+                                  style={{
+                                    background: uploading && uploadingFor === entry.id 
+                                      ? '#999' 
+                                      : 'linear-gradient(145deg, #d4af37 0%, #c5a028 50%, #9c7a1f 100%)',
+                                    color: '#1a0f0a',
+                                    border: '1px solid #8b6914',
+                                    boxShadow: '0 2px 6px rgba(0,0,0,0.4)',
+                                  }}
+                                >
+                                  <Upload className="w-3 h-3" />
+                                  {uploading && uploadingFor === entry.id ? '...' : 'Upload'}
+                                </button>
+                              </td>
+                            </>
+                          )}
+                        </>
                       )}
                     </tr>
                   ))
