@@ -404,6 +404,17 @@ const MonthlyDetail = ({ monthDate, isAdmin, onClose }) => {
                   >
                     Notes
                   </th>
+                  {/* Exhibits column - visible to ALL users */}
+                  <th 
+                    className="px-3 py-3 text-center text-xs sm:text-sm font-bold uppercase tracking-wider"
+                    style={{ 
+                      color: '#d4af37',
+                      fontFamily: 'Arial, sans-serif',
+                      borderRight: isAdmin ? '1px solid #8b6914' : 'none',
+                    }}
+                  >
+                    Exhibits
+                  </th>
                   {isAdmin && (
                     <>
                       <th 
@@ -411,19 +422,9 @@ const MonthlyDetail = ({ monthDate, isAdmin, onClose }) => {
                         style={{ 
                           color: '#d4af37',
                           fontFamily: 'Arial, sans-serif',
-                          borderRight: '1px solid #8b6914',
                         }}
                       >
                         Actions
-                      </th>
-                      <th 
-                        className="px-3 py-3 text-center text-xs sm:text-sm font-bold uppercase tracking-wider"
-                        style={{ 
-                          color: '#d4af37',
-                          fontFamily: 'Arial, sans-serif',
-                        }}
-                      >
-                        Upload
                       </th>
                     </>
                   )}
@@ -432,7 +433,7 @@ const MonthlyDetail = ({ monthDate, isAdmin, onClose }) => {
               <tbody>
                 {loading ? (
                   <tr>
-                    <td colSpan={isAdmin ? "9" : "7"} className="px-3 py-6 text-center">
+                    <td colSpan={isAdmin ? "9" : "8"} className="px-3 py-6 text-center">
                       <div className="flex items-center justify-center gap-2">
                         <Loader2 className="w-5 h-5 animate-spin" style={{ color: '#d4af37' }} />
                         <span className="text-sm italic" style={{ color: '#5D4037' }}>Loading entries...</span>
@@ -441,7 +442,7 @@ const MonthlyDetail = ({ monthDate, isAdmin, onClose }) => {
                   </tr>
                 ) : entries.length === 0 ? (
                   <tr>
-                    <td colSpan={isAdmin ? "9" : "7"} className="px-3 py-6 text-center text-sm italic" style={{ color: '#5D4037' }}>
+                    <td colSpan={isAdmin ? "9" : "8"} className="px-3 py-6 text-center text-sm italic" style={{ color: '#5D4037' }}>
                       {isAdmin 
                         ? 'No entries yet. Click "Add Entry" to begin documenting this month.'
                         : 'No detailed entries for this month yet.'
