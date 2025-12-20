@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { indexEntries } from '../mock';
 import { Card } from '../components/ui/card';
-import { Calendar, PlayCircle, Boxes, Scale, AlertTriangle, HeartCrack, FileText, History, Lock, LockOpen, Shield } from 'lucide-react';
+import { Calendar, PlayCircle, Boxes, Scale, AlertTriangle, HeartCrack, FileText, History, Lock, LockOpen, Shield, Mail, ChevronDown, ChevronUp } from 'lucide-react';
 import Timeline from '../components/Timeline';
 import MonthlyDetail from '../components/MonthlyDetail';
 import AdminLogin from '../components/AdminLogin';
