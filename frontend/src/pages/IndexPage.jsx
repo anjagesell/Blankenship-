@@ -24,7 +24,7 @@ const IndexPage = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [selectedMonth, setSelectedMonth] = useState(null);
   const [showAdminLogin, setShowAdminLogin] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(() => sessionStorage.getItem('blankenship_admin') === 'true');
   const [showGenogram, setShowGenogram] = useState(false);
 
   useEffect(() => {
@@ -40,14 +40,6 @@ const IndexPage = () => {
     window.addEventListener('resize', checkMobile);
     
     return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-
-  // Check if admin session exists on mount
-  useEffect(() => {
-    const adminSession = sessionStorage.getItem('blankenship_admin');
-    if (adminSession === 'true') {
-      setIsAdmin(true);
-    }
   }, []);
 
   const handleAdminLogin = () => {
