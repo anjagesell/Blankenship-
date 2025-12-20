@@ -391,7 +391,7 @@ const MonthlyDetail = ({ monthDate, isAdmin, onClose }) => {
               <tbody>
                 {loading ? (
                   <tr>
-                    <td colSpan={isAdmin ? "8" : "6"} className="px-3 py-6 text-center">
+                    <td colSpan={isAdmin ? "9" : "7"} className="px-3 py-6 text-center">
                       <div className="flex items-center justify-center gap-2">
                         <Loader2 className="w-5 h-5 animate-spin" style={{ color: '#d4af37' }} />
                         <span className="text-sm italic" style={{ color: '#5D4037' }}>Loading entries...</span>
@@ -400,7 +400,7 @@ const MonthlyDetail = ({ monthDate, isAdmin, onClose }) => {
                   </tr>
                 ) : entries.length === 0 ? (
                   <tr>
-                    <td colSpan={isAdmin ? "8" : "6"} className="px-3 py-6 text-center text-sm italic" style={{ color: '#5D4037' }}>
+                    <td colSpan={isAdmin ? "9" : "7"} className="px-3 py-6 text-center text-sm italic" style={{ color: '#5D4037' }}>
                       {isAdmin 
                         ? 'No entries yet. Click "Add Entry" to begin documenting this month.'
                         : 'No detailed entries for this month yet.'
@@ -420,6 +420,9 @@ const MonthlyDetail = ({ monthDate, isAdmin, onClose }) => {
                       {editingId === entry.id ? (
                         // Edit Mode
                         <>
+                          <td className="px-2 py-2 text-center text-xs font-bold" style={{ color: '#8b6914', borderRight: '1px solid rgba(139,105,20,0.3)' }}>
+                            {index + 1}
+                          </td>
                           <td className="px-2 py-2" style={{ borderRight: '1px solid rgba(139,105,20,0.3)' }}>
                             <input
                               type="text"
