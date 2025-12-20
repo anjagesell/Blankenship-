@@ -313,10 +313,16 @@ async def download_file(file_id: str):
     ext = file_record["file_type"]
     media_type = ALLOWED_EXTENSIONS.get(ext, "application/octet-stream")
     
+    # Return file with proper headers for cross-origin access
     return FileResponse(
         path=file_path,
         media_type=media_type,
-        filename=file_record["filename"]
+        filename=file_record["filename"],
+        headers={
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Expose-Headers": "Content-Disposition",
+            "Cache-Control": "public, max-age=3600"
+        }
     )
 
 # Delete a file (admin only)
