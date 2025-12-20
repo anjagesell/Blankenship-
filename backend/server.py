@@ -550,6 +550,10 @@ async def delete_monthly_entry(entry_id: str, admin_password: str):
     return {"status": "success", "message": "Monthly entry deleted"}
 
 
+# Include the router in the main app (after all routes are defined)
+app.include_router(api_router)
+
+
 @app.on_event("shutdown")
 async def shutdown_db_client():
     client.close()
