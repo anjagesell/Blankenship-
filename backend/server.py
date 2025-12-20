@@ -362,12 +362,13 @@ async def delete_file(file_id: str, admin_password: str = Form(...)):
     if not file_record:
         raise HTTPException(status_code=404, detail="File not found")
     
-    # Delete file from filesystem
-    file_path = Path(file_record["file_path"])
-    if file_path.exists():
-        file_path.unlink()
+    # Delete file from filesystem (if it exists - backward compatibility)
+    if "file_path" in file_record:
+        file_path = Path(file_record["file_path"])
+        if file_path.exists():
+            file_path.unlink()
     
-    # Delete record from database
+    # Delete record from database (this removes MongoDB-stored content too)
     await db.uploaded_files.delete_one({"file_id": file_id})
     
     return {"status": "success", "message": "File deleted"}
