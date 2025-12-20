@@ -1,25 +1,46 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Edit2, Trash2, Save, X } from 'lucide-react';
-import { getTimelineEntries, saveTimelineEntries } from '../mockTimeline';
+import { Plus, Edit2, Trash2, Save, X, Loader2 } from 'lucide-react';
+
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
+const ADMIN_PASSWORD = '02071951';
 
 const Timeline = ({ isAdmin }) => {
   const [entries, setEntries] = useState([]);
   const [editingId, setEditingId] = useState(null);
   const [editForm, setEditForm] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
 
+  // Fetch timeline entries from backend
   useEffect(() => {
-    setEntries(getTimelineEntries());
+    fetchEntries();
   }, []);
+
+  const fetchEntries = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch(`${BACKEND_URL}/api/timeline`);
+      if (response.ok) {
+        const data = await response.json();
+        setEntries(data);
+      }
+    } catch (error) {
+      console.error('Failed to fetch timeline entries:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleAdd = () => {
     const newEntry = {
-      id: Date.now(),
+      id: `temp-${Date.now()}`,
       date: '',
       time: '',
       witness: '',
       description: '',
       evidence: '',
-      notes: ''
+      notes: '',
+      isNew: true
     };
     setEditingId(newEntry.id);
     setEditForm(newEntry);
@@ -31,18 +52,71 @@ const Timeline = ({ isAdmin }) => {
     setEditForm({ ...entry });
   };
 
-  const handleSave = () => {
-    const updatedEntries = entries.map(e => 
-      e.id === editingId ? editForm : e
-    );
-    setEntries(updatedEntries);
-    saveTimelineEntries(updatedEntries);
-    setEditingId(null);
-    setEditForm({});
+  const handleSave = async () => {
+    setSaving(true);
+    try {
+      const isNew = editForm.isNew || editForm.id.startsWith('temp-');
+      
+      if (isNew) {
+        // Create new entry
+        const response = await fetch(`${BACKEND_URL}/api/timeline/create?admin_password=${ADMIN_PASSWORD}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            date: editForm.date,
+            time: editForm.time,
+            witness: editForm.witness,
+            description: editForm.description,
+            evidence: editForm.evidence,
+            notes: editForm.notes
+          })
+        });
+        
+        if (response.ok) {
+          const savedEntry = await response.json();
+          setEntries(entries.map(e => 
+            e.id === editingId ? savedEntry : e
+          ));
+        } else {
+          throw new Error('Failed to save entry');
+        }
+      } else {
+        // Update existing entry
+        const response = await fetch(`${BACKEND_URL}/api/timeline/${editForm.id}?admin_password=${ADMIN_PASSWORD}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            date: editForm.date,
+            time: editForm.time,
+            witness: editForm.witness,
+            description: editForm.description,
+            evidence: editForm.evidence,
+            notes: editForm.notes
+          })
+        });
+        
+        if (response.ok) {
+          const updatedEntry = await response.json();
+          setEntries(entries.map(e => 
+            e.id === editingId ? updatedEntry : e
+          ));
+        } else {
+          throw new Error('Failed to update entry');
+        }
+      }
+      
+      setEditingId(null);
+      setEditForm({});
+    } catch (error) {
+      console.error('Save error:', error);
+      alert('Failed to save entry. Please try again.');
+    } finally {
+      setSaving(false);
+    }
   };
 
   const handleCancel = () => {
-    if (!editForm.date && !editForm.time && !editForm.witness) {
+    if (editForm.isNew || editForm.id?.startsWith('temp-')) {
       // If it's a new empty entry, remove it
       setEntries(entries.filter(e => e.id !== editingId));
     }
@@ -50,11 +124,22 @@ const Timeline = ({ isAdmin }) => {
     setEditForm({});
   };
 
-  const handleDelete = (id) => {
+  const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this entry?')) {
-      const updatedEntries = entries.filter(e => e.id !== id);
-      setEntries(updatedEntries);
-      saveTimelineEntries(updatedEntries);
+      try {
+        const response = await fetch(`${BACKEND_URL}/api/timeline/${id}?admin_password=${ADMIN_PASSWORD}`, {
+          method: 'DELETE'
+        });
+        
+        if (response.ok) {
+          setEntries(entries.filter(e => e.id !== id));
+        } else {
+          throw new Error('Failed to delete entry');
+        }
+      } catch (error) {
+        console.error('Delete error:', error);
+        alert('Failed to delete entry. Please try again.');
+      }
     }
   };
 
