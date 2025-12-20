@@ -308,6 +308,7 @@ const Timeline = ({ isAdmin }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [viewingExhibit, setViewingExhibit] = useState(null);
   const [showPrintModal, setShowPrintModal] = useState(false);
+  const [clearingFiles, setClearingFiles] = useState(false);
   const [showGenogram, setShowGenogram] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
