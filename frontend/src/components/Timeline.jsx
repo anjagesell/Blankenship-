@@ -225,7 +225,7 @@ const PrintReport = ({ entries, exhibitFiles, onClose }) => {
 };
 
 // Mobile Card Component for entries
-const MobileEntryCard = ({ entry, index, isAdmin, exhibitFiles, onEdit, onDelete, onUpload, uploadingFor, onViewExhibit }) => {
+const MobileEntryCard = ({ entry, index, isAdmin, exhibitFiles, onEdit, onDelete, onUpload, uploadingFor, onViewExhibit, onDeleteExhibit }) => {
   const files = exhibitFiles[entry.id] || [];
   
   return (
