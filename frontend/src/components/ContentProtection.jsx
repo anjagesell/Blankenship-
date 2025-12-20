@@ -5,8 +5,20 @@ const ContentProtection = () => {
   const showScreenshotWarning = () => {
     const warningDiv = document.createElement('div');
     warningDiv.id = 'screenshot-warning';
+    
+    // Function to close the warning
+    const closeWarning = () => {
+      warningDiv.style.transition = 'opacity 0.3s ease-out';
+      warningDiv.style.opacity = '0';
+      setTimeout(() => {
+        if (document.body.contains(warningDiv)) {
+          document.body.removeChild(warningDiv);
+        }
+      }, 300);
+    };
+    
     warningDiv.innerHTML = `
-      <div style="
+      <div id="screenshot-overlay" style="
         position: fixed;
         top: 0;
         left: 0;
@@ -18,33 +30,49 @@ const ContentProtection = () => {
         justify-content: center;
         z-index: 99999;
         animation: fadeIn 0.2s ease-out;
+        cursor: pointer;
       ">
         <div style="
           background: linear-gradient(135deg, #8b0000 0%, #5c0000 100%);
           border: 4px solid #d4af37;
-          padding: 40px 50px;
+          padding: 30px 40px 25px;
           border-radius: 12px;
           box-shadow: 0 20px 60px rgba(0,0,0,0.9), 0 0 100px rgba(139,0,0,0.5);
           font-family: Georgia, serif;
           text-align: center;
           max-width: 500px;
           animation: popIn 0.3s ease-out;
+          position: relative;
         ">
-          <div style="font-size: 60px; margin-bottom: 15px;">
+          <div style="font-size: 50px; margin-bottom: 12px;">
             🚨📸🚫
           </div>
-          <div style="color: #d4af37; font-size: 28px; font-weight: bold; margin-bottom: 15px; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">
+          <div style="color: #d4af37; font-size: 24px; font-weight: bold; margin-bottom: 12px; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">
             CAUGHT YOU!
           </div>
-          <div style="color: #f5e6c8; font-size: 18px; margin-bottom: 10px; line-height: 1.5;">
+          <div style="color: #f5e6c8; font-size: 16px; margin-bottom: 8px; line-height: 1.5;">
             What did your mother tell you about taking other people's stuff?
           </div>
-          <div style="color: #ff6b6b; font-size: 22px; font-weight: bold; margin-bottom: 15px;">
+          <div style="color: #ff6b6b; font-size: 20px; font-weight: bold; margin-bottom: 12px;">
             Stop that! 😤
           </div>
-          <div style="color: #d4a574; font-size: 12px; font-style: italic;">
+          <div style="color: #d4a574; font-size: 11px; font-style: italic; margin-bottom: 15px;">
             This content is protected evidence. Screenshots are monitored.
           </div>
+          <button id="screenshot-close-btn" style="
+            background: linear-gradient(145deg, #d4af37 0%, #9c7a1f 100%);
+            color: #1a0f0a;
+            border: 2px solid #8b6914;
+            padding: 8px 24px;
+            border-radius: 6px;
+            font-family: Georgia, serif;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+          " onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+            Okay, okay! 🙄
+          </button>
         </div>
       </div>
       <style>
@@ -67,16 +95,31 @@ const ContentProtection = () => {
     
     document.body.appendChild(warningDiv);
     
-    // Remove warning after 3 seconds with fade out
-    setTimeout(() => {
-      warningDiv.style.transition = 'opacity 0.5s ease-out';
-      warningDiv.style.opacity = '0';
-      setTimeout(() => {
-        if (document.body.contains(warningDiv)) {
-          document.body.removeChild(warningDiv);
+    // Add click handler to close button
+    const closeBtn = document.getElementById('screenshot-close-btn');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        closeWarning();
+      });
+    }
+    
+    // Add click handler to overlay (click outside to close)
+    const overlay = document.getElementById('screenshot-overlay');
+    if (overlay) {
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) {
+          closeWarning();
         }
-      }, 500);
-    }, 3000);
+      });
+    }
+    
+    // Auto-remove warning after 5 seconds (longer now since they can close manually)
+    setTimeout(() => {
+      if (document.body.contains(warningDiv)) {
+        closeWarning();
+      }
+    }, 5000);
   };
 
   useEffect(() => {
