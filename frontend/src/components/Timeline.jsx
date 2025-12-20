@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Plus, Edit2, Trash2, Save, X, Loader2, ArrowUpDown, Upload, FileText, Search, Printer, Eye, Download, ZoomIn, ZoomOut } from 'lucide-react';
+import { Plus, Edit2, Trash2, Save, X, Loader2, ArrowUpDown, Upload, FileText, Search, Printer, Eye, Download, ZoomIn, ZoomOut, GitBranch } from 'lucide-react';
+import Genogram from './Genogram';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
 const ADMIN_PASSWORD = '02071951';
