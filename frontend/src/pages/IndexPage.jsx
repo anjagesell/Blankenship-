@@ -123,12 +123,7 @@ const IndexPage = () => {
         </div>
       </div>
 
-      {/* Timeline Section */}
-      <div className="container mx-auto px-4 py-8 sm:py-12 relative z-10">
-        <Timeline isAdmin={isAdmin} />
-      </div>
-
-      {/* Compact Year Envelope Icons */}
+      {/* Year Envelope Icons */}
       <div className="container mx-auto px-4 py-8 sm:py-12 relative z-10">
         {/* Year Envelopes Row */}
         <div className="flex flex-wrap justify-center gap-4 sm:gap-6 md:gap-8 mb-8">
