@@ -672,6 +672,7 @@ const Timeline = ({ isAdmin }) => {
                   <tr key={entry.id} style={{ background: index % 2 === 0 ? 'rgba(255,255,255,0.3)' : 'rgba(244,232,193,0.4)', borderBottom: '1px solid #8b6914' }} className="hover:bg-yellow-100/50 transition-colors">
                     {editingId === entry.id ? (
                       <>
+                        <td className="px-2 py-2 text-center text-sm font-bold" style={{ color: '#8b6914', fontFamily: 'Courier', borderRight: '1px solid rgba(139,105,20,0.3)' }}>{index + 1}</td>
                         <td className="px-2 py-2" style={{ borderRight: '1px solid rgba(139,105,20,0.3)' }}><input type="text" value={editForm.date} onChange={(e) => handleChange('date', e.target.value)} placeholder="MM/DD/YYYY" className="w-full px-2 py-1 text-xs rounded" style={{ background: '#fff', border: '1px solid #8b6914', color: '#3E2723', fontFamily: 'Courier' }} /></td>
                         <td className="px-2 py-2" style={{ borderRight: '1px solid rgba(139,105,20,0.3)' }}><input type="text" value={editForm.time} onChange={(e) => handleChange('time', e.target.value)} placeholder="HH:MM" className="w-full px-2 py-1 text-xs rounded" style={{ background: '#fff', border: '1px solid #8b6914', color: '#3E2723', fontFamily: 'Courier' }} /></td>
                         <td className="px-2 py-2" style={{ borderRight: '1px solid rgba(139,105,20,0.3)' }}><input type="text" value={editForm.witness} onChange={(e) => handleChange('witness', e.target.value)} placeholder="Name" className="w-full px-2 py-1 text-xs rounded" style={{ background: '#fff', border: '1px solid #8b6914', color: '#3E2723' }} /></td>
@@ -682,6 +683,7 @@ const Timeline = ({ isAdmin }) => {
                       </>
                     ) : (
                       <>
+                        <td className="px-2 py-3 text-center text-sm font-bold" style={{ color: '#8b6914', fontFamily: 'Courier', borderRight: '1px solid rgba(139,105,20,0.3)' }}>{index + 1}</td>
                         <td className="px-3 py-3 text-xs sm:text-sm font-semibold whitespace-nowrap" style={{ color: '#3E2723', fontFamily: 'Courier', borderRight: '1px solid rgba(139,105,20,0.3)' }}>{entry.date}</td>
                         <td className="px-3 py-3 text-xs sm:text-sm whitespace-nowrap" style={{ color: '#3E2723', fontFamily: 'Courier', borderRight: '1px solid rgba(139,105,20,0.3)' }}>{entry.time}</td>
                         <td className="px-3 py-3 text-xs sm:text-sm font-semibold" style={{ color: '#2c1810', fontFamily: 'Arial', borderRight: '1px solid rgba(139,105,20,0.3)' }}>{entry.witness}</td>
