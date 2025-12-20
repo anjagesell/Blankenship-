@@ -464,6 +464,33 @@ const Timeline = ({ isAdmin }) => {
     fileInput.click();
   };
 
+  // Clear all old broken files (one-time cleanup)
+  const handleClearOldFiles = async () => {
+    if (!window.confirm('This will remove all old exhibit records so you can re-upload them fresh. Continue?')) {
+      return;
+    }
+    
+    setClearingFiles(true);
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/files/clear-all?admin_password=${ADMIN_PASSWORD}`, {
+        method: 'DELETE'
+      });
+      
+      if (response.ok) {
+        const result = await response.json();
+        alert(`Done! ${result.message}`);
+        // Clear local exhibit files state
+        setExhibitFiles({});
+      } else {
+        throw new Error('Failed to clear files');
+      }
+    } catch (error) {
+      alert(`Error: ${error.message}`);
+    } finally {
+      setClearingFiles(false);
+    }
+  };
+
   const getExhibitDisplay = (entryId) => {
     const files = exhibitFiles[entryId] || [];
     if (files.length === 0) return null;
