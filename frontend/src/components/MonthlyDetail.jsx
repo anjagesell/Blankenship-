@@ -390,6 +390,7 @@ const MonthlyDetail = ({ monthDate, isAdmin, onClose }) => {
                       color: '#d4af37',
                       fontFamily: 'Arial, sans-serif',
                       borderRight: '1px solid #8b6914',
+                      width: '100px',
                     }}
                   >
                     Evidence
@@ -400,6 +401,7 @@ const MonthlyDetail = ({ monthDate, isAdmin, onClose }) => {
                       color: '#d4af37',
                       fontFamily: 'Arial, sans-serif',
                       borderRight: '1px solid #8b6914',
+                      minWidth: '300px',
                     }}
                   >
                     Notes
