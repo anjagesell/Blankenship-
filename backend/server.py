@@ -212,6 +212,7 @@ async def upload_file(
 ):
     """
     Upload a file (PDF, image, video, or audio) for a specific timeline/monthly entry.
+    Stores file content directly in MongoDB for persistence across deployments.
     Requires admin password.
     """
     # Verify admin password
@@ -227,32 +228,28 @@ async def upload_file(
     # Generate unique file ID
     file_id = str(uuid.uuid4())
     file_extension = get_file_extension(file.filename)
-    stored_filename = f"{file_id}.{file_extension}"
-    
-    # Create directory structure: uploads/{entry_id}/
-    entry_dir = UPLOAD_DIR / entry_id
-    entry_dir.mkdir(exist_ok=True)
-    
-    file_path = entry_dir / stored_filename
     
     try:
-        # Save file
-        with open(file_path, "wb") as buffer:
-            shutil.copyfileobj(file.file, buffer)
+        # Read file content and encode as base64 for MongoDB storage
+        file_content = await file.read()
+        file_size = len(file_content)
         
-        # Get file size
-        file_size = file_path.stat().st_size
+        # Check file size (limit to 16MB for MongoDB document)
+        if file_size > 16 * 1024 * 1024:
+            raise HTTPException(status_code=400, detail="File too large. Maximum size is 16MB.")
         
-        # Create file record in database
+        # Encode as base64 for storage
+        file_content_b64 = base64.b64encode(file_content).decode('utf-8')
+        
+        # Create file record in database with content
         file_record = {
             "file_id": file_id,
             "filename": file.filename,
-            "stored_filename": stored_filename,
             "file_type": file_extension,
             "file_size": file_size,
             "entry_id": entry_id,
             "upload_date": datetime.now(timezone.utc).isoformat(),
-            "file_path": str(file_path)
+            "file_content": file_content_b64  # Store file content in MongoDB
         }
         
         await db.uploaded_files.insert_one(file_record)
@@ -266,10 +263,9 @@ async def upload_file(
             entry_id=entry_id
         )
     
+    except HTTPException:
+        raise
     except Exception as e:
-        # Clean up file if database insert fails
-        if file_path.exists():
-            file_path.unlink()
         raise HTTPException(status_code=500, detail=f"Upload failed: {str(e)}")
 
 # Get files for a specific entry
