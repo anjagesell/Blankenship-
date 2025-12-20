@@ -617,23 +617,54 @@ const MonthlyDetail = ({ monthDate, isAdmin, onClose }) => {
                                   </button>
                                 </div>
                               </td>
-                              <td className="px-3 py-3 text-center">
-                                <button
-                                  onClick={() => handleUpload(entry.id)}
-                                  disabled={uploading && uploadingFor === entry.id}
-                                  className="inline-flex items-center gap-1 px-3 py-1 text-xs font-semibold rounded transition-all hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
-                                  style={{
-                                    background: uploading && uploadingFor === entry.id 
-                                      ? '#999' 
-                                      : 'linear-gradient(145deg, #d4af37 0%, #c5a028 50%, #9c7a1f 100%)',
-                                    color: '#1a0f0a',
-                                    border: '1px solid #8b6914',
-                                    boxShadow: '0 2px 6px rgba(0,0,0,0.4)',
-                                  }}
-                                >
-                                  <Upload className="w-3 h-3" />
-                                  {uploading && uploadingFor === entry.id ? '...' : 'Upload'}
-                                </button>
+                              <td className="px-2 py-2">
+                                <div className="flex flex-wrap items-center gap-1">
+                                  {/* Show uploaded files */}
+                                  {(exhibitFiles[entry.id] || []).map((file, fileIndex) => (
+                                    <div key={file.file_id} className="inline-flex items-center">
+                                      <a
+                                        href={`${BACKEND_URL}/api/file/${file.file_id}`}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="inline-flex items-center gap-1 px-2 py-1 text-[10px] hover:opacity-80"
+                                        style={{ 
+                                          background: 'linear-gradient(145deg, #d4af37 0%, #9c7a1f 100%)', 
+                                          color: '#1a0f0a', 
+                                          fontWeight: 'bold',
+                                          borderRadius: '4px 0 0 4px'
+                                        }}
+                                        title={file.filename}
+                                      >
+                                        <FileText className="w-3 h-3" />
+                                        Ex.{fileIndex + 1}
+                                      </a>
+                                      <button
+                                        onClick={() => handleDeleteFile(file.file_id, entry.id)}
+                                        className="px-1 py-1 text-[10px] hover:bg-red-700"
+                                        style={{ background: '#dc3545', color: '#fff', borderRadius: '0 4px 4px 0' }}
+                                        title="Delete file"
+                                      >
+                                        <X className="w-3 h-3" />
+                                      </button>
+                                    </div>
+                                  ))}
+                                  {/* Upload button */}
+                                  <button
+                                    onClick={() => handleUpload(entry.id)}
+                                    disabled={uploading && uploadingFor === entry.id}
+                                    className="inline-flex items-center gap-1 px-2 py-1 text-[10px] font-semibold rounded transition-all hover:scale-105 disabled:opacity-50"
+                                    style={{
+                                      background: uploading && uploadingFor === entry.id 
+                                        ? '#999' 
+                                        : 'linear-gradient(145deg, #28a745 0%, #1e7e34 100%)',
+                                      color: '#fff',
+                                      border: '1px solid #1e7e34',
+                                    }}
+                                  >
+                                    <Upload className="w-3 h-3" />
+                                    {uploading && uploadingFor === entry.id ? '...' : '+'}
+                                  </button>
+                                </div>
                               </td>
                             </>
                           )}
