@@ -1,8 +1,132 @@
 import React, { useState, useEffect } from 'react';
-import { X, Upload, Plus, Edit2, Trash2, Save, Loader2, FileText } from 'lucide-react';
+import { X, Upload, Plus, Edit2, Trash2, Save, Loader2, FileText, ZoomIn, ZoomOut, Eye } from 'lucide-react';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
 const ADMIN_PASSWORD = '02071951';
+
+// Exhibit Viewer Modal - View Only (no download for readers)
+const ExhibitViewer = ({ file, onClose, isAdmin }) => {
+  const [zoom, setZoom] = useState(100);
+  const [imageError, setImageError] = useState(false);
+  const [loading, setLoading] = useState(true);
+  
+  if (!file) return null;
+  
+  const fileType = file.file_type?.toLowerCase() || '';
+  const isImage = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'heic', 'heif'].includes(fileType);
+  const isPdf = fileType === 'pdf';
+  const fileUrl = `${BACKEND_URL}/api/file/${file.file_id}`;
+  
+  return (
+    <div 
+      className="fixed inset-0 z-[9999] flex items-center justify-center p-2 sm:p-4"
+      style={{ background: 'rgba(0, 0, 0, 0.95)' }}
+      onClick={onClose}
+    >
+      <div 
+        className="relative w-full max-w-5xl max-h-[90vh] flex flex-col"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Header */}
+        <div 
+          className="flex items-center justify-between p-3 sm:p-4 rounded-t-lg"
+          style={{
+            background: 'linear-gradient(135deg, #2c3e50 0%, #1a252f 100%)',
+            border: '2px solid #d4af37',
+            borderBottom: 'none',
+          }}
+        >
+          <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
+            <FileText className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" style={{ color: '#d4af37' }} />
+            <span className="text-white font-semibold text-sm sm:text-base truncate" style={{ fontFamily: 'Georgia, serif' }}>
+              {file.filename || 'Exhibit'}
+            </span>
+          </div>
+          <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
+            {isImage && !imageError && (
+              <>
+                <button onClick={() => setZoom(z => Math.max(25, z - 25))} className="p-1.5 sm:p-2 rounded hover:bg-white/10 transition-colors" style={{ color: '#d4af37' }} title="Zoom Out">
+                  <ZoomOut className="w-4 h-4 sm:w-5 sm:h-5" />
+                </button>
+                <span className="text-white text-xs sm:text-sm min-w-[40px] text-center hidden sm:inline">{zoom}%</span>
+                <button onClick={() => setZoom(z => Math.min(200, z + 25))} className="p-1.5 sm:p-2 rounded hover:bg-white/10 transition-colors" style={{ color: '#d4af37' }} title="Zoom In">
+                  <ZoomIn className="w-4 h-4 sm:w-5 sm:h-5" />
+                </button>
+              </>
+            )}
+            {/* Only show open in new tab for admin */}
+            {isAdmin && (
+              <a href={fileUrl} target="_blank" rel="noopener noreferrer" className="p-1.5 sm:p-2 rounded hover:bg-white/10 transition-colors" style={{ color: '#d4af37' }} title="Open in New Tab">
+                <Eye className="w-4 h-4 sm:w-5 sm:h-5" />
+              </a>
+            )}
+            <button onClick={onClose} className="p-1.5 sm:p-2 rounded hover:bg-white/10 transition-colors" style={{ color: '#ff6b6b' }} title="Close">
+              <X className="w-5 h-5 sm:w-6 sm:h-6" />
+            </button>
+          </div>
+        </div>
+        
+        {/* Content */}
+        <div 
+          className="flex-1 overflow-auto rounded-b-lg flex items-center justify-center"
+          style={{
+            background: '#1a1a1a',
+            border: '2px solid #d4af37',
+            borderTop: 'none',
+            minHeight: '300px',
+          }}
+        >
+          {loading && isImage && (
+            <div className="absolute inset-0 flex items-center justify-center">
+              <Loader2 className="w-8 h-8 animate-spin" style={{ color: '#d4af37' }} />
+            </div>
+          )}
+          
+          {isImage && !imageError ? (
+            <img 
+              src={fileUrl} 
+              alt={file.filename || 'Exhibit'}
+              onLoad={() => setLoading(false)}
+              onError={() => { setImageError(true); setLoading(false); }}
+              style={{ 
+                maxWidth: '100%', 
+                maxHeight: '70vh', 
+                transform: `scale(${zoom / 100})`, 
+                transition: 'transform 0.2s ease',
+                display: loading ? 'none' : 'block',
+                pointerEvents: 'none', // Prevent right-click save
+              }} 
+              onContextMenu={(e) => e.preventDefault()} // Disable right-click
+              draggable={false}
+            />
+          ) : isPdf ? (
+            <iframe 
+              src={`${fileUrl}#toolbar=0&navpanes=0`} 
+              title={file.filename} 
+              className="w-full h-full" 
+              style={{ minHeight: '70vh', background: '#fff' }} 
+            />
+          ) : (
+            <div className="text-center p-6 sm:p-8">
+              <FileText className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-4" style={{ color: '#d4af37' }} />
+              <p className="text-white mb-2 text-sm sm:text-base">
+                {imageError ? 'Unable to load preview.' : 'Preview not available for this file type.'}
+              </p>
+              <p className="text-gray-400 text-xs">File: {file.filename}</p>
+            </div>
+          )}
+        </div>
+        
+        {/* Watermark/Notice for readers */}
+        {!isAdmin && (
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 px-4 py-2 rounded text-xs" style={{ background: 'rgba(0,0,0,0.7)', color: '#d4af37' }}>
+            View Only — Protected Evidence
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
 
 const MonthlyDetail = ({ monthDate, isAdmin, onClose }) => {
   const [entries, setEntries] = useState([]);
