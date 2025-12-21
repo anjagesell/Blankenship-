@@ -27,7 +27,7 @@ const IndexPage = () => {
   const [selectedMonth, setSelectedMonth] = useState(null);
   const [showAdminLogin, setShowAdminLogin] = useState(false);
   const [isAdmin, setIsAdmin] = useState(() => sessionStorage.getItem('blankenship_admin') === 'true');
-  const [showGenogram, setShowGenogram] = useState(false);
+  const [showCommunicationDiagram, setShowCommunicationDiagram] = useState(false);
   const [showRouteAnalysis, setShowRouteAnalysis] = useState(false);
 
   useEffect(() => {
