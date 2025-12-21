@@ -105,9 +105,15 @@ async def download_document(filename: str):
         raise HTTPException(status_code=404, detail="Document not found")
     
     # Determine content type
-    content_type = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-    if filename.endswith('.pdf'):
+    content_type = "application/octet-stream"
+    if filename.endswith('.docx'):
+        content_type = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    elif filename.endswith('.pdf'):
         content_type = "application/pdf"
+    elif filename.endswith('.png'):
+        content_type = "image/png"
+    elif filename.endswith('.jpg') or filename.endswith('.jpeg'):
+        content_type = "image/jpeg"
     
     return FileResponse(
         path=file_path,
