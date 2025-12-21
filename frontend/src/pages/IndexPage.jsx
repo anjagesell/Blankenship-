@@ -7,6 +7,7 @@ import MonthlyDetail from '../components/MonthlyDetail';
 import AdminLogin from '../components/AdminLogin';
 import Genogram from '../components/Genogram';
 import RouteAnalysis from '../components/RouteAnalysis';
+import EmbeddedRouteMap from '../components/EmbeddedRouteMap';
 
 // Icon mapping
 const iconMap = {
