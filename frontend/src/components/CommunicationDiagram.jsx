@@ -130,12 +130,63 @@ const CommunicationDiagram = ({ onClose }) => {
             viewBox="0 0 800 850"
             style={{ transform: `scale(${zoom})`, transformOrigin: 'center center' }}
           >
+            {/* Define arrowhead markers for two-way conversations */}
+            <defs>
+              {/* Arrowhead for line end */}
+              <marker
+                id="arrowhead-end"
+                markerWidth="10"
+                markerHeight="7"
+                refX="8"
+                refY="3.5"
+                orient="auto"
+                markerUnits="strokeWidth"
+              >
+                <polygon points="0 0, 10 3.5, 0 7" fill="#000" />
+              </marker>
+              {/* Arrowhead for line start */}
+              <marker
+                id="arrowhead-start"
+                markerWidth="10"
+                markerHeight="7"
+                refX="2"
+                refY="3.5"
+                orient="auto-start-reverse"
+                markerUnits="strokeWidth"
+              >
+                <polygon points="10 0, 0 3.5, 10 7" fill="#000" />
+              </marker>
+              {/* Highlighted arrowheads */}
+              <marker
+                id="arrowhead-end-highlight"
+                markerWidth="10"
+                markerHeight="7"
+                refX="8"
+                refY="3.5"
+                orient="auto"
+                markerUnits="strokeWidth"
+              >
+                <polygon points="0 0, 10 3.5, 0 7" fill="#dc3545" />
+              </marker>
+              <marker
+                id="arrowhead-start-highlight"
+                markerWidth="10"
+                markerHeight="7"
+                refX="2"
+                refY="3.5"
+                orient="auto-start-reverse"
+                markerUnits="strokeWidth"
+              >
+                <polygon points="10 0, 0 3.5, 10 7" fill="#dc3545" />
+              </marker>
+            </defs>
+
             {/* Title */}
             <text x="400" y="35" textAnchor="middle" fontSize="22" fontWeight="bold" fill="#333">
               Communication Web — Nov 30, 2013
             </text>
 
-            {/* Draw ALL connection lines - BLACK like reference */}
+            {/* Draw ALL connection lines - BLACK with arrowheads at BOTH ends */}
             {CONNECTIONS.map(([fromId, toId], idx) => {
               const from = getPerson(fromId);
               const to = getPerson(toId);
