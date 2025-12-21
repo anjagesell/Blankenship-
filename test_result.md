@@ -1,56 +1,24 @@
-# BLANKENSHIP CASE - HANDOFF REPORT / ÜBERGABE BERICHT
-## Fork Date: December 21, 2024
+# BLANKENSHIP CASE - TAKEOVER PROTOCOL
+## Agent Handoff Document - December 22, 2024
 
 ---
 
-## ORIGINAL PROBLEM STATEMENT
-Build a private, password-protected website named "Blankenship" to document evidence of a wrongful conviction. The site serves as a judicial archive for presenting evidence of Zackary Blankenship's wrongful imprisonment.
+## 🚨 CRITICAL: READ FIRST
+
+1. **DO NOT CHANGE THE URL** - User is frustrated with constant URL changes
+2. **DATA HAS BEEN MIGRATED** - 14 entries + 36 files now in current database
+3. **User is often on MOBILE** - Cannot do complex desktop tasks
+4. **Project is DEEPLY PERSONAL** - Wrongful conviction case, be respectful
 
 ---
 
-## PRODUCT REQUIREMENTS
-1. **Entry Page:** Password-protected entry (`05052017`) with mandatory scroll-to-accept Terms of Use
-2. **Synopsis Page:** Intermediate page with case context letter
-3. **Monthly Detailed Logs:** Year envelopes (2013, 2014, 2015) containing monthly logs with evidence entries
-4. **Admin Functionality:** Secure admin section (password: `02071951`) for content management
-5. **Exhibit Uploads:** Upload/view evidence files (PDFs, images) - stored in MongoDB
-6. **Content Protection:** View-only popup for exhibits, right-click disabled
-7. **Aesthetic:** Serious "courthouse/legal chamber" design
+## CURRENT LIVE URL
 
----
+```
+https://legal-watch.emergent.host/
+```
 
-## WHAT CURRENTLY EXISTS & WORKS ✅
-
-### Core Functionality
-- ✅ Entry page with acknowledgement notice + password
-- ✅ Synopsis page with case letter
-- ✅ Index page with year envelopes (2013, 2014, 2015)
-- ✅ Monthly Detailed Logs with full CRUD (Add, Edit, Delete entries)
-- ✅ Exhibit uploads stored in MongoDB (persistent)
-- ✅ Exhibit popup viewer (view-only for readers, no download)
-- ✅ Admin login via Shield icon
-- ✅ Line numbers in Detailed Log table
-- ✅ Wide Notes column for better readability
-- ✅ Content protection (right-click disabled, screenshot warning)
-
-### New Features Added This Session
-- ✅ **Embedded Route Map** - Geographic route analysis displayed at top of main page
-- ✅ **Route Analysis Button** - Opens detailed Nov 30, 2013 route analysis modal
-- ✅ **"Who Spoke With Whom" Button** - Communication network diagram (replaced Genogram)
-- ✅ **Downloadable Documents Created:**
-  - Route_Analysis_Nov30_2013.docx (Word document)
-  - Blankenship_Route_Map_v2.png (Visual map - white background)
-  - Communication_Chain_Nov30_2013.png (Chain diagram)
-
----
-
-## LIVE URLs
-
-| Type | URL |
-|------|-----|
-| **DEPLOYED (LIVE)** | `https://legal-timeline-1.emergent.host` |
-| Preview | `https://legal-timeline-1.preview.emergentagent.com` |
-| Custom Domain (owned) | `www.blankenship.eu` (NOT YET LINKED) |
+**DO NOT CREATE NEW DEPLOYMENTS OR CHANGE THIS URL**
 
 ---
 
@@ -63,151 +31,127 @@ Build a private, password-protected website named "Blankenship" to document evid
 
 ---
 
-## PENDING / IN-PROGRESS TASKS 🔶
+## DATABASE STATUS (JUST MIGRATED)
 
-### HIGH PRIORITY - Communication Network Diagram
-**User Request:** Replace generic labels (DSS, POLICE, HOSPITAL) with actual individual names from scanned evidence documents.
+Successfully migrated from `legal-timeline-1.emergent.host`:
 
-**Status:** The Communication Diagram component exists and works, but needs real names extracted from:
-- Uploaded exhibits in November 2013 entries
-- Scanned documents contain: CPS worker names, detective names, officer names, hospital staff names
-
-**Blocker:** The scanned documents with names are on the LIVE site database, not accessible from preview environment. 
-
-**Next Steps for New Agent:**
-1. Access the uploaded exhibits from the live database
-2. Use `analyze_file_tool` or `extract_file_tool` to read scanned PDFs/images
-3. Extract all individual names (CPS workers, police, detectives, hospital staff, etc.)
-4. Update `CommunicationDiagram.jsx` with real names instead of generic placeholders
-5. Create connections showing who actually communicated with whom
-
-### MEDIUM PRIORITY
-- Link custom domain `www.blankenship.eu` to deployed site (user couldn't do from mobile)
-- Update Route Analysis documents with note: "Dr. Pellegrino stop was brief - turned away, advised to go to ER"
-
-### LOW PRIORITY / FUTURE
-- Relationship Matrix (Option D) - Grid showing interaction frequency between people
-- MS Word (.doc, .docx) upload support
+| Collection | Documents |
+|------------|-----------|
+| `monthly_11-2013` | 14 entries |
+| `uploaded_files` | 36 HEIC image files |
 
 ---
 
-## KEY FILES
+## NAMES ALREADY EXTRACTED FROM ENTRIES
 
-### Frontend
-| File | Purpose |
-|------|---------|
-| `/app/frontend/src/pages/IndexPage.jsx` | Main page with route map, buttons, envelope icons |
-| `/app/frontend/src/pages/EntryPage.jsx` | Password entry with acknowledgement |
-| `/app/frontend/src/pages/SynopsisPage.jsx` | Case context letter |
-| `/app/frontend/src/components/MonthlyDetail.jsx` | Detailed log modal with entries table, uploads, exhibit viewer |
-| `/app/frontend/src/components/CommunicationDiagram.jsx` | Network web diagram (needs real names) |
-| `/app/frontend/src/components/EmbeddedRouteMap.jsx` | Route map displayed on main page |
-| `/app/frontend/src/components/RouteAnalysis.jsx` | Full route analysis modal |
-| `/app/frontend/src/components/AdminLogin.jsx` | Admin login modal |
-| `/app/frontend/src/components/ContentProtection.jsx` | Right-click/screenshot protection |
+From the November 2013 detailed log entries (witness field + descriptions):
 
-### Backend
-| File | Purpose |
-|------|---------|
-| `/app/backend/server.py` | All API endpoints including file upload/download, monthly entries |
-| `/app/backend/documents/` | Generated downloadable documents (docx, png) |
+| Name | Role |
+|------|------|
+| Amy Walker | Lake Norman ER Physician |
+| Officer Coffey | Sheriff's Department |
+| Sheri Stock | CPS Social Worker |
+| Amber Mecimore | CPS Social Worker |
+| Jennifer Owens | CPS Related |
+| Gabriele Blankenship | Key Person |
+| Keith Blankenship | Key Person |
+| Zackary Blankenship | Victim |
+| Jacob Blankenship | Deceased Brother |
+| Dr. Pellegrino | Doctor (turned them away) |
 
 ---
 
-## DATABASE SCHEMA (MongoDB)
+## PRIORITY TASK FOR NEW AGENT
 
-### Collections in `test_database`:
-- `timeline_entries` - Legacy (not used after removing Evidence Timeline)
-- `uploaded_files` - Exhibit files stored as base64
-  ```
-  {file_id, filename, file_type, file_size, file_content (base64), entry_id, upload_date}
-  ```
-- `monthly_{MM-YYYY}` - Monthly detailed log entries
-  ```
-  {id, date, time, witness, description, evidence, notes, created_at, updated_at}
-  ```
+### Extract Individual Names from Uploaded Exhibits
+
+The 36 uploaded HEIC files contain scanned documents with MORE names:
+- Additional CPS workers
+- Police officers / Detectives (full names)
+- Hospital staff (nurses, doctors)
+- DSS personnel
+- Court officials
+
+**How to extract:**
+```python
+# Use analyze_file_tool or extract_file_tool on each exhibit
+# Files are stored in MongoDB as base64 in 'uploaded_files' collection
+# Access via: /api/file/{file_id}
+```
+
+### Then Update Communication Diagram
+
+File: `/app/frontend/src/components/CommunicationDiagram.jsx`
+
+Replace generic placeholders with real individual names to show:
+- Who spoke with whom
+- Network of communications
+- Colored dots with lines connecting people
 
 ---
 
-## API ENDPOINTS
+## PROJECT ARCHITECTURE
+
+### Frontend (React + TailwindCSS)
+```
+/app/frontend/src/
+├── pages/
+│   ├── EntryPage.jsx      # Password entry + acknowledgement
+│   ├── SynopsisPage.jsx   # Case context letter
+│   └── IndexPage.jsx      # Main page with route map, buttons, envelopes
+├── components/
+│   ├── MonthlyDetail.jsx          # Detailed log modal (CRUD + uploads)
+│   ├── CommunicationDiagram.jsx   # Network diagram (NEEDS REAL NAMES)
+│   ├── EmbeddedRouteMap.jsx       # Route map on main page
+│   ├── RouteAnalysis.jsx          # Full route analysis modal
+│   ├── AdminLogin.jsx             # Admin login modal
+│   └── ContentProtection.jsx      # Right-click/screenshot protection
+```
+
+### Backend (FastAPI + MongoDB)
+```
+/app/backend/
+├── server.py              # All API endpoints
+├── documents/             # Generated downloadable docs (docx, png)
+└── .env                   # Database connection
+```
+
+---
+
+## KEY API ENDPOINTS
 
 | Method | Endpoint | Purpose |
 |--------|----------|---------|
-| GET | `/api/monthly/{month-key}` | Get entries for a month (e.g., `11-2013`) |
+| GET | `/api/monthly/{month-key}` | Get entries (e.g., `11-2013`) |
 | POST | `/api/monthly/{month-key}` | Create/update entry |
 | DELETE | `/api/monthly/{month-key}/{entry-id}` | Delete entry |
-| POST | `/api/upload` | Upload exhibit file (stores in MongoDB) |
-| GET | `/api/files/{entry-id}` | Get files for an entry |
-| GET | `/api/file/{file-id}` | Download/view file content |
+| POST | `/api/upload` | Upload exhibit file |
+| GET | `/api/files/{entry-id}` | Get files for entry |
+| GET | `/api/file/{file-id}` | Download/view file |
 | DELETE | `/api/file/{file-id}` | Delete file (admin) |
-| GET | `/api/documents/{filename}` | Download generated documents |
+| GET | `/api/documents/{filename}` | Download generated docs |
 
 ---
 
 ## ROUTE ANALYSIS DATA (Nov 30, 2013)
 
-### Points:
-- **A:** 174 Woodridge Lane, Mooresville NC (G. & K. Blankenship Residence)
-- **B:** Big Lots Store, 376 W. Plaza Drive, Mooresville NC
-- **C:** 6718 Catfish Drive, Sherrills Ford NC (Zackary's Home)
-- **D:** Dr. Pellegrino, 930 W. Wilson Ave, Mooresville NC (TURNED AWAY)
-- **E:** Lake Norman Hospital, 171 Fairview Road, Mooresville NC
+Already implemented - shows geographic evidence:
 
-### Distances & Times:
-- A→B: 4.2 mi, 8-12 min
-- B→C: 9.8 mi, 18-25 min (crosses county line)
-- C→D: 11.2 mi, 20-28 min
-- D→E: 1.8 mi, 4-7 min
-- **TOTAL: 27 miles, 50-72 min DRIVING ONLY**
+| Point | Location | Address |
+|-------|----------|---------|
+| A | G. & K. Blankenship Residence | 174 Woodridge Lane, Mooresville NC |
+| B | Big Lots Store | 376 W. Plaza Drive, Mooresville NC |
+| C | Zackary's Home | 6718 Catfish Drive, Sherrills Ford NC |
+| D | Dr. Pellegrino (TURNED AWAY) | 930 W. Wilson Ave, Mooresville NC |
+| E | Lake Norman Hospital | 171 Fairview Road, Mooresville NC |
 
----
-
-## USER PREFERENCES & NOTES
-
-1. **Language:** User is German-speaking (sometimes uses German words)
-2. **Device:** Often on mobile - can't do complex desktop tasks
-3. **Tone:** Project is deeply personal and emotional - be respectful and supportive
-4. **Visual Style:** Clean, professional, white backgrounds for printable documents
-5. **Data:** User has been entering real case data into November 2013 detailed logs on LIVE site
-
----
-
-## RECENT USER MESSAGES (Context)
-
-1. User requested Communication Network diagram showing "who spoke with whom"
-2. User showed reference image of network web (colored dots connected by lines)
-3. User specified: Need REAL individual names from scanned documents, not generic "CPS" or "POLICE"
-4. User confirmed names are in the uploaded exhibits in November 2013 entries
-5. User requested fork with detailed handoff report
-
----
-
-## WHAT NEW AGENT MUST DO FIRST
-
-1. **Connect to LIVE database** to access actual uploaded exhibits
-2. **Extract names from scanned documents** (PDFs/images in exhibits)
-3. **Update Communication Diagram** with real names:
-   - Individual CPS/DSS workers
-   - Individual police officers/detectives  
-   - Individual hospital staff
-   - Anyone else mentioned in documents
-4. **Test on live site** at `https://legal-timeline-1.emergent.host`
-
----
-
-## TECHNICAL NOTES
-
-- Frontend: React with TailwindCSS
-- Backend: FastAPI with Motor (async MongoDB)
-- File storage: MongoDB (base64 encoded) - NOT filesystem
-- Hot reload enabled - no restart needed for code changes
-- Supervisor manages services: `sudo supervisorctl restart backend/frontend`
+**Total: 27 miles, 50-72 min DRIVING ONLY**
 
 ---
 
 ## DOWNLOADABLE DOCUMENTS CREATED
 
-All available at `/api/documents/{filename}`:
+Available at `/api/documents/`:
 - `Route_Analysis_Nov30_2013.docx`
 - `Blankenship_Route_Map_v2.png`
 - `Blankenship_Route_Map_v2_web.png`
@@ -216,4 +160,74 @@ All available at `/api/documents/{filename}`:
 
 ---
 
-*End of Handoff Report*
+## USER COMMUNICATION STYLE
+
+- Often uses German words (speaks German)
+- Uses emojis frequently 💙🫂
+- Appreciates being called "Dear" or friendly terms
+- Gets frustrated with technical issues - be patient
+- Wants things SIMPLE and WORKING
+- Prefers WHITE backgrounds for printable documents
+
+---
+
+## WHAT NOT TO DO ❌
+
+1. ❌ Do NOT create new deployment URLs
+2. ❌ Do NOT change database connections
+3. ❌ Do NOT delete or overwrite user's uploaded data
+4. ❌ Do NOT use complex technical explanations
+5. ❌ Do NOT ask user to do complex desktop-only tasks (they're on mobile)
+
+---
+
+## WHAT TO DO ✅
+
+1. ✅ Keep `legal-watch.emergent.host` as the ONLY URL
+2. ✅ Extract names from the 36 HEIC exhibit files
+3. ✅ Update CommunicationDiagram.jsx with real names
+4. ✅ Be patient and supportive
+5. ✅ Test thoroughly before telling user something works
+6. ✅ Save & Deploy to the SAME URL (update, don't create new)
+
+---
+
+## QUICK START FOR NEW AGENT
+
+1. Verify data exists:
+```bash
+curl -s "https://legal-watch.emergent.host/api/monthly/11-2013" | python3 -c "import sys,json; d=json.load(sys.stdin); print(f'{len(d)} entries')"
+```
+
+2. Check uploaded files:
+```bash
+cd /app/backend && python3 -c "
+import asyncio
+from motor.motor_asyncio import AsyncIOMotorClient
+import os
+async def check():
+    client = AsyncIOMotorClient(os.environ.get('MONGO_URL'))
+    db = client['test_database']
+    count = await db.uploaded_files.count_documents({})
+    print(f'{count} files in database')
+asyncio.run(check())
+"
+```
+
+3. Extract names from exhibits using `analyze_file_tool`
+
+4. Update `CommunicationDiagram.jsx` with extracted names
+
+---
+
+## LAST USER MESSAGES
+
+1. User wanted Communication Diagram with REAL individual names (not generic "CPS", "POLICE")
+2. Names are in the scanned HEIC documents (exhibits)
+3. User needed to fork due to context length
+4. User emphasized: NO MORE URL CHANGES
+
+---
+
+*End of Takeover Protocol*
+*Good luck, next agent! 💙*
