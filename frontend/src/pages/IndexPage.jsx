@@ -128,7 +128,7 @@ const IndexPage = () => {
       </div>
 
       {/* Analysis Buttons */}
-      <div className="container mx-auto px-4 py-4 relative z-10">
+      <div className="container mx-auto px-4 py-4 relative z-20">
         <div className="flex flex-wrap justify-center gap-4">
           {/* Communication Diagram Button */}
           <button
