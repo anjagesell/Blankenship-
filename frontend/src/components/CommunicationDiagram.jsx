@@ -195,16 +195,30 @@ const CommunicationDiagram = ({ onClose }) => {
               const isHighlighted = selectedPerson && 
                 (fromId === selectedPerson || toId === selectedPerson);
               
+              // Calculate shortened line to not overlap with nodes
+              const dx = to.x - from.x;
+              const dy = to.y - from.y;
+              const length = Math.sqrt(dx * dx + dy * dy);
+              const nodeRadius = 28;
+              const shortenBy = nodeRadius + 5; // Shorten line to stop at node edge
+              
+              const startX = from.x + (dx / length) * shortenBy;
+              const startY = from.y + (dy / length) * shortenBy;
+              const endX = to.x - (dx / length) * shortenBy;
+              const endY = to.y - (dy / length) * shortenBy;
+              
               return (
                 <line
                   key={`line-${idx}`}
-                  x1={from.x}
-                  y1={from.y}
-                  x2={to.x}
-                  y2={to.y}
-                  stroke="#000"
-                  strokeWidth={isHighlighted ? 3 : 1.5}
+                  x1={startX}
+                  y1={startY}
+                  x2={endX}
+                  y2={endY}
+                  stroke={isHighlighted ? "#dc3545" : "#000"}
+                  strokeWidth={isHighlighted ? 2.5 : 1.5}
                   opacity={selectedPerson ? (isHighlighted ? 1 : 0.15) : 0.7}
+                  markerStart={isHighlighted ? "url(#arrowhead-start-highlight)" : "url(#arrowhead-start)"}
+                  markerEnd={isHighlighted ? "url(#arrowhead-end-highlight)" : "url(#arrowhead-end)"}
                 />
               );
             })}
