@@ -3,189 +3,179 @@ The user wants to build a private, password-protected website named Blankenship 
 
 **PRODUCT REQUIREMENTS:**
 1.  **Entry Page:** A password-protected entry page () with a mandatory, scroll-to-accept Terms of Use agreement.
-2.  **Synopsis Page:** An intermediate page after login with a letter detailing the case context.
-3.  **Investigative Structure:** A two-tier evidence system on the main page:
-    *   A top-level, Excel-style Highlights Timeline.
-    *   Interactive yearly archives (e.g., 2013, 2014) that reveal detailed monthly logs.
-4.  **Admin & Upload Functionality:**
+2.  **Investigative Structure:** A system to view evidence, which has evolved from a main timeline to a series of yearly/monthly detailed logs inside envelope icons.
+3.  **Admin & Upload Functionality:**
     *   A secure admin section (password: ) for content management.
-    *   Admin can add, edit, and delete entries in timelines.
-    *   Admin can upload evidence files (PDFs, images, video, audio) associated with events.
+    *   Admin can add, edit, and delete entries in the detailed logs.
+    *   Admin can upload evidence files (PDFs, images) associated with events.
+4.  **Evidence Visualization:**
+    *   A Who Spoke to Whom network diagram to visualize communications between individuals.
+    *   A Geographic Route Analysis map to show the timeline and feasibility of a specific journey on Nov 30, 2013.
 5.  **Aesthetic:** A serious, courthouse/legal chamber design with marble, mahogany, and brass/gold accents.
-6.  **Content Protection:** Measures to prevent casual downloading (e.g., disabling right-click, screenshot warnings).
+6.  **Content Protection:** Readers should only be able to view exhibits in a popup, not download them directly. Right-click and other casual copy methods should be disabled.
 7.  **Core Narrative:** To present evidence of Zackary Blankenship's wrongful imprisonment and honor his late brother, Jacob.
 
 **User's preferred language**: English
 
 **what currently exists?**
-The application is a fully-featured React/FastAPI/MongoDB evidence management system with a judicial courthouse theme.
-- **Data Persistence:** All timeline entries and uploaded files are now stored directly in MongoDB, ensuring data persists across deployments and sessions. The critical  issue has been resolved.
-- **Entry Page:** Features a mandatory Acknowledgement Notice that must be scrolled and accepted *before* the password can be entered. A friendly popup guides users who try to skip this step.
-- **Index Page / Timelines:**
-    - The main evidence timeline is fully responsive, showing a table on desktops/tablets and a card-based view on mobile.
-    - **Features:** Line numbers for each entry, a Search bar, a date Sort toggle, and a Print Report button that generates a formatted PDF.
-    - **Admin Controls:** Admins see buttons to Add Entry, Edit, and Delete rows. A red Clear Files button was added to purge old, broken exhibit records.
-- **Exhibit Management:**
-    - The Evidence column has been renamed to Exhibit.
-    - Admins can upload files (JPEG, PDF) for each timeline entry.
-    - Clicking an exhibit badge opens a lightbox viewer for images/PDFs.
-- **Visual Case Map (Genogram):** A new feature that displays the entire case history as an interactive, clickable tree diagram, rooted in the initial event from October 2013.
-- **Content Protection:** Robust measures are in place, including disabling right-click, copy/paste, and dev tools, plus a dismissible, humorous warning popup for screenshot attempts.
-- **UI Enhancements:** The yearly archive boxes have been replaced with elegant envelope icons, now featuring CONFIDENTIAL stamps and EVIDENCE tags for authenticity.
+The application is a React/FastAPI/MongoDB evidence management system. The key functionality has been consolidated into a system of Monthly Detailed Logs accessible via yearly envelope icons on the main page. The original main Evidence Timeline has been removed at the user's request.
+
+- **Data Migration:** All user data from a previous deployment (14 November 2013 entries and 36 associated exhibit files) has been successfully migrated to the current environment's database.
+- **Main Page:** Displays an embedded Geographic Route Analysis map at the top, followed by clickable envelope icons for each year (e.g., 2013, 2014). Buttons are present to open the Who Spoke to Whom diagram and the full Route Analysis page.
+- **Monthly Detailed Logs:** A modal view that shows a table of evidence entries for a given month. It includes line numbers, admin controls (Add, Edit, Delete), and an EXHIBITS column.
+- **Exhibit Handling:** Admins can upload files for each entry. Regular users see exhibit badges and can view them in a secure, view-only popup. Admins have the ability to delete individual exhibits.
+- **Evidence Visualization:**
+    - A Geographic Route Analysis map has been created as a static component and an embedded view, detailing a 5-point journey from Nov 30, 2013. Downloadable Word and PNG versions of this analysis are available.
+    - A Who Spoke to Whom network diagram component () has replaced the old Genogram. It is designed to extract names from log entries and display connections, but currently uses generic placeholders.
 
 **Last working item**:
-*   **Last item agent was working**: The user requested two final changes before forking: adding line numbers to the timeline and a button to clear all exhibit files (to solve the broken files issue). The agent implemented both.
-*   **Status**: USER VERIFICATION PENDING
-*   **Agent Testing Done**: N
-*   **Which testing method agent to use?** Manual testing by the user after deployment. The user needs to:
-    1.  Log in as admin.
-    2.  Click the red Clear Files button to purge old, broken exhibit records.
-    3.  Confirm the line numbers appear correctly in the timeline table.
-    4.  Re-upload an exhibit to ensure it works correctly with the new database storage system.
-*   **User Testing Done**: N
+- **Last item agent was working**: The agent successfully migrated all user data (14 entries from November 2013 and 36 associated exhibit files) from a previous deployment () into the current session's MongoDB database. This was done to resolve the user's issue of missing data after a fork.
+- **Status**: USER VERIFICATION PENDING
+- **Agent Testing Done**: Y (Agent verified the counts of migrated entries and files via database checks.)
+- **Which testing method agent to use?** Manual user testing. The user needs to log in, navigate to the November 2013 detailed log, and confirm that all 14 of their entries and the associated 36 exhibits are present and displaying correctly.
+- **User Testing Done**: N
 
 **All Pending/In progress Issue list**:
-*   **Issue 1**: Exhibit files uploaded before the database storage fix are broken. (P0)
-*   **Issue 2**: MS Word uploads (, ) are not working. (P2)
+- **Issue 1**: The Who Spoke With Whom diagram uses generic placeholders (DSS, POLICE) instead of actual individuals' names. (P0)
+- **Issue 2**: MS Word uploads (, ) are not working. (P2)
 
 **Issues Detail**:
-*   **Issue 1: Broken Exhibit Files from Filesystem Storage**
-    *   **Description**: The user reported that clicking on an exhibit results in a File not found on server error. This is because files were previously stored on the ephemeral filesystem, which is wiped on deployment. The file records exist in the DB, but the file content is gone.
-    *   **Attempted fixes**: The agent correctly diagnosed the issue and re-architected the file handling system to store file content directly in MongoDB. To clean up the old, broken records, the agent added a  endpoint and a red Clear Files button to the admin UI.
-    *   **Next debug checklist**:
-        1.  Instruct the user to **Save and Deploy** the latest changes.
-        2.  Guide the user to log in as admin and click the red Clear Files button.
-        3.  Confirm that the old exhibit badges disappear.
-        4.  Guide the user to re-upload an exhibit and verify it can be viewed correctly.
-    *   **Why fix this issue and what will be achieved with the fix?**: This is critical for the application's core functionality. Fixing it will make the evidence upload feature reliable and persistent.
-    *   **Status**: USER VERIFICATION PENDING
-    *   **Is recurring issue?**: N (The architectural fix prevents recurrence).
-    *   **Should Test frontend/backend/both after fix?**: Both.
-    *   **Blocked on other issue**: None.
-*   **Issue 2: MS Word Upload Failure**
-    *   **Description**: The user mentioned that while JPEG and PDF uploads work, MS Word documents fail to upload.
-    *   **Attempted fixes**: The agent acknowledged the issue but deprioritized it at the user's request. No fix has been attempted.
-    *   **Next debug checklist**:
-        1.  Verify the  and MIME type mapping in  includes  and .
-        2.  Review the file upload logic to ensure it can handle these file types.
-        3.  Test uploading a  file and inspect backend logs for errors.
-    *   **Why fix this issue and what will be achieved with the fix?**: It will complete the file type support requested by the user, making the exhibit upload feature more versatile.
-    *   **Status**: NOT STARTED
-    *   **Is recurring issue?**: N/A
-    *   **Should Test frontend/backend/both after fix?**: Both.
-    *   **Blocked on other issue**: None.
+- **Issue 1: Who Spoke With Whom Diagram Needs Real Names**
+    - **Description**: The user wants the communication network diagram to display the real names of individuals involved (specific CPS workers, detectives, etc.) instead of generic group labels.
+    - **Attempted fixes**: The agent identified that the names are located within the user's uploaded scanned documents (PDFs/images). The agent was unable to access these files from the preview environment in the last session to perform OCR or manual extraction. This is the primary blocker for completing the feature.
+    - **Next debug checklist**:
+        1. Confirm with the user that the migrated data (including exhibit files) is now accessible in the current environment.
+        2. Propose a strategy to extract names from the document files. Options:
+            - Ask the user to manually list the names from the key documents.
+            - Investigate using a tool or library (e.g.,  for OCR) to automatically read the text from the exhibit files (, ). This may require installing new dependencies.
+        3. Once names are extracted, update  to parse these names and generate the network graph correctly.
+    - **Why fix this issue and what will be achieved with the fix?**: This is the user's main desired feature for visualizing the case's key players and their interactions. Completing it will provide a powerful tool for analyzing the evidence.
+    - **Status**: IN PROGRESS
+    - **Is recurring issue?**: Y (The challenge of extracting data from files has come up before).
+    - **Should Test frontend/backend/both after fix?**: Frontend.
+    - **Blocked on other issue**: None.
+
+- **Issue 2: MS Word Upload Failure**
+    - **Description**: While JPEG and PDF uploads work, MS Word documents (, ) fail to upload. This was noted in the initial handoff.
+    - **Attempted fixes**: None attempted. This was de-prioritized.
+    - **Next debug checklist**:
+        1. In , review the  endpoint and the allowed MIME types.
+        2. Add the correct MIME types for  () and  ().
+        3. Test uploading a  file and inspect backend logs for any errors during processing.
+    - **Why fix this issue and what will be achieved with the fix?**: It will complete the file type support requested by theuser, making the exhibit upload feature more versatile.
+    - **Status**: NOT STARTED
+    - **Is recurring issue?**: N
+    - **Should Test frontend/backend/both after fix?**: Both.
+    - **Blocked on other issue**: None.
 
 **In progress Task List**:
-*   None.
+- None.
 
 **Upcoming and Future Tasks**
-*   **Upcoming Tasks**:
-    *   (P0) Add individual delete (X) buttons for each exhibit badge in the timeline, so the user doesn't have to clear all files to remove one.
-    *   (P1) Fix the MS Word (, ) upload functionality.
-    *   (P2) Connect the main file upload buttons in the  modal to the backend.
-    *   (P2) Get the real data from the user to populate the timelines.
-*   **Future Tasks**:
-    *   (P3) Build a simple admin interface for viewing and managing all uploaded evidence files in one place.
+- **Upcoming Tasks**:
+    *   (P0) Populate the Who Spoke to Whom diagram with actual individual names (continuation of Issue 1).
+- **Future Tasks**:
+    *   (P1) Implement the Relationship Matrix (Option D). The user expressed strong interest in this as a future enhancement to see communication density in a grid format.
+    *   (P2) Build a simple admin interface for viewing and managing all uploaded evidence files in one place.
 
 **Completed work in this session**
-- **Data Persistence Overhaul**: Migrated timeline and file storage from /filesystem to MongoDB, making all data permanent and solving the critical data loss issue.
-- **UI Enhancement (Envelopes)**: Replaced yearly archive boxes with elegant envelope icons, complete with CONFIDENTIAL stamps and EVIDENCE tags.
-- **Cache-Busting Implemented**: Added meta tags and a version-based script to ensure users always see the latest version of the site.
-- **Timeline Feature Pack**:
-    - **Search**: Added a real-time search bar.
-    - **Sorting**: Implemented a date sort toggle button.
-    - **Line Numbers**: Added a # column for numbered entries.
-    - **Wider Notes**: Expanded the notes column for better readability.
-- **Exhibit Management Upgrade**:
-    - Renamed Evidence column to Exhibit.
-    - Added an Upload button to each timeline row.
-    - Implemented a lightbox-style Exhibit Viewer for images and PDFs.
-    - Added a Clear Files button for admins to purge old file records.
-- **Genogram (Visual Case Map)**: Created a new, interactive tree diagram that visualizes the case timeline, with clickable nodes that show entry details.
-- **Full Responsiveness**: Reworked the timeline to use a card-based layout on mobile devices, ensuring usability across all screen sizes.
-- **Content Protection Hardening**: Added a dismissible, humorous popup warning to deter screenshots.
-- **Entry Page UX Improvement**: Moved the Acknowledgement Notice above the password fields and made them disabled until the notice is accepted.
+- **Full Data Migration**: Rescued and imported all user entries (14) and exhibit files (36) from a previous deployment into the current database.
+- **Geographic Route Analysis Feature**:
+    - Created a new page () and an embedded component () visualizing a 5-point journey from Nov 30, 2013.
+    - Implemented downloadable  and  versions of the analysis via a new backend endpoint.
+    - Refined the map image based on user feedback (white background, fixed text overlap).
+- **Evidence Timeline Removal**: Removed the main timeline from the  as requested, focusing the UI on the Monthly Detailed Logs.
+- **Genogram Replacement**: Replaced the old  with a new, more advanced  designed to show a Who Spoke to Whom network.
+- **Monthly Detailed Log Enhancements**:
+    - Added line numbers ( column).
+    - Made the Notes column wider for readability.
+    - Implemented a secure popup viewer () for non-admins to prevent direct file downloads.
+    - Ensured the EXHIBITS column is visible to all users, while upload/delete controls remain admin-only.
+- **User Support**: Addressed significant user frustration regarding changing URLs, explaining the deployment process and successfully migrating data to consolidate work.
 
 **Earlier issues found/mentioned but not fixed**
-*   **MS Word upload failure**: As detailed in the All Pending/In progress Issue list, this was acknowledged but not addressed.
+*   **MS Word upload failure**: Detailed in the All Pending/In progress Issue list.
 
 **Known issue recurrence from previous fork**
-*   N/A
+*   None.
 
 **Code Architecture**
 
 
 **Key Technical Concepts**
-*   **Frontend**: React (Hooks), TailwindCSS, Responsive Design (Card-based mobile layout),  &  for PDF generation,  (or similar) for the Genogram.
+*   **Frontend**: React (Hooks), TailwindCSS.
 *   **Backend**: FastAPI, Pydantic, MongoDB ().
-*   **Database**: MongoDB. File storage was moved from the filesystem into MongoDB collections (as Base64-encoded strings).
-*   **Data Persistence**: All user-generated content (timeline entries, uploaded files) is now stored in MongoDB, ensuring it persists across deployments.
+*   **Data Migration**: Manually fetching data via API calls from an old deployment and inserting it into a new database instance.
+*   **Document/Image Generation**: Using Python libraries (, ) on the backend to dynamically create and serve  and  files.
+*   **Data Visualization**: D3.js or a similar library used within  to render network graphs.
 
 **key DB schema**
 *   : 
-*   :  (The  field is new and critical).
+*   : 
 
 **changes in tech stack**
-*   **File Storage**: Moved from storing files on the local filesystem () to storing them as Base64-encoded strings directly within MongoDB documents.
+*   **Backend**: Added  and  for document and image generation.  was installed for the migration script.
 
 **All files of reference**
-*   : The most heavily modified file, contains logic for the search, sort, print, exhibit viewer, upload buttons, line numbers, clear files button, and Genogram integration. **CRITICAL FILE.**
-*   : The second most critical file. Contains all new API endpoints for timeline CRUD, file upload/download from MongoDB, and the endpoint to clear file records.
-*   : Modified to enforce the Acknowledge First workflow.
-*   : New component for the visual case map.
-*   : Modified to add stamps/tags to the envelope icons.
-*   : Modified to add a dismissible screenshot warning.
+*   : The new, incomplete network diagram that needs to be populated with real names. **CRITICAL FILE.**
+*   : The main entry point after login. Heavily modified to remove the old timeline and add the new visualization components.
+*   : The core component for data entry and viewing. Contains the logic for the detailed log table, exhibit viewing, and uploads.
+*   : Modified to add the  endpoint for serving generated reports.
+*   : The new component for the geographic journey analysis.
+*   : The summary version of the route map displayed on the main page.
 
 **Areas that need refactoring**:
-*   The file deletion mechanism is currently all or nothing. A more granular approach is needed by implementing individual delete buttons for each exhibit, as requested by the user.
+*   The  needs a robust name-extraction logic to be functional. Currently, its data processing part is a placeholder.
 
 **key api endpoints**
-*   : Fetches all timeline entries.
+*   : Fetches all timeline entries. (Still exists but may not be used by frontend).
 *   : Creates/updates a timeline entry.
-*   : Deletes a timeline entry.
-*   : Uploads a file and stores its content in MongoDB.
-*   : Fetches file metadata for a timeline entry.
-*   : Serves the content of a specific file from MongoDB.
+*   : Fetches entries for a specific month.
+*   : Uploads a file to MongoDB.
+*   : Serves file content from MongoDB.
 *   : Deletes a specific file.
-*   : **(New)** Deletes all records from the  collection. Requires admin password.
+*   : **(New)** Serves generated documents (e.g., ).
 
 **Critical Info for New Agent**
-*   **TOP PRIORITY:** The user MUST use the new Clear Files button after deployment to purge old, broken file records. The previous file uploads are lost due to the filesystem being ephemeral. Guide the user through this process: **Deploy → Log in as Admin → Click Clear Files → Re-upload exhibits.**
-*   **PENDING REQUEST:** The user has asked for a way to delete exhibits individually. Implementing an X button next to each exhibit badge in  should be your first upcoming task.
-*   **KNOWN BUG:** MS Word uploads do not work. This is a lower-priority but known issue to be addressed.
-*   **Project Sensitivity**: Maintain a respectful, professional, and supportive tone. The project is deeply personal and emotionally significant to the user.
+*   **DATA IS MIGRATED:** All of the user's November 2013 data (entries and exhibits) has been successfully imported into this environment. Your first step should be to help the user verify this in the UI.
+*   **BLOCKER - NAME EXTRACTION:** The immediate task is to get the real names of individuals (CPS workers, police) for the Who Spoke to Whom diagram. The user expects you to extract this from their uploaded documents. You will need a strategy for this (e.g., asking the user to list them, exploring OCR). This is the highest priority.
+*   **URL STABILITY IS KEY:** The user is extremely frustrated with changing URLs. Be very careful with deployments. Guide the user to always update the *existing* deployment slot to maintain the same URL (). Re-iterate the value of connecting their custom domain () for a permanent solution.
+*   **PROJECT SENSITIVITY**: Maintain a supportive, patient, and highly professional tone. This project is of extreme personal importance to the user.
 
 **documents and test_reports created in this job**
-*   None.
+*   
+*   
+*   
+*   
+*    (Contains the previous handoff summary)
 
 **Last 10 User Messages and any pending HUMAN messages**
-10. **User**: Yes, go ahead and **fork**! 🍴...
-9.  **User**: System is telling me to fork.
-8.  **User**: The changes have been implemented... Please save and deploy these changes and test the functionality...
-7.  **User**: (Agent confirming implementation of line numbers)
-6.  **User**: Great questions! Currently it clears ALL... Would you like me to also add a small X button... Adding that now! 📝
-5.  **User**: Um, hold on.. this clear files Button.... Does it clear all files or just those I am interested in targeting to clear? And second question before I save. Please add line number next to the line entrys infront of the date column please 🙏
-4.  **User**: Wait! Let me quickly add the Clear Old Files button first so you can tap it on your phone! It'll just take 30 seconds:
-3.  **User**: I'll save and redeploy now
-2.  **User**: No problem! Let me add a Clear Old Files button right in the admin interface so you can tap it directly on your phone! 📱
-1.  **User**: I'm on mobile so can't use those links up there. Phone won't copy that.
+10. 
+9.  
+8.  
+7.  
+6.  
+5.  
+4.  
+3.  
+2.  
+1.  
 
 **Project Health Check:**
-*   **Broken**:
-    *   Exhibit records pointing to files uploaded before the database storage fix. These records must be purged using the new Clear Files button.
+*   **Broken**: None.
 *   **Mocked**:
-    *   The timeline data is still limited to a few test entries created by the agent. The user needs to populate it with the real case data.
+    *   The  is functionally mocked. It displays a graph structure but uses generic placeholder names. It needs to be connected to real data extracted from the user's evidence.
 
 **3rd Party Integrations**
 *   **Google Fonts**: For 'Kalam' and 'Garamond' fonts.
 *   **Lucide-react**: Used for icons.
-*   **jspdf & html2canvas**: Used for the Print Report PDF generation feature.
-*   **react-flow-renderer** (or similar): Inferred library used to create the interactive Genogram visualization.
+*   **python-docx**: Used on the backend to generate Word documents.
+*   **Pillow**: Used on the backend to generate map images.
 
 **Testing status**
 *   **Testing agent used after significant changes**: NO
 *   **Troubleshoot agent used after agent stuck in loop**: NO
-*   **Test files created**: None.
+*   **Test files created**: None for testing application logic. Python scripts were used to generate artifacts.
 *   **Known regressions**: None.
 
 **Credentials to test flow:**
@@ -193,4 +183,4 @@ The application is a fully-featured React/FastAPI/MongoDB evidence management sy
 *   **Admin Login Password**: 
 
 **What agent forgot to execute**
-*   The agent acknowledged the user's request to add individual delete buttons (X) for each exhibit but did not implement it before the session forked. This should be prioritized in the next session.</analysis>
+*   The agent did not finalize a concrete technical plan to extract names from scanned documents, which is a blocker for the user's primary pending request.</analysis>
