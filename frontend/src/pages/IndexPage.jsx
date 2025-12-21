@@ -554,9 +554,9 @@ const IndexPage = () => {
         />
       )}
 
-      {/* Genogram Modal */}
-      {showGenogram && (
-        <Genogram onClose={() => setShowGenogram(false)} />
+      {/* Communication Diagram Modal */}
+      {showCommunicationDiagram && (
+        <CommunicationDiagram onClose={() => setShowCommunicationDiagram(false)} />
       )}
 
       {/* Route Analysis Modal */}
