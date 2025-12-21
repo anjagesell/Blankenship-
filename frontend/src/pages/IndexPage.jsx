@@ -130,9 +130,9 @@ const IndexPage = () => {
       {/* Analysis Buttons */}
       <div className="container mx-auto px-4 py-4 relative z-10">
         <div className="flex flex-wrap justify-center gap-4">
-          {/* Genogram Button */}
+          {/* Communication Diagram Button */}
           <button
-            onClick={() => setShowGenogram(true)}
+            onClick={() => setShowCommunicationDiagram(true)}
             className="px-6 py-3 rounded-lg flex items-center gap-3 transition-all hover:scale-105 shadow-lg"
             style={{
               background: 'linear-gradient(145deg, #2c3e50 0%, #1a252f 100%)',
@@ -143,12 +143,12 @@ const IndexPage = () => {
               boxShadow: '0 4px 20px rgba(212,175,55,0.3)',
             }}
           >
-            <span className="text-2xl">🌳</span>
+            <span className="text-2xl">👥</span>
             <div className="text-left">
-              <div className="text-base">View Case Genogram</div>
-              <div className="text-xs text-yellow-600/70 font-normal">Visual Timeline of All Events</div>
+              <div className="text-base">Who Spoke With Whom</div>
+              <div className="text-xs text-yellow-600/70 font-normal">Communication Network Diagram</div>
             </div>
-            <GitBranch className="w-5 h-5 ml-2" />
+            <Users className="w-5 h-5 ml-2" />
           </button>
           
           {/* Route Analysis Button */}
