@@ -96,6 +96,25 @@ class StatusCheck(BaseModel):
 class StatusCheckCreate(BaseModel):
     client_name: str
 
+# Document download endpoint
+@api_router.get("/documents/{filename}")
+async def download_document(filename: str):
+    """Download a document file"""
+    file_path = ROOT_DIR / "documents" / filename
+    if not file_path.exists():
+        raise HTTPException(status_code=404, detail="Document not found")
+    
+    # Determine content type
+    content_type = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    if filename.endswith('.pdf'):
+        content_type = "application/pdf"
+    
+    return FileResponse(
+        path=file_path,
+        filename=filename,
+        media_type=content_type
+    )
+
 # Add your routes to the router instead of directly to app
 @api_router.get("/")
 async def api_root():
