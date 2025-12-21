@@ -27,6 +27,7 @@ const IndexPage = () => {
   const [showAdminLogin, setShowAdminLogin] = useState(false);
   const [isAdmin, setIsAdmin] = useState(() => sessionStorage.getItem('blankenship_admin') === 'true');
   const [showGenogram, setShowGenogram] = useState(false);
+  const [showRouteAnalysis, setShowRouteAnalysis] = useState(false);
 
   useEffect(() => {
     document.title = 'Blankenship';
