@@ -552,6 +552,11 @@ const IndexPage = () => {
       {showGenogram && (
         <Genogram onClose={() => setShowGenogram(false)} />
       )}
+
+      {/* Route Analysis Modal */}
+      {showRouteAnalysis && (
+        <RouteAnalysis onClose={() => setShowRouteAnalysis(false)} />
+      )}
     </div>
   );
 };
