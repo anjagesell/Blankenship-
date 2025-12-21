@@ -1,148 +1,106 @@
-import React, { useState, useEffect } from 'react';
-import { X, ZoomIn, ZoomOut, Users, RefreshCw } from 'lucide-react';
+import React, { useState } from 'react';
+import { X, ZoomIn, ZoomOut, Users } from 'lucide-react';
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
+// Real names extracted from November 2013 entries
+const PEOPLE_DATA = [
+  // CPS / Social Workers
+  { id: 1, name: 'Sherri Stock', role: 'CPS Social Worker', category: 'cps' },
+  { id: 2, name: 'Amber Mecimore', role: 'CPS Social Worker', category: 'cps' },
+  { id: 3, name: 'Pam Frazier', role: 'CPS SW (Iredell Co.)', category: 'cps' },
+  { id: 4, name: 'SW Reitzel', role: 'CPS Supervisor', category: 'cps' },
+  { id: 5, name: 'Lena Barber', role: 'CPS', category: 'cps' },
+  { id: 6, name: 'Jennifer Owens', role: 'CPS', category: 'cps' },
+  // Medical
+  { id: 7, name: 'Amy Walker', role: 'S.A.N.E. Nurse, Lake Norman ER', category: 'medical' },
+  // Law Enforcement
+  { id: 8, name: 'Officer Coffey', role: "Sheriff's Dept.", category: 'police' },
+  // Blankenship Family
+  { id: 9, name: 'Zachary Blankenship', role: 'Father (Accused)', category: 'family' },
+  { id: 10, name: 'Tammy Blankenship', role: 'Mother', category: 'family' },
+  { id: 11, name: 'Rylie Blankenship', role: 'Child (2 yrs)', category: 'family' },
+  { id: 12, name: 'Keith Blankenship', role: 'Grandfather', category: 'family' },
+  { id: 13, name: 'Gabriele Blankenship', role: 'Grandmother', category: 'family' },
+  // Others
+  { id: 14, name: 'Vickie Toppings', role: 'Mentioned in case', category: 'other' },
+  { id: 15, name: 'Pastor Osborne', role: 'Mentioned in case', category: 'other' },
+];
 
-// Simple Network Web Diagram
+// Documented communications from November 30, 2013
+const COMMUNICATIONS = [
+  { from: 1, to: 8, time: '12:15pm', desc: 'Phone call about child' },
+  { from: 1, to: 2, time: '12:30pm', desc: 'CPS coordination call' },
+  { from: 2, to: 6, time: '12:50pm', desc: 'CPS intake discussion' },
+  { from: 2, to: 13, time: '12:50pm', desc: 'CPS intake with grandmother' },
+  { from: 2, to: 7, time: '12:50pm', desc: 'SW spoke with SANE Nurse' },
+  { from: 2, to: 3, time: '1:22pm', desc: 'Requested Iredell Co. assist' },
+  { from: 1, to: 2, time: '4:00pm', desc: 'Arranged home visit' },
+  { from: 3, to: 10, time: '4:00pm', desc: 'Home visit arranged' },
+  { from: 1, to: 10, time: '6:33pm', desc: 'Interrogation of mother' },
+  { from: 1, to: 4, time: '6:33pm', desc: 'Supervisor directives' },
+  { from: 2, to: 12, time: '8:35pm', desc: 'Phone call with grandfather' },
+  { from: 2, to: 7, time: '9:00pm', desc: 'Follow-up with nurse' },
+  { from: 1, to: 9, time: '9:02pm', desc: 'Interrogation of Zachary' },
+  { from: 1, to: 10, time: '9:02pm', desc: 'Present during interrogation' },
+  { from: 1, to: 11, time: '9:02pm', desc: 'Child present' },
+  { from: 1, to: 14, time: '9:02pm', desc: 'Present at home visit' },
+  { from: 1, to: 4, time: '9:02pm', desc: 'Supervisor involvement' },
+  { from: 1, to: 15, time: '9:02pm', desc: 'Pastor present' },
+  { from: 1, to: 5, time: '9:02pm', desc: 'CPS Lena Barber present' },
+  { from: 1, to: 9, time: '10:30pm', desc: 'Drive from Burger King' },
+  { from: 1, to: 10, time: '10:30pm', desc: 'No contact order issued' },
+];
+
 const CommunicationDiagram = ({ onClose }) => {
   const [zoom, setZoom] = useState(1);
   const [selectedPerson, setSelectedPerson] = useState(null);
-  const [people, setPeople] = useState([]);
-  const [connections, setConnections] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [hoveredLine, setHoveredLine] = useState(null);
 
-  useEffect(() => {
-    const fetchAndExtractData = async () => {
-      setLoading(true);
-      try {
-        const months = [
-          '10-2013', '11-2013', '12-2013',
-          '01-2014', '02-2014', '03-2014', '04-2014', '05-2014', '06-2014',
-          '07-2014', '08-2014', '09-2014', '10-2014', '11-2014', '12-2014',
-          '01-2015', '02-2015', '03-2015', '04-2015', '05-2015', '06-2015',
-          '07-2015', '08-2015', '09-2015', '10-2015', '11-2015', '12-2015'
-        ];
-
-        const allEntries = [];
-        for (const monthKey of months) {
-          try {
-            const response = await fetch(`${BACKEND_URL}/api/monthly/${monthKey}`);
-            if (response.ok) {
-              const entries = await response.json();
-              allEntries.push(...entries);
-            }
-          } catch (err) {}
-        }
-
-        // Extract unique names
-        const namesSet = new Set();
-        allEntries.forEach((entry) => {
-          if (entry.witness) namesSet.add(entry.witness.trim().toUpperCase());
-          
-          const text = `${entry.description || ''} ${entry.notes || ''}`.toUpperCase();
-          const namePatterns = [
-            /GABRIELE/g, /KEITH/g, /ZACKARY/g, /JACOB/g,
-            /BLANKENSHIP/g, /PELLEGRINO/g,
-          ];
-          namePatterns.forEach(pattern => {
-            const matches = text.match(pattern);
-            if (matches) matches.forEach(m => namesSet.add(m.trim()));
-          });
-        });
-
-        const namesArray = Array.from(namesSet).filter(n => n.length > 2);
-        
-        if (namesArray.length === 0) {
-          setDefaultData();
-        } else {
-          // Position people in a circle
-          const centerX = 400;
-          const centerY = 350;
-          const radius = 200;
-
-          const peopleWithPositions = namesArray.map((name, index) => {
-            const angle = (index / namesArray.length) * 2 * Math.PI - Math.PI / 2;
-            return {
-              id: index,
-              name: name,
-              x: centerX + Math.cos(angle) * radius,
-              y: centerY + Math.sin(angle) * radius,
-              color: getColorForPerson(name),
-            };
-          });
-
-          setPeople(peopleWithPositions);
-          
-          // Create connections between people
-          const conns = [];
-          for (let i = 0; i < peopleWithPositions.length; i++) {
-            for (let j = i + 1; j < peopleWithPositions.length; j++) {
-              conns.push({ from: i, to: j });
-            }
-          }
-          setConnections(conns);
-        }
-      } catch (error) {
-        setDefaultData();
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchAndExtractData();
-  }, []);
-
-  const setDefaultData = () => {
-    const centerX = 400;
-    const centerY = 350;
-    const radius = 200;
-    
-    const defaultNames = ['GABRIELE', 'KEITH', 'ZACKARY', 'JACOB', 'DR. PELLEGRINO', 'HOSPITAL', 'DSS', 'POLICE'];
-    
-    const defaultPeople = defaultNames.map((name, index) => {
-      const angle = (index / defaultNames.length) * 2 * Math.PI - Math.PI / 2;
-      return {
-        id: index,
-        name: name,
-        x: centerX + Math.cos(angle) * radius,
-        y: centerY + Math.sin(angle) * radius,
-        color: getColorForPerson(name),
-      };
-    });
-    
-    setPeople(defaultPeople);
-    
-    // Create web connections
-    const conns = [];
-    for (let i = 0; i < defaultPeople.length; i++) {
-      for (let j = i + 1; j < defaultPeople.length; j++) {
-        conns.push({ from: i, to: j });
-      }
+  // Color scheme by category
+  const getCategoryColor = (category) => {
+    switch (category) {
+      case 'cps': return '#e83e8c'; // Pink for CPS
+      case 'medical': return '#0d6efd'; // Blue for Medical
+      case 'police': return '#6c757d'; // Gray for Police
+      case 'family': return '#28a745'; // Green for Family
+      case 'other': return '#fd7e14'; // Orange for Others
+      default: return '#17a2b8';
     }
-    setConnections(conns);
   };
 
-  const getColorForPerson = (name) => {
-    const n = name.toUpperCase();
-    if (n.includes('GABRIELE')) return '#dc3545';
-    if (n.includes('KEITH')) return '#fd7e14';
-    if (n.includes('ZACKARY')) return '#ffc107';
-    if (n.includes('JACOB')) return '#6f42c1';
-    if (n.includes('PELLEGRINO') || n.includes('DR')) return '#20c997';
-    if (n.includes('HOSPITAL') || n.includes('NURSE') || n.includes('ER')) return '#0d6efd';
-    if (n.includes('DSS') || n.includes('SOCIAL')) return '#e83e8c';
-    if (n.includes('POLICE') || n.includes('OFFICER') || n.includes('DETECTIVE')) return '#6c757d';
-    const colors = ['#17a2b8', '#28a745', '#795548', '#607d8b'];
-    return colors[name.length % colors.length];
+  // Position people in octagonal/circular arrangement
+  const centerX = 400;
+  const centerY = 380;
+  const radius = 280;
+
+  const peopleWithPositions = PEOPLE_DATA.map((person, index) => {
+    const angle = (index / PEOPLE_DATA.length) * 2 * Math.PI - Math.PI / 2;
+    return {
+      ...person,
+      x: centerX + Math.cos(angle) * radius,
+      y: centerY + Math.sin(angle) * radius,
+      color: getCategoryColor(person.category),
+    };
+  });
+
+  // Get communications for a person
+  const getPersonCommunications = (personId) => {
+    return COMMUNICATIONS.filter(c => c.from === personId || c.to === personId);
+  };
+
+  // Check if two people communicated
+  const didCommunicate = (id1, id2) => {
+    return COMMUNICATIONS.some(c => 
+      (c.from === id1 && c.to === id2) || (c.from === id2 && c.to === id1)
+    );
   };
 
   return (
     <div 
       className="fixed inset-0 z-[9999] flex items-center justify-center"
-      style={{ background: 'rgba(0, 0, 0, 0.9)' }}
+      style={{ background: 'rgba(0, 0, 0, 0.92)' }}
     >
       <div 
-        className="relative w-full max-w-4xl h-[85vh] flex flex-col rounded-lg overflow-hidden"
+        className="relative w-full max-w-5xl h-[90vh] flex flex-col rounded-lg overflow-hidden"
         style={{ background: '#fff', border: '3px solid #d4af37' }}
       >
         {/* Header */}
@@ -154,7 +112,7 @@ const CommunicationDiagram = ({ onClose }) => {
             <Users className="w-5 h-5" style={{ color: '#d4af37' }} />
             <div>
               <h2 className="text-lg font-bold text-white">Who Spoke With Whom</h2>
-              <p className="text-xs text-gray-400">Communication Network • Click a person for details</p>
+              <p className="text-xs text-gray-400">November 30, 2013 — Documented Communications Network</p>
             </div>
           </div>
           <div className="flex items-center gap-2">
@@ -173,114 +131,185 @@ const CommunicationDiagram = ({ onClose }) => {
 
         {/* Diagram */}
         <div className="flex-1 overflow-auto" style={{ background: '#fafafa' }}>
-          {loading ? (
-            <div className="flex items-center justify-center h-full">
-              <div className="text-center">
-                <div className="text-4xl mb-4">🕸️</div>
-                <p className="text-gray-600">Building network...</p>
-              </div>
-            </div>
-          ) : (
-            <svg 
-              width="100%" 
-              height="100%" 
-              viewBox="0 0 800 700"
-              style={{ transform: `scale(${zoom})`, transformOrigin: 'center center' }}
-            >
-              {/* Title */}
-              <text x="400" y="35" textAnchor="middle" fontSize="20" fontWeight="bold" fill="#8b6914">
-                Communication Network
-              </text>
-              <text x="400" y="55" textAnchor="middle" fontSize="11" fill="#666">
-                Lines show who communicated with whom
-              </text>
+          <svg 
+            width="100%" 
+            height="100%" 
+            viewBox="0 0 800 800"
+            style={{ transform: `scale(${zoom})`, transformOrigin: 'center center' }}
+          >
+            {/* Title */}
+            <text x="400" y="35" textAnchor="middle" fontSize="22" fontWeight="bold" fill="#8b6914">
+              Communication Network — Nov 30, 2013
+            </text>
+            <text x="400" y="55" textAnchor="middle" fontSize="11" fill="#666">
+              Lines connect individuals who communicated • Click a person for details
+            </text>
 
-              {/* Draw ALL connection lines first */}
-              {connections.map((conn, idx) => {
-                const fromPerson = people[conn.from];
-                const toPerson = people[conn.to];
-                if (!fromPerson || !toPerson) return null;
-                
-                return (
+            {/* Draw ALL connection lines (documented communications) */}
+            {COMMUNICATIONS.map((comm, idx) => {
+              const fromPerson = peopleWithPositions.find(p => p.id === comm.from);
+              const toPerson = peopleWithPositions.find(p => p.id === comm.to);
+              if (!fromPerson || !toPerson) return null;
+              
+              const isHighlighted = selectedPerson && (comm.from === selectedPerson || comm.to === selectedPerson);
+              const isHovered = hoveredLine === idx;
+              
+              return (
+                <g key={`comm-${idx}`}>
                   <line
-                    key={idx}
                     x1={fromPerson.x}
                     y1={fromPerson.y}
                     x2={toPerson.x}
                     y2={toPerson.y}
-                    stroke="#333"
-                    strokeWidth={1.5}
-                    opacity={0.6}
+                    stroke={isHighlighted ? '#d4af37' : isHovered ? '#ff6b6b' : '#333'}
+                    strokeWidth={isHighlighted ? 3 : isHovered ? 2.5 : 1.5}
+                    opacity={selectedPerson ? (isHighlighted ? 1 : 0.15) : 0.6}
+                    style={{ cursor: 'pointer' }}
+                    onMouseEnter={() => setHoveredLine(idx)}
+                    onMouseLeave={() => setHoveredLine(null)}
                   />
-                );
-              })}
+                </g>
+              );
+            })}
 
-              {/* Draw people dots ON TOP of lines */}
-              {people.map((person) => (
+            {/* Draw people nodes */}
+            {peopleWithPositions.map((person) => {
+              const isSelected = selectedPerson === person.id;
+              const hasConnection = selectedPerson ? 
+                COMMUNICATIONS.some(c => 
+                  (c.from === selectedPerson && c.to === person.id) || 
+                  (c.to === selectedPerson && c.from === person.id) ||
+                  person.id === selectedPerson
+                ) : true;
+              
+              return (
                 <g 
                   key={person.id} 
-                  onClick={() => setSelectedPerson(selectedPerson === person.id ? null : person.id)}
+                  onClick={() => setSelectedPerson(isSelected ? null : person.id)}
                   style={{ cursor: 'pointer' }}
+                  opacity={selectedPerson && !hasConnection ? 0.3 : 1}
                 >
                   {/* Glow effect when selected */}
-                  {selectedPerson === person.id && (
-                    <circle cx={person.x} cy={person.y} r={28} fill={person.color} opacity={0.3} />
+                  {isSelected && (
+                    <circle cx={person.x} cy={person.y} r={32} fill={person.color} opacity={0.3} />
                   )}
                   
-                  {/* Main dot */}
+                  {/* Main node - RED circle like in the reference image */}
                   <circle 
                     cx={person.x} 
                     cy={person.y} 
-                    r={18} 
-                    fill={person.color}
+                    r={20} 
+                    fill="#dc3545"
                     stroke="#fff"
                     strokeWidth={3}
                   />
                   
-                  {/* Name label */}
+                  {/* Name label with background */}
+                  <rect
+                    x={person.x - 55}
+                    y={person.y + 25}
+                    width={110}
+                    height={32}
+                    rx={4}
+                    fill="rgba(255,255,255,0.95)"
+                    stroke={person.color}
+                    strokeWidth={1}
+                  />
                   <text 
                     x={person.x} 
-                    y={person.y + 35} 
+                    y={person.y + 40} 
                     textAnchor="middle" 
-                    fontSize="11" 
+                    fontSize="10" 
                     fontWeight="bold" 
                     fill="#333"
                   >
                     {person.name}
                   </text>
-                </g>
-              ))}
-
-              {/* Legend */}
-              <g transform="translate(20, 600)">
-                <rect x={0} y={0} width={180} height={70} rx={6} fill="#fff" stroke="#d4af37" strokeWidth={1} />
-                <text x={10} y={18} fontSize={11} fontWeight="bold" fill="#8b6914">LEGEND</text>
-                <circle cx={20} cy={38} r={8} fill="#dc3545" />
-                <text x={35} y={42} fontSize={10} fill="#333">= Person in case</text>
-                <line x1={10} y1={58} x2={40} y2={58} stroke="#333" strokeWidth={1.5} />
-                <text x={50} y={62} fontSize={10} fill="#333">= Communication</text>
-              </g>
-
-              {/* Info box if person selected */}
-              {selectedPerson !== null && people[selectedPerson] && (
-                <g transform="translate(580, 580)">
-                  <rect x={0} y={0} width={200} height={60} rx={6} fill="#fff" stroke={people[selectedPerson].color} strokeWidth={2} />
-                  <text x={10} y={20} fontSize={12} fontWeight="bold" fill={people[selectedPerson].color}>
-                    {people[selectedPerson].name}
+                  <text 
+                    x={person.x} 
+                    y={person.y + 52} 
+                    textAnchor="middle" 
+                    fontSize="8" 
+                    fill={person.color}
+                  >
+                    {person.role.length > 20 ? person.role.substring(0, 18) + '...' : person.role}
                   </text>
-                  <text x={10} y={38} fontSize={10} fill="#666">
-                    Connected to {connections.filter(c => c.from === selectedPerson || c.to === selectedPerson).length} people
-                  </text>
-                  <text x={10} y={52} fontSize={9} fill="#999">Click elsewhere to deselect</text>
                 </g>
-              )}
-            </svg>
-          )}
+              );
+            })}
+
+            {/* Legend */}
+            <g transform="translate(20, 680)">
+              <rect x={0} y={0} width={760} height={95} rx={6} fill="#fff" stroke="#d4af37" strokeWidth={1} />
+              <text x={15} y={20} fontSize={12} fontWeight="bold" fill="#8b6914">LEGEND — Categories</text>
+              
+              {/* Row 1 */}
+              <circle cx={30} cy={45} r={10} fill="#e83e8c" />
+              <text x={48} y={49} fontSize={10} fill="#333">CPS/Social Workers</text>
+              
+              <circle cx={180} cy={45} r={10} fill="#0d6efd" />
+              <text x={198} y={49} fontSize={10} fill="#333">Medical</text>
+              
+              <circle cx={280} cy={45} r={10} fill="#6c757d" />
+              <text x={298} y={49} fontSize={10} fill="#333">Law Enforcement</text>
+              
+              <circle cx={430} cy={45} r={10} fill="#28a745" />
+              <text x={448} y={49} fontSize={10} fill="#333">Blankenship Family</text>
+              
+              <circle cx={600} cy={45} r={10} fill="#fd7e14" />
+              <text x={618} y={49} fontSize={10} fill="#333">Others</text>
+              
+              {/* Row 2 */}
+              <line x1={20} y1={75} x2={60} y2={75} stroke="#333" strokeWidth={2} />
+              <text x={70} y={79} fontSize={10} fill="#333">= Documented communication on Nov 30, 2013</text>
+              
+              <circle cx={400} cy={75} r={10} fill="#dc3545" stroke="#fff" strokeWidth={2} />
+              <text x={418} y={79} fontSize={10} fill="#333">= Individual involved</text>
+            </g>
+
+            {/* Info panel when person selected */}
+            {selectedPerson && (() => {
+              const person = peopleWithPositions.find(p => p.id === selectedPerson);
+              const comms = getPersonCommunications(selectedPerson);
+              if (!person) return null;
+              
+              return (
+                <g transform="translate(550, 70)">
+                  <rect x={0} y={0} width={230} height={140} rx={8} fill="#fff" stroke={person.color} strokeWidth={2} filter="drop-shadow(0 2px 4px rgba(0,0,0,0.2))" />
+                  <rect x={0} y={0} width={230} height={30} rx={8} fill={person.color} />
+                  <text x={115} y={20} textAnchor="middle" fontSize={12} fontWeight="bold" fill="#fff">
+                    {person.name}
+                  </text>
+                  <text x={15} y={50} fontSize={10} fill="#666">
+                    Role: {person.role}
+                  </text>
+                  <text x={15} y={70} fontSize={10} fill="#666">
+                    Communications: {comms.length}
+                  </text>
+                  <line x1={15} y1={80} x2={215} y2={80} stroke="#eee" />
+                  <text x={15} y={95} fontSize={9} fill="#333" fontWeight="bold">
+                    Spoke with:
+                  </text>
+                  <text x={15} y={110} fontSize={8} fill="#666">
+                    {[...new Set(comms.map(c => c.from === selectedPerson ? c.to : c.from))]
+                      .map(id => peopleWithPositions.find(p => p.id === id)?.name)
+                      .filter(Boolean)
+                      .slice(0, 4)
+                      .join(', ')}
+                    {comms.length > 4 ? '...' : ''}
+                  </text>
+                  <text x={15} y={130} fontSize={8} fill="#999" fontStyle="italic">
+                    Click elsewhere to deselect
+                  </text>
+                </g>
+              );
+            })()}
+          </svg>
         </div>
 
         {/* Footer */}
         <div className="p-2 text-center text-xs" style={{ background: '#f5f5f5', borderTop: '1px solid #d4af37', color: '#666' }}>
-          Blankenship Case — Communication Network — Data from Monthly Detailed Logs
+          Blankenship Case — Communication Network — Data extracted from November 2013 Detailed Logs
         </div>
       </div>
     </div>
