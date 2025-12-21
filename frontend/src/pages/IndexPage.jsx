@@ -121,9 +121,10 @@ const IndexPage = () => {
         </div>
       </div>
 
-      {/* Genogram Button */}
+      {/* Analysis Buttons */}
       <div className="container mx-auto px-4 py-4 relative z-10">
-        <div className="flex justify-center">
+        <div className="flex flex-wrap justify-center gap-4">
+          {/* Genogram Button */}
           <button
             onClick={() => setShowGenogram(true)}
             className="px-6 py-3 rounded-lg flex items-center gap-3 transition-all hover:scale-105 shadow-lg"
@@ -142,6 +143,27 @@ const IndexPage = () => {
               <div className="text-xs text-yellow-600/70 font-normal">Visual Timeline of All Events</div>
             </div>
             <GitBranch className="w-5 h-5 ml-2" />
+          </button>
+          
+          {/* Route Analysis Button */}
+          <button
+            onClick={() => setShowRouteAnalysis(true)}
+            className="px-6 py-3 rounded-lg flex items-center gap-3 transition-all hover:scale-105 shadow-lg"
+            style={{
+              background: 'linear-gradient(145deg, #1a3a52 0%, #0d1f2d 100%)',
+              color: '#0d6efd',
+              border: '3px solid #0d6efd',
+              fontFamily: 'Georgia, serif',
+              fontWeight: 'bold',
+              boxShadow: '0 4px 20px rgba(13,110,253,0.3)',
+            }}
+          >
+            <span className="text-2xl">🗺️</span>
+            <div className="text-left">
+              <div className="text-base">Route Analysis</div>
+              <div className="text-xs text-blue-400/70 font-normal">Nov 30, 2013 — Geographic Evidence</div>
+            </div>
+            <MapPin className="w-5 h-5 ml-2" />
           </button>
         </div>
       </div>
