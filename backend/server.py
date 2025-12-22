@@ -1122,20 +1122,6 @@ async def delete_admin(target_admin_id: str, admin_id: str):
     
     return {"success": True, "message": f"Admin. {target_admin['name']} removed"}
 
-# Activity logging helper
-async def log_activity(admin_name: str, action: str, target_type: str, target_id: str, description: str):
-    """Log an admin activity"""
-    activity = {
-        "id": str(uuid.uuid4()),
-        "admin_name": admin_name,
-        "action": action,
-        "target_type": target_type,
-        "target_id": target_id,
-        "target_description": description,
-        "timestamp": datetime.now(timezone.utc).isoformat()
-    }
-    await db.activity_logs.insert_one(activity)
-
 # Get activity logs (all admins can view)
 @api_router.get("/admin/activity")
 async def get_activity_logs(admin_id: str, limit: int = 100, skip: int = 0):
