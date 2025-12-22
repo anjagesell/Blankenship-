@@ -335,9 +335,9 @@ const EntryPage = () => {
         </div>
 
         {/* Code entry boxes - NOW BELOW ACKNOWLEDGEMENT */}
-        <div className="mt-6">
+        <div>
           <div 
-            className={`flex gap-1.5 sm:gap-2 md:gap-3 justify-center px-2 transition-all ${!termsAccepted ? 'opacity-50' : ''}`}
+            className={`flex gap-1 sm:gap-2 justify-center transition-all ${!termsAccepted ? 'opacity-50' : ''}`}
           >
             {code.map((digit, index) => (
               <input
@@ -351,7 +351,7 @@ const EntryPage = () => {
                 onKeyDown={(e) => handleKeyDown(index, e)}
                 onFocus={() => handleInputFocus(index)}
                 onPaste={handlePaste}
-                className="w-9 h-11 sm:w-12 sm:h-14 md:w-14 md:h-16 text-center text-lg sm:text-xl md:text-2xl font-bold transition-all"
+                className="w-8 h-10 sm:w-11 sm:h-13 md:w-14 md:h-16 text-center text-base sm:text-xl md:text-2xl font-bold transition-all"
                 style={{
                   background: termsAccepted 
                     ? 'linear-gradient(145deg, #f4e8c1 0%, #e8dcc8 50%, #d4c5a9 100%)'
@@ -372,7 +372,7 @@ const EntryPage = () => {
           </div>
           
           <p 
-            className={`text-xs sm:text-sm tracking-wide px-2 uppercase mt-3 ${!termsAccepted ? 'opacity-50' : ''}`} 
+            className={`text-[10px] sm:text-sm tracking-wide uppercase mt-2 ${!termsAccepted ? 'opacity-50' : ''}`} 
             style={{ fontFamily: 'Garamond, serif', color: '#d4af37' }}
           >
             Enter 8-Digit Access Code
@@ -380,7 +380,7 @@ const EntryPage = () => {
           
           {!termsAccepted && (
             <p 
-              className="text-[10px] sm:text-xs tracking-wide px-2 mt-1 italic" 
+              className="text-[9px] sm:text-xs tracking-wide mt-1 italic" 
               style={{ fontFamily: 'Garamond, serif', color: '#d4a574' }}
             >
               (Please acknowledge the notice above first)
