@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { X, Upload, Plus, Edit2, Trash2, Save, Loader2, FileText, ZoomIn, ZoomOut, Eye } from 'lucide-react';
+import { X, Upload, Plus, Edit2, Trash2, Save, Loader2, FileText, ZoomIn, ZoomOut, Eye, ArrowUp, ArrowDown } from 'lucide-react';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
 const ADMIN_PASSWORD = '02071951';
