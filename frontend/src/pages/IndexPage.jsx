@@ -649,6 +649,7 @@ const IndexPage = () => {
         <MonthlyDetail 
           monthDate={selectedMonth}
           isAdmin={isAdmin}
+          adminInfo={adminInfo}
           onClose={() => setSelectedMonth(null)}
         />
       )}
@@ -673,6 +674,20 @@ const IndexPage = () => {
       <VisitorMonitor 
         isOpen={showVisitorMonitor} 
         onClose={() => setShowVisitorMonitor(false)} 
+      />
+
+      {/* Team Panel - Owner Only */}
+      <TeamPanel 
+        isOpen={showTeamPanel} 
+        onClose={() => setShowTeamPanel(false)}
+        adminInfo={adminInfo}
+      />
+
+      {/* Activity Log - All Admins */}
+      <ActivityLog 
+        isOpen={showActivityLog} 
+        onClose={() => setShowActivityLog(false)}
+        adminInfo={adminInfo}
       />
     </div>
   );
