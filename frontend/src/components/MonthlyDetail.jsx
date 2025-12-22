@@ -844,6 +844,14 @@ const MonthlyDetail = ({ monthDate, isAdmin, adminInfo, onClose }) => {
                             style={{ color: '#5D4037', fontFamily: 'Arial, sans-serif', borderRight: '1px solid rgba(139,105,20,0.3)', minWidth: '300px', maxWidth: '400px', lineHeight: '1.6' }}
                           >
                             {entry.notes}
+                            {/* Show last edited by - visible to everyone */}
+                            {entry.last_edited_by && (
+                              <div className="mt-2 pt-2 border-t border-yellow-900/20">
+                                <span className="text-[10px] not-italic" style={{ color: '#8b6914' }}>
+                                  Last edited by Admin. {entry.last_edited_by}
+                                </span>
+                              </div>
+                            )}
                           </td>
                           {/* Exhibits column - visible to ALL users */}
                           <td className="px-2 py-2">
