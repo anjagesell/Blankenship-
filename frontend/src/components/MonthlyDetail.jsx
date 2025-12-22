@@ -718,7 +718,7 @@ const MonthlyDetail = ({ monthDate, isAdmin, adminInfo, onClose }) => {
               <tbody>
                 {loading ? (
                   <tr>
-                    <td colSpan={isAdmin ? "10" : "8"} className="px-3 py-6 text-center">
+                    <td colSpan={isAdmin ? "11" : "8"} className="px-3 py-6 text-center">
                       <div className="flex items-center justify-center gap-2">
                         <Loader2 className="w-5 h-5 animate-spin" style={{ color: '#d4af37' }} />
                         <span className="text-sm italic" style={{ color: '#5D4037' }}>Loading entries...</span>
