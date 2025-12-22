@@ -22,6 +22,7 @@ const OUTER_PEOPLE = [
   { id: 'vickie', name: 'Vickie Toppings', duty: 'Present at visit', color: '#ff9800' },
   { id: 'pastor', name: 'Pastor Osborne', duty: 'Present at visit', color: '#ffc107' },
   { id: 'lena', name: 'Lena Barber', duty: 'CPS', color: '#795548' },
+  { id: 'biglots', name: 'Big Lots', duty: 'Mooresville', color: '#00897b' },
 ];
 
 // VERIFIED CONNECTIONS FROM EVIDENCE
