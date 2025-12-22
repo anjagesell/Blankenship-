@@ -2,7 +2,7 @@
 
 ## Test Summary - December 21, 2024
 
-**URL Tested**: https://wrongful-proof.preview.emergentagent.com/index  
+**URL Tested**: https://justice-archives.preview.emergentagent.com/index  
 **Feature**: "Who Spoke With Whom" Communication Diagram  
 **Tester**: Testing Agent
 
