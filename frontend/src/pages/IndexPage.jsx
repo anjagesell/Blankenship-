@@ -627,6 +627,12 @@ const IndexPage = () => {
         isOpen={showViolationsCascade} 
         onClose={() => setShowViolationsCascade(false)} 
       />
+
+      {/* Visitor Monitor Modal - Admin Only */}
+      <VisitorMonitor 
+        isOpen={showVisitorMonitor} 
+        onClose={() => setShowVisitorMonitor(false)} 
+      />
     </div>
   );
 };
