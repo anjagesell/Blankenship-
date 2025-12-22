@@ -307,7 +307,8 @@ const MonthlyDetail = ({ monthDate, isAdmin, adminInfo, onClose }) => {
             witness: editForm.witness,
             description: editForm.description,
             evidence: editForm.evidence,
-            notes: editForm.notes
+            notes: editForm.notes,
+            admin_name: adminName
           })
         });
         
@@ -330,7 +331,8 @@ const MonthlyDetail = ({ monthDate, isAdmin, adminInfo, onClose }) => {
             witness: editForm.witness,
             description: editForm.description,
             evidence: editForm.evidence,
-            notes: editForm.notes
+            notes: editForm.notes,
+            admin_name: adminName
           })
         });
         
