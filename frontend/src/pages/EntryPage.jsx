@@ -235,7 +235,7 @@ const EntryPage = () => {
 
         {/* Terms of Use Requirement - NOW ABOVE PASSWORD BOXES */}
         <div 
-          className="mt-4 p-4 sm:p-5 rounded mx-2 sm:mx-4"
+          className="p-3 sm:p-4 rounded mx-1 sm:mx-4"
           style={{
             background: 'linear-gradient(145deg, rgba(212,175,55,0.1) 0%, rgba(139,105,20,0.1) 100%)',
             border: termsAccepted ? '2px solid #28a745' : '2px solid #8b6914',
@@ -246,7 +246,7 @@ const EntryPage = () => {
           }}
         >
           <h3 
-            className="text-sm sm:text-base font-bold mb-2 text-center"
+            className="text-xs sm:text-sm font-bold mb-2 text-center"
             style={{ 
               color: termsAccepted ? '#28a745' : '#d4af37',
               fontFamily: 'Georgia, serif',
@@ -257,6 +257,7 @@ const EntryPage = () => {
           
           {/* Scrollable Terms Container */}
           <div 
+            data-testid="notice-content"
             onScroll={(e) => {
               const element = e.target;
               const isAtBottom = element.scrollHeight - element.scrollTop <= element.clientHeight + 10;
@@ -264,9 +265,10 @@ const EntryPage = () => {
                 setTermsScrolled(true);
               }
             }}
-            className="overflow-y-auto mb-2 pr-2"
+            className="overflow-y-auto mb-2"
             style={{
-              maxHeight: '120px',
+              maxHeight: '100px',
+              minHeight: '80px',
               border: '1px solid #8b6914',
               background: 'rgba(0,0,0,0.2)',
               borderRadius: '4px',
@@ -274,17 +276,16 @@ const EntryPage = () => {
             }}
           >
             <div 
-              className="text-[10px] sm:text-xs space-y-2 text-left"
+              className="text-[9px] sm:text-xs leading-relaxed text-left"
               style={{ 
                 color: '#f5e6c8',
                 fontFamily: 'Garamond, serif',
-                lineHeight: '1.5',
               }}
             >
-              <p>
+              <p className="mb-2">
                 <strong>Access Restrictions:</strong> This website contains legally protected evidence and documentation. Access is restricted to authorized individuals only. By entering this site, you acknowledge that:
               </p>
-              <ul className="list-disc pl-5 space-y-1">
+              <ul className="list-disc pl-4 space-y-1 mb-2">
                 <li>You are accessing private, password-protected judicial archives</li>
                 <li>All content is protected by copyright and constitutes legal evidence</li>
                 <li>Unauthorized copying, downloading, distribution, or reproduction of any content is strictly prohibited</li>
@@ -301,7 +302,7 @@ const EntryPage = () => {
           {/* Scroll instruction */}
           {!termsScrolled && (
             <p 
-              className="text-[10px] sm:text-xs text-center mb-2 italic"
+              className="text-[9px] sm:text-xs text-center mb-2 italic"
               style={{ color: '#d4a574' }}
             >
               Please scroll to the bottom to continue ↓
@@ -327,7 +328,7 @@ const EntryPage = () => {
                 cursor: termsScrolled ? 'pointer' : 'not-allowed',
               }}
             />
-            <span className={`text-[11px] sm:text-xs font-semibold ${termsScrolled ? 'group-hover:text-yellow-400' : ''} transition-colors leading-relaxed`}>
+            <span className={`text-[9px] sm:text-xs font-semibold ${termsScrolled ? 'group-hover:text-yellow-400' : ''} transition-colors leading-tight`}>
               I have read and agree to the Terms of Use Requirement, and I acknowledge that all content is legally protected evidence.
             </span>
           </label>
