@@ -1,45 +1,65 @@
 import React, { useState } from 'react';
 import { X } from 'lucide-react';
 
-// People with unique colors - arranged in octagonal order
-const PEOPLE = [
+// CENTER FAMILY - Gabi, Keith, Zachary, Tammy
+const CENTER_PEOPLE = [
   { id: 'keith', name: 'Keith', duty: 'Grandfather (Accuser)', color: '#e74c3c' },
-  { id: 'gabriele', name: 'Gabriele', duty: 'Grandmother (Accuser)', color: '#c0392b' },
+  { id: 'gabi', name: 'Gabi', duty: 'Grandmother (Accuser)', color: '#c0392b' },
+  { id: 'zachary', name: 'Zachary', duty: 'Father (Accused)', color: '#2ecc71' },
+  { id: 'tammy', name: 'Tammy', duty: 'Mother', color: '#27ae60' },
+];
+
+// OUTER RING - Everyone else
+const OUTER_PEOPLE = [
   { id: 'amy', name: 'Amy Walker', duty: 'S.A.N.E. Nurse', color: '#3498db' },
   { id: 'coffey', name: 'Officer Coffey', duty: "Sheriff's Dept", color: '#7f8c8d' },
   { id: 'sherri', name: 'Sherri Stock', duty: 'CPS Social Worker', color: '#e91e63' },
   { id: 'amber', name: 'Amber Mecimore', duty: 'CPS Social Worker', color: '#9c27b0' },
-  { id: 'tammy', name: 'Tammy', duty: 'Mother', color: '#27ae60' },
-  { id: 'zachary', name: 'Zachary', duty: 'Father (Accused)', color: '#2ecc71' },
   { id: 'rylie', name: 'Rylie', duty: 'Child (2 yrs)', color: '#1abc9c' },
   { id: 'jennifer', name: 'Jennifer Owens', duty: 'CPS Intake', color: '#8e44ad' },
   { id: 'pam', name: 'Pam Frazier', duty: 'CPS (Iredell Co.)', color: '#673ab7' },
   { id: 'reitzel', name: 'SW Reitzel', duty: 'CPS Supervisor', color: '#5c6bc0' },
 ];
 
-// Who spoke to whom - lines connect these pairs
+// WHO INITIATED conversation TO WHOM - [initiator, receiver]
+// Line color matches the INITIATOR's color
 const CONNECTIONS = [
-  ['keith', 'gabriele'],
+  // Keith initiated
+  ['keith', 'gabi'],
   ['keith', 'amy'],
-  ['gabriele', 'amy'],
   ['keith', 'coffey'],
   ['keith', 'rylie'],
-  ['gabriele', 'rylie'],
-  ['gabriele', 'amber'],
   ['keith', 'amber'],
+  
+  // Gabi initiated
+  ['gabi', 'amy'],
+  ['gabi', 'rylie'],
+  ['gabi', 'amber'],
+  
+  // Amy initiated
   ['amy', 'rylie'],
   ['amy', 'coffey'],
   ['amy', 'amber'],
+  
+  // Coffey initiated
   ['coffey', 'sherri'],
+  
+  // Sherri initiated
   ['sherri', 'amber'],
-  ['amber', 'jennifer'],
-  ['amber', 'pam'],
   ['sherri', 'tammy'],
   ['sherri', 'rylie'],
   ['sherri', 'reitzel'],
   ['sherri', 'zachary'],
+  
+  // Amber initiated
+  ['amber', 'jennifer'],
+  ['amber', 'pam'],
+  
+  // Pam initiated
   ['pam', 'tammy'],
   ['pam', 'rylie'],
+  
+  // Tammy initiated
   ['tammy', 'zachary'],
   ['tammy', 'rylie'],
 ];
@@ -49,19 +69,36 @@ const CommunicationDiagram = ({ onClose }) => {
 
   const cx = 400;
   const cy = 400;
-  const radius = 300;
+  const centerRadius = 100; // Inner circle for family
+  const outerRadius = 300;  // Outer circle for others
 
-  // Position nodes in octagon
-  const nodes = PEOPLE.map((p, i) => {
-    const angle = (i / PEOPLE.length) * 2 * Math.PI - Math.PI / 2;
+  // Position CENTER family in a small square/diamond in middle
+  const centerPositions = [
+    { x: cx - 60, y: cy - 60 },  // Keith - top left
+    { x: cx + 60, y: cy - 60 },  // Gabi - top right
+    { x: cx - 60, y: cy + 60 },  // Zachary - bottom left
+    { x: cx + 60, y: cy + 60 },  // Tammy - bottom right
+  ];
+
+  const centerNodes = CENTER_PEOPLE.map((p, i) => ({
+    ...p,
+    x: centerPositions[i].x,
+    y: centerPositions[i].y,
+  }));
+
+  // Position OUTER people in octagon around center
+  const outerNodes = OUTER_PEOPLE.map((p, i) => {
+    const angle = (i / OUTER_PEOPLE.length) * 2 * Math.PI - Math.PI / 2;
     return {
       ...p,
-      x: cx + Math.cos(angle) * radius,
-      y: cy + Math.sin(angle) * radius,
+      x: cx + Math.cos(angle) * outerRadius,
+      y: cy + Math.sin(angle) * outerRadius,
     };
   });
 
-  const getNode = (id) => nodes.find(n => n.id === id);
+  const allNodes = [...centerNodes, ...outerNodes];
+
+  const getNode = (id) => allNodes.find(n => n.id === id);
 
   const isConnected = (id) => {
     if (!selected) return true;
@@ -85,30 +122,35 @@ const CommunicationDiagram = ({ onClose }) => {
         {/* Diagram */}
         <div className="flex-1 overflow-auto bg-white p-4">
           <svg viewBox="0 0 800 850" className="w-full h-full">
-            {/* Arrow markers */}
+            {/* Arrow markers for each person's color */}
             <defs>
-              {nodes.map(node => (
-                <marker
-                  key={`arrow-${node.id}`}
-                  id={`arrow-${node.id}`}
-                  markerWidth="8"
-                  markerHeight="6"
-                  refX="6"
-                  refY="3"
-                  orient="auto"
-                >
-                  <polygon points="0 0, 8 3, 0 6" fill={node.color} />
-                </marker>
+              {allNodes.map(node => (
+                <React.Fragment key={`markers-${node.id}`}>
+                  <marker
+                    id={`arrow-end-${node.id}`}
+                    markerWidth="10"
+                    markerHeight="8"
+                    refX="8"
+                    refY="4"
+                    orient="auto"
+                  >
+                    <polygon points="0 0, 10 4, 0 8" fill={node.color} />
+                  </marker>
+                  <marker
+                    id={`arrow-start-${node.id}`}
+                    markerWidth="10"
+                    markerHeight="8"
+                    refX="2"
+                    refY="4"
+                    orient="auto-start-reverse"
+                  >
+                    <polygon points="10 0, 0 4, 10 8" fill={node.color} />
+                  </marker>
+                </React.Fragment>
               ))}
-              <marker id="arrow-black" markerWidth="8" markerHeight="6" refX="6" refY="3" orient="auto">
-                <polygon points="0 0, 8 3, 0 6" fill="#333" />
-              </marker>
-              <marker id="arrow-black-start" markerWidth="8" markerHeight="6" refX="2" refY="3" orient="auto-start-reverse">
-                <polygon points="8 0, 0 3, 8 6" fill="#333" />
-              </marker>
             </defs>
 
-            {/* Connection lines with arrows at both ends */}
+            {/* Connection lines - COLOR MATCHES INITIATOR, THICK */}
             {CONNECTIONS.map(([fromId, toId], i) => {
               const from = getNode(fromId);
               const to = getNode(toId);
@@ -118,31 +160,40 @@ const CommunicationDiagram = ({ onClose }) => {
               const dx = to.x - from.x;
               const dy = to.y - from.y;
               const len = Math.sqrt(dx * dx + dy * dy);
-              const offset = 35;
+              const offset = 32;
 
               const x1 = from.x + (dx / len) * offset;
               const y1 = from.y + (dy / len) * offset;
               const x2 = to.x - (dx / len) * offset;
               const y2 = to.y - (dy / len) * offset;
 
+              // LINE COLOR = INITIATOR'S COLOR
+              const lineColor = from.color;
+
               return (
                 <line
                   key={i}
                   x1={x1} y1={y1}
                   x2={x2} y2={y2}
-                  stroke={isActive ? from.color : '#333'}
-                  strokeWidth={isActive ? 3 : 1.5}
-                  opacity={selected ? (isActive ? 1 : 0.15) : 0.7}
-                  markerEnd="url(#arrow-black)"
-                  markerStart="url(#arrow-black-start)"
+                  stroke={lineColor}
+                  strokeWidth={isActive ? 5 : 3}
+                  opacity={selected ? (isActive ? 1 : 0.2) : 0.8}
+                  markerEnd={`url(#arrow-end-${fromId})`}
+                  markerStart={`url(#arrow-start-${fromId})`}
                 />
               );
             })}
 
+            {/* CENTER label */}
+            <text x={cx} y={cy - 110} textAnchor="middle" fill="#666" fontSize="12" fontWeight="bold">
+              — FAMILY —
+            </text>
+
             {/* Nodes */}
-            {nodes.map(node => {
+            {allNodes.map(node => {
               const active = isConnected(node.id);
               const isSelected = selected === node.id;
+              const isCenter = CENTER_PEOPLE.some(p => p.id === node.id);
 
               return (
                 <g
@@ -152,29 +203,29 @@ const CommunicationDiagram = ({ onClose }) => {
                   opacity={active ? 1 : 0.2}
                 >
                   {isSelected && (
-                    <circle cx={node.x} cy={node.y} r={38} fill={node.color} opacity={0.3} />
+                    <circle cx={node.x} cy={node.y} r={42} fill={node.color} opacity={0.3} />
                   )}
                   <circle
                     cx={node.x}
                     cy={node.y}
-                    r={28}
+                    r={isCenter ? 32 : 28}
                     fill={node.color}
-                    stroke="#fff"
-                    strokeWidth={3}
+                    stroke={isCenter ? '#d4af37' : '#fff'}
+                    strokeWidth={isCenter ? 4 : 3}
                   />
                   <text
                     x={node.x}
                     y={node.y - 4}
                     textAnchor="middle"
                     fill="#fff"
-                    fontSize="10"
+                    fontSize={isCenter ? "11" : "10"}
                     fontWeight="bold"
                   >
-                    {node.name.length > 12 ? node.name.split(' ')[0] : node.name}
+                    {node.name.length > 10 ? node.name.split(' ')[0] : node.name}
                   </text>
                   <text
                     x={node.x}
-                    y={node.y + 8}
+                    y={node.y + 9}
                     textAnchor="middle"
                     fill="#fff"
                     fontSize="7"
@@ -186,9 +237,12 @@ const CommunicationDiagram = ({ onClose }) => {
               );
             })}
 
-            {/* Footer */}
-            <text x="400" y="820" textAnchor="middle" fill="#666" fontSize="11">
-              Click any node to highlight connections • Double arrows = two-way conversation
+            {/* Legend */}
+            <text x="400" y="780" textAnchor="middle" fill="#333" fontSize="11" fontWeight="bold">
+              Line color = Initiating person's color • Click any node to highlight
+            </text>
+            <text x="400" y="800" textAnchor="middle" fill="#666" fontSize="10">
+              Double arrows = two-way conversation documented
             </text>
           </svg>
         </div>
