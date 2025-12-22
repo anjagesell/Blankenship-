@@ -189,11 +189,12 @@ const CommunicationDiagram = ({ onClose }) => {
               FAMILY
             </text>
 
-            {/* Nodes */}
+            {/* Nodes - LARGER with more space for text */}
             {allNodes.map(node => {
               const active = isConnected(node.id);
               const isSelected = selected === node.id;
               const isCenter = CENTER_PEOPLE.some(p => p.id === node.id);
+              const nodeRadius = isCenter ? 38 : 34;
 
               return (
                 <g
@@ -203,36 +204,51 @@ const CommunicationDiagram = ({ onClose }) => {
                   opacity={active ? 1 : 0.2}
                 >
                   {isSelected && (
-                    <circle cx={node.x} cy={node.y} r={42} fill={node.color} opacity={0.3} />
+                    <circle cx={node.x} cy={node.y} r={nodeRadius + 10} fill={node.color} opacity={0.3} />
                   )}
                   <circle
                     cx={node.x}
                     cy={node.y}
-                    r={isCenter ? 32 : 28}
+                    r={nodeRadius}
                     fill={node.color}
                     stroke={isCenter ? '#d4af37' : '#fff'}
                     strokeWidth={isCenter ? 4 : 3}
                   />
+                  {/* Name - centered */}
                   <text
                     x={node.x}
-                    y={node.y - 4}
+                    y={node.y - 6}
                     textAnchor="middle"
                     fill="#fff"
-                    fontSize={isCenter ? "11" : "10"}
+                    fontSize={isCenter ? "12" : "11"}
                     fontWeight="bold"
                   >
-                    {node.name.length > 10 ? node.name.split(' ')[0] : node.name}
+                    {node.name.split(' ')[0]}
                   </text>
+                  {/* Duty - smaller, below name */}
                   <text
                     x={node.x}
-                    y={node.y + 9}
+                    y={node.y + 8}
                     textAnchor="middle"
                     fill="#fff"
-                    fontSize="7"
-                    opacity={0.9}
+                    fontSize="8"
+                    opacity={0.95}
                   >
-                    {node.duty.length > 16 ? node.duty.substring(0, 14) + '..' : node.duty}
+                    {node.duty.length > 18 ? node.duty.substring(0, 16) + '..' : node.duty}
                   </text>
+                  {/* Second line of duty if needed */}
+                  {node.duty.length > 18 && (
+                    <text
+                      x={node.x}
+                      y={node.y + 18}
+                      textAnchor="middle"
+                      fill="#fff"
+                      fontSize="7"
+                      opacity={0.85}
+                    >
+                      {node.duty.substring(16, 30)}
+                    </text>
+                  )}
                 </g>
               );
             })}
