@@ -79,6 +79,9 @@ const CONNECTIONS = [
   // PAM FRAZIER
   ['pam', 'tammy'],       // Entry 8 - Home visit
   ['pam', 'rylie'],       // Entry 8 - Child made no disclosure
+  
+  // TAMMY'S EMPLOYMENT
+  ['tammy', 'biglots'],   // Entry 1 - Tammy at work 8:30 am
 ];
 
 const CommunicationDiagram = ({ onClose }) => {
