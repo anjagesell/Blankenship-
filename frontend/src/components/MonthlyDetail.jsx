@@ -162,6 +162,9 @@ const MonthlyDetail = ({ monthDate, isAdmin, onClose }) => {
   const [editForm, setEditForm] = useState({});
   const [saving, setSaving] = useState(false);
   const [month, year] = monthDate.split('/');
+  
+  // Track this monthly folder view for analytics
+  useMonthlyPageTracker(monthDate);
   const monthNames = ['', 'January', 'February', 'March', 'April', 'May', 'June', 
                       'July', 'August', 'September', 'October', 'November', 'December'];
   const monthName = monthNames[parseInt(month)];
