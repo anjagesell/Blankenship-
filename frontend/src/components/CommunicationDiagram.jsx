@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { X } from 'lucide-react';
 
-// CENTER FAMILY - Gabi, Keith, Zachary, Tammy
+// CENTER FAMILY - Gabi, Keith, Zachary, Tammy - CLOSE TOGETHER
 const CENTER_PEOPLE = [
   { id: 'keith', name: 'Keith', duty: 'Grandfather (Accuser)', color: '#e74c3c' },
   { id: 'gabi', name: 'Gabi', duty: 'Grandmother (Accuser)', color: '#c0392b' },
@@ -25,70 +25,72 @@ const OUTER_PEOPLE = [
 ];
 
 // ========================================
-// VERIFIED CONNECTIONS FROM EVIDENCE ONLY
-// Format: [initiator, receiver, time, note]
+// VERIFIED CONNECTIONS FROM EVIDENCE
+// Format: [initiator, receiver]
 // ========================================
 const CONNECTIONS = [
+  // FAMILY CONVERSATIONS (they lived/communicated together)
+  ['keith', 'gabi'],      // Married couple
+  ['keith', 'tammy'],     // Father-in-law to daughter-in-law
+  ['keith', 'zachary'],   // Father to son
+  ['gabi', 'tammy'],      // Mother-in-law to daughter-in-law
+  ['gabi', 'zachary'],    // Mother to son
+  ['tammy', 'zachary'],   // Married couple
+  ['tammy', 'rylie'],     // Mother to child
+  ['zachary', 'rylie'],   // Father to child
+  ['keith', 'rylie'],     // Grandfather to grandchild
+  ['gabi', 'rylie'],      // Grandmother to grandchild
+  
   // Entry 1 & 2 (11:30-11:52am) - ER Visit
-  ['keith', 'rylie', '11:30am', 'Brought to ER'],
-  ['gabi', 'rylie', '11:30am', 'Brought to ER'],
-  ['amy', 'rylie', '11:30am', 'Medical exam'],
-  ['coffey', 'amy', '11:52am', 'Nurse reported findings'],
-  ['coffey', 'keith', '11:52am', 'Keith spoke to officer'],
-  ['coffey', 'rylie', '11:52am', 'Spoke with child alone'],
+  ['amy', 'rylie'],       // Medical exam
+  ['coffey', 'amy'],      // Nurse reported findings
+  ['coffey', 'keith'],    // Keith spoke to officer at ER
+  ['coffey', 'rylie'],    // Spoke with child alone
   
   // Entry 3 (12:15pm)
-  ['sherri', 'coffey', '12:15pm', 'Phone call'],
+  ['sherri', 'coffey'],   // Phone call
   
   // Entry 4 (12:30pm)
-  ['sherri', 'amber', '12:30pm', 'Phone call'],
+  ['sherri', 'amber'],    // Phone call
   
   // Entry 5 (12:50pm) - CPS Intake
-  ['amber', 'jennifer', '12:50pm', 'Intake report'],
-  ['amber', 'gabi', '12:50pm', 'Intake call'],
+  ['amber', 'jennifer'],  // Intake report
+  ['amber', 'gabi'],      // Intake call to grandmother
   
   // Entry 6 (12:50pm)
-  ['amber', 'amy', '12:50pm', 'Phone call about exam'],
+  ['amber', 'amy'],       // Phone call about exam
   
   // Entry 7 (1:22pm)
-  ['amber', 'pam', '1:22pm', 'Requested assistance'],
+  ['amber', 'pam'],       // Requested assistance
   
-  // Entry 8 (3:30pm) - Pam's home visit to grandparents
-  ['pam', 'amber', '3:30pm', 'Report on home visit'],
-  ['pam', 'keith', '3:30pm', 'Home visit'],
-  ['pam', 'gabi', '3:30pm', 'Home visit'],
+  // Entry 8 (3:30pm) - Pam's home visit
+  ['pam', 'amber'],       // Report on home visit
+  ['pam', 'keith'],       // Home visit
+  ['pam', 'gabi'],        // Home visit
   
   // Entry 9 (4:00pm)
-  ['sherri', 'amber', '4:00pm', 'Arranged home visit'],
+  ['sherri', 'amber'],    // Arranged home visit (duplicate but important)
   
   // Entry 10 (6:33pm) - Sherri's interrogation
-  ['sherri', 'tammy', '6:33pm', 'Interrogation'],
-  ['sherri', 'rylie', '6:33pm', 'Interviewed child alone'],
-  ['sherri', 'reitzel', '6:33pm', 'Got supervisor directives'],
+  ['sherri', 'tammy'],    // Interrogation
+  ['sherri', 'rylie'],    // Interviewed child alone
+  ['sherri', 'reitzel'],  // Got supervisor directives
   
   // Entry 11 (8:35pm)
-  ['amber', 'keith', '8:35pm', 'Phone call - placement offer'],
+  ['amber', 'keith'],     // Phone call - placement offer
   
   // Entry 12 (9:00pm)
-  ['amber', 'amy', '9:00pm', 'Phone call - scope inquiry'],
+  ['amber', 'amy'],       // Phone call - scope inquiry (duplicate)
   
   // Entry 13 (9:02pm) - Home/Work visit
-  ['sherri', 'zachary', '9:02pm', 'Picked up from work'],
-  ['sherri', 'tammy', '9:02pm', 'Present at home'],
-  ['sherri', 'rylie', '9:02pm', 'Present at home'],
-  ['sherri', 'reitzel', '9:02pm', 'Supervisor present'],
-  ['sherri', 'vickie', '9:02pm', 'Present at visit'],
-  ['sherri', 'pastor', '9:02pm', 'Present at visit'],
-  ['sherri', 'lena', '9:02pm', 'CPS present'],
+  ['sherri', 'zachary'],  // Picked up from work
+  ['sherri', 'vickie'],   // Present at visit
+  ['sherri', 'pastor'],   // Present at visit
+  ['sherri', 'lena'],     // CPS present
   
   // Entry 14 (10:30pm)
-  ['sherri', 'zachary', '10:30pm', 'Drove home'],
-  ['sherri', 'tammy', '10:30pm', 'No contact order'],
-  
-  // Family connections (implicit from living together)
-  ['tammy', 'zachary', 'Family', 'Married'],
-  ['tammy', 'rylie', 'Family', 'Mother-child'],
-  ['keith', 'gabi', 'Family', 'Married'],
+  // sherri -> zachary already added
+  // sherri -> tammy already added
 ];
 
 const CommunicationDiagram = ({ onClose }) => {
@@ -97,12 +99,12 @@ const CommunicationDiagram = ({ onClose }) => {
   const cx = 400;
   const cy = 400;
 
-  // Position CENTER family in a diamond in middle - more spaced
+  // Position CENTER family CLOSE TOGETHER in a tight square
   const centerPositions = [
-    { x: cx - 100, y: cy - 60 },  // Keith - left
-    { x: cx + 100, y: cy - 60 },  // Gabi - right
-    { x: cx - 100, y: cy + 80 },  // Zachary - bottom left
-    { x: cx + 100, y: cy + 80 },  // Tammy - bottom right
+    { x: cx - 55, y: cy - 55 },  // Keith - top left
+    { x: cx + 55, y: cy - 55 },  // Gabi - top right
+    { x: cx - 55, y: cy + 55 },  // Zachary - bottom left
+    { x: cx + 55, y: cy + 55 },  // Tammy - bottom right
   ];
 
   const centerNodes = CENTER_PEOPLE.map((p, i) => ({
@@ -112,7 +114,7 @@ const CommunicationDiagram = ({ onClose }) => {
   }));
 
   // Position OUTER people in circle around center
-  const outerRadius = 300;
+  const outerRadius = 290;
   const outerNodes = OUTER_PEOPLE.map((p, i) => {
     const angle = (i / OUTER_PEOPLE.length) * 2 * Math.PI - Math.PI / 2;
     return {
@@ -177,7 +179,7 @@ const CommunicationDiagram = ({ onClose }) => {
             </defs>
 
             {/* Connection lines - COLOR MATCHES INITIATOR */}
-            {CONNECTIONS.map(([fromId, toId, time, note], i) => {
+            {CONNECTIONS.map(([fromId, toId], i) => {
               const from = getNode(fromId);
               const to = getNode(toId);
               if (!from || !to) return null;
@@ -186,7 +188,7 @@ const CommunicationDiagram = ({ onClose }) => {
               const dx = to.x - from.x;
               const dy = to.y - from.y;
               const len = Math.sqrt(dx * dx + dy * dy);
-              const offset = 42;
+              const offset = 38;
 
               const x1 = from.x + (dx / len) * offset;
               const y1 = from.y + (dy / len) * offset;
@@ -203,24 +205,24 @@ const CommunicationDiagram = ({ onClose }) => {
                   x2={x2} y2={y2}
                   stroke={lineColor}
                   strokeWidth={isActive ? 5 : 3}
-                  opacity={selected ? (isActive ? 1 : 0.15) : 0.7}
+                  opacity={selected ? (isActive ? 1 : 0.15) : 0.65}
                   markerEnd={`url(#arrow-end-${fromId})`}
                   markerStart={`url(#arrow-start-${fromId})`}
                 />
               );
             })}
 
-            {/* FAMILY label - CENTERED between the 4 family members */}
-            <text x={cx} y={cy + 10} textAnchor="middle" fill="#8b6914" fontSize="18" fontWeight="bold">
+            {/* FAMILY label - BOLD and CENTERED */}
+            <text x={cx} y={cy + 5} textAnchor="middle" fill="#8b6914" fontSize="16" fontWeight="bold">
               FAMILY
             </text>
 
-            {/* Nodes - LARGER with more space for text */}
+            {/* Nodes */}
             {allNodes.map(node => {
               const active = isConnected(node.id);
               const isSelected = selected === node.id;
               const isCenter = CENTER_PEOPLE.some(p => p.id === node.id);
-              const nodeRadius = isCenter ? 40 : 36;
+              const nodeRadius = isCenter ? 38 : 34;
 
               return (
                 <g
@@ -240,36 +242,36 @@ const CommunicationDiagram = ({ onClose }) => {
                     stroke={isCenter ? '#d4af37' : '#fff'}
                     strokeWidth={isCenter ? 4 : 3}
                   />
-                  {/* Name - centered */}
+                  {/* Name */}
                   <text
                     x={node.x}
-                    y={node.y - 6}
+                    y={node.y - 5}
                     textAnchor="middle"
                     fill="#fff"
-                    fontSize={isCenter ? "13" : "11"}
+                    fontSize={isCenter ? "12" : "10"}
                     fontWeight="bold"
                   >
                     {node.name.split(' ')[0]}
                   </text>
-                  {/* Duty - below name */}
+                  {/* Duty */}
                   <text
                     x={node.x}
                     y={node.y + 8}
                     textAnchor="middle"
                     fill="#fff"
-                    fontSize="8"
+                    fontSize="7"
                     opacity={0.95}
                   >
-                    {node.duty.length > 18 ? node.duty.substring(0, 16) + '..' : node.duty}
+                    {node.duty.length > 16 ? node.duty.substring(0, 14) + '..' : node.duty}
                   </text>
-                  {/* Second line if needed */}
+                  {/* Last name if exists */}
                   {node.name.split(' ').length > 1 && (
                     <text
                       x={node.x}
-                      y={node.y + 20}
+                      y={node.y + 19}
                       textAnchor="middle"
                       fill="#fff"
-                      fontSize="9"
+                      fontSize="8"
                       opacity={0.85}
                     >
                       {node.name.split(' ').slice(1).join(' ')}
