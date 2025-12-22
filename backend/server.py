@@ -875,13 +875,19 @@ async def update_monthly_entry(entry_id: str, entry: MonthlyEntryUpdate, admin_p
     if not existing:
         raise HTTPException(status_code=404, detail="Monthly entry not found")
     
-    update_data = {k: v for k, v in entry.model_dump().items() if v is not None}
+    admin_name = entry.admin_name or "Admin"
+    
+    update_data = {k: v for k, v in entry.model_dump().items() if v is not None and k != "admin_name"}
     update_data["updated_at"] = datetime.now(timezone.utc).isoformat()
+    update_data["last_edited_by"] = admin_name
     
     await db.monthly_entries.update_one(
         {"id": entry_id},
         {"$set": update_data}
     )
+    
+    # Log activity
+    await log_activity(admin_name, "edited", "entry", entry_id, f"Edited entry in {existing.get('month_key', 'unknown')}")
     
     updated = await db.monthly_entries.find_one({"id": entry_id}, {"_id": 0})
     return updated
