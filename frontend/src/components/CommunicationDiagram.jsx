@@ -279,16 +279,44 @@ const CommunicationDiagram = ({ onClose }) => {
                   opacity={active ? 1 : 0.2}
                 >
                   {isSelected && (
-                    <circle cx={node.x} cy={node.y} r={nodeRadius + 10} fill={node.color} opacity={0.3} />
+                    isCenter ? (
+                      <rect 
+                        x={node.x - nodeRadius - 10} 
+                        y={node.y - nodeRadius - 10} 
+                        width={(nodeRadius + 10) * 2} 
+                        height={(nodeRadius + 10) * 2} 
+                        rx={4}
+                        fill={node.color} 
+                        opacity={0.3} 
+                      />
+                    ) : (
+                      <circle cx={node.x} cy={node.y} r={nodeRadius + 10} fill={node.color} opacity={0.3} />
+                    )
                   )}
-                  <circle
-                    cx={node.x}
-                    cy={node.y}
-                    r={nodeRadius}
-                    fill={node.color}
-                    stroke={isCenter ? '#d4af37' : '#fff'}
-                    strokeWidth={isCenter ? 4 : 3}
-                  />
+                  
+                  {/* SQUARE for family, CIRCLE for others */}
+                  {isCenter ? (
+                    <rect
+                      x={node.x - nodeRadius}
+                      y={node.y - nodeRadius}
+                      width={nodeRadius * 2}
+                      height={nodeRadius * 2}
+                      rx={4}
+                      fill={node.color}
+                      stroke="#d4af37"
+                      strokeWidth={4}
+                    />
+                  ) : (
+                    <circle
+                      cx={node.x}
+                      cy={node.y}
+                      r={nodeRadius}
+                      fill={node.color}
+                      stroke="#fff"
+                      strokeWidth={3}
+                    />
+                  )}
+                  
                   {/* Name */}
                   <text
                     x={node.x}
