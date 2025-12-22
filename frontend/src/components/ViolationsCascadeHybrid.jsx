@@ -238,8 +238,8 @@ const VIOLATION_CATEGORIES = [
     title: 'CPS Protocol Violations',
     subtitle: 'N.C. Gen. Stat. § 7B-302',
     icon: Building2,
-    color: '#00bcd4',
-    bgColor: 'rgba(0, 188, 212, 0.1)',
+    color: '#e74c3c',
+    bgColor: 'rgba(231, 76, 60, 0.1)',
     count: 8,
     violations: [
       {
