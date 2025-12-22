@@ -269,7 +269,7 @@ const CommunicationDiagram = ({ onClose }) => {
               const active = isConnected(node.id);
               const isSelected = selected === node.id;
               const isCenter = CENTER_PEOPLE.some(p => p.id === node.id);
-              const nodeRadius = isCenter ? 36 : 32;
+              const nodeRadius = isCenter ? 22 : 32;  // Smaller squares for family
 
               return (
                 <g
@@ -281,11 +281,11 @@ const CommunicationDiagram = ({ onClose }) => {
                   {isSelected && (
                     isCenter ? (
                       <rect 
-                        x={node.x - nodeRadius - 10} 
-                        y={node.y - nodeRadius - 10} 
-                        width={(nodeRadius + 10) * 2} 
-                        height={(nodeRadius + 10) * 2} 
-                        rx={4}
+                        x={node.x - nodeRadius - 8} 
+                        y={node.y - nodeRadius - 8} 
+                        width={(nodeRadius + 8) * 2} 
+                        height={(nodeRadius + 8) * 2} 
+                        rx={3}
                         fill={node.color} 
                         opacity={0.3} 
                       />
@@ -301,10 +301,10 @@ const CommunicationDiagram = ({ onClose }) => {
                       y={node.y - nodeRadius}
                       width={nodeRadius * 2}
                       height={nodeRadius * 2}
-                      rx={4}
+                      rx={3}
                       fill={node.color}
                       stroke="#d4af37"
-                      strokeWidth={4}
+                      strokeWidth={3}
                     />
                   ) : (
                     <circle
@@ -320,27 +320,29 @@ const CommunicationDiagram = ({ onClose }) => {
                   {/* Name */}
                   <text
                     x={node.x}
-                    y={node.y - 5}
+                    y={isCenter ? node.y + 2 : node.y - 5}
                     textAnchor="middle"
                     fill="#fff"
-                    fontSize={isCenter ? "12" : "10"}
+                    fontSize={isCenter ? "10" : "10"}
                     fontWeight="bold"
                   >
                     {node.name.split(' ')[0]}
                   </text>
-                  {/* Duty */}
-                  <text
-                    x={node.x}
-                    y={node.y + 8}
-                    textAnchor="middle"
-                    fill="#fff"
-                    fontSize="7"
-                    opacity={0.95}
-                  >
-                    {node.duty.length > 16 ? node.duty.substring(0, 14) + '..' : node.duty}
-                  </text>
-                  {/* Last name if exists */}
-                  {node.name.split(' ').length > 1 && (
+                  {/* Duty - only show for circles */}
+                  {!isCenter && (
+                    <text
+                      x={node.x}
+                      y={node.y + 8}
+                      textAnchor="middle"
+                      fill="#fff"
+                      fontSize="7"
+                      opacity={0.95}
+                    >
+                      {node.duty.length > 16 ? node.duty.substring(0, 14) + '..' : node.duty}
+                    </text>
+                  )}
+                  {/* Last name if exists - only for circles */}
+                  {!isCenter && node.name.split(' ').length > 1 && (
                     <text
                       x={node.x}
                       y={node.y + 19}
