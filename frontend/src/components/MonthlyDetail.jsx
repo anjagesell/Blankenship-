@@ -587,9 +587,20 @@ const MonthlyDetail = ({ monthDate, isAdmin, onClose }) => {
                         style={{ 
                           color: '#d4af37',
                           fontFamily: 'Arial, sans-serif',
+                          borderRight: '1px solid #8b6914',
                         }}
                       >
                         Actions
+                      </th>
+                      <th 
+                        className="px-3 py-3 text-center text-xs sm:text-sm font-bold uppercase tracking-wider"
+                        style={{ 
+                          color: '#ff6b6b',
+                          fontFamily: 'Arial, sans-serif',
+                          background: 'rgba(220, 53, 69, 0.3)',
+                        }}
+                      >
+                        🗑️ DELETE
                       </th>
                     </>
                   )}
