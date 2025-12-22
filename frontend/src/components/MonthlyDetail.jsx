@@ -36,6 +36,64 @@ const ExhibitViewer = ({ file, onClose, isAdmin }) => {
   const [zoom, setZoom] = useState(100);
   const [imageError, setImageError] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [blobUrl, setBlobUrl] = useState(null);
+  
+  // Load file as blob to prevent direct URL access/download
+  useEffect(() => {
+    if (!file) return;
+    
+    const loadFile = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch(`${BACKEND_URL}/api/file/${file.file_id}`);
+        if (response.ok) {
+          const blob = await response.blob();
+          const url = URL.createObjectURL(blob);
+          setBlobUrl(url);
+        } else {
+          setImageError(true);
+        }
+      } catch (err) {
+        console.error('Failed to load file:', err);
+        setImageError(true);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    loadFile();
+    
+    // Cleanup blob URL on unmount
+    return () => {
+      if (blobUrl) URL.revokeObjectURL(blobUrl);
+    };
+  }, [file]);
+  
+  // Block all download/save attempts
+  useEffect(() => {
+    const preventActions = (e) => {
+      // Block right-click
+      if (e.type === 'contextmenu') {
+        e.preventDefault();
+        return false;
+      }
+      // Block keyboard shortcuts (Ctrl+S, Ctrl+Shift+S, etc.)
+      if (e.type === 'keydown' && (e.ctrlKey || e.metaKey)) {
+        if (e.key === 's' || e.key === 'S' || e.key === 'p' || e.key === 'P') {
+          e.preventDefault();
+          return false;
+        }
+      }
+    };
+    
+    document.addEventListener('contextmenu', preventActions);
+    document.addEventListener('keydown', preventActions);
+    
+    return () => {
+      document.removeEventListener('contextmenu', preventActions);
+      document.removeEventListener('keydown', preventActions);
+    };
+  }, []);
   
   if (!file) return null;
   
@@ -49,10 +107,12 @@ const ExhibitViewer = ({ file, onClose, isAdmin }) => {
       className="fixed inset-0 z-[9999] flex items-center justify-center p-2 sm:p-4"
       style={{ background: 'rgba(0, 0, 0, 0.95)' }}
       onClick={onClose}
+      onContextMenu={(e) => e.preventDefault()}
     >
       <div 
         className="relative w-full max-w-5xl max-h-[90vh] flex flex-col"
         onClick={(e) => e.stopPropagation()}
+        onContextMenu={(e) => e.preventDefault()}
       >
         {/* Header */}
         <div 
@@ -70,7 +130,7 @@ const ExhibitViewer = ({ file, onClose, isAdmin }) => {
             </span>
           </div>
           <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
-            {isImage && !imageError && (
+            {isImage && !imageError && !loading && (
               <>
                 <button onClick={() => setZoom(z => Math.max(25, z - 25))} className="p-1.5 sm:p-2 rounded hover:bg-white/10 transition-colors" style={{ color: '#d4af37' }} title="Zoom Out">
                   <ZoomOut className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -93,55 +153,62 @@ const ExhibitViewer = ({ file, onClose, isAdmin }) => {
           </div>
         </div>
         
-        {/* Content */}
+        {/* Content - View Only */}
         <div 
-          className="flex-1 overflow-auto rounded-b-lg flex items-center justify-center"
+          className="flex-1 overflow-auto rounded-b-lg flex items-center justify-center select-none"
           style={{
             background: '#1a1a1a',
             border: '2px solid #d4af37',
             borderTop: 'none',
             minHeight: '300px',
+            userSelect: 'none',
+            WebkitUserSelect: 'none',
+            WebkitTouchCallout: 'none',
           }}
+          onContextMenu={(e) => e.preventDefault()}
+          onDragStart={(e) => e.preventDefault()}
         >
-          {loading && isImage && (
+          {loading && (
             <div className="absolute inset-0 flex items-center justify-center">
               <Loader2 className="w-8 h-8 animate-spin" style={{ color: '#d4af37' }} />
             </div>
           )}
           
-          {isImage && !imageError ? (
+          {!loading && isImage && !imageError && blobUrl ? (
             <img 
-              src={fileUrl} 
+              src={blobUrl} 
               alt={file.filename || 'Exhibit'}
-              onLoad={() => setLoading(false)}
-              onError={() => { setImageError(true); setLoading(false); }}
               style={{ 
                 maxWidth: '100%', 
                 maxHeight: '70vh', 
                 transform: `scale(${zoom / 100})`, 
                 transition: 'transform 0.2s ease',
-                display: loading ? 'none' : 'block',
-                pointerEvents: 'none', // Prevent right-click save
+                pointerEvents: 'none',
+                userSelect: 'none',
+                WebkitUserSelect: 'none',
+                WebkitTouchCallout: 'none',
               }} 
-              onContextMenu={(e) => e.preventDefault()} // Disable right-click
+              onContextMenu={(e) => e.preventDefault()}
+              onDragStart={(e) => e.preventDefault()}
               draggable={false}
             />
-          ) : isPdf ? (
+          ) : !loading && isPdf && blobUrl ? (
             <iframe 
-              src={`${fileUrl}#toolbar=0&navpanes=0`} 
+              src={`${blobUrl}#toolbar=0&navpanes=0&scrollbar=1&view=FitH`} 
               title={file.filename} 
               className="w-full h-full" 
               style={{ minHeight: '70vh', background: '#fff' }} 
+              sandbox="allow-same-origin"
             />
-          ) : (
+          ) : !loading && imageError ? (
             <div className="text-center p-6 sm:p-8">
               <FileText className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-4" style={{ color: '#d4af37' }} />
               <p className="text-white mb-2 text-sm sm:text-base">
-                {imageError ? 'Unable to load preview.' : 'Preview not available for this file type.'}
+                Unable to load preview.
               </p>
               <p className="text-gray-400 text-xs">File: {file.filename}</p>
             </div>
-          )}
+          ) : null}
         </div>
         
         {/* Watermark/Notice for readers */}
