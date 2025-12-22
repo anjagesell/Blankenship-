@@ -155,7 +155,7 @@ const ExhibitViewer = ({ file, onClose, isAdmin }) => {
   );
 };
 
-const MonthlyDetail = ({ monthDate, isAdmin, onClose }) => {
+const MonthlyDetail = ({ monthDate, isAdmin, adminInfo, onClose }) => {
   const [entries, setEntries] = useState([]);
   const [loading, setLoading] = useState(true);
   const [editingId, setEditingId] = useState(null);
@@ -173,6 +173,9 @@ const MonthlyDetail = ({ monthDate, isAdmin, onClose }) => {
   const [exhibitFiles, setExhibitFiles] = useState({});
   const [viewingFile, setViewingFile] = useState(null);
   const [lastUpdate, setLastUpdate] = useState(Date.now());
+  
+  // Get admin name for tracking
+  const adminName = adminInfo?.name || 'Admin';
 
   // Fetch entries from backend
   useEffect(() => {
