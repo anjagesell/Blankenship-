@@ -6,17 +6,42 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { ScrollArea } from '../components/ui/scroll-area';
 import { Scale, Shield, Gavel, Info } from 'lucide-react';
 
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
+
 const EntryPage = () => {
   const [code, setCode] = useState(['', '', '', '', '', '', '', '']);
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [termsScrolled, setTermsScrolled] = useState(false);
   const [showAccessReminder, setShowAccessReminder] = useState(false);
+  const [visitorLogged, setVisitorLogged] = useState(false);
   const inputRefs = useRef([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     document.title = 'Blankenship';
+    
+    // Log visitor on page load (only once)
+    if (!visitorLogged) {
+      logVisitor(false);
+      setVisitorLogged(true);
+    }
   }, []);
+
+  // Log visitor to backend
+  const logVisitor = async (accessGranted) => {
+    try {
+      await fetch(`${BACKEND_URL}/api/visitor/log`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          page_accessed: 'entry',
+          access_granted: accessGranted
+        })
+      });
+    } catch (error) {
+      console.error('Failed to log visitor:', error);
+    }
+  };
 
   // Focus first input only after terms are accepted
   useEffect(() => {
