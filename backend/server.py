@@ -724,6 +724,8 @@ class MonthlyEntry(BaseModel):
     notes: str = ""
     created_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
     updated_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+    created_by: str = ""  # Admin name who created
+    last_edited_by: str = ""  # Admin name who last edited
 
 class MonthlyEntryCreate(BaseModel):
     month_key: str
@@ -733,6 +735,7 @@ class MonthlyEntryCreate(BaseModel):
     description: str = ""
     evidence: str = ""
     notes: str = ""
+    admin_name: str = ""  # Who is creating this
 
 class MonthlyEntryUpdate(BaseModel):
     date: Optional[str] = None
@@ -741,6 +744,7 @@ class MonthlyEntryUpdate(BaseModel):
     description: Optional[str] = None
     evidence: Optional[str] = None
     notes: Optional[str] = None
+    admin_name: Optional[str] = None  # Who is updating this
 
 
 # ========== TIMELINE ENDPOINTS ==========
