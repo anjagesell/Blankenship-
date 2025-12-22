@@ -178,6 +178,7 @@ const AGENCY_COLORS = {
   'STATE': '#f44336',
   'FOSTER': '#8bc34a',
   'FAMILY': '#673ab7',
+  'VICTIM': '#e91e63',
 };
 
 const ViolationsCascade = ({ isOpen, onClose }) => {
