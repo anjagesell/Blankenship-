@@ -584,6 +584,14 @@ const IndexPage = () => {
             }}
             onClick={(e) => e.stopPropagation()}
           >
+            {/* Admin name display */}
+            <div 
+              className="px-4 py-2 text-xs border-b"
+              style={{ color: '#888', borderColor: '#333' }}
+            >
+              Admin. {adminInfo?.name || 'Unknown'}
+            </div>
+            
             <button
               onClick={() => { setShowVisitorMonitor(true); setShowAdminMenu(false); }}
               className="w-full px-4 py-3 text-left text-sm flex items-center gap-2 hover:bg-white/10 transition-colors"
@@ -592,6 +600,28 @@ const IndexPage = () => {
               <Eye className="w-4 h-4" />
               Monitor
             </button>
+            
+            <button
+              onClick={() => { setShowActivityLog(true); setShowAdminMenu(false); }}
+              className="w-full px-4 py-3 text-left text-sm flex items-center gap-2 hover:bg-white/10 transition-colors"
+              style={{ color: '#d4af37', borderBottom: '1px solid #333' }}
+            >
+              <History className="w-4 h-4" />
+              Activity
+            </button>
+            
+            {/* Team option - only for owner */}
+            {adminInfo?.is_owner && (
+              <button
+                onClick={() => { setShowTeamPanel(true); setShowAdminMenu(false); }}
+                className="w-full px-4 py-3 text-left text-sm flex items-center gap-2 hover:bg-white/10 transition-colors"
+                style={{ color: '#d4af37', borderBottom: '1px solid #333' }}
+              >
+                <Users className="w-4 h-4" />
+                Team
+              </button>
+            )}
+            
             <button
               onClick={() => { handleAdminLogout(); setShowAdminMenu(false); }}
               className="w-full px-4 py-3 text-left text-sm flex items-center gap-2 hover:bg-white/10 transition-colors"
