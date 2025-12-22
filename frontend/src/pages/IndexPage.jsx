@@ -8,7 +8,7 @@ import AdminLogin from '../components/AdminLogin';
 import CommunicationDiagram from '../components/CommunicationDiagram';
 import RouteAnalysis from '../components/RouteAnalysis';
 import EmbeddedRouteMap from '../components/EmbeddedRouteMap';
-import ViolationsCascade from '../components/ViolationsCascade';
+import ViolationsCascadeHybrid from '../components/ViolationsCascadeHybrid';
 
 // Icon mapping
 const iconMap = {
