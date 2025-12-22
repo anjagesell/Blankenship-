@@ -390,7 +390,7 @@ const EntryPage = () => {
       </div>
 
       {/* Legal Information Icons - Refined */}
-      <div className="mt-6 mb-4 flex justify-center gap-4 sm:gap-6 md:gap-8 px-4 z-10">
+      <div className="mt-4 mb-2 flex justify-center gap-6 sm:gap-8 px-4 z-10">
         {/* NC State Law */}
         <Dialog>
           <DialogTrigger asChild>
