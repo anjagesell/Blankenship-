@@ -38,6 +38,9 @@ const IndexPage = () => {
   const [showViolationsCascade, setShowViolationsCascade] = useState(false);
   const [showVisitorMonitor, setShowVisitorMonitor] = useState(false);
 
+  // Track page visit
+  usePageTracker('index');
+
   // Add keyboard shortcut - press 'D' to open diagram
   useEffect(() => {
     const handleKeyPress = (e) => {
