@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { indexEntries } from '../mock';
+import { indexEntriesByYear } from '../mock';
 import { Card } from '../components/ui/card';
 import { Calendar, PlayCircle, Boxes, Scale, AlertTriangle, HeartCrack, FileText, History, Lock, LockOpen, Shield, Mail, ChevronDown, ChevronUp, GitBranch, MapPin, Users } from 'lucide-react';
 import MonthlyDetail from '../components/MonthlyDetail';
@@ -20,6 +20,9 @@ const iconMap = {
   'HeartCrack': HeartCrack,
   'FileText': FileText,
 };
+
+// All years from 2013 to 2026
+const ALL_YEARS = [2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026];
 
 const IndexPage = () => {
   const navigate = useNavigate();
