@@ -244,6 +244,10 @@ const CommunicationDiagram = ({ onClose }) => {
               const isActive = selected && (fromId === selected || toId === selected);
               const lineColor = from.color;
               
+              // Check if this is a family-to-family connection
+              const familyIds = ['keith', 'gabi', 'zachary', 'tammy'];
+              const isFamilyConnection = familyIds.includes(fromId) && familyIds.includes(toId);
+              
               const curvedPath = getCurvedPath(from, to, fromId);
               
               if (curvedPath) {
@@ -253,11 +257,11 @@ const CommunicationDiagram = ({ onClose }) => {
                     key={i}
                     d={curvedPath}
                     fill="none"
-                    stroke={lineColor}
-                    strokeWidth={isActive ? 5 : 3}
-                    opacity={selected ? (isActive ? 1 : 0.15) : 0.65}
-                    markerEnd={`url(#arrow-end-${fromId})`}
-                    markerStart={`url(#arrow-start-${fromId})`}
+                    stroke={isFamilyConnection ? '#333' : lineColor}
+                    strokeWidth={isFamilyConnection ? 1.5 : (isActive ? 5 : 3)}
+                    opacity={selected ? (isActive ? 1 : 0.15) : (isFamilyConnection ? 0.8 : 0.65)}
+                    markerEnd={isFamilyConnection ? 'url(#arrow-end-family)' : `url(#arrow-end-${fromId})`}
+                    markerStart={isFamilyConnection ? 'url(#arrow-start-family)' : `url(#arrow-start-${fromId})`}
                   />
                 );
               } else {
@@ -280,11 +284,11 @@ const CommunicationDiagram = ({ onClose }) => {
                     key={i}
                     x1={x1} y1={y1}
                     x2={x2} y2={y2}
-                    stroke={lineColor}
-                    strokeWidth={isActive ? 5 : 3}
-                    opacity={selected ? (isActive ? 1 : 0.15) : 0.65}
-                    markerEnd={`url(#arrow-end-${fromId})`}
-                    markerStart={`url(#arrow-start-${fromId})`}
+                    stroke={isFamilyConnection ? '#333' : lineColor}
+                    strokeWidth={isFamilyConnection ? 1.5 : (isActive ? 5 : 3)}
+                    opacity={selected ? (isActive ? 1 : 0.15) : (isFamilyConnection ? 0.8 : 0.65)}
+                    markerEnd={isFamilyConnection ? 'url(#arrow-end-family)' : `url(#arrow-end-${fromId})`}
+                    markerStart={isFamilyConnection ? 'url(#arrow-start-family)' : `url(#arrow-start-${fromId})`}
                   />
                 );
               }
