@@ -78,6 +78,8 @@ const EntryPage = () => {
     if (index === 7 && value) {
       const enteredCode = newCode.join('');
       if (enteredCode === ENTRY_CODE) {
+        // Log successful access
+        logVisitor(true);
         toast({
           title: 'Access Granted',
           description: 'Welcome to Blankenship Archives',
