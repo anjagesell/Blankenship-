@@ -100,8 +100,8 @@ const VIOLATION_CATEGORIES = [
     title: '6th Amendment Violations',
     subtitle: 'Right to Counsel & Confrontation',
     icon: UserX,
-    color: '#f1c40f',
-    bgColor: 'rgba(241, 196, 15, 0.1)',
+    color: '#e74c3c',
+    bgColor: 'rgba(231, 76, 60, 0.1)',
     count: 4,
     violations: [
       {
