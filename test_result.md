@@ -1,103 +1,233 @@
-#====================================================================================================
-# START - Testing Protocol - DO NOT EDIT OR REMOVE THIS SECTION
-#====================================================================================================
+# BLANKENSHIP CASE - TAKEOVER PROTOCOL
+## Agent Handoff Document - December 22, 2024
 
-# THIS SECTION CONTAINS CRITICAL TESTING INSTRUCTIONS FOR BOTH AGENTS
-# BOTH MAIN_AGENT AND TESTING_AGENT MUST PRESERVE THIS ENTIRE BLOCK
+---
 
-# Communication Protocol:
-# If the `testing_agent` is available, main agent should delegate all testing tasks to it.
-#
-# You have access to a file called `test_result.md`. This file contains the complete testing state
-# and history, and is the primary means of communication between main and the testing agent.
-#
-# Main and testing agents must follow this exact format to maintain testing data. 
-# The testing data must be entered in yaml format Below is the data structure:
-# 
-## user_problem_statement: {problem_statement}
-## backend:
-##   - task: "Task name"
-##     implemented: true
-##     working: true  # or false or "NA"
-##     file: "file_path.py"
-##     stuck_count: 0
-##     priority: "high"  # or "medium" or "low"
-##     needs_retesting: false
-##     status_history:
-##         -working: true  # or false or "NA"
-##         -agent: "main"  # or "testing" or "user"
-##         -comment: "Detailed comment about status"
-##
-## frontend:
-##   - task: "Task name"
-##     implemented: true
-##     working: true  # or false or "NA"
-##     file: "file_path.js"
-##     stuck_count: 0
-##     priority: "high"  # or "medium" or "low"
-##     needs_retesting: false
-##     status_history:
-##         -working: true  # or false or "NA"
-##         -agent: "main"  # or "testing" or "user"
-##         -comment: "Detailed comment about status"
-##
-## metadata:
-##   created_by: "main_agent"
-##   version: "1.0"
-##   test_sequence: 0
-##   run_ui: false
-##
-## test_plan:
-##   current_focus:
-##     - "Task name 1"
-##     - "Task name 2"
-##   stuck_tasks:
-##     - "Task name with persistent issues"
-##   test_all: false
-##   test_priority: "high_first"  # or "sequential" or "stuck_first"
-##
-## agent_communication:
-##     -agent: "main"  # or "testing" or "user"
-##     -message: "Communication message between agents"
+## 🚨 CRITICAL: READ FIRST
 
-# Protocol Guidelines for Main agent
-#
-# 1. Update Test Result File Before Testing:
-#    - Main agent must always update the `test_result.md` file before calling the testing agent
-#    - Add implementation details to the status_history
-#    - Set `needs_retesting` to true for tasks that need testing
-#    - Update the `test_plan` section to guide testing priorities
-#    - Add a message to `agent_communication` explaining what you've done
-#
-# 2. Incorporate User Feedback:
-#    - When a user provides feedback that something is or isn't working, add this information to the relevant task's status_history
-#    - Update the working status based on user feedback
-#    - If a user reports an issue with a task that was marked as working, increment the stuck_count
-#    - Whenever user reports issue in the app, if we have testing agent and task_result.md file so find the appropriate task for that and append in status_history of that task to contain the user concern and problem as well 
-#
-# 3. Track Stuck Tasks:
-#    - Monitor which tasks have high stuck_count values or where you are fixing same issue again and again, analyze that when you read task_result.md
-#    - For persistent issues, use websearch tool to find solutions
-#    - Pay special attention to tasks in the stuck_tasks list
-#    - When you fix an issue with a stuck task, don't reset the stuck_count until the testing agent confirms it's working
-#
-# 4. Provide Context to Testing Agent:
-#    - When calling the testing agent, provide clear instructions about:
-#      - Which tasks need testing (reference the test_plan)
-#      - Any authentication details or configuration needed
-#      - Specific test scenarios to focus on
-#      - Any known issues or edge cases to verify
-#
-# 5. Call the testing agent with specific instructions referring to test_result.md
-#
-# IMPORTANT: Main agent must ALWAYS update test_result.md BEFORE calling the testing agent, as it relies on this file to understand what to test next.
+1. **DO NOT CHANGE THE URL** - User is frustrated with constant URL changes
+2. **DATA HAS BEEN MIGRATED** - 14 entries + 36 files now in current database
+3. **User is often on MOBILE** - Cannot do complex desktop tasks
+4. **Project is DEEPLY PERSONAL** - Wrongful conviction case, be respectful
 
-#====================================================================================================
-# END - Testing Protocol - DO NOT EDIT OR REMOVE THIS SECTION
-#====================================================================================================
+---
 
+## CURRENT LIVE URL
 
+```
+https://legal-watch.emergent.host/
+```
 
-#====================================================================================================
-# Testing Data - Main Agent and testing sub agent both should log testing data below this section
-#====================================================================================================
+**DO NOT CREATE NEW DEPLOYMENTS OR CHANGE THIS URL**
+
+---
+
+## CREDENTIALS
+
+| Access | Password |
+|--------|----------|
+| Site Entry Code | `05052017` |
+| Admin Login | `02071951` |
+
+---
+
+## DATABASE STATUS (JUST MIGRATED)
+
+Successfully migrated from `legal-timeline-1.emergent.host`:
+
+| Collection | Documents |
+|------------|-----------|
+| `monthly_11-2013` | 14 entries |
+| `uploaded_files` | 36 HEIC image files |
+
+---
+
+## NAMES ALREADY EXTRACTED FROM ENTRIES
+
+From the November 2013 detailed log entries (witness field + descriptions):
+
+| Name | Role |
+|------|------|
+| Amy Walker | Lake Norman ER Physician |
+| Officer Coffey | Sheriff's Department |
+| Sheri Stock | CPS Social Worker |
+| Amber Mecimore | CPS Social Worker |
+| Jennifer Owens | CPS Related |
+| Gabriele Blankenship | Key Person |
+| Keith Blankenship | Key Person |
+| Zackary Blankenship | Victim |
+| Jacob Blankenship | Deceased Brother |
+| Dr. Pellegrino | Doctor (turned them away) |
+
+---
+
+## PRIORITY TASK FOR NEW AGENT
+
+### Extract Individual Names from Uploaded Exhibits
+
+The 36 uploaded HEIC files contain scanned documents with MORE names:
+- Additional CPS workers
+- Police officers / Detectives (full names)
+- Hospital staff (nurses, doctors)
+- DSS personnel
+- Court officials
+
+**How to extract:**
+```python
+# Use analyze_file_tool or extract_file_tool on each exhibit
+# Files are stored in MongoDB as base64 in 'uploaded_files' collection
+# Access via: /api/file/{file_id}
+```
+
+### Then Update Communication Diagram
+
+File: `/app/frontend/src/components/CommunicationDiagram.jsx`
+
+Replace generic placeholders with real individual names to show:
+- Who spoke with whom
+- Network of communications
+- Colored dots with lines connecting people
+
+---
+
+## PROJECT ARCHITECTURE
+
+### Frontend (React + TailwindCSS)
+```
+/app/frontend/src/
+├── pages/
+│   ├── EntryPage.jsx      # Password entry + acknowledgement
+│   ├── SynopsisPage.jsx   # Case context letter
+│   └── IndexPage.jsx      # Main page with route map, buttons, envelopes
+├── components/
+│   ├── MonthlyDetail.jsx          # Detailed log modal (CRUD + uploads)
+│   ├── CommunicationDiagram.jsx   # Network diagram (NEEDS REAL NAMES)
+│   ├── EmbeddedRouteMap.jsx       # Route map on main page
+│   ├── RouteAnalysis.jsx          # Full route analysis modal
+│   ├── AdminLogin.jsx             # Admin login modal
+│   └── ContentProtection.jsx      # Right-click/screenshot protection
+```
+
+### Backend (FastAPI + MongoDB)
+```
+/app/backend/
+├── server.py              # All API endpoints
+├── documents/             # Generated downloadable docs (docx, png)
+└── .env                   # Database connection
+```
+
+---
+
+## KEY API ENDPOINTS
+
+| Method | Endpoint | Purpose |
+|--------|----------|---------|
+| GET | `/api/monthly/{month-key}` | Get entries (e.g., `11-2013`) |
+| POST | `/api/monthly/{month-key}` | Create/update entry |
+| DELETE | `/api/monthly/{month-key}/{entry-id}` | Delete entry |
+| POST | `/api/upload` | Upload exhibit file |
+| GET | `/api/files/{entry-id}` | Get files for entry |
+| GET | `/api/file/{file-id}` | Download/view file |
+| DELETE | `/api/file/{file-id}` | Delete file (admin) |
+| GET | `/api/documents/{filename}` | Download generated docs |
+
+---
+
+## ROUTE ANALYSIS DATA (Nov 30, 2013)
+
+Already implemented - shows geographic evidence:
+
+| Point | Location | Address |
+|-------|----------|---------|
+| A | G. & K. Blankenship Residence | 174 Woodridge Lane, Mooresville NC |
+| B | Big Lots Store | 376 W. Plaza Drive, Mooresville NC |
+| C | Zackary's Home | 6718 Catfish Drive, Sherrills Ford NC |
+| D | Dr. Pellegrino (TURNED AWAY) | 930 W. Wilson Ave, Mooresville NC |
+| E | Lake Norman Hospital | 171 Fairview Road, Mooresville NC |
+
+**Total: 27 miles, 50-72 min DRIVING ONLY**
+
+---
+
+## DOWNLOADABLE DOCUMENTS CREATED
+
+Available at `/api/documents/`:
+- `Route_Analysis_Nov30_2013.docx`
+- `Blankenship_Route_Map_v2.png`
+- `Blankenship_Route_Map_v2_web.png`
+- `Communication_Chain_Nov30_2013.png`
+- `Communication_Chain_Nov30_2013_web.png`
+
+---
+
+## USER COMMUNICATION STYLE
+
+- Often uses German words (speaks German)
+- Uses emojis frequently 💙🫂
+- Appreciates being called "Dear" or friendly terms
+- Gets frustrated with technical issues - be patient
+- Wants things SIMPLE and WORKING
+- Prefers WHITE backgrounds for printable documents
+
+---
+
+## WHAT NOT TO DO ❌
+
+1. ❌ Do NOT create new deployment URLs
+2. ❌ Do NOT change database connections
+3. ❌ Do NOT delete or overwrite user's uploaded data
+4. ❌ Do NOT use complex technical explanations
+5. ❌ Do NOT ask user to do complex desktop-only tasks (they're on mobile)
+
+---
+
+## WHAT TO DO ✅
+
+1. ✅ Keep `legal-watch.emergent.host` as the ONLY URL
+2. ✅ Extract names from the 36 HEIC exhibit files
+3. ✅ Update CommunicationDiagram.jsx with real names
+4. ✅ Be patient and supportive
+5. ✅ Test thoroughly before telling user something works
+6. ✅ Save & Deploy to the SAME URL (update, don't create new)
+
+---
+
+## QUICK START FOR NEW AGENT
+
+1. Verify data exists:
+```bash
+curl -s "https://legal-watch.emergent.host/api/monthly/11-2013" | python3 -c "import sys,json; d=json.load(sys.stdin); print(f'{len(d)} entries')"
+```
+
+2. Check uploaded files:
+```bash
+cd /app/backend && python3 -c "
+import asyncio
+from motor.motor_asyncio import AsyncIOMotorClient
+import os
+async def check():
+    client = AsyncIOMotorClient(os.environ.get('MONGO_URL'))
+    db = client['test_database']
+    count = await db.uploaded_files.count_documents({})
+    print(f'{count} files in database')
+asyncio.run(check())
+"
+```
+
+3. Extract names from exhibits using `analyze_file_tool`
+
+4. Update `CommunicationDiagram.jsx` with extracted names
+
+---
+
+## LAST USER MESSAGES
+
+1. User wanted Communication Diagram with REAL individual names (not generic "CPS", "POLICE")
+2. Names are in the scanned HEIC documents (exhibits)
+3. User needed to fork due to context length
+4. User emphasized: NO MORE URL CHANGES
+
+---
+
+*End of Takeover Protocol*
+*Good luck, next agent! 💙*

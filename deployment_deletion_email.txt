@@ -1,0 +1,42 @@
+Subject: Support Request – Deployment Consolidation and Management Assistance
+
+To: support@emergent.sh
+
+---
+
+Dear Emergent Support Team,
+
+I am reaching out to request assistance with managing my deployments as I currently have 11 active deployments but would like to reduce this to 3. Some duplicate or older versions appear to have been created during development.
+
+Deployments Requested for Deletion (7 identified):
+
+1. #EMT-795078 - Lawquery-App
+2. #EMT-4705aa - Octa-Care-Platform-1
+3. #EMT-c0f7dd - Healthcare-Dashboard-2
+4. #EMT-b2d100 - Octa-Care-3
+5. #EMT-c8580e - Caregiver-Portal-3
+6. #EMT-a5bb43 - Careflow-74
+7. #EMT-270774 - Octa-Calendar
+
+Deployments to Retain:
+
+1. #EMT-6129cf - Octa-Care-Platform (https://octa-care-platform.emergent.host/)
+2. My Larsen Book – Please help identify this deployment ID
+3. Blankenship – Not yet deployed, to be deployed when ready
+
+Additionally, I notice 3 more deployments that I cannot currently identify and would appreciate help confirming their details.
+
+Feedback and Concerns:
+
+- It would be helpful if users could manage deployment deletions themselves through the mobile interface, as this functionality seems unavailable currently.
+- Support response times for billing and deployment management issues could be faster; any guidance on improving access to timely support would be appreciated.
+- Coordination between agents sometimes results in duplicate deployments; any improvements in this process would reduce confusion.
+
+I appreciate your assistance in cleaning up deployments and helping me better manage them going forward.
+
+Thank you for your support.
+
+Best regards,
+
+[Your Name]
+[Your Job ID - Click the 'i' button in top-right of Emergent chat to find this]
