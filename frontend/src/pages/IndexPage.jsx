@@ -141,27 +141,6 @@ const IndexPage = () => {
       {/* Analysis Buttons */}
       <div className="container mx-auto px-4 py-4 relative z-20">
         <div className="flex flex-wrap justify-center gap-4">
-          {/* Communication Diagram Button */}
-          <button
-            onClick={() => setShowCommunicationDiagram(true)}
-            className="px-6 py-3 rounded-lg flex items-center gap-3 transition-all hover:scale-105 shadow-lg"
-            style={{
-              background: 'linear-gradient(145deg, #2c3e50 0%, #1a252f 100%)',
-              color: '#d4af37',
-              border: '3px solid #d4af37',
-              fontFamily: 'Georgia, serif',
-              fontWeight: 'bold',
-              boxShadow: '0 4px 20px rgba(212,175,55,0.3)',
-            }}
-          >
-            <span className="text-2xl">👥</span>
-            <div className="text-left">
-              <div className="text-base">Who Spoke With Whom</div>
-              <div className="text-xs text-yellow-600/70 font-normal">Communication Network Diagram</div>
-            </div>
-            <Users className="w-5 h-5 ml-2" />
-          </button>
-          
           {/* Route Analysis Button */}
           <button
             onClick={() => setShowRouteAnalysis(true)}
