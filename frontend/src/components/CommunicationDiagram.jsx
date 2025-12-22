@@ -203,31 +203,27 @@ const CommunicationDiagram = ({ onClose }) => {
                 <polygon points="6 0, 0 2.5, 6 5" fill="#333" />
               </marker>
               
-              {/* Regular arrows for each person's color */}
-              {allNodes.map(node => (
-                <React.Fragment key={`markers-${node.id}`}>
-                  <marker
-                    id={`arrow-end-${node.id}`}
-                    markerWidth="10"
-                    markerHeight="8"
-                    refX="8"
-                    refY="4"
-                    orient="auto"
-                  >
-                    <polygon points="0 0, 10 4, 0 8" fill={node.color} />
-                  </marker>
-                  <marker
-                    id={`arrow-start-${node.id}`}
-                    markerWidth="10"
-                    markerHeight="8"
-                    refX="2"
-                    refY="4"
-                    orient="auto-start-reverse"
-                  >
-                    <polygon points="10 0, 0 4, 10 8" fill={node.color} />
-                  </marker>
-                </React.Fragment>
-              ))}
+              {/* Small BLACK arrows for all other connections (tips only) */}
+              <marker
+                id="arrow-end-black"
+                markerWidth="7"
+                markerHeight="6"
+                refX="6"
+                refY="3"
+                orient="auto"
+              >
+                <polygon points="0 0, 7 3, 0 6" fill="#333" />
+              </marker>
+              <marker
+                id="arrow-start-black"
+                markerWidth="7"
+                markerHeight="6"
+                refX="1"
+                refY="3"
+                orient="auto-start-reverse"
+              >
+                <polygon points="7 0, 0 3, 7 6" fill="#333" />
+              </marker>
             </defs>
 
             {/* FAMILY label above the horizontal line */}
