@@ -894,13 +894,21 @@ async def update_monthly_entry(entry_id: str, entry: MonthlyEntryUpdate, admin_p
 
 # Delete a monthly entry (admin only)
 @api_router.delete("/monthly/{entry_id}")
-async def delete_monthly_entry(entry_id: str, admin_password: str):
+async def delete_monthly_entry(entry_id: str, admin_password: str, admin_name: str = "Admin"):
     """Delete a monthly detail entry (admin only)"""
     verify_admin_password(admin_password)
+    
+    existing = await db.monthly_entries.find_one({"id": entry_id}, {"_id": 0})
     
     result = await db.monthly_entries.delete_one({"id": entry_id})
     if result.deleted_count == 0:
         raise HTTPException(status_code=404, detail="Monthly entry not found")
+    
+    # Log activity
+    month_key = existing.get('month_key', 'unknown') if existing else 'unknown'
+    await log_activity(admin_name, "deleted", "entry", entry_id, f"Deleted entry from {month_key}")
+    
+    return {"status": "success", "message": "Entry deleted"}
     
     return {"status": "success", "message": "Monthly entry deleted"}
 
