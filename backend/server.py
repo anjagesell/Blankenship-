@@ -14,6 +14,16 @@ from datetime import datetime, timezone
 import shutil
 import mimetypes
 import base64
+from io import BytesIO
+
+# Try to import pillow-heif for HEIC conversion (universal compatibility)
+try:
+    import pillow_heif
+    from PIL import Image
+    pillow_heif.register_heif_opener()
+    HEIC_SUPPORT = True
+except ImportError:
+    HEIC_SUPPORT = False
 
 
 ROOT_DIR = Path(__file__).parent
