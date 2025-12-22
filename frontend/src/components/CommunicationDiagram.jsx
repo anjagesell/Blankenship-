@@ -256,8 +256,8 @@ const CommunicationDiagram = ({ onClose }) => {
                     stroke={isFamilyConnection ? '#333' : lineColor}
                     strokeWidth={isFamilyConnection ? 1.5 : (isActive ? 5 : 3)}
                     opacity={selected ? (isActive ? 1 : 0.15) : (isFamilyConnection ? 0.8 : 0.65)}
-                    markerEnd={isFamilyConnection ? 'url(#arrow-end-family)' : `url(#arrow-end-${fromId})`}
-                    markerStart={isFamilyConnection ? 'url(#arrow-start-family)' : `url(#arrow-start-${fromId})`}
+                    markerEnd={isFamilyConnection ? 'url(#arrow-end-family)' : 'url(#arrow-end-black)'}
+                    markerStart={isFamilyConnection ? 'url(#arrow-start-family)' : 'url(#arrow-start-black)'}
                   />
                 );
               } else {
@@ -283,8 +283,8 @@ const CommunicationDiagram = ({ onClose }) => {
                     stroke={isFamilyConnection ? '#333' : lineColor}
                     strokeWidth={isFamilyConnection ? 1.5 : (isActive ? 5 : 3)}
                     opacity={selected ? (isActive ? 1 : 0.15) : (isFamilyConnection ? 0.8 : 0.65)}
-                    markerEnd={isFamilyConnection ? 'url(#arrow-end-family)' : `url(#arrow-end-${fromId})`}
-                    markerStart={isFamilyConnection ? 'url(#arrow-start-family)' : `url(#arrow-start-${fromId})`}
+                    markerEnd={isFamilyConnection ? 'url(#arrow-end-family)' : 'url(#arrow-end-black)'}
+                    markerStart={isFamilyConnection ? 'url(#arrow-start-family)' : 'url(#arrow-start-black)'}
                   />
                 );
               }
