@@ -1,4 +1,4 @@
-from fastapi import FastAPI, APIRouter, UploadFile, File, Form, HTTPException, Depends
+from fastapi import FastAPI, APIRouter, UploadFile, File, Form, HTTPException, Depends, Request
 from fastapi.responses import FileResponse, Response
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from dotenv import load_dotenv
@@ -15,6 +15,7 @@ import shutil
 import mimetypes
 import base64
 from io import BytesIO
+import httpx
 
 # Try to import pillow-heif for HEIC conversion (universal compatibility)
 try:
