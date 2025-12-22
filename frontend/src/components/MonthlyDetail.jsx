@@ -283,6 +283,7 @@ const MonthlyDetail = ({ monthDate, isAdmin, onClose }) => {
           setEntries(entries.map(e => 
             e.id === editingId ? savedEntry : e
           ));
+          triggerRefresh(); // Immediate refresh
         } else {
           throw new Error('Failed to save entry');
         }
