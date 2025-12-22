@@ -47,8 +47,9 @@ const CONNECTIONS = [
   ['coffey', 'keith'],    // Keith spoke to officer at ER
   ['coffey', 'rylie'],    // Spoke with child alone
   
-  // Entry 3 (12:15pm)
-  ['sherri', 'coffey'],   // Phone call
+  // Entry 3 (12:15pm) - Sherri Stock spoke to Amy Walker BEFORE calling Coffey
+  ['sherri', 'amy'],      // Sherri spoke with Amy Walker (per Entry 3 - she told Coffey)
+  ['sherri', 'coffey'],   // Phone call to report
   
   // Entry 4 (12:30pm)
   ['sherri', 'amber'],    // Phone call
