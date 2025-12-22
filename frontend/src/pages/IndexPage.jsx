@@ -27,7 +27,7 @@ const IndexPage = () => {
   const [selectedMonth, setSelectedMonth] = useState(null);
   const [showAdminLogin, setShowAdminLogin] = useState(false);
   const [isAdmin, setIsAdmin] = useState(() => sessionStorage.getItem('blankenship_admin') === 'true');
-  const [showCommunicationDiagram, setShowCommunicationDiagram] = useState(true);
+  const [showCommunicationDiagram, setShowCommunicationDiagram] = useState(false);
   const [showRouteAnalysis, setShowRouteAnalysis] = useState(false);
 
   // Add keyboard shortcut - press 'D' to open diagram
