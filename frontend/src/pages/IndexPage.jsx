@@ -495,7 +495,7 @@ const IndexPage = () => {
                                     fontFamily: 'Courier, monospace',
                                   }}
                                 >
-                                  {entry.date || 'Pre-history'}
+                                  {entry.date === 'PRE-HISTORY' ? 'PRE-HISTORY' : entry.date || 'Pre-history'}
                                 </span>
                               </div>
                               <h3 
