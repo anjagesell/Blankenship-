@@ -107,6 +107,182 @@ class StatusCheck(BaseModel):
 class StatusCheckCreate(BaseModel):
     client_name: str
 
+# Visitor tracking models
+class VisitorLog(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+    
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    ip_address: str
+    city: Optional[str] = None
+    region: Optional[str] = None
+    country: Optional[str] = None
+    country_code: Optional[str] = None
+    timezone: Optional[str] = None
+    isp: Optional[str] = None
+    user_agent: Optional[str] = None
+    page_accessed: str = "entry"
+    timestamp: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    access_granted: bool = False
+
+class VisitorLogCreate(BaseModel):
+    page_accessed: str = "entry"
+    access_granted: bool = False
+
+# ============================================
+# VISITOR TRACKING ENDPOINTS (Admin Only)
+# ============================================
+
+async def get_geo_from_ip(ip_address: str) -> dict:
+    """Get geographic information from IP address using free ip-api.com"""
+    try:
+        # Skip localhost/private IPs
+        if ip_address in ['127.0.0.1', 'localhost', '::1'] or ip_address.startswith('192.168.') or ip_address.startswith('10.'):
+            return {
+                'city': 'Local',
+                'region': 'Local Network',
+                'country': 'Local',
+                'country_code': 'LO',
+                'timezone': 'N/A',
+                'isp': 'Local Network'
+            }
+        
+        async with httpx.AsyncClient() as client:
+            response = await client.get(f'http://ip-api.com/json/{ip_address}?fields=status,city,regionName,country,countryCode,timezone,isp', timeout=5.0)
+            if response.status_code == 200:
+                data = response.json()
+                if data.get('status') == 'success':
+                    return {
+                        'city': data.get('city', 'Unknown'),
+                        'region': data.get('regionName', 'Unknown'),
+                        'country': data.get('country', 'Unknown'),
+                        'country_code': data.get('countryCode', 'XX'),
+                        'timezone': data.get('timezone', 'Unknown'),
+                        'isp': data.get('isp', 'Unknown')
+                    }
+    except Exception as e:
+        logging.error(f"Geo lookup failed for {ip_address}: {e}")
+    
+    return {
+        'city': 'Unknown',
+        'region': 'Unknown',
+        'country': 'Unknown',
+        'country_code': 'XX',
+        'timezone': 'Unknown',
+        'isp': 'Unknown'
+    }
+
+@api_router.post("/visitor/log")
+async def log_visitor(request: Request, visitor_data: VisitorLogCreate):
+    """Log a visitor access (called from frontend)"""
+    try:
+        # Get real IP address (handling proxies)
+        forwarded_for = request.headers.get('X-Forwarded-For')
+        if forwarded_for:
+            ip_address = forwarded_for.split(',')[0].strip()
+        else:
+            ip_address = request.client.host if request.client else 'Unknown'
+        
+        # Get user agent
+        user_agent = request.headers.get('User-Agent', 'Unknown')
+        
+        # Get geographic info
+        geo_info = await get_geo_from_ip(ip_address)
+        
+        # Create visitor log entry
+        visitor_log = {
+            'id': str(uuid.uuid4()),
+            'ip_address': ip_address,
+            'city': geo_info['city'],
+            'region': geo_info['region'],
+            'country': geo_info['country'],
+            'country_code': geo_info['country_code'],
+            'timezone': geo_info['timezone'],
+            'isp': geo_info['isp'],
+            'user_agent': user_agent[:500],  # Limit length
+            'page_accessed': visitor_data.page_accessed,
+            'access_granted': visitor_data.access_granted,
+            'timestamp': datetime.now(timezone.utc).isoformat()
+        }
+        
+        await db.visitor_logs.insert_one(visitor_log)
+        
+        return {"status": "logged", "id": visitor_log['id']}
+    except Exception as e:
+        logging.error(f"Failed to log visitor: {e}")
+        return {"status": "error", "message": str(e)}
+
+@api_router.get("/admin/visitors")
+async def get_visitor_logs(admin_password: str, limit: int = 100, skip: int = 0):
+    """Get visitor logs (Admin only)"""
+    verify_admin_password(admin_password)
+    
+    try:
+        # Get total count
+        total = await db.visitor_logs.count_documents({})
+        
+        # Get logs sorted by timestamp descending (newest first)
+        logs = await db.visitor_logs.find({}, {"_id": 0}).sort("timestamp", -1).skip(skip).limit(limit).to_list(limit)
+        
+        return {
+            "total": total,
+            "logs": logs,
+            "limit": limit,
+            "skip": skip
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to fetch visitor logs: {str(e)}")
+
+@api_router.get("/admin/visitors/stats")
+async def get_visitor_stats(admin_password: str):
+    """Get visitor statistics (Admin only)"""
+    verify_admin_password(admin_password)
+    
+    try:
+        # Total visitors
+        total_visitors = await db.visitor_logs.count_documents({})
+        
+        # Visitors with access granted
+        access_granted = await db.visitor_logs.count_documents({"access_granted": True})
+        
+        # Unique IPs
+        unique_ips = await db.visitor_logs.distinct("ip_address")
+        
+        # Visitors by country (aggregation)
+        country_pipeline = [
+            {"$group": {"_id": "$country", "count": {"$sum": 1}}},
+            {"$sort": {"count": -1}},
+            {"$limit": 10}
+        ]
+        countries = await db.visitor_logs.aggregate(country_pipeline).to_list(10)
+        
+        # Recent visitors (last 24 hours)
+        from datetime import timedelta
+        yesterday = datetime.now(timezone.utc) - timedelta(hours=24)
+        recent_count = await db.visitor_logs.count_documents({
+            "timestamp": {"$gte": yesterday.isoformat()}
+        })
+        
+        return {
+            "total_visitors": total_visitors,
+            "access_granted": access_granted,
+            "unique_ips": len(unique_ips),
+            "visitors_last_24h": recent_count,
+            "top_countries": [{"country": c["_id"], "count": c["count"]} for c in countries]
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to fetch visitor stats: {str(e)}")
+
+@api_router.delete("/admin/visitors/clear")
+async def clear_visitor_logs(admin_password: str):
+    """Clear all visitor logs (Admin only)"""
+    verify_admin_password(admin_password)
+    
+    try:
+        result = await db.visitor_logs.delete_many({})
+        return {"status": "cleared", "deleted_count": result.deleted_count}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to clear visitor logs: {str(e)}")
+
 # Document download endpoint
 @api_router.get("/documents/{filename}")
 async def download_document(filename: str):
