@@ -30,6 +30,7 @@ const IndexPage = () => {
   const [isAdmin, setIsAdmin] = useState(() => sessionStorage.getItem('blankenship_admin') === 'true');
   const [showCommunicationDiagram, setShowCommunicationDiagram] = useState(false);
   const [showRouteAnalysis, setShowRouteAnalysis] = useState(false);
+  const [showViolationsCascade, setShowViolationsCascade] = useState(false);
 
   // Add keyboard shortcut - press 'D' to open diagram
   useEffect(() => {
