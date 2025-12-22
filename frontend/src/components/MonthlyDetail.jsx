@@ -142,10 +142,20 @@ const MonthlyDetail = ({ monthDate, isAdmin, onClose }) => {
   const [uploadingFor, setUploadingFor] = useState(null);
   const [exhibitFiles, setExhibitFiles] = useState({});
   const [viewingFile, setViewingFile] = useState(null);
+  const [lastUpdate, setLastUpdate] = useState(Date.now());
 
   // Fetch entries from backend
   useEffect(() => {
     fetchEntries();
+  }, [monthDate, lastUpdate]);
+
+  // Real-time polling for updates every 5 seconds
+  useEffect(() => {
+    const pollInterval = setInterval(() => {
+      fetchEntriesSilent();
+    }, 5000);
+    
+    return () => clearInterval(pollInterval);
   }, [monthDate]);
 
   // Fetch exhibit files when entries change
@@ -178,10 +188,29 @@ const MonthlyDetail = ({ monthDate, isAdmin, onClose }) => {
         method: 'DELETE'
       });
       if (response.ok) {
+        // Immediate refresh
         await fetchExhibitFiles(entryId);
+        triggerRefresh();
       }
     } catch (error) {
       alert('Failed to delete file');
+    }
+  };
+
+  // Silent fetch (no loading spinner) for polling
+  const fetchEntriesSilent = async () => {
+    try {
+      const monthKey = monthDate.replace('/', '-');
+      const response = await fetch(`${BACKEND_URL}/api/monthly/${monthKey}`);
+      if (response.ok) {
+        const data = await response.json();
+        // Only update if data has changed
+        if (JSON.stringify(data) !== JSON.stringify(entries)) {
+          setEntries(data);
+        }
+      }
+    } catch (error) {
+      console.error('Silent fetch failed:', error);
     }
   };
 
@@ -200,6 +229,11 @@ const MonthlyDetail = ({ monthDate, isAdmin, onClose }) => {
     } finally {
       setLoading(false);
     }
+  };
+
+  // Trigger an immediate refresh
+  const triggerRefresh = () => {
+    setLastUpdate(Date.now());
   };
 
   const handleAdd = () => {
