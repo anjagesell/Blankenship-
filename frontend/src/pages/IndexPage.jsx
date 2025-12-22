@@ -33,11 +33,17 @@ const IndexPage = () => {
   const [selectedMonth, setSelectedMonth] = useState(null);
   const [showAdminLogin, setShowAdminLogin] = useState(false);
   const [isAdmin, setIsAdmin] = useState(() => sessionStorage.getItem('blankenship_admin') === 'true');
+  const [adminInfo, setAdminInfo] = useState(() => {
+    const stored = sessionStorage.getItem('blankenship_admin_info');
+    return stored ? JSON.parse(stored) : null;
+  });
   const [showCommunicationDiagram, setShowCommunicationDiagram] = useState(false);
   const [showRouteAnalysis, setShowRouteAnalysis] = useState(false);
   const [showViolationsCascade, setShowViolationsCascade] = useState(false);
   const [showVisitorMonitor, setShowVisitorMonitor] = useState(false);
   const [showAdminMenu, setShowAdminMenu] = useState(false);
+  const [showTeamPanel, setShowTeamPanel] = useState(false);
+  const [showActivityLog, setShowActivityLog] = useState(false);
 
   // Track page visit
   usePageTracker('index');
@@ -68,15 +74,19 @@ const IndexPage = () => {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  const handleAdminLogin = () => {
+  const handleAdminLogin = (admin) => {
     setIsAdmin(true);
+    setAdminInfo(admin);
     sessionStorage.setItem('blankenship_admin', 'true');
+    sessionStorage.setItem('blankenship_admin_info', JSON.stringify(admin));
     setShowAdminLogin(false);
   };
 
   const handleAdminLogout = () => {
     setIsAdmin(false);
+    setAdminInfo(null);
     sessionStorage.removeItem('blankenship_admin');
+    sessionStorage.removeItem('blankenship_admin_info');
   };
 
   // Close admin menu when clicking outside
