@@ -574,7 +574,7 @@ async def get_monthly_entries(month_key: str):
     """Get all entries for a specific month (e.g., '10/2013')"""
     # URL decode the month_key since it may contain /
     decoded_key = month_key.replace("-", "/")
-    entries = await db.monthly_entries.find({"month_key": decoded_key}, {"_id": 0}).to_list(1000)
+    entries = await db.monthly_entries.find({"month_key": decoded_key}, {"_id": 0}).sort("line_number", 1).to_list(1000)
     return entries
 
 # Create a new monthly entry (admin only)
