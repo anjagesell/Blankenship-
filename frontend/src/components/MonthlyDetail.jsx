@@ -1,8 +1,35 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { X, Upload, Plus, Edit2, Trash2, Save, Loader2, FileText, ZoomIn, ZoomOut, Eye } from 'lucide-react';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
 const ADMIN_PASSWORD = '02071951';
+
+// Track monthly folder view for analytics
+const useMonthlyPageTracker = (monthDate) => {
+  const hasLogged = useRef(false);
+  
+  useEffect(() => {
+    if (hasLogged.current || !monthDate) return;
+    hasLogged.current = true;
+    
+    const logPageVisit = async () => {
+      try {
+        await fetch(`${BACKEND_URL}/api/visitor/log`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            page_accessed: monthDate,
+            access_granted: true
+          })
+        });
+      } catch (error) {
+        console.error('Failed to log monthly page visit:', error);
+      }
+    };
+    
+    logPageVisit();
+  }, [monthDate]);
+};
 
 // Exhibit Viewer Modal - View Only (no download for readers)
 const ExhibitViewer = ({ file, onClose, isAdmin }) => {
