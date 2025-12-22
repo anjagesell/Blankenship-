@@ -305,8 +305,8 @@ const VIOLATION_CATEGORIES = [
     title: 'Civil & Parental Rights',
     subtitle: 'Family Court Failures',
     icon: Users,
-    color: '#9b59b6',
-    bgColor: 'rgba(155, 89, 182, 0.1)',
+    color: '#e74c3c',
+    bgColor: 'rgba(231, 76, 60, 0.1)',
     count: 4,
     violations: [
       {
