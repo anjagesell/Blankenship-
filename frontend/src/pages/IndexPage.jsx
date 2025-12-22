@@ -603,7 +603,7 @@ const IndexPage = () => {
       )}
 
       {/* Violations Cascade Modal */}
-      <ViolationsCascade 
+      <ViolationsCascadeHybrid 
         isOpen={showViolationsCascade} 
         onClose={() => setShowViolationsCascade(false)} 
       />
