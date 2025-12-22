@@ -841,14 +841,28 @@ async def create_monthly_entry(entry: MonthlyEntryCreate, admin_password: str):
     """Create a new monthly detail entry (admin only)"""
     verify_admin_password(admin_password)
     
+    admin_name = entry.admin_name or "Admin"
+    
     new_entry = MonthlyEntry(
         id=str(uuid.uuid4()),
-        **entry.model_dump(),
+        month_key=entry.month_key,
+        date=entry.date,
+        time=entry.time,
+        witness=entry.witness,
+        description=entry.description,
+        evidence=entry.evidence,
+        notes=entry.notes,
         created_at=datetime.now(timezone.utc).isoformat(),
-        updated_at=datetime.now(timezone.utc).isoformat()
+        updated_at=datetime.now(timezone.utc).isoformat(),
+        created_by=admin_name,
+        last_edited_by=admin_name
     )
     
     await db.monthly_entries.insert_one(new_entry.model_dump())
+    
+    # Log activity
+    await log_activity(admin_name, "created", "entry", new_entry.id, f"Created entry in {entry.month_key}")
+    
     return new_entry.model_dump()
 
 # Update a monthly entry (admin only)
