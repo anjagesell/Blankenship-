@@ -181,6 +181,29 @@ const CommunicationDiagram = ({ onClose }) => {
           <svg viewBox="0 0 800 900" className="w-full h-full">
             {/* Arrow markers */}
             <defs>
+              {/* Small black arrows for family-to-family connections */}
+              <marker
+                id="arrow-end-family"
+                markerWidth="6"
+                markerHeight="5"
+                refX="5"
+                refY="2.5"
+                orient="auto"
+              >
+                <polygon points="0 0, 6 2.5, 0 5" fill="#333" />
+              </marker>
+              <marker
+                id="arrow-start-family"
+                markerWidth="6"
+                markerHeight="5"
+                refX="1"
+                refY="2.5"
+                orient="auto-start-reverse"
+              >
+                <polygon points="6 0, 0 2.5, 6 5" fill="#333" />
+              </marker>
+              
+              {/* Regular arrows for each person's color */}
               {allNodes.map(node => (
                 <React.Fragment key={`markers-${node.id}`}>
                   <marker
