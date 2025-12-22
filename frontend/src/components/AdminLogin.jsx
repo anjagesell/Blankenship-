@@ -1,20 +1,38 @@
 import React, { useState } from 'react';
-import { Lock, X } from 'lucide-react';
+import { Lock, X, User } from 'lucide-react';
+
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
 
 const AdminLogin = ({ onAdminLogin, onClose }) => {
+  const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
+    setLoading(true);
     
-    // Admin password verification
-    if (password === '02071951') {
-      onAdminLogin();
-      setError('');
-    } else {
-      setError('Incorrect admin password');
-      setPassword('');
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/admin/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, password })
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
+        // Pass admin info to parent
+        onAdminLogin(data.admin);
+      } else {
+        setError('Invalid name or password');
+        setPassword('');
+      }
+    } catch (err) {
+      setError('Connection error. Please try again.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -62,32 +80,56 @@ const AdminLogin = ({ onAdminLogin, onClose }) => {
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="p-6">
+        <form onSubmit={handleSubmit} className="p-6 space-y-4">
           <p 
             className="text-yellow-600/80 text-sm mb-4"
             style={{ fontFamily: 'Garamond, serif' }}
           >
-            Enter admin password to enable upload functionality
+            Enter your credentials to access admin features
           </p>
 
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Admin Password"
-            className="w-full px-4 py-3 rounded text-lg font-semibold"
-            style={{
-              background: 'linear-gradient(145deg, #f4e8c1 0%, #e8dcc8 100%)',
-              border: '2px solid #8b6914',
-              color: '#3E2723',
-              fontFamily: 'Courier, monospace',
-            }}
-            autoFocus
-          />
+          {/* Name Input */}
+          <div className="relative">
+            <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5" style={{ color: '#8b6914' }} />
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Name"
+              className="w-full pl-11 pr-4 py-3 rounded text-lg font-semibold"
+              style={{
+                background: 'linear-gradient(145deg, #f4e8c1 0%, #e8dcc8 100%)',
+                border: '2px solid #8b6914',
+                color: '#3E2723',
+                fontFamily: 'Georgia, serif',
+              }}
+              autoFocus
+              required
+            />
+          </div>
+
+          {/* Password Input */}
+          <div className="relative">
+            <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5" style={{ color: '#8b6914' }} />
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Password"
+              className="w-full pl-11 pr-4 py-3 rounded text-lg font-semibold"
+              style={{
+                background: 'linear-gradient(145deg, #f4e8c1 0%, #e8dcc8 100%)',
+                border: '2px solid #8b6914',
+                color: '#3E2723',
+                fontFamily: 'Courier, monospace',
+              }}
+              required
+            />
+          </div>
 
           {error && (
             <p 
-              className="text-red-500 text-sm mt-2 font-semibold"
+              className="text-red-500 text-sm font-semibold"
               style={{ fontFamily: 'Arial, sans-serif' }}
             >
               ⚠️ {error}
@@ -96,7 +138,8 @@ const AdminLogin = ({ onAdminLogin, onClose }) => {
 
           <button
             type="submit"
-            className="w-full mt-6 px-6 py-3 rounded text-lg font-bold uppercase tracking-wider transition-all hover:scale-105"
+            disabled={loading}
+            className="w-full mt-2 px-6 py-3 rounded text-lg font-bold uppercase tracking-wider transition-all hover:scale-105 disabled:opacity-50"
             style={{
               background: 'linear-gradient(145deg, #d4af37 0%, #c5a028 50%, #9c7a1f 100%)',
               color: '#1a0f0a',
@@ -105,15 +148,8 @@ const AdminLogin = ({ onAdminLogin, onClose }) => {
               fontFamily: 'Georgia, serif',
             }}
           >
-            Login as Admin
+            {loading ? 'Verifying...' : 'Login'}
           </button>
-
-          <p 
-            className="text-yellow-600/60 text-xs mt-4 text-center italic"
-            style={{ fontFamily: 'Garamond, serif' }}
-          >
-            Admin access grants file upload privileges
-          </p>
         </form>
       </div>
     </div>
