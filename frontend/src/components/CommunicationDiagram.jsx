@@ -184,9 +184,9 @@ const CommunicationDiagram = ({ onClose }) => {
               );
             })}
 
-            {/* CENTER label */}
-            <text x={cx} y={cy - 110} textAnchor="middle" fill="#666" fontSize="12" fontWeight="bold">
-              — FAMILY —
+            {/* FAMILY label - CENTERED between the 4 family members */}
+            <text x={cx} y={cy - 5} textAnchor="middle" fill="#8b6914" fontSize="16" fontWeight="bold">
+              FAMILY
             </text>
 
             {/* Nodes */}
