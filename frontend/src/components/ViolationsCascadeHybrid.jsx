@@ -68,8 +68,8 @@ const VIOLATION_CATEGORIES = [
     title: '5th Amendment Violations',
     subtitle: 'Due Process & Self-Incrimination',
     icon: Gavel,
-    color: '#e67e22',
-    bgColor: 'rgba(230, 126, 34, 0.1)',
+    color: '#e74c3c',
+    bgColor: 'rgba(231, 76, 60, 0.1)',
     count: 3,
     violations: [
       {
