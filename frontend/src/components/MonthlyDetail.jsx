@@ -286,6 +286,31 @@ const MonthlyDetail = ({ monthDate, isAdmin, adminInfo, onClose }) => {
     setEntries([...entries, newEntry]);
   };
 
+  // Insert entry above or below a specific line
+  const handleInsert = (index, position) => {
+    const newEntry = {
+      id: `temp-${Date.now()}`,
+      month_key: monthDate,
+      date: '',
+      time: '',
+      witness: '',
+      description: '',
+      evidence: '',
+      notes: '',
+      isNew: true,
+      insertAt: position === 'above' ? index : index + 1
+    };
+    
+    // Insert at the correct position
+    const insertIndex = position === 'above' ? index : index + 1;
+    const newEntries = [...entries];
+    newEntries.splice(insertIndex, 0, newEntry);
+    
+    setEntries(newEntries);
+    setEditingId(newEntry.id);
+    setEditForm(newEntry);
+  };
+
   const handleEdit = (entry) => {
     setEditingId(entry.id);
     setEditForm({ ...entry });
