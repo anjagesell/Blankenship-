@@ -262,12 +262,46 @@ async def get_visitor_stats(admin_password: str):
             "timestamp": {"$gte": yesterday.isoformat()}
         })
         
+        # Page analytics - visits by page
+        page_pipeline = [
+            {"$group": {"_id": "$page_accessed", "count": {"$sum": 1}}},
+            {"$sort": {"count": -1}},
+            {"$limit": 20}
+        ]
+        pages = await db.visitor_logs.aggregate(page_pipeline).to_list(20)
+        
+        # Monthly folder analytics (for entries like "11/2013", "12/2013", etc.)
+        monthly_pipeline = [
+            {"$match": {"page_accessed": {"$regex": "^\\d{2}/\\d{4}$"}}},
+            {"$group": {"_id": "$page_accessed", "count": {"$sum": 1}}},
+            {"$sort": {"count": -1}},
+            {"$limit": 20}
+        ]
+        monthly_pages = await db.visitor_logs.aggregate(monthly_pipeline).to_list(20)
+        
+        # Visitors by hour of day (to see peak times)
+        # This helps understand when people are most active
+        hour_pipeline = [
+            {"$addFields": {
+                "hour": {"$hour": {"$dateFromString": {"dateString": "$timestamp"}}}
+            }},
+            {"$group": {"_id": "$hour", "count": {"$sum": 1}}},
+            {"$sort": {"_id": 1}}
+        ]
+        try:
+            hourly = await db.visitor_logs.aggregate(hour_pipeline).to_list(24)
+        except:
+            hourly = []
+        
         return {
             "total_visitors": total_visitors,
             "access_granted": access_granted,
             "unique_ips": len(unique_ips),
             "visitors_last_24h": recent_count,
-            "top_countries": [{"country": c["_id"], "count": c["count"]} for c in countries]
+            "top_countries": [{"country": c["_id"], "count": c["count"]} for c in countries],
+            "page_visits": [{"page": p["_id"], "count": p["count"]} for p in pages],
+            "monthly_folder_visits": [{"month": m["_id"], "count": m["count"]} for m in monthly_pages],
+            "hourly_activity": [{"hour": h["_id"], "count": h["count"]} for h in hourly]
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to fetch visitor stats: {str(e)}")
