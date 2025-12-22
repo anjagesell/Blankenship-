@@ -72,12 +72,12 @@ const CommunicationDiagram = ({ onClose }) => {
   const centerRadius = 100; // Inner circle for family
   const outerRadius = 300;  // Outer circle for others
 
-  // Position CENTER family in a small square/diamond in middle
+  // Position CENTER family in a small square/diamond in middle - more spaced out
   const centerPositions = [
-    { x: cx - 60, y: cy - 60 },  // Keith - top left
-    { x: cx + 60, y: cy - 60 },  // Gabi - top right
-    { x: cx - 60, y: cy + 60 },  // Zachary - bottom left
-    { x: cx + 60, y: cy + 60 },  // Tammy - bottom right
+    { x: cx - 90, y: cy - 90 },  // Keith - top left
+    { x: cx + 90, y: cy - 90 },  // Gabi - top right
+    { x: cx - 90, y: cy + 90 },  // Zachary - bottom left
+    { x: cx + 90, y: cy + 90 },  // Tammy - bottom right
   ];
 
   const centerNodes = CENTER_PEOPLE.map((p, i) => ({
