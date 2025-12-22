@@ -38,33 +38,46 @@ const CONNECTIONS = [
   ['keith', 'rylie'],
   ['gabi', 'rylie'],
   
-  // ER Visit
-  ['amy', 'rylie'],
-  ['coffey', 'amy'],
-  ['coffey', 'keith'],
-  ['coffey', 'rylie'],
+  // GABI'S INTERACTIONS (verified from entries)
+  ['gabi', 'amy'],        // Entry 1, 6 - At ER when Rylie examined
+  ['gabi', 'coffey'],     // Entry 2 - Present at ER with Keith
+  ['gabi', 'amber'],      // Entry 5 - CPS intake call
+  ['gabi', 'jennifer'],   // Entry 5 - CPS intake
+  ['gabi', 'pam'],        // Entry 8 - Home visit by Pam Frazier
   
-  // Sherri spoke with Amy Walker before calling Coffey
-  ['sherri', 'amy'],
-  ['sherri', 'coffey'],
-  ['sherri', 'amber'],
-  ['amber', 'jennifer'],
-  ['amber', 'gabi'],
-  ['amber', 'amy'],
-  ['amber', 'pam'],
-  ['pam', 'amber'],
-  ['pam', 'keith'],
-  ['pam', 'gabi'],
-  ['sherri', 'amber'],
-  ['sherri', 'tammy'],
-  ['sherri', 'rylie'],
-  ['sherri', 'reitzel'],
-  ['amber', 'keith'],
-  ['amber', 'amy'],
-  ['sherri', 'zachary'],
-  ['sherri', 'vickie'],
-  ['sherri', 'pastor'],
-  ['sherri', 'lena'],
+  // KEITH'S INTERACTIONS
+  ['keith', 'amy'],       // Entry 1, 6 - At ER
+  ['keith', 'coffey'],    // Entry 2 - Spoke with officer at ER
+  ['keith', 'amber'],     // Entry 11 - Phone call about placement
+  ['keith', 'pam'],       // Entry 8 - Home visit
+  
+  // AMY WALKER (NURSE) INTERACTIONS
+  ['amy', 'rylie'],       // Entry 1 - Medical exam
+  ['amy', 'coffey'],      // Entry 2 - Told officer findings
+  ['amy', 'amber'],       // Entry 6, 12 - Phone calls with CPS
+  ['amy', 'sherri'],      // Entry 3 - Sherri spoke with Amy before calling Coffey
+  
+  // OFFICER COFFEY
+  ['coffey', 'rylie'],    // Entry 2 - Spoke with child alone
+  ['coffey', 'sherri'],   // Entry 3 - Phone call from Sherri
+  
+  // SHERRI STOCK INTERACTIONS
+  ['sherri', 'amber'],    // Entry 4, 9 - CPS coordination
+  ['sherri', 'tammy'],    // Entry 10 - Interrogation
+  ['sherri', 'rylie'],    // Entry 10 - Interviewed child alone
+  ['sherri', 'reitzel'],  // Entry 10 - Got supervisor directives
+  ['sherri', 'zachary'],  // Entry 13, 14 - Picked up from work, interrogated
+  ['sherri', 'vickie'],   // Entry 13 - Present at visit
+  ['sherri', 'pastor'],   // Entry 13 - Present at visit
+  ['sherri', 'lena'],     // Entry 13 - CPS present
+  
+  // AMBER MECIMORE INTERACTIONS
+  ['amber', 'jennifer'],  // Entry 5 - Intake report
+  ['amber', 'pam'],       // Entry 7, 8 - Requested assistance, got report
+  
+  // PAM FRAZIER
+  ['pam', 'tammy'],       // Entry 8 - Home visit
+  ['pam', 'rylie'],       // Entry 8 - Child made no disclosure
 ];
 
 const CommunicationDiagram = ({ onClose }) => {
