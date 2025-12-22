@@ -260,14 +260,15 @@ const ViolationsCascade = ({ isOpen, onClose }) => {
     // Draw lines from inner to outer (based on agency)
     outerPositions.forEach((outerNode) => {
       const relatedInner = innerPositions.find(inner => {
-        if (outerNode.agency === 'CPS' && inner.id === 'jennifer_owen') return true;
+        if (outerNode.agency === 'CPS' && (inner.id === 'jennifer_owen' || inner.id === 'sw_reitzel')) return true;
         if (outerNode.agency === 'LAW' && inner.id === 'mccombs') return true;
-        if (outerNode.agency === 'MEDICAL' && inner.id === 'beth_oshbar') return true;
+        if (outerNode.agency === 'MEDICAL' && (inner.id === 'beth_oshbar' || inner.id === 'adrienne_opdyke')) return true;
         if (outerNode.agency === 'COURT' && inner.id === 'prosecution') return true;
         if (outerNode.agency === 'DEFENSE' && (inner.id === 'trial_counsel' || inner.id === 'herbert_pearce')) return true;
         if (outerNode.agency === 'STATE' && inner.id === 'prosecution') return true;
         if (outerNode.agency === 'FOSTER' && inner.id === 'jennifer_owen') return true;
         if (outerNode.agency === 'FAMILY' && inner.id === 'prosecution') return true;
+        if (outerNode.agency === 'VICTIM' && inner.id === 'jennifer_owen') return true;
         return false;
       });
 
