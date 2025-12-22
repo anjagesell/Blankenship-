@@ -37,6 +37,7 @@ const IndexPage = () => {
   const [showRouteAnalysis, setShowRouteAnalysis] = useState(false);
   const [showViolationsCascade, setShowViolationsCascade] = useState(false);
   const [showVisitorMonitor, setShowVisitorMonitor] = useState(false);
+  const [showAdminMenu, setShowAdminMenu] = useState(false);
 
   // Track page visit
   usePageTracker('index');
