@@ -601,6 +601,12 @@ const IndexPage = () => {
       {showRouteAnalysis && (
         <RouteAnalysis onClose={() => setShowRouteAnalysis(false)} />
       )}
+
+      {/* Violations Cascade Modal */}
+      <ViolationsCascade 
+        isOpen={showViolationsCascade} 
+        onClose={() => setShowViolationsCascade(false)} 
+      />
     </div>
   );
 };
