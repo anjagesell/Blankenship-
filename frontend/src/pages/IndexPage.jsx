@@ -552,7 +552,7 @@ const IndexPage = () => {
       {/* Admin Button - Bottom Right (Gold, Symbol Only) */}
       <div className="fixed bottom-6 right-6 z-40">
         <button
-          onClick={() => isAdmin ? setShowAdminMenu(prev => !prev) : setShowAdminLogin(true)}
+          onClick={(e) => { e.stopPropagation(); isAdmin ? setShowAdminMenu(prev => !prev) : setShowAdminLogin(true); }}
           className="p-3 rounded-full transition-all hover:scale-110"
           style={{
             background: 'linear-gradient(145deg, #d4af37 0%, #c5a028 50%, #9c7a1f 100%)',
@@ -572,6 +572,7 @@ const IndexPage = () => {
               border: '2px solid #d4af37',
               minWidth: '160px',
             }}
+            onClick={(e) => e.stopPropagation()}
           >
             <button
               onClick={() => { setShowVisitorMonitor(true); setShowAdminMenu(false); }}
