@@ -178,8 +178,8 @@ const VIOLATION_CATEGORIES = [
     title: 'Brady Violations',
     subtitle: 'Suppressed Exculpatory Evidence',
     icon: FileX,
-    color: '#3498db',
-    bgColor: 'rgba(52, 152, 219, 0.1)',
+    color: '#e74c3c',
+    bgColor: 'rgba(231, 76, 60, 0.1)',
     count: 7,
     violations: [
       {
