@@ -313,6 +313,27 @@ const MonthlyDetail = ({ monthDate, isAdmin, onClose }) => {
     }
   };
 
+  const handleReassignLineNumbers = async () => {
+    if (window.confirm('This will reorder all entries by TIME (earliest first). Continue?')) {
+      try {
+        const monthKey = monthDate.replace('/', '-');
+        const response = await fetch(`${BACKEND_URL}/api/monthly/${monthKey}/reassign?admin_password=${ADMIN_PASSWORD}`, {
+          method: 'POST'
+        });
+        
+        if (response.ok) {
+          alert('Line numbers reassigned by time order! Refreshing...');
+          fetchEntries(); // Refresh the list
+        } else {
+          throw new Error('Failed to reassign');
+        }
+      } catch (error) {
+        console.error('Reassign error:', error);
+        alert('Failed to reassign line numbers. Please try again.');
+      }
+    }
+  };
+
   const handleChange = (field, value) => {
     setEditForm({ ...editForm, [field]: value });
   };
