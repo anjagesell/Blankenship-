@@ -242,7 +242,7 @@ const CommunicationDiagram = ({ onClose }) => {
                 const dx = to.x - from.x;
                 const dy = to.y - from.y;
                 const len = Math.sqrt(dx * dx + dy * dy);
-                const offset = 35;
+                const offset = isCenter ? 25 : 35;
 
                 const x1 = from.x + (dx / len) * offset;
                 const y1 = from.y + (dy / len) * offset;
