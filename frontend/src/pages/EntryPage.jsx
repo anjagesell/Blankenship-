@@ -553,17 +553,17 @@ const EntryPage = () => {
 
       {/* Copyright Notice - Bottom of Page */}
       <div 
-        className="mt-4 mb-6 text-center px-4"
+        className="mt-2 mb-4 text-center px-4"
         style={{ 
           color: '#d4a574',
           fontFamily: 'Garamond, serif',
         }}
       >
-        <div className="text-xs sm:text-sm space-y-1">
+        <div className="text-[10px] sm:text-sm">
           <div className="font-semibold" style={{ color: '#d4af37' }}>
             © 2025 Blankenship Judicial Archives
           </div>
-          <div className="text-[10px] sm:text-xs">
+          <div className="text-[9px] sm:text-xs">
             Private Evidence Documentation • Authorized Access Only
           </div>
         </div>
