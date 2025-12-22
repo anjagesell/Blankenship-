@@ -332,6 +332,31 @@ const IndexPage = () => {
                 </h2>
               </div>
 
+              {/* Who Spoke With Whom - Only show in 2013 section */}
+              {year === '2013' && (
+                <div className="flex justify-center mb-6">
+                  <button
+                    onClick={() => setShowCommunicationDiagram(true)}
+                    className="px-6 py-3 rounded-lg flex items-center gap-3 transition-all hover:scale-105 shadow-lg"
+                    style={{
+                      background: 'linear-gradient(145deg, #2c3e50 0%, #1a252f 100%)',
+                      color: '#d4af37',
+                      border: '3px solid #d4af37',
+                      fontFamily: 'Georgia, serif',
+                      fontWeight: 'bold',
+                      boxShadow: '0 4px 20px rgba(212,175,55,0.3)',
+                    }}
+                  >
+                    <span className="text-2xl">👥</span>
+                    <div className="text-left">
+                      <div className="text-base">Who Spoke With Whom</div>
+                      <div className="text-xs text-yellow-600/70 font-normal">Communication Network — Nov 30, 2013</div>
+                    </div>
+                    <Users className="w-5 h-5 ml-2" />
+                  </button>
+                </div>
+              )}
+
               {/* Contents */}
               <div className="px-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
