@@ -832,25 +832,25 @@ const MonthlyDetail = ({ monthDate, isAdmin, onClose }) => {
                           </td>
                           {isAdmin && (
                             <>
-                              <td className="px-2 py-2 text-center">
-                                <div className="flex gap-1 justify-center">
-                                  <button
-                                    onClick={() => handleEdit(entry)}
-                                    className="p-1 rounded hover:scale-110 transition-all"
-                                    style={{ background: '#ffc107', color: '#000' }}
-                                    title="Edit"
-                                  >
-                                    <Edit2 className="w-3 h-3" />
-                                  </button>
-                                  <button
-                                    onClick={() => handleDelete(entry.id)}
-                                    className="p-1 rounded hover:scale-110 transition-all"
-                                    style={{ background: '#dc3545', color: '#fff' }}
-                                    title="Delete"
-                                  >
-                                    <Trash2 className="w-3 h-3" />
-                                  </button>
-                                </div>
+                              <td className="px-2 py-2 text-center" style={{ borderRight: '1px solid rgba(139,105,20,0.3)' }}>
+                                <button
+                                  onClick={() => handleEdit(entry)}
+                                  className="p-1.5 rounded hover:scale-110 transition-all"
+                                  style={{ background: '#ffc107', color: '#000' }}
+                                  title="Edit"
+                                >
+                                  <Edit2 className="w-4 h-4" />
+                                </button>
+                              </td>
+                              <td className="px-2 py-2 text-center" style={{ background: 'rgba(220, 53, 69, 0.1)' }}>
+                                <button
+                                  onClick={() => handleDelete(entry.id)}
+                                  className="p-2 rounded hover:scale-110 transition-all"
+                                  style={{ background: '#dc3545', color: '#fff' }}
+                                  title="Delete this line"
+                                >
+                                  <Trash2 className="w-4 h-4" />
+                                </button>
                               </td>
                             </>
                           )}
