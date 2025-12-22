@@ -249,6 +249,9 @@ async def upload_file(
     Upload a file (PDF, image, video, or audio) for a specific timeline/monthly entry.
     Stores file content directly in MongoDB for persistence across deployments.
     Requires admin password.
+    
+    HEIC/HEIF files are automatically converted to JPG for universal compatibility
+    across all devices (PC, Android, Apple, Tablets).
     """
     # Verify admin password
     verify_admin_password(admin_password)
@@ -262,10 +265,11 @@ async def upload_file(
     
     # Generate unique file ID
     file_id = str(uuid.uuid4())
-    file_extension = get_file_extension(file.filename)
+    original_extension = get_file_extension(file.filename)
+    original_filename = file.filename
     
     try:
-        # Read file content and encode as base64 for MongoDB storage
+        # Read file content
         file_content = await file.read()
         file_size = len(file_content)
         
@@ -273,14 +277,43 @@ async def upload_file(
         if file_size > 16 * 1024 * 1024:
             raise HTTPException(status_code=400, detail="File too large. Maximum size is 16MB.")
         
+        # Auto-convert HEIC/HEIF to JPG for universal device compatibility
+        final_filename = original_filename
+        final_extension = original_extension
+        final_content = file_content
+        
+        if original_extension.lower() in ['heic', 'heif'] and HEIC_SUPPORT:
+            try:
+                # Convert HEIC to JPG
+                img = Image.open(BytesIO(file_content))
+                
+                # Convert to RGB if necessary (for RGBA/P mode images)
+                if img.mode in ('RGBA', 'P'):
+                    img = img.convert('RGB')
+                
+                # Save as JPG
+                jpg_buffer = BytesIO()
+                img.save(jpg_buffer, 'JPEG', quality=85)
+                jpg_buffer.seek(0)
+                
+                final_content = jpg_buffer.read()
+                final_extension = 'jpg'
+                final_filename = original_filename.rsplit('.', 1)[0] + '.jpg'
+                file_size = len(final_content)
+                
+                logging.info(f"Converted {original_filename} to {final_filename} for universal compatibility")
+            except Exception as conv_error:
+                logging.warning(f"HEIC conversion failed, storing original: {conv_error}")
+                # Fall back to original if conversion fails
+        
         # Encode as base64 for storage
-        file_content_b64 = base64.b64encode(file_content).decode('utf-8')
+        file_content_b64 = base64.b64encode(final_content).decode('utf-8')
         
         # Create file record in database with content
         file_record = {
             "file_id": file_id,
-            "filename": file.filename,
-            "file_type": file_extension,
+            "filename": final_filename,
+            "file_type": final_extension,
             "file_size": file_size,
             "entry_id": entry_id,
             "upload_date": datetime.now(timezone.utc).isoformat(),
@@ -291,8 +324,8 @@ async def upload_file(
         
         return FileUploadResponse(
             file_id=file_id,
-            filename=file.filename,
-            file_type=file_extension,
+            filename=final_filename,
+            file_type=final_extension,
             file_size=file_size,
             upload_date=file_record["upload_date"],
             entry_id=entry_id
