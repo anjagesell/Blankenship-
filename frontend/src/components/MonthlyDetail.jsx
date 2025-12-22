@@ -731,7 +731,7 @@ const MonthlyDetail = ({ monthDate, isAdmin, adminInfo, onClose }) => {
                   </tr>
                 ) : entries.length === 0 ? (
                   <tr>
-                    <td colSpan={isAdmin ? "11" : "8"} className="px-3 py-6 text-center text-sm italic" style={{ color: '#5D4037' }}>
+                    <td colSpan={isAdmin ? "10" : "8"} className="px-3 py-6 text-center text-sm italic" style={{ color: '#5D4037' }}>
                       {isAdmin 
                         ? 'No entries yet. Click "Add Entry" to begin documenting this month.'
                         : 'No detailed entries for this month yet.'
