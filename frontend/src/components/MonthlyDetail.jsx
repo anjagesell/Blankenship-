@@ -346,12 +346,15 @@ const MonthlyDetail = ({ monthDate, isAdmin, adminInfo, onClose }) => {
 
   // Silent fetch (no loading spinner) for polling
   const fetchEntriesSilent = async () => {
+    // Don't refresh if user is currently editing - it would lose their work
+    if (editingId) return;
+    
     try {
       const monthKey = monthDate.replace('/', '-');
       const response = await fetch(`${BACKEND_URL}/api/monthly/${monthKey}`);
       if (response.ok) {
         const data = await response.json();
-        // Only update if data has changed
+        // Only update if data has changed and not editing
         if (JSON.stringify(data) !== JSON.stringify(entries)) {
           setEntries(data);
         }
@@ -362,6 +365,9 @@ const MonthlyDetail = ({ monthDate, isAdmin, adminInfo, onClose }) => {
   };
 
   const fetchEntries = async () => {
+    // Don't refresh if user is currently editing - it would lose their work
+    if (editingId) return;
+    
     try {
       setLoading(true);
       // Replace / with - for URL
