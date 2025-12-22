@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { indexEntriesByYear } from '../mock';
 import { Card } from '../components/ui/card';
-import { Calendar, PlayCircle, Boxes, Scale, AlertTriangle, HeartCrack, FileText, History, Lock, LockOpen, Shield, Mail, ChevronDown, ChevronUp, GitBranch, MapPin, Users } from 'lucide-react';
+import { Calendar, PlayCircle, Boxes, Scale, AlertTriangle, HeartCrack, FileText, History, Lock, LockOpen, Shield, Mail, ChevronDown, ChevronUp, GitBranch, MapPin, Users, Eye } from 'lucide-react';
 import MonthlyDetail from '../components/MonthlyDetail';
 import AdminLogin from '../components/AdminLogin';
 import CommunicationDiagram from '../components/CommunicationDiagram';
 import RouteAnalysis from '../components/RouteAnalysis';
 import EmbeddedRouteMap from '../components/EmbeddedRouteMap';
 import ViolationsCascadeHybrid from '../components/ViolationsCascadeHybrid';
+import VisitorMonitor from '../components/VisitorMonitor';
 
 // Icon mapping
 const iconMap = {
