@@ -412,6 +412,7 @@ const MonthlyDetail = ({ monthDate, isAdmin, onClose }) => {
         alert(`Successfully uploaded ${files.length} file(s)!`);
         // Refresh the exhibit files for this entry
         await fetchExhibitFiles(entryId);
+        triggerRefresh(); // Immediate refresh
       } catch (error) {
         alert(`Upload failed: ${error.message}`);
       } finally {
