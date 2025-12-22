@@ -701,7 +701,7 @@ const MonthlyDetail = ({ monthDate, isAdmin, onClose }) => {
                               style={{ background: '#fff', border: '1px solid #8b6914', color: '#5D4037' }}
                             />
                           </td>
-                          <td className="px-2 py-2 text-center">
+                          <td className="px-2 py-2 text-center" style={{ borderRight: '1px solid rgba(139,105,20,0.3)' }}>
                             <div className="flex gap-1 justify-center">
                               <button
                                 onClick={handleSave}
@@ -723,8 +723,8 @@ const MonthlyDetail = ({ monthDate, isAdmin, onClose }) => {
                               </button>
                             </div>
                           </td>
-                          <td className="px-2 py-2 text-center">
-                            <span className="text-[10px] italic" style={{ color: '#8b6914' }}>Save first</span>
+                          <td className="px-2 py-2 text-center" style={{ background: 'rgba(220, 53, 69, 0.1)' }}>
+                            <span className="text-[10px] italic" style={{ color: '#999' }}>Save first</span>
                           </td>
                         </>
                       ) : (
