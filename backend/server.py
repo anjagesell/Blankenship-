@@ -627,6 +627,55 @@ async def delete_monthly_entry(entry_id: str, admin_password: str):
     return {"status": "success", "message": "Monthly entry deleted"}
 
 
+# Reassign line numbers for a month (admin only)
+@api_router.post("/monthly/{month_key}/reassign")
+async def reassign_line_numbers(month_key: str, admin_password: str):
+    """Reassign line numbers based on time order (admin only)"""
+    verify_admin_password(admin_password)
+    
+    decoded_key = month_key.replace("-", "/")
+    entries = await db.monthly_entries.find({"month_key": decoded_key}, {"_id": 0}).to_list(1000)
+    
+    if not entries:
+        raise HTTPException(status_code=404, detail="No entries found for this month")
+    
+    # Helper to parse time for sorting
+    def parse_time(time_str):
+        if not time_str:
+            return 9999
+        time_str = time_str.lower().strip()
+        try:
+            # Handle various formats
+            import re
+            match = re.search(r'(\d{1,2}):?(\d{2})?\s*(am|pm)?', time_str)
+            if match:
+                hour = int(match.group(1))
+                minute = int(match.group(2)) if match.group(2) else 0
+                period = match.group(3)
+                
+                if period == 'pm' and hour != 12:
+                    hour += 12
+                elif period == 'am' and hour == 12:
+                    hour = 0
+                
+                return hour * 60 + minute
+        except:
+            pass
+        return 9999
+    
+    # Sort by time
+    sorted_entries = sorted(entries, key=lambda x: parse_time(x.get('time', '')))
+    
+    # Update line numbers
+    for i, entry in enumerate(sorted_entries, 1):
+        await db.monthly_entries.update_one(
+            {"id": entry["id"]},
+            {"$set": {"line_number": i}}
+        )
+    
+    return {"status": "success", "message": f"Reassigned line numbers for {len(sorted_entries)} entries"}
+
+
 # Include the router in the main app (after all routes are defined)
 app.include_router(api_router)
 
