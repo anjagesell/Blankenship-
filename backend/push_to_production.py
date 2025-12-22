@@ -166,14 +166,17 @@ def push_entries():
     """Push all entries to production"""
     print("Pushing November 2013 entries to production...")
     
+    # Admin password for the site
+    ADMIN_PASSWORD = "02071951"
+    
     success_count = 0
     fail_count = 0
     
     for entry in NOV_2013_ENTRIES:
         try:
-            # Use the monthly entry creation endpoint
+            # Use the monthly entry creation endpoint with admin password
             response = requests.post(
-                f"{PRODUCTION_URL}/monthly/entry",
+                f"{PRODUCTION_URL}/monthly/create?admin_password={ADMIN_PASSWORD}",
                 json=entry,
                 headers={"Content-Type": "application/json"},
                 timeout=30
