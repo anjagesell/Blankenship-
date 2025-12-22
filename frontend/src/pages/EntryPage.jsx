@@ -199,13 +199,13 @@ const EntryPage = () => {
       )}
 
       {/* Courthouse columns effect */}
-      <div className="absolute inset-0 opacity-10">
+      <div className="absolute inset-0 opacity-10 pointer-events-none">
         <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-white/20 to-transparent" />
         <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-white/20 to-transparent" />
       </div>
 
       {/* Main content */}
-      <div className="text-center space-y-4 sm:space-y-6 w-full max-w-md sm:max-w-2xl md:max-w-4xl relative z-10">
+      <div className="text-center w-full max-w-md sm:max-w-2xl md:max-w-4xl relative z-10 flex flex-col gap-4 sm:gap-6 mt-4 sm:mt-8">
         {/* Justicia symbol with dramatic lighting */}
         <div className="mb-4 relative">
           <div 
