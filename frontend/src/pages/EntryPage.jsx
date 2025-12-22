@@ -118,7 +118,7 @@ const EntryPage = () => {
 
   return (
     <div 
-      className="min-h-screen flex flex-col items-center justify-center relative px-3 overflow-hidden"
+      className="min-h-screen flex flex-col items-center justify-start relative px-3 py-4 overflow-x-hidden overflow-y-auto"
       style={{
         background: `
           linear-gradient(135deg, rgba(26, 26, 46, 0.95) 0%, rgba(22, 33, 62, 0.98) 100%),
