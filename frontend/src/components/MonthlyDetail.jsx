@@ -198,6 +198,7 @@ const ExhibitViewer = ({ file, onClose, isAdmin }) => {
               draggable={false}
             />
           ) : !loading && isPdf && blobUrl ? (
+            /* PDF VIEWER */
             <iframe 
               src={`${blobUrl}#toolbar=0&navpanes=0&scrollbar=1&view=FitH`} 
               title={file.filename} 
@@ -205,6 +206,47 @@ const ExhibitViewer = ({ file, onClose, isAdmin }) => {
               style={{ minHeight: '70vh', background: '#fff' }} 
               sandbox="allow-same-origin"
             />
+          ) : !loading && isVideo && blobUrl ? (
+            /* VIDEO PLAYER */
+            <video
+              src={blobUrl}
+              controls
+              controlsList="nodownload noplaybackrate"
+              disablePictureInPicture
+              playsInline
+              className="max-w-full max-h-[70vh] rounded"
+              style={{
+                background: '#000',
+              }}
+              onContextMenu={(e) => e.preventDefault()}
+            >
+              Your browser does not support video playback.
+            </video>
+          ) : !loading && isAudio && blobUrl ? (
+            /* AUDIO PLAYER */
+            <div className="w-full max-w-md p-6">
+              <div className="text-center mb-4">
+                <div 
+                  className="w-20 h-20 mx-auto rounded-full flex items-center justify-center mb-3"
+                  style={{ background: 'linear-gradient(145deg, #d4af37 0%, #9c7a1f 100%)' }}
+                >
+                  <FileText className="w-10 h-10" style={{ color: '#1a0f0a' }} />
+                </div>
+                <p className="text-white text-sm truncate">{file.filename}</p>
+              </div>
+              <audio
+                src={blobUrl}
+                controls
+                controlsList="nodownload"
+                className="w-full"
+                style={{
+                  filter: 'sepia(20%) saturate(70%) grayscale(0) hue-rotate(0deg)',
+                }}
+                onContextMenu={(e) => e.preventDefault()}
+              >
+                Your browser does not support audio playback.
+              </audio>
+            </div>
           ) : !loading && imageError ? (
             <div className="text-center p-6 sm:p-8">
               <FileText className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-4" style={{ color: '#d4af37' }} />
