@@ -618,14 +618,16 @@ const ViolationsCascade = ({ isOpen, onClose }) => {
             >
               <h4 className="text-xs font-bold mb-2" style={{ color: '#e74c3c' }}>
                 <FileWarning className="w-3 h-3 inline mr-1" />
-                THE CASCADE
+                THE CASCADE OF INJUSTICE
               </h4>
               <ul className="text-xs space-y-1" style={{ color: '#ccc' }}>
-                <li>🔴 1 False allegation → 56+ failures</li>
-                <li>🟠 13 days: Allegation to Arrest</li>
-                <li>🟡 5+ years: Ongoing injustice</li>
-                <li>🟢 4 professionals found NO evidence</li>
-                <li>🔵 Child accused GRANDPARENTS</li>
+                <li>🔴 1 False allegation by grandparents</li>
+                <li>🟠 8+ agencies involved in failure</li>
+                <li>🟡 25+ officials who violated rights</li>
+                <li>🟢 Amy Walker: Found NO evidence</li>
+                <li>🔵 Foster Mom: Child said "they lied"</li>
+                <li>🟣 Child accused GRANDPARENTS</li>
+                <li>⚪ All exculpatory evidence SUPPRESSED</li>
               </ul>
             </div>
           </div>
