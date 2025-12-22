@@ -4,7 +4,7 @@ import { X } from 'lucide-react';
 // CENTER FAMILY - Horizontal line: Keith, Gabi, Zachary, Tammy
 const CENTER_PEOPLE = [
   { id: 'keith', name: 'Keith', duty: 'Grandfather (Accuser)', color: '#e74c3c' },
-  { id: 'gabi', name: 'Gabi', duty: 'Grandmother (Accuser)', color: '#ff6b6b' },
+  { id: 'gabi', name: 'Gabi', duty: 'Grandmother (Accuser)', color: '#ff9500' },
   { id: 'zachary', name: 'Zachary', duty: 'Father (Accused)', color: '#2ecc71' },
   { id: 'tammy', name: 'Tammy', duty: 'Mother', color: '#27ae60' },
 ];
