@@ -413,6 +413,20 @@ def verify_admin_password(password: str):
         raise HTTPException(status_code=403, detail="Invalid admin password")
     return True
 
+# Activity logging helper (defined early for use throughout)
+async def log_activity(admin_name: str, action: str, target_type: str, target_id: str, description: str):
+    """Log an admin activity"""
+    activity = {
+        "id": str(uuid.uuid4()),
+        "admin_name": admin_name,
+        "action": action,
+        "target_type": target_type,
+        "target_id": target_id,
+        "target_description": description,
+        "timestamp": datetime.now(timezone.utc).isoformat()
+    }
+    await db.activity_logs.insert_one(activity)
+
 # Allowed file types
 ALLOWED_EXTENSIONS = {
     # Documents
