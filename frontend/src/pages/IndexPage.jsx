@@ -539,61 +539,49 @@ const IndexPage = () => {
           })}
         </div>
 
-      {/* Admin Login Button - Bottom Right */}
-      {!isAdmin ? (
+      {/* Admin Button - Bottom Right (Gold, Symbol Only) */}
+      <div className="fixed bottom-6 right-6 z-40">
         <button
-          onClick={() => setShowAdminLogin(true)}
-          className="fixed bottom-6 right-6 p-3 rounded-full transition-all hover:scale-110 z-40"
+          onClick={() => isAdmin ? setShowAdminMenu(prev => !prev) : setShowAdminLogin(true)}
+          className="p-3 rounded-full transition-all hover:scale-110"
           style={{
             background: 'linear-gradient(145deg, #d4af37 0%, #c5a028 50%, #9c7a1f 100%)',
             border: '2px solid #8b6914',
             boxShadow: '0 4px 16px rgba(212, 175, 55, 0.6)',
           }}
-          title="Admin Login"
         >
           <Shield className="w-5 h-5" style={{ color: '#1a0f0a' }} />
         </button>
-      ) : (
-        <div className="fixed bottom-6 right-6 flex items-center gap-2 z-40">
-          {/* Visitor Monitor Button */}
-          <button
-            onClick={() => setShowVisitorMonitor(true)}
-            className="px-3 py-2 rounded transition-all hover:scale-105 flex items-center gap-2"
+        
+        {/* Admin Menu (only visible when admin is logged in and menu is open) */}
+        {isAdmin && showAdminMenu && (
+          <div 
+            className="absolute bottom-14 right-0 rounded-lg shadow-2xl overflow-hidden"
             style={{
-              background: 'linear-gradient(145deg, #2ecc71 0%, #27ae60 100%)',
-              border: '2px solid #1e8449',
-              boxShadow: '0 4px 16px rgba(46, 204, 113, 0.6)',
-              color: '#fff',
-              fontFamily: 'Arial, sans-serif',
-              fontSize: '12px',
-              fontWeight: 'bold',
+              background: 'linear-gradient(145deg, #1a1a2e 0%, #0a0a12 100%)',
+              border: '2px solid #d4af37',
+              minWidth: '160px',
             }}
-            title="Visitor Monitor"
           >
-            <Eye className="w-4 h-4" />
-            VISITORS
-          </button>
-          
-          {/* Admin Logout Button */}
-          <button
-            onClick={handleAdminLogout}
-            className="px-4 py-2 rounded transition-all hover:scale-105 flex items-center gap-2"
-            style={{
-              background: 'linear-gradient(145deg, #8b0000 0%, #660000 100%)',
-              border: '2px solid #440000',
-              boxShadow: '0 4px 16px rgba(139, 0, 0, 0.6)',
-              color: '#fff',
-              fontFamily: 'Arial, sans-serif',
-              fontSize: '12px',
-              fontWeight: 'bold',
-            }}
-            title="Logout Admin"
-          >
-            <Shield className="w-4 h-4" />
-            ADMIN
-          </button>
-        </div>
-      )}
+            <button
+              onClick={() => { setShowVisitorMonitor(true); setShowAdminMenu(false); }}
+              className="w-full px-4 py-3 text-left text-sm flex items-center gap-2 hover:bg-white/10 transition-colors"
+              style={{ color: '#d4af37', borderBottom: '1px solid #333' }}
+            >
+              <Eye className="w-4 h-4" />
+              Monitor
+            </button>
+            <button
+              onClick={() => { handleAdminLogout(); setShowAdminMenu(false); }}
+              className="w-full px-4 py-3 text-left text-sm flex items-center gap-2 hover:bg-white/10 transition-colors"
+              style={{ color: '#d4af37' }}
+            >
+              <LockOpen className="w-4 h-4" />
+              Logout
+            </button>
+          </div>
+        )}
+      </div>
 
       {/* Admin Login Modal */}
       {showAdminLogin && (
