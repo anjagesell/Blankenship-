@@ -35,6 +35,7 @@ const IndexPage = () => {
   const [showCommunicationDiagram, setShowCommunicationDiagram] = useState(false);
   const [showRouteAnalysis, setShowRouteAnalysis] = useState(false);
   const [showViolationsCascade, setShowViolationsCascade] = useState(false);
+  const [showVisitorMonitor, setShowVisitorMonitor] = useState(false);
 
   // Add keyboard shortcut - press 'D' to open diagram
   useEffect(() => {
