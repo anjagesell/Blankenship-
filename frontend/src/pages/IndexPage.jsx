@@ -550,23 +550,45 @@ const IndexPage = () => {
           <Shield className="w-5 h-5" style={{ color: '#1a0f0a' }} />
         </button>
       ) : (
-        <button
-          onClick={handleAdminLogout}
-          className="fixed bottom-6 right-6 px-4 py-2 rounded transition-all hover:scale-105 z-40 flex items-center gap-2"
-          style={{
-            background: 'linear-gradient(145deg, #8b0000 0%, #660000 100%)',
-            border: '2px solid #440000',
-            boxShadow: '0 4px 16px rgba(139, 0, 0, 0.6)',
-            color: '#fff',
-            fontFamily: 'Arial, sans-serif',
-            fontSize: '12px',
-            fontWeight: 'bold',
-          }}
-          title="Logout Admin"
-        >
-          <Shield className="w-4 h-4" />
-          ADMIN
-        </button>
+        <div className="fixed bottom-6 right-6 flex items-center gap-2 z-40">
+          {/* Visitor Monitor Button */}
+          <button
+            onClick={() => setShowVisitorMonitor(true)}
+            className="px-3 py-2 rounded transition-all hover:scale-105 flex items-center gap-2"
+            style={{
+              background: 'linear-gradient(145deg, #2ecc71 0%, #27ae60 100%)',
+              border: '2px solid #1e8449',
+              boxShadow: '0 4px 16px rgba(46, 204, 113, 0.6)',
+              color: '#fff',
+              fontFamily: 'Arial, sans-serif',
+              fontSize: '12px',
+              fontWeight: 'bold',
+            }}
+            title="Visitor Monitor"
+          >
+            <Eye className="w-4 h-4" />
+            VISITORS
+          </button>
+          
+          {/* Admin Logout Button */}
+          <button
+            onClick={handleAdminLogout}
+            className="px-4 py-2 rounded transition-all hover:scale-105 flex items-center gap-2"
+            style={{
+              background: 'linear-gradient(145deg, #8b0000 0%, #660000 100%)',
+              border: '2px solid #440000',
+              boxShadow: '0 4px 16px rgba(139, 0, 0, 0.6)',
+              color: '#fff',
+              fontFamily: 'Arial, sans-serif',
+              fontSize: '12px',
+              fontWeight: 'bold',
+            }}
+            title="Logout Admin"
+          >
+            <Shield className="w-4 h-4" />
+            ADMIN
+          </button>
+        </div>
       )}
 
       {/* Admin Login Modal */}
