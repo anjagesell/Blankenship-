@@ -100,6 +100,8 @@ const ExhibitViewer = ({ file, onClose, isAdmin }) => {
   const fileType = file.file_type?.toLowerCase() || '';
   const isImage = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'heic', 'heif'].includes(fileType);
   const isPdf = fileType === 'pdf';
+  const isVideo = ['mp4', 'mov', 'avi', 'wmv', 'mpeg', 'mpg', 'flv', 'webm'].includes(fileType);
+  const isAudio = ['mp3', 'wav', 'aac', 'ogg', 'flac', 'm4a'].includes(fileType);
   const fileUrl = `${BACKEND_URL}/api/file/${file.file_id}`;
   
   return (
@@ -128,6 +130,8 @@ const ExhibitViewer = ({ file, onClose, isAdmin }) => {
             <span className="text-white font-semibold text-sm sm:text-base truncate" style={{ fontFamily: 'Georgia, serif' }}>
               {file.filename || 'Exhibit'}
             </span>
+            {isVideo && <span className="text-xs px-2 py-0.5 rounded" style={{ background: 'rgba(212,175,55,0.2)', color: '#d4af37' }}>VIDEO</span>}
+            {isAudio && <span className="text-xs px-2 py-0.5 rounded" style={{ background: 'rgba(212,175,55,0.2)', color: '#d4af37' }}>AUDIO</span>}
           </div>
           <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
             {isImage && !imageError && !loading && (
@@ -160,7 +164,7 @@ const ExhibitViewer = ({ file, onClose, isAdmin }) => {
             background: '#1a1a1a',
             border: '2px solid #d4af37',
             borderTop: 'none',
-            minHeight: '300px',
+            minHeight: isAudio ? '150px' : '300px',
             userSelect: 'none',
             WebkitUserSelect: 'none',
             WebkitTouchCallout: 'none',
@@ -174,6 +178,7 @@ const ExhibitViewer = ({ file, onClose, isAdmin }) => {
             </div>
           )}
           
+          {/* IMAGE VIEWER */}
           {!loading && isImage && !imageError && blobUrl ? (
             <img 
               src={blobUrl} 
