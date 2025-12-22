@@ -79,6 +79,15 @@ const IndexPage = () => {
     sessionStorage.removeItem('blankenship_admin');
   };
 
+  // Close admin menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = () => setShowAdminMenu(false);
+    if (showAdminMenu) {
+      document.addEventListener('click', handleClickOutside);
+      return () => document.removeEventListener('click', handleClickOutside);
+    }
+  }, [showAdminMenu]);
+
   // Use the pre-organized entries by year
   const entriesByYear = indexEntriesByYear;
   const years = ALL_YEARS.map(String);
