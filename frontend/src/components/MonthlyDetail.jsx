@@ -428,22 +428,40 @@ const MonthlyDetail = ({ monthDate, isAdmin, onClose }) => {
           </div>
           <div className="flex items-center gap-2">
             {isAdmin && (
-              <button
-                onClick={handleAdd}
-                className="px-3 py-2 rounded flex items-center gap-2 transition-all hover:scale-105"
-                style={{
-                  background: 'linear-gradient(145deg, #d4af37 0%, #c5a028 50%, #9c7a1f 100%)',
-                  color: '#1a0f0a',
-                  border: '2px solid #8b6914',
-                  boxShadow: '0 4px 12px rgba(0,0,0,0.6)',
-                  fontFamily: 'Arial, sans-serif',
-                  fontWeight: 'bold',
-                  fontSize: '12px',
-                }}
-              >
-                <Plus className="w-4 h-4" />
-                Add Entry
-              </button>
+              <>
+                <button
+                  onClick={handleReassignLineNumbers}
+                  className="px-3 py-2 rounded flex items-center gap-2 transition-all hover:scale-105"
+                  style={{
+                    background: 'linear-gradient(145deg, #17a2b8 0%, #138496 100%)',
+                    color: '#fff',
+                    border: '2px solid #117a8b',
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.6)',
+                    fontFamily: 'Arial, sans-serif',
+                    fontWeight: 'bold',
+                    fontSize: '11px',
+                  }}
+                  title="Reorder entries by time (earliest first)"
+                >
+                  🔄 Reassign #s
+                </button>
+                <button
+                  onClick={handleAdd}
+                  className="px-3 py-2 rounded flex items-center gap-2 transition-all hover:scale-105"
+                  style={{
+                    background: 'linear-gradient(145deg, #d4af37 0%, #c5a028 50%, #9c7a1f 100%)',
+                    color: '#1a0f0a',
+                    border: '2px solid #8b6914',
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.6)',
+                    fontFamily: 'Arial, sans-serif',
+                    fontWeight: 'bold',
+                    fontSize: '12px',
+                  }}
+                >
+                  <Plus className="w-4 h-4" />
+                  Add Entry
+                </button>
+              </>
             )}
             <button
               onClick={onClose}
