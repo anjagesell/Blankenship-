@@ -72,20 +72,9 @@ const IndexPage = () => {
     sessionStorage.removeItem('blankenship_admin');
   };
 
-  // Group entries by year
-  const entriesByYear = indexEntries.reduce((acc, entry) => {
-    if (entry.id === 0) {
-      if (!acc['2013']) acc['2013'] = [];
-      acc['2013'].push(entry);
-    } else if (entry.date) {
-      const year = entry.date.split('/')[1];
-      if (!acc[year]) acc[year] = [];
-      acc[year].push(entry);
-    }
-    return acc;
-  }, {});
-
-  const years = Object.keys(entriesByYear).sort();
+  // Use the pre-organized entries by year
+  const entriesByYear = indexEntriesByYear;
+  const years = ALL_YEARS.map(String);
 
   const toggleYear = (year) => {
     setOpenYears(prev => ({
