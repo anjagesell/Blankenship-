@@ -930,6 +930,240 @@ async def reassign_line_numbers(month_key: str, admin_password: str):
     return {"status": "success", "message": f"Reassigned line numbers for {len(sorted_entries)} entries"}
 
 
+# ============================================
+# MULTI-ADMIN SYSTEM
+# ============================================
+
+# Admin account model
+class AdminAccount(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+    
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    name: str  # e.g., "Larsen"
+    password: str
+    is_owner: bool = False  # Only owner can add/remove admins and see passwords
+    created_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+
+class AdminLogin(BaseModel):
+    name: str
+    password: str
+
+class AdminCreate(BaseModel):
+    name: str
+    password: str
+
+# Activity log model
+class ActivityLog(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+    
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    admin_name: str
+    action: str  # "created", "edited", "deleted", "uploaded", "deleted_file"
+    target_type: str  # "entry", "file"
+    target_id: str
+    target_description: str  # Brief description of what was affected
+    timestamp: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+
+# Entry lock model
+class EntryLock(BaseModel):
+    entry_id: str
+    admin_name: str
+    locked_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+
+# Initialize owner account on startup
+@app.on_event("startup")
+async def init_admin_accounts():
+    """Create the owner admin account if it doesn't exist"""
+    owner = await db.admin_accounts.find_one({"is_owner": True})
+    if not owner:
+        owner_account = {
+            "id": str(uuid.uuid4()),
+            "name": "Larsen",
+            "password": "02071951",
+            "is_owner": True,
+            "created_at": datetime.now(timezone.utc).isoformat()
+        }
+        await db.admin_accounts.insert_one(owner_account)
+        logging.info("Owner admin account 'Larsen' created")
+
+# Admin login endpoint
+@api_router.post("/admin/login")
+async def admin_login(credentials: AdminLogin):
+    """Verify admin credentials and return admin info"""
+    admin = await db.admin_accounts.find_one(
+        {"name": {"$regex": f"^{credentials.name}$", "$options": "i"}, "password": credentials.password},
+        {"_id": 0}
+    )
+    if not admin:
+        raise HTTPException(status_code=401, detail="Invalid name or password")
+    
+    return {
+        "success": True,
+        "admin": {
+            "id": admin["id"],
+            "name": admin["name"],
+            "is_owner": admin.get("is_owner", False)
+        }
+    }
+
+# Get all admins (owner only - includes passwords)
+@api_router.get("/admin/team")
+async def get_admin_team(admin_id: str):
+    """Get all admin accounts - owner sees passwords, others don't"""
+    requesting_admin = await db.admin_accounts.find_one({"id": admin_id}, {"_id": 0})
+    if not requesting_admin:
+        raise HTTPException(status_code=401, detail="Admin not found")
+    
+    admins = await db.admin_accounts.find({}, {"_id": 0}).to_list(100)
+    
+    # If owner, include passwords; otherwise hide them
+    if requesting_admin.get("is_owner", False):
+        return {"admins": admins, "is_owner_view": True}
+    else:
+        # Hide passwords for non-owners
+        for admin in admins:
+            admin.pop("password", None)
+        return {"admins": admins, "is_owner_view": False}
+
+# Create new admin (owner only)
+@api_router.post("/admin/team/create")
+async def create_admin(admin_id: str, new_admin: AdminCreate):
+    """Create a new admin account (owner only)"""
+    requesting_admin = await db.admin_accounts.find_one({"id": admin_id}, {"_id": 0})
+    if not requesting_admin or not requesting_admin.get("is_owner", False):
+        raise HTTPException(status_code=403, detail="Only the owner can add team members")
+    
+    # Check if name already exists
+    existing = await db.admin_accounts.find_one(
+        {"name": {"$regex": f"^{new_admin.name}$", "$options": "i"}}
+    )
+    if existing:
+        raise HTTPException(status_code=400, detail="An admin with this name already exists")
+    
+    new_account = {
+        "id": str(uuid.uuid4()),
+        "name": new_admin.name,
+        "password": new_admin.password,
+        "is_owner": False,
+        "created_at": datetime.now(timezone.utc).isoformat()
+    }
+    await db.admin_accounts.insert_one(new_account)
+    
+    # Log activity
+    await log_activity(requesting_admin["name"], "added", "admin", new_account["id"], f"Added Admin. {new_admin.name}")
+    
+    return {"success": True, "admin": new_account}
+
+# Delete admin (owner only)
+@api_router.delete("/admin/team/{target_admin_id}")
+async def delete_admin(target_admin_id: str, admin_id: str):
+    """Delete an admin account (owner only)"""
+    requesting_admin = await db.admin_accounts.find_one({"id": admin_id}, {"_id": 0})
+    if not requesting_admin or not requesting_admin.get("is_owner", False):
+        raise HTTPException(status_code=403, detail="Only the owner can remove team members")
+    
+    target_admin = await db.admin_accounts.find_one({"id": target_admin_id}, {"_id": 0})
+    if not target_admin:
+        raise HTTPException(status_code=404, detail="Admin not found")
+    
+    if target_admin.get("is_owner", False):
+        raise HTTPException(status_code=400, detail="Cannot remove the owner account")
+    
+    await db.admin_accounts.delete_one({"id": target_admin_id})
+    
+    # Log activity
+    await log_activity(requesting_admin["name"], "removed", "admin", target_admin_id, f"Removed Admin. {target_admin['name']}")
+    
+    return {"success": True, "message": f"Admin. {target_admin['name']} removed"}
+
+# Activity logging helper
+async def log_activity(admin_name: str, action: str, target_type: str, target_id: str, description: str):
+    """Log an admin activity"""
+    activity = {
+        "id": str(uuid.uuid4()),
+        "admin_name": admin_name,
+        "action": action,
+        "target_type": target_type,
+        "target_id": target_id,
+        "target_description": description,
+        "timestamp": datetime.now(timezone.utc).isoformat()
+    }
+    await db.activity_logs.insert_one(activity)
+
+# Get activity logs (all admins can view)
+@api_router.get("/admin/activity")
+async def get_activity_logs(admin_id: str, limit: int = 100, skip: int = 0):
+    """Get activity logs - visible to all admins"""
+    admin = await db.admin_accounts.find_one({"id": admin_id}, {"_id": 0})
+    if not admin:
+        raise HTTPException(status_code=401, detail="Admin not found")
+    
+    total = await db.activity_logs.count_documents({})
+    logs = await db.activity_logs.find({}, {"_id": 0}).sort("timestamp", -1).skip(skip).limit(limit).to_list(limit)
+    
+    return {"logs": logs, "total": total}
+
+# Entry locking endpoints
+@api_router.post("/admin/lock/{entry_id}")
+async def lock_entry(entry_id: str, admin_id: str):
+    """Lock an entry for editing"""
+    admin = await db.admin_accounts.find_one({"id": admin_id}, {"_id": 0})
+    if not admin:
+        raise HTTPException(status_code=401, detail="Admin not found")
+    
+    # Check if already locked by someone else
+    existing_lock = await db.entry_locks.find_one({"entry_id": entry_id}, {"_id": 0})
+    if existing_lock and existing_lock["admin_name"] != admin["name"]:
+        # Check if lock is stale (older than 5 minutes)
+        lock_time = datetime.fromisoformat(existing_lock["locked_at"])
+        if (datetime.now(timezone.utc) - lock_time).seconds < 300:
+            return {"locked": True, "by": existing_lock["admin_name"], "self": False}
+    
+    # Create or update lock
+    await db.entry_locks.update_one(
+        {"entry_id": entry_id},
+        {"$set": {
+            "entry_id": entry_id,
+            "admin_name": admin["name"],
+            "locked_at": datetime.now(timezone.utc).isoformat()
+        }},
+        upsert=True
+    )
+    
+    return {"locked": True, "by": admin["name"], "self": True}
+
+@api_router.delete("/admin/lock/{entry_id}")
+async def unlock_entry(entry_id: str, admin_id: str):
+    """Unlock an entry"""
+    admin = await db.admin_accounts.find_one({"id": admin_id}, {"_id": 0})
+    if not admin:
+        raise HTTPException(status_code=401, detail="Admin not found")
+    
+    await db.entry_locks.delete_one({"entry_id": entry_id, "admin_name": admin["name"]})
+    return {"unlocked": True}
+
+@api_router.get("/admin/locks")
+async def get_all_locks(admin_id: str):
+    """Get all current entry locks"""
+    admin = await db.admin_accounts.find_one({"id": admin_id}, {"_id": 0})
+    if not admin:
+        raise HTTPException(status_code=401, detail="Admin not found")
+    
+    locks = await db.entry_locks.find({}, {"_id": 0}).to_list(100)
+    
+    # Filter out stale locks (older than 5 minutes)
+    active_locks = []
+    for lock in locks:
+        lock_time = datetime.fromisoformat(lock["locked_at"])
+        if (datetime.now(timezone.utc) - lock_time).seconds < 300:
+            active_locks.append(lock)
+        else:
+            # Clean up stale lock
+            await db.entry_locks.delete_one({"entry_id": lock["entry_id"]})
+    
+    return {"locks": active_locks}
+
+
 # Include the router in the main app (after all routes are defined)
 app.include_router(api_router)
 
