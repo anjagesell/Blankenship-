@@ -139,8 +139,8 @@ const VIOLATION_CATEGORIES = [
     title: '14th Amendment Violations',
     subtitle: 'Due Process & Equal Protection',
     icon: Scale,
-    color: '#2ecc71',
-    bgColor: 'rgba(46, 204, 113, 0.1)',
+    color: '#e74c3c',
+    bgColor: 'rgba(231, 76, 60, 0.1)',
     count: 4,
     violations: [
       {
