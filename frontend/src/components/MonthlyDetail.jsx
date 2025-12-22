@@ -305,6 +305,7 @@ const MonthlyDetail = ({ monthDate, isAdmin, onClose }) => {
           setEntries(entries.map(e => 
             e.id === editingId ? updatedEntry : e
           ));
+          triggerRefresh(); // Immediate refresh
         } else {
           throw new Error('Failed to update entry');
         }
@@ -337,6 +338,7 @@ const MonthlyDetail = ({ monthDate, isAdmin, onClose }) => {
         
         if (response.ok) {
           setEntries(entries.filter(e => e.id !== id));
+          triggerRefresh(); // Immediate refresh
         } else {
           throw new Error('Failed to delete entry');
         }
@@ -357,7 +359,7 @@ const MonthlyDetail = ({ monthDate, isAdmin, onClose }) => {
         
         if (response.ok) {
           alert('Line numbers reassigned by time order! Refreshing...');
-          fetchEntries(); // Refresh the list
+          triggerRefresh(); // Immediate refresh
         } else {
           throw new Error('Failed to reassign');
         }
