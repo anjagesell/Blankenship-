@@ -656,6 +656,17 @@ const MonthlyDetail = ({ monthDate, isAdmin, adminInfo, onClose }) => {
                   {isAdmin && (
                     <>
                       <th 
+                        className="px-2 py-3 text-center text-xs sm:text-sm font-bold uppercase tracking-wider"
+                        style={{ 
+                          color: '#2ecc71',
+                          fontFamily: 'Arial, sans-serif',
+                          borderRight: '1px solid #8b6914',
+                          background: 'rgba(46, 204, 113, 0.15)',
+                        }}
+                      >
+                        Insert
+                      </th>
+                      <th 
                         className="px-3 py-3 text-center text-xs sm:text-sm font-bold uppercase tracking-wider"
                         style={{ 
                           color: '#d4af37',
@@ -663,7 +674,7 @@ const MonthlyDetail = ({ monthDate, isAdmin, adminInfo, onClose }) => {
                           borderRight: '1px solid #8b6914',
                         }}
                       >
-                        Actions
+                        Edit
                       </th>
                       <th 
                         className="px-3 py-3 text-center text-xs sm:text-sm font-bold uppercase tracking-wider"
@@ -673,7 +684,7 @@ const MonthlyDetail = ({ monthDate, isAdmin, adminInfo, onClose }) => {
                           background: 'rgba(220, 53, 69, 0.3)',
                         }}
                       >
-                        🗑️ DELETE
+                        🗑️
                       </th>
                     </>
                   )}
