@@ -2,7 +2,7 @@
 
 ## Test Summary - December 21, 2024
 
-**URL Tested**: https://justice-witness.preview.emergentagent.com/index  
+**URL Tested**: https://truth-finder-20.preview.emergentagent.com/index  
 **Feature**: "Who Spoke With Whom" Communication Diagram  
 **Tester**: Testing Agent
 

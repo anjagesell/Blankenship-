@@ -4,7 +4,7 @@
 **Date:** December 21, 2024  
 **Tester:** Testing Agent  
 **Feature:** "Who Spoke With Whom" Button and Communication Diagram Modal  
-**URL Tested:** https://justice-witness.preview.emergentagent.com/index
+**URL Tested:** https://truth-finder-20.preview.emergentagent.com/index
 
 ---
 

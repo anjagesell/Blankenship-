@@ -3,66 +3,87 @@ The user wants to build a private, password-protected website named Blankenship 
 
 **PRODUCT REQUIREMENTS:**
 1.  **Entry Page:** A password-protected entry page () with a mandatory, scroll-to-accept Terms of Use agreement.
-2.  **Investigative Structure:** A system to view evidence, which has evolved from a main timeline to a series of yearly/monthly detailed logs inside envelope icons.
+2.  **Investigative Structure:** A system to view evidence via yearly/monthly detailed logs accessible through envelope icons.
 3.  **Admin & Upload Functionality:**
     *   A secure admin section (password: ) for content management.
-    *   Admin can add, edit, and delete entries in the detailed logs.
-    *   Admin can upload evidence files (PDFs, images) associated with events.
+    *   Admin can add, edit, and delete entries and upload evidence files (PDFs, images).
 4.  **Evidence Visualization:**
-    *   A Who Spoke to Whom network diagram to visualize communications between individuals.
-    *   A Geographic Route Analysis map to show the timeline and feasibility of a specific journey on Nov 30, 2013.
-5.  **Aesthetic:** A serious, courthouse/legal chamber design with marble, mahogany, and brass/gold accents.
-6.  **Content Protection:** Readers should only be able to view exhibits in a popup, not download them directly. Right-click and other casual copy methods should be disabled.
-7.  **Core Narrative:** To present evidence of Zackary Blankenship's wrongful imprisonment and honor his late brother, Jacob.
+    *   A Who Spoke to Whom network diagram to visualize communications.
+    *   A Geographic Route Analysis map.
+5.  **Aesthetic:** A serious, courthouse/legal chamber design.
+6.  **Content Protection:** Readers can only view exhibits in a popup; downloads and right-clicks are disabled.
+7.  **Core Narrative:** To present evidence of Zackary Blankenship's wrongful imprisonment.
+8.  **Explicit User Instructions:** The user has explicitly and repeatedly demanded that **no outside agents (sub-agents) be used** and that their **production URL should never be changed**. All work must be deployed to their existing site.
 
 **User's preferred language**: English
 
 **what currently exists?**
-The application is a React/FastAPI/MongoDB evidence management system. The key functionality has been consolidated into a system of Monthly Detailed Logs accessible via yearly envelope icons on the main page. The original main Evidence Timeline has been removed at the user's request.
+The application is a React/FastAPI/MongoDB evidence management system. The main page displays an embedded route map and yearly envelope icons that open modals with detailed monthly evidence logs.
 
-- **Data Migration:** All user data from a previous deployment (14 November 2013 entries and 36 associated exhibit files) has been successfully migrated to the current environment's database.
-- **Main Page:** Displays an embedded Geographic Route Analysis map at the top, followed by clickable envelope icons for each year (e.g., 2013, 2014). Buttons are present to open the Who Spoke to Whom diagram and the full Route Analysis page.
-- **Monthly Detailed Logs:** A modal view that shows a table of evidence entries for a given month. It includes line numbers, admin controls (Add, Edit, Delete), and an EXHIBITS column.
-- **Exhibit Handling:** Admins can upload files for each entry. Regular users see exhibit badges and can view them in a secure, view-only popup. Admins have the ability to delete individual exhibits.
-- **Evidence Visualization:**
-    - A Geographic Route Analysis map has been created as a static component and an embedded view, detailing a 5-point journey from Nov 30, 2013. Downloadable Word and PNG versions of this analysis are available.
-    - A Who Spoke to Whom network diagram component () has replaced the old Genogram. It is designed to extract names from log entries and display connections, but currently uses generic placeholders.
+The core of the recent work is the  component, which has been extensively developed through rapid, iterative feedback from the user. It now displays a complex, color-coded, and highly specific network graph of individuals involved in the case, with the central family members represented as squares in a horizontal line.
 
 **Last working item**:
-- **Last item agent was working**: The agent successfully migrated all user data (14 entries from November 2013 and 36 associated exhibit files) from a previous deployment () into the current session's MongoDB database. This was done to resolve the user's issue of missing data after a fork.
-- **Status**: USER VERIFICATION PENDING
-- **Agent Testing Done**: Y (Agent verified the counts of migrated entries and files via database checks.)
-- **Which testing method agent to use?** Manual user testing. The user needs to log in, navigate to the November 2013 detailed log, and confirm that all 14 of their entries and the associated 36 exhibits are present and displaying correctly.
-- **User Testing Done**: N
+- **Last item agent was working**: The agent was attempting to resolve a critical deployment failure. The user reported that all the extensive work done on the Who Spoke to Whom diagram in the preview environment was not showing up on their live production URL after they performed a Save and Deploy. This caused extreme user frustration regarding the different URLs and the perceived involvement of outside agents. The agent identified the environment discrepancy and had just begun migrating data from the user's live site to the current preview environment to unify them before the user decided to fork the session.
+- **Status**: BLOCKED
+- **Agent Testing Done**: N/A (The issue is a deployment/environment-sync problem, not a feature bug.)
+- **Which testing method agent to use?** Manual verification. The next agent must first ensure the codebase and data are unified, then guide the user to deploy. Finally, take a screenshot of the *live production URL* to verify the fix. DO NOT use the  as it failed previously.
+- **User Testing Done**: N (User's attempt to test on the live site is what revealed the deployment failure.)
 
 **All Pending/In progress Issue list**:
-- **Issue 1**: The Who Spoke With Whom diagram uses generic placeholders (DSS, POLICE) instead of actual individuals' names. (P0)
-- **Issue 2**: MS Word uploads (, ) are not working. (P2)
+- **Issue 1**: Deployment Failure & Environment Sync (P0)
+- **Issue 2**: Create Time-Sliced Diagrams (P1)
+- **Issue 3**: Incorrect Placement of New Timeline Entries (P2)
+- **Issue 4**: MS Word Upload Failure (P3)
 
 **Issues Detail**:
-- **Issue 1: Who Spoke With Whom Diagram Needs Real Names**
-    - **Description**: The user wants the communication network diagram to display the real names of individuals involved (specific CPS workers, detectives, etc.) instead of generic group labels.
-    - **Attempted fixes**: The agent identified that the names are located within the user's uploaded scanned documents (PDFs/images). The agent was unable to access these files from the preview environment in the last session to perform OCR or manual extraction. This is the primary blocker for completing the feature.
+- **Issue 1: Deployment Failure & Environment Sync**
+    - **Description**: Changes made in the preview environment are not reflecting on the user's deployed site. This is the source of all current user frustration. The user wants all work consolidated and deployed to their single, permanent URL.
+    - **Attempted fixes**: The agent identified the environment mismatch and started migrating data from the live site to the preview environment. The  previously failed with a  error. The previous agent got stuck in a loop trying to screenshot the non-functioning modal on the live site.
     - **Next debug checklist**:
-        1. Confirm with the user that the migrated data (including exhibit files) is now accessible in the current environment.
-        2. Propose a strategy to extract names from the document files. Options:
-            - Ask the user to manually list the names from the key documents.
-            - Investigate using a tool or library (e.g.,  for OCR) to automatically read the text from the exhibit files (, ). This may require installing new dependencies.
-        3. Once names are extracted, update  to parse these names and generate the network graph correctly.
-    - **Why fix this issue and what will be achieved with the fix?**: This is the user's main desired feature for visualizing the case's key players and their interactions. Completing it will provide a powerful tool for analyzing the evidence.
-    - **Status**: IN PROGRESS
-    - **Is recurring issue?**: Y (The challenge of extracting data from files has come up before).
-    - **Should Test frontend/backend/both after fix?**: Frontend.
-    - **Blocked on other issue**: None.
+        1.  **Reassure the user** that you understand the issue and will focus solely on getting their work live on their correct URL.
+        2.  Verify that the code in  is the final, user-approved version.
+        3.  Verify the data migration from the live site was successful and the local database is now the single source of truth.
+        4.  Clean up any debugging code. Specifically, revert the change in  that forces the diagram modal to be open by default. The state  should be initialized to .
+        5.  Ask the user to perform the Save and Deploy action again.
+        6.  After they confirm, navigate to the live URL and take a screenshot to prove the new diagram is live. If the modal click fails in the screenshot tool, temporarily set the state to  again to capture the image, show the user, and then immediately revert the code.
+    - **Why fix this issue and what will be achieved with the fix?**: This is the top priority. Fixing it will resolve the user's frustration and restore their confidence by making all the recent progress visible on their production site.
+    - **Status**: BLOCKED
+    - **Is recurring issue?**: Y
+    - **Should Test frontend/backend/both after fix?**: Both (Frontend screenshot of live URL, Backend to confirm data persistence).
 
-- **Issue 2: MS Word Upload Failure**
-    - **Description**: While JPEG and PDF uploads work, MS Word documents (, ) fail to upload. This was noted in the initial handoff.
-    - **Attempted fixes**: None attempted. This was de-prioritized.
+- **Issue 2: Create Time-Sliced Diagrams**
+    - **Description**: The user wants to create new diagrams filtered by a specific time window (e.g., 8 AM - 11 AM).
+    - **Attempted fixes**: The agent checked the existing data and found no entries within that specific time frame.
     - **Next debug checklist**:
-        1. In , review the  endpoint and the allowed MIME types.
-        2. Add the correct MIME types for  () and  ().
-        3. Test uploading a  file and inspect backend logs for any errors during processing.
-    - **Why fix this issue and what will be achieved with the fix?**: It will complete the file type support requested by theuser, making the exhibit upload feature more versatile.
+        1.  Wait for the user to add the morning entries into the timeline.
+        2.  Once data is present, modify the backend to filter entries by a time range.
+        3.  Add UI controls on the frontend to allow the user to select a time range for the diagram.
+    - **Why fix this issue and what will be achieved with the fix?**: This is the user's next desired feature for evidence analysis.
+    - **Status**: NOT STARTED
+    - **Is recurring issue?**: N
+    - **Should Test frontend/backend/both after fix?**: Both.
+    - **Blocked on other issue**: Issue 1: Deployment Failure. Also blocked on user providing the necessary data.
+
+- **Issue 3: Incorrect Placement of New Timeline Entries**
+    - **Description**: The user requested two blank entry spaces at the top of the Nov. 30th timeline, but the agent's script added them to the bottom.
+    - **Attempted fixes**: None. The issue was superseded by the deployment failure.
+    - **Next debug checklist**:
+        1.  Review the backend logic for creating entries.
+        2.  Modify the logic to ensure new entries are either inserted at the top or that the entire list is re-sorted by date/time after any addition.
+    - **Why fix this issue and what will be achieved with the fix?**: Fulfills a direct user request and allows for correct chronological data entry.
+    - **Status**: NOT STARTED
+    - **Is recurring issue?**: N
+    - **Should Test frontend/backend/both after fix?**: Both.
+    - **Blocked on other issue**: Issue 1: Deployment Failure.
+
+- **Issue 4: MS Word Upload Failure**
+    - **Description**: The application fails to upload  and  files. This is a low-priority carry-over from the previous session.
+    - **Attempted fixes**: None.
+    - **Next debug checklist**:
+        1.  Review the  endpoint in .
+        2.  Add the correct MIME types for Word documents ( and ).
+        3.  Test by uploading a  file.
+    - **Why fix this issue and what will be achieved with the fix?**: Completes the requested file type support for the evidence upload feature.
     - **Status**: NOT STARTED
     - **Is recurring issue?**: N
     - **Should Test frontend/backend/both after fix?**: Both.
@@ -73,114 +94,96 @@ The application is a React/FastAPI/MongoDB evidence management system. The key f
 
 **Upcoming and Future Tasks**
 - **Upcoming Tasks**:
-    *   (P0) Populate the Who Spoke to Whom diagram with actual individual names (continuation of Issue 1).
+    - (P0) Implement time-sliced diagrams (Issue 2).
+    - (P1) Fix new timeline entry placement (Issue 3).
 - **Future Tasks**:
-    *   (P1) Implement the Relationship Matrix (Option D). The user expressed strong interest in this as a future enhancement to see communication density in a grid format.
-    *   (P2) Build a simple admin interface for viewing and managing all uploaded evidence files in one place.
+    - (P1) Implement the Relationship Matrix (Option D).
+    - (P2) Build an admin interface for managing all uploaded files.
+    - (P3) Fix MS Word upload failure (Issue 4).
 
 **Completed work in this session**
-- **Full Data Migration**: Rescued and imported all user entries (14) and exhibit files (36) from a previous deployment into the current database.
-- **Geographic Route Analysis Feature**:
-    - Created a new page () and an embedded component () visualizing a 5-point journey from Nov 30, 2013.
-    - Implemented downloadable  and  versions of the analysis via a new backend endpoint.
-    - Refined the map image based on user feedback (white background, fixed text overlap).
-- **Evidence Timeline Removal**: Removed the main timeline from the  as requested, focusing the UI on the Monthly Detailed Logs.
-- **Genogram Replacement**: Replaced the old  with a new, more advanced  designed to show a Who Spoke to Whom network.
-- **Monthly Detailed Log Enhancements**:
-    - Added line numbers ( column).
-    - Made the Notes column wider for readability.
-    - Implemented a secure popup viewer () for non-admins to prevent direct file downloads.
-    - Ensured the EXHIBITS column is visible to all users, while upload/delete controls remain admin-only.
-- **User Support**: Addressed significant user frustration regarding changing URLs, explaining the deployment process and successfully migrating data to consolidate work.
+- **Who Spoke to Whom Diagram V1 Complete**: The diagram feature was built from scratch and heavily iterated upon to meet precise user specifications. This includes:
+    - Extracting all individuals from the November 2013 timeline entries.
+    - Building an interactive, color-coded network graph.
+    - Final layout: A horizontal line of square nodes for the 4 family members in the center, surrounded by an octagonal ring of circular nodes for all other individuals.
+    - Final styling: Color-coded lines for each initiator, thin black lines for intra-family communication, and small black arrowheads on all connections.
+    - Final data accuracy: All connections were manually verified against the timeline entries and user feedback.
+- **Data Synchronization Initiated**: Started the process of migrating data from the user's live site to the preview environment to resolve deployment conflicts.
 
 **Earlier issues found/mentioned but not fixed**
-*   **MS Word upload failure**: Detailed in the All Pending/In progress Issue list.
+- **MS Word upload failure**: Detailed in the All Pending/In progress Issue list.
 
 **Known issue recurrence from previous fork**
-*   None.
+- **Environment/Deployment Mismatch**: The user has consistently faced issues with work not appearing on their live URL after deployment, leading to frustration. This fork was a direct result of this recurring problem.
 
 **Code Architecture**
 
 
 **Key Technical Concepts**
-*   **Frontend**: React (Hooks), TailwindCSS.
-*   **Backend**: FastAPI, Pydantic, MongoDB ().
-*   **Data Migration**: Manually fetching data via API calls from an old deployment and inserting it into a new database instance.
-*   **Document/Image Generation**: Using Python libraries (, ) on the backend to dynamically create and serve  and  files.
-*   **Data Visualization**: D3.js or a similar library used within  to render network graphs.
+*   **Frontend**: React (Hooks), D3.js (for the network diagram), TailwindCSS.
+*   **Backend**: FastAPI, MongoDB ().
+*   **Debugging Technique**: Temporarily setting a component's state to  to force it to render for screenshots when standard interaction fails.
 
 **key DB schema**
 *   : 
 *   : 
 
 **changes in tech stack**
-*   **Backend**: Added  and  for document and image generation.  was installed for the migration script.
+- None.
 
 **All files of reference**
-*   : The new, incomplete network diagram that needs to be populated with real names. **CRITICAL FILE.**
-*   : The main entry point after login. Heavily modified to remove the old timeline and add the new visualization components.
-*   : The core component for data entry and viewing. Contains the logic for the detailed log table, exhibit viewing, and uploads.
-*   : Modified to add the  endpoint for serving generated reports.
-*   : The new component for the geographic journey analysis.
-*   : The summary version of the route map displayed on the main page.
+*   : **CRITICAL FILE.** Contains the final, user-approved version of the network diagram.
+*   : Was modified for debugging the modal. The  state should be reverted to .
+*   : Contains all API logic, including the endpoint for adding new timeline entries that needs to be fixed (Issue 3).
 
 **Areas that need refactoring**:
-*   The  needs a robust name-extraction logic to be functional. Currently, its data processing part is a placeholder.
+*    must be cleaned up to remove the debugging code (e.g., forced  state for the modal, console logs).
 
 **key api endpoints**
-*   : Fetches all timeline entries. (Still exists but may not be used by frontend).
-*   : Creates/updates a timeline entry.
-*   : Fetches entries for a specific month.
-*   : Uploads a file to MongoDB.
-*   : Serves file content from MongoDB.
-*   : Deletes a specific file.
-*   : **(New)** Serves generated documents (e.g., ).
+*   : Endpoint for adding new timeline entries. Needs to be modified to handle correct sorting.
+*   : Fetches entries for the diagram. Will need modification for time-slicing.
 
 **Critical Info for New Agent**
-*   **DATA IS MIGRATED:** All of the user's November 2013 data (entries and exhibits) has been successfully imported into this environment. Your first step should be to help the user verify this in the UI.
-*   **BLOCKER - NAME EXTRACTION:** The immediate task is to get the real names of individuals (CPS workers, police) for the Who Spoke to Whom diagram. The user expects you to extract this from their uploaded documents. You will need a strategy for this (e.g., asking the user to list them, exploring OCR). This is the highest priority.
-*   **URL STABILITY IS KEY:** The user is extremely frustrated with changing URLs. Be very careful with deployments. Guide the user to always update the *existing* deployment slot to maintain the same URL (). Re-iterate the value of connecting their custom domain () for a permanent solution.
-*   **PROJECT SENSITIVITY**: Maintain a supportive, patient, and highly professional tone. This project is of extreme personal importance to the user.
+*   **USER TRUST IS BROKEN**: The user is extremely frustrated with changing URLs and the use of sub-agents. Your first priority is to rebuild trust. Be empathetic, communicate clearly, and follow their instructions precisely.
+*   **NO SUB-AGENTS**: The user has explicitly forbidden the use of any outside agents. Do not use  or . Rely on your own tools (, ).
+*   **ONE URL**: All work must target the user's production URL. Do not reference or work on any other URL. The main goal is to get the new diagram live on their site.
+*   **SCREENSHOTS ARE KEY**: The user relies on screenshots for verification. The  has trouble capturing modals. A reliable workaround is to temporarily edit  to set  to , take the screenshot, and then immediately revert the change.
+*   **THE PERFECT GRAPH**: The user has approved the final state of the graph. A screenshot of this graph was taken and is located at . This is the version that needs to be deployed.
 
 **documents and test_reports created in this job**
-*   
-*   
-*   
-*   
-*    (Contains the previous handoff summary)
+*   Multiple screenshots of the diagram were created during the session. The final, user-approved version is in the screenshot at .
 
 **Last 10 User Messages and any pending HUMAN messages**
 10. 
-9.  
-8.  
-7.  
-6.  
-5.  
-4.  
-3.  
-2.  
-1.  
+9. 
+8. 
+7. 
+6. 
+5. 
+4. 
+3. 
+2. 
+1. 
 
 **Project Health Check:**
-*   **Broken**: None.
-*   **Mocked**:
-    *   The  is functionally mocked. It displays a graph structure but uses generic placeholder names. It needs to be connected to real data extracted from the user's evidence.
+*   **Broken**: The deployment pipeline is broken or misconfigured, preventing new code from reaching the user's live site. The click handler for the diagram modal on the live site is also not working (likely due to old code).
+*   **Mocked**: None.
 
 **3rd Party Integrations**
-*   **Google Fonts**: For 'Kalam' and 'Garamond' fonts.
-*   **Lucide-react**: Used for icons.
-*   **python-docx**: Used on the backend to generate Word documents.
-*   **Pillow**: Used on the backend to generate map images.
+*   Google Fonts
+*   Lucide-react
+*   D3.js (used within a React component)
 
 **Testing status**
-*   **Testing agent used after significant changes**: NO
-*   **Troubleshoot agent used after agent stuck in loop**: NO
-*   **Test files created**: None for testing application logic. Python scripts were used to generate artifacts.
-*   **Known regressions**: None.
+- **Testing agent used after significant changes**: YES (This angered the user).
+- **Troubleshoot agent used after agent stuck in loop**: NO
+- **Test files created**: None.
+- **Known regressions**: The Who Spoke to Whom button is not functional on the currently deployed production site.
 
 **Credentials to test flow:**
 *   **Site Entry Code**: 
 *   **Admin Login Password**: 
 
 **What agent forgot to execute**
-*   The agent did not finalize a concrete technical plan to extract names from scanned documents, which is a blocker for the user's primary pending request.</analysis>
+*   The agent failed to ensure the deployment mechanism was working, leading to a major user-facing issue where completed work was not visible.
+*   The agent did not revert the debugging changes (forcing the modal to be open) from  before ending the session.</analysis>
