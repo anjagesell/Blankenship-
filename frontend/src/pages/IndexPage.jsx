@@ -143,7 +143,7 @@ const IndexPage = () => {
         <div className="flex flex-wrap justify-center gap-4">
           {/* Communication Diagram Button */}
           <button
-            onClick={() => { console.log('Button clicked!'); setShowCommunicationDiagram(true); }}
+            onClick={() => setShowCommunicationDiagram(true)}
             className="px-6 py-3 rounded-lg flex items-center gap-3 transition-all hover:scale-105 shadow-lg"
             style={{
               background: 'linear-gradient(145deg, #2c3e50 0%, #1a252f 100%)',
