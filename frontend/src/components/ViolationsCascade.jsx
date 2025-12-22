@@ -165,7 +165,7 @@ const OUTER_RING = [
   { id: 'tpr_court', name: 'TPR Proceedings', role: 'Termination Court', agency: 'FAMILY', violations: ['brady', '14th'], actions: ['Terminated rights based on tainted evidence', 'Parents denied meaningful hearing'] },
   
   // The Child - Ultimate Victim
-  { id: 'rylie', name: 'R.E.B. (Child)', role: 'Alleged Victim', agency: 'VICTIM', violations: [], note: '✓ Later accused GRANDPARENTS of abuse', actions: ['Told foster mother grandparents lied', 'Accused Keith & Gabriele of abuse', 'Truth suppressed from all proceedings'] },
+  { id: 'rylie', name: 'Rylie aka Rose', role: 'Alleged Victim', agency: 'VICTIM', violations: [], note: '✓ Later accused GRANDPARENTS of abuse', actions: ['Told foster mother grandparents lied', 'Accused Keith & Gabriele of abuse', 'Truth suppressed from all proceedings'] },
 ];
 
 // Agency colors
