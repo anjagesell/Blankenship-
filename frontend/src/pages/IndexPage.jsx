@@ -10,6 +10,7 @@ import RouteAnalysis from '../components/RouteAnalysis';
 import EmbeddedRouteMap from '../components/EmbeddedRouteMap';
 import ViolationsCascadeHybrid from '../components/ViolationsCascadeHybrid';
 import VisitorMonitor from '../components/VisitorMonitor';
+import { usePageTracker } from '../hooks/usePageTracker';
 
 // Icon mapping
 const iconMap = {
