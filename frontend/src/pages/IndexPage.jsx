@@ -335,6 +335,27 @@ const IndexPage = () => {
                     </div>
                     <Users className="w-5 h-5 ml-2" />
                   </button>
+                  
+                  {/* Violations Cascade Button */}
+                  <button
+                    onClick={() => setShowViolationsCascade(true)}
+                    className="px-6 py-3 rounded-lg flex items-center gap-3 transition-all hover:scale-105 shadow-lg"
+                    style={{
+                      background: 'linear-gradient(145deg, #4a1c1c 0%, #2d1212 100%)',
+                      color: '#e74c3c',
+                      border: '3px solid #c0392b',
+                      fontFamily: 'Georgia, serif',
+                      fontWeight: 'bold',
+                      boxShadow: '0 4px 20px rgba(192,57,43,0.4)',
+                    }}
+                  >
+                    <span className="text-2xl">⚖️</span>
+                    <div className="text-left">
+                      <div className="text-base">Constitutional Violations</div>
+                      <div className="text-xs text-red-400/70 font-normal">CPS, State & Federal — 56+ Officials</div>
+                    </div>
+                    <AlertTriangle className="w-5 h-5 ml-2" />
+                  </button>
                 </div>
               )}
 
