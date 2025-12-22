@@ -30,6 +30,17 @@ const IndexPage = () => {
   const [showCommunicationDiagram, setShowCommunicationDiagram] = useState(false);
   const [showRouteAnalysis, setShowRouteAnalysis] = useState(false);
 
+  // Add keyboard shortcut - press 'D' to open diagram
+  useEffect(() => {
+    const handleKeyPress = (e) => {
+      if (e.key === 'd' || e.key === 'D') {
+        setShowCommunicationDiagram(true);
+      }
+    };
+    window.addEventListener('keypress', handleKeyPress);
+    return () => window.removeEventListener('keypress', handleKeyPress);
+  }, []);
+
   useEffect(() => {
     document.title = 'Blankenship';
     // Force scroll to top when page loads (especially important on mobile)
