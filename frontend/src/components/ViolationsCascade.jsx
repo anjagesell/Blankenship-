@@ -29,50 +29,79 @@ const INNER_RING = [
   {
     id: 'jennifer_owen',
     name: 'Jennifer Owen',
-    role: 'CPS Supervisor (Former Police)',
+    role: 'CPS Intake Supervisor',
     agency: 'CPS',
     violations: ['4th', '14th', 'cps', 'brady'],
     actions: [
-      'Falsified CPS records',
-      'Created impossible addresses',
-      'Premature CME submission',
-      'Coordinated with law enforcement',
+      'Former police officer - knew legal standards',
+      'Falsified CPS records with impossible addresses',
+      'Submitted CME referral SAME DAY as report',
+      'No proper investigation before action',
+      'Created "1866 Woodridge Lane" - doesn\'t exist',
+    ],
+  },
+  {
+    id: 'sw_reitzel',
+    name: 'SW Reitzel',
+    role: 'CPS Supervisor',
+    agency: 'CPS',
+    violations: ['cps', '14th'],
+    actions: [
+      'Gave "substantiated" directive Nov 30',
+      'No evidence existed at time of directive',
+      'Predetermined outcome before investigation',
     ],
   },
   {
     id: 'mccombs',
     name: 'Sr. Inv. McCombs',
-    role: 'Catawba Sheriff',
+    role: 'Catawba County Sheriff',
     agency: 'LAW',
-    violations: ['4th', 'franks'],
+    violations: ['4th', 'franks', '14th'],
     actions: [
-      'False warrant dates (Dec 1-12)',
-      'Knew dates impossible',
-      'Wrote "November" in Synopsis same day',
+      'Wrote warrant with FALSE dates (Dec 1-12)',
+      'KNEW dates were impossible',
+      'Same document: Synopsis says "November"',
+      'Warrant says "December" - deliberate falsification',
     ],
   },
   {
     id: 'beth_oshbar',
     name: 'Beth Oshbar',
-    role: 'Nurse Practitioner',
+    role: 'Nurse Practitioner (CME)',
     agency: 'MEDICAL',
     violations: ['4th', '14th'],
     actions: [
-      'Exam without parental consent',
-      '"Floppy hymen" - unscientific term',
-      'Yet found "Hymen intact"',
+      'Exam conducted WITHOUT parental consent',
+      'Used unscientific term "floppy hymen"',
+      'Yet found "Hymen INTACT, no scarring"',
+      'Findings contradicted abuse allegation',
+    ],
+  },
+  {
+    id: 'adrienne_opdyke',
+    name: 'Adrienne Opdyke',
+    role: 'Forensic Interviewer - Dove House',
+    agency: 'MEDICAL',
+    violations: ['4th', '14th', '6th'],
+    actions: [
+      'Leading/suggestive interview techniques',
+      'Failed to follow NICHD protocol',
+      'Interview tainted by prior CPS contact',
     ],
   },
   {
     id: 'prosecution',
-    name: 'Prosecution',
-    role: 'DA Office',
+    name: 'District Attorney',
+    role: 'Prosecution',
     agency: 'STATE',
     violations: ['brady', '14th', '6th'],
     actions: [
-      'Suppressed exculpatory evidence',
+      'Suppressed Amy Walker\'s findings (NO evidence)',
+      'Suppressed foster mother\'s documentation',
       'Misdated photo evidence',
-      'Failed disclosure obligations',
+      'Failed Brady disclosure obligations',
+      'Child accused GRANDPARENTS - never disclosed',
     ],
   },
   {
@@ -82,10 +111,12 @@ const INNER_RING = [
     agency: 'DEFENSE',
     violations: ['strickland', '6th'],
     actions: [
-      'Failed to challenge CPS',
+      'Failed to challenge CPS procedures',
       'No Franks hearing requested',
-      'No taint hearing requested',
-      'Failed to object to hearsay',
+      'No taint hearing requested despite clear taint',
+      'Failed to object to hearsay testimony',
+      'Failed to investigate CPS records',
+      'Did not call exculpatory witnesses',
     ],
   },
   {
@@ -95,41 +126,46 @@ const INNER_RING = [
     agency: 'DEFENSE',
     violations: ['strickland', '6th'],
     actions: [
-      '"Just met defendant"',
-      '"3-4 hours to prepare"',
-      'Inadequate representation',
+      'Stated: "I just met the defendant"',
+      'Only "3-4 hours to prepare"',
+      'No review of trial transcripts',
+      'No investigation of new evidence',
+      'Inadequate representation at critical stage',
     ],
   },
 ];
 
 // OUTER RING - Agencies and officials who failed
 const OUTER_RING = [
-  // CPS Workers
-  { id: 'amber_mecimore', name: 'Amber Mecimore', role: 'CPS Lead Worker', agency: 'CPS', violations: ['cps'] },
-  { id: 'sherri_stock', name: 'Sherri Stock', role: 'CPS Worker', agency: 'CPS', violations: ['cps', '14th'] },
-  { id: 'pam_frazier', name: 'Pam Frazier', role: 'Iredell CPS', agency: 'CPS', violations: ['cps'] },
-  { id: 'charity', name: 'SW Charity', role: 'CPS Worker', agency: 'CPS', violations: ['cps'] },
+  // CPS Workers - November/December
+  { id: 'amber_mecimore', name: 'Amber Mecimore', role: 'CPS Lead Worker', agency: 'CPS', violations: ['cps', '14th'], actions: ['Led investigation with predetermined outcome', 'Failed to document exculpatory evidence'] },
+  { id: 'sherri_stock', name: 'Sherri Stock', role: 'CPS Worker', agency: 'CPS', violations: ['cps', '14th'], actions: ['Participated in flawed investigation', 'Interrogated parents without counsel'] },
+  { id: 'pam_frazier', name: 'Pam Frazier', role: 'Iredell County CPS', agency: 'CPS', violations: ['cps'], actions: ['Cross-county coordination', 'Home visit found NO disclosure'] },
+  { id: 'sw_charity', name: 'SW Charity', role: 'CPS Worker', agency: 'CPS', violations: ['cps'], actions: ['Participated in removal proceedings'] },
+  { id: 'lena_barber', name: 'Lena Barber', role: 'CPS Worker', agency: 'CPS', violations: ['cps'], actions: ['Present during family separation'] },
   
   // Law Enforcement
-  { id: 'coffey', name: 'Officer Coffey', role: 'Sheriff Dept', agency: 'LAW', violations: ['4th'] },
-  { id: 'kisby', name: 'Officer Kisby', role: 'Sheriff Dept', agency: 'LAW', violations: ['4th'] },
-  { id: 'fischer', name: 'Sgt Fischer', role: 'Sheriff Supervisor', agency: 'LAW', violations: ['4th'] },
+  { id: 'coffey', name: 'Officer Coffey', role: "Sheriff's Deputy", agency: 'LAW', violations: ['4th'], actions: ['First responder', 'Relied on tainted CPS info'] },
+  { id: 'kisby', name: 'Officer Kisby', role: "Sheriff's Deputy", agency: 'LAW', violations: ['4th'], actions: ['Participated in arrest'] },
+  { id: 'fischer', name: 'Sgt Fischer', role: "Sheriff's Supervisor", agency: 'LAW', violations: ['4th'], actions: ['Supervised flawed investigation'] },
   
-  // Medical
-  { id: 'amy_walker', name: 'Amy Walker', role: 'S.A.N.E. Nurse', agency: 'MEDICAL', violations: [], note: 'Found NO evidence (ignored)' },
-  { id: 'adrienne', name: 'Adrienne Opdyke', role: 'Forensic Interviewer', agency: 'MEDICAL', violations: ['4th', '14th'] },
+  // Medical - KEY EXCULPATORY
+  { id: 'amy_walker', name: 'Amy Walker', role: 'S.A.N.E. Nurse', agency: 'MEDICAL', violations: [], note: '✓ Found NO PHYSICAL EVIDENCE of abuse - SUPPRESSED', actions: ['Professional exam found nothing', 'Evidence suppressed by prosecution'] },
   
   // Courts
-  { id: 'magistrate', name: 'Magistrate', role: 'Signed False Warrant', agency: 'COURT', violations: ['4th', 'franks'] },
-  { id: 'trial_judge', name: 'Trial Judge', role: 'Superior Court', agency: 'COURT', violations: ['6th', '14th'] },
-  { id: 'resentence_judge', name: 'Judge Bell', role: 'Resentencing', agency: 'COURT', violations: ['6th'] },
+  { id: 'magistrate', name: 'Magistrate', role: 'Signed Warrant', agency: 'COURT', violations: ['4th', 'franks'], actions: ['Signed warrant with false dates', 'Failed to verify probable cause'] },
+  { id: 'trial_judge', name: 'Trial Judge', role: 'Superior Court', agency: 'COURT', violations: ['6th', '14th'], actions: ['Allowed hearsay testimony', 'Failed to ensure fair trial'] },
+  { id: 'judge_bell', name: 'Judge Bell', role: 'Resentencing Judge', agency: 'COURT', violations: ['6th'], actions: ['Proceeded with unprepared counsel', 'Denied adequate preparation time'] },
   
-  // Foster Care
-  { id: 'bobbi_jo', name: 'Bobbi Jo Christopher', role: 'Foster Parent', agency: 'FOSTER', violations: [], note: 'Documented truth (suppressed)' },
+  // Foster Care - KEY EXCULPATORY
+  { id: 'bobbi_jo', name: 'Bobbi Jo Christopher', role: 'Foster Parent', agency: 'FOSTER', violations: [], note: '✓ Documented child\'s TRUTH - SUPPRESSED', actions: ['Child told her grandparents lied', 'Documentation never disclosed to defense'] },
   
-  // Family Court
-  { id: 'gal', name: 'Guardian Ad Litem', role: 'GAL Report', agency: 'FAMILY', violations: ['14th'], note: 'False "multiple counts of rape"' },
-  { id: 'tpr_court', name: 'TPR Court', role: 'Termination Proceedings', agency: 'FAMILY', violations: ['brady', '14th'] },
+  // Family Court System
+  { id: 'gal', name: 'Guardian Ad Litem', role: 'GAL Report Author', agency: 'FAMILY', violations: ['14th', 'brady'], actions: ['Falsely wrote "multiple counts of rape"', 'No such charges ever existed', 'Used to terminate parental rights'] },
+  { id: 'tpr_court', name: 'TPR Proceedings', role: 'Termination Court', agency: 'FAMILY', violations: ['brady', '14th'], actions: ['Terminated rights based on tainted evidence', 'Parents denied meaningful hearing'] },
+  
+  // The Child - Ultimate Victim
+  { id: 'rylie', name: 'R.E.B. (Child)', role: 'Alleged Victim', agency: 'VICTIM', violations: [], note: '✓ Later accused GRANDPARENTS of abuse', actions: ['Told foster mother grandparents lied', 'Accused Keith & Gabriele of abuse', 'Truth suppressed from all proceedings'] },
 ];
 
 // Agency colors
