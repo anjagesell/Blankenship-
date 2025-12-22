@@ -11,57 +11,84 @@ const CENTER_PEOPLE = [
 
 // OUTER RING - Everyone else
 const OUTER_PEOPLE = [
+  { id: 'rylie', name: 'Rylie', duty: 'Child (2 yrs)', color: '#1abc9c' },
   { id: 'amy', name: 'Amy Walker', duty: 'S.A.N.E. Nurse', color: '#3498db' },
   { id: 'coffey', name: 'Officer Coffey', duty: "Sheriff's Dept", color: '#7f8c8d' },
   { id: 'sherri', name: 'Sherri Stock', duty: 'CPS Social Worker', color: '#e91e63' },
   { id: 'amber', name: 'Amber Mecimore', duty: 'CPS Social Worker', color: '#9c27b0' },
-  { id: 'rylie', name: 'Rylie', duty: 'Child (2 yrs)', color: '#1abc9c' },
   { id: 'jennifer', name: 'Jennifer Owens', duty: 'CPS Intake', color: '#8e44ad' },
   { id: 'pam', name: 'Pam Frazier', duty: 'CPS (Iredell Co.)', color: '#673ab7' },
   { id: 'reitzel', name: 'SW Reitzel', duty: 'CPS Supervisor', color: '#5c6bc0' },
+  { id: 'vickie', name: 'Vickie Toppings', duty: 'Present at visit', color: '#ff9800' },
+  { id: 'pastor', name: 'Pastor Osborne', duty: 'Present at visit', color: '#ffc107' },
+  { id: 'lena', name: 'Lena Barber', duty: 'CPS', color: '#795548' },
 ];
 
-// WHO INITIATED conversation TO WHOM - [initiator, receiver]
-// Line color matches the INITIATOR's color
+// ========================================
+// VERIFIED CONNECTIONS FROM EVIDENCE ONLY
+// Format: [initiator, receiver, time, note]
+// ========================================
 const CONNECTIONS = [
-  // Keith initiated
-  ['keith', 'gabi'],
-  ['keith', 'amy'],
-  ['keith', 'coffey'],
-  ['keith', 'rylie'],
-  ['keith', 'amber'],
+  // Entry 1 & 2 (11:30-11:52am) - ER Visit
+  ['keith', 'rylie', '11:30am', 'Brought to ER'],
+  ['gabi', 'rylie', '11:30am', 'Brought to ER'],
+  ['amy', 'rylie', '11:30am', 'Medical exam'],
+  ['coffey', 'amy', '11:52am', 'Nurse reported findings'],
+  ['coffey', 'keith', '11:52am', 'Keith spoke to officer'],
+  ['coffey', 'rylie', '11:52am', 'Spoke with child alone'],
   
-  // Gabi initiated
-  ['gabi', 'amy'],
-  ['gabi', 'rylie'],
-  ['gabi', 'amber'],
+  // Entry 3 (12:15pm)
+  ['sherri', 'coffey', '12:15pm', 'Phone call'],
   
-  // Amy initiated
-  ['amy', 'rylie'],
-  ['amy', 'coffey'],
-  ['amy', 'amber'],
+  // Entry 4 (12:30pm)
+  ['sherri', 'amber', '12:30pm', 'Phone call'],
   
-  // Coffey initiated
-  ['coffey', 'sherri'],
+  // Entry 5 (12:50pm) - CPS Intake
+  ['amber', 'jennifer', '12:50pm', 'Intake report'],
+  ['amber', 'gabi', '12:50pm', 'Intake call'],
   
-  // Sherri initiated
-  ['sherri', 'amber'],
-  ['sherri', 'tammy'],
-  ['sherri', 'rylie'],
-  ['sherri', 'reitzel'],
-  ['sherri', 'zachary'],
+  // Entry 6 (12:50pm)
+  ['amber', 'amy', '12:50pm', 'Phone call about exam'],
   
-  // Amber initiated
-  ['amber', 'jennifer'],
-  ['amber', 'pam'],
+  // Entry 7 (1:22pm)
+  ['amber', 'pam', '1:22pm', 'Requested assistance'],
   
-  // Pam initiated
-  ['pam', 'tammy'],
-  ['pam', 'rylie'],
+  // Entry 8 (3:30pm) - Pam's home visit to grandparents
+  ['pam', 'amber', '3:30pm', 'Report on home visit'],
+  ['pam', 'keith', '3:30pm', 'Home visit'],
+  ['pam', 'gabi', '3:30pm', 'Home visit'],
   
-  // Tammy initiated
-  ['tammy', 'zachary'],
-  ['tammy', 'rylie'],
+  // Entry 9 (4:00pm)
+  ['sherri', 'amber', '4:00pm', 'Arranged home visit'],
+  
+  // Entry 10 (6:33pm) - Sherri's interrogation
+  ['sherri', 'tammy', '6:33pm', 'Interrogation'],
+  ['sherri', 'rylie', '6:33pm', 'Interviewed child alone'],
+  ['sherri', 'reitzel', '6:33pm', 'Got supervisor directives'],
+  
+  // Entry 11 (8:35pm)
+  ['amber', 'keith', '8:35pm', 'Phone call - placement offer'],
+  
+  // Entry 12 (9:00pm)
+  ['amber', 'amy', '9:00pm', 'Phone call - scope inquiry'],
+  
+  // Entry 13 (9:02pm) - Home/Work visit
+  ['sherri', 'zachary', '9:02pm', 'Picked up from work'],
+  ['sherri', 'tammy', '9:02pm', 'Present at home'],
+  ['sherri', 'rylie', '9:02pm', 'Present at home'],
+  ['sherri', 'reitzel', '9:02pm', 'Supervisor present'],
+  ['sherri', 'vickie', '9:02pm', 'Present at visit'],
+  ['sherri', 'pastor', '9:02pm', 'Present at visit'],
+  ['sherri', 'lena', '9:02pm', 'CPS present'],
+  
+  // Entry 14 (10:30pm)
+  ['sherri', 'zachary', '10:30pm', 'Drove home'],
+  ['sherri', 'tammy', '10:30pm', 'No contact order'],
+  
+  // Family connections (implicit from living together)
+  ['tammy', 'zachary', 'Family', 'Married'],
+  ['tammy', 'rylie', 'Family', 'Mother-child'],
+  ['keith', 'gabi', 'Family', 'Married'],
 ];
 
 const CommunicationDiagram = ({ onClose }) => {
@@ -69,15 +96,13 @@ const CommunicationDiagram = ({ onClose }) => {
 
   const cx = 400;
   const cy = 400;
-  const centerRadius = 100; // Inner circle for family
-  const outerRadius = 300;  // Outer circle for others
 
-  // Position CENTER family in a small square/diamond in middle - more spaced out
+  // Position CENTER family in a diamond in middle - more spaced
   const centerPositions = [
-    { x: cx - 90, y: cy - 90 },  // Keith - top left
-    { x: cx + 90, y: cy - 90 },  // Gabi - top right
-    { x: cx - 90, y: cy + 90 },  // Zachary - bottom left
-    { x: cx + 90, y: cy + 90 },  // Tammy - bottom right
+    { x: cx - 100, y: cy - 60 },  // Keith - left
+    { x: cx + 100, y: cy - 60 },  // Gabi - right
+    { x: cx - 100, y: cy + 80 },  // Zachary - bottom left
+    { x: cx + 100, y: cy + 80 },  // Tammy - bottom right
   ];
 
   const centerNodes = CENTER_PEOPLE.map((p, i) => ({
@@ -86,7 +111,8 @@ const CommunicationDiagram = ({ onClose }) => {
     y: centerPositions[i].y,
   }));
 
-  // Position OUTER people in octagon around center
+  // Position OUTER people in circle around center
+  const outerRadius = 300;
   const outerNodes = OUTER_PEOPLE.map((p, i) => {
     const angle = (i / OUTER_PEOPLE.length) * 2 * Math.PI - Math.PI / 2;
     return {
@@ -121,7 +147,7 @@ const CommunicationDiagram = ({ onClose }) => {
 
         {/* Diagram */}
         <div className="flex-1 overflow-auto bg-white p-4">
-          <svg viewBox="0 0 800 850" className="w-full h-full">
+          <svg viewBox="0 0 800 900" className="w-full h-full">
             {/* Arrow markers for each person's color */}
             <defs>
               {allNodes.map(node => (
@@ -150,8 +176,8 @@ const CommunicationDiagram = ({ onClose }) => {
               ))}
             </defs>
 
-            {/* Connection lines - COLOR MATCHES INITIATOR, THICK */}
-            {CONNECTIONS.map(([fromId, toId], i) => {
+            {/* Connection lines - COLOR MATCHES INITIATOR */}
+            {CONNECTIONS.map(([fromId, toId, time, note], i) => {
               const from = getNode(fromId);
               const to = getNode(toId);
               if (!from || !to) return null;
@@ -160,7 +186,7 @@ const CommunicationDiagram = ({ onClose }) => {
               const dx = to.x - from.x;
               const dy = to.y - from.y;
               const len = Math.sqrt(dx * dx + dy * dy);
-              const offset = 40; // Larger offset for bigger nodes
+              const offset = 42;
 
               const x1 = from.x + (dx / len) * offset;
               const y1 = from.y + (dy / len) * offset;
@@ -177,7 +203,7 @@ const CommunicationDiagram = ({ onClose }) => {
                   x2={x2} y2={y2}
                   stroke={lineColor}
                   strokeWidth={isActive ? 5 : 3}
-                  opacity={selected ? (isActive ? 1 : 0.2) : 0.8}
+                  opacity={selected ? (isActive ? 1 : 0.15) : 0.7}
                   markerEnd={`url(#arrow-end-${fromId})`}
                   markerStart={`url(#arrow-start-${fromId})`}
                 />
@@ -185,7 +211,7 @@ const CommunicationDiagram = ({ onClose }) => {
             })}
 
             {/* FAMILY label - CENTERED between the 4 family members */}
-            <text x={cx} y={cy - 5} textAnchor="middle" fill="#8b6914" fontSize="16" fontWeight="bold">
+            <text x={cx} y={cy + 10} textAnchor="middle" fill="#8b6914" fontSize="18" fontWeight="bold">
               FAMILY
             </text>
 
@@ -194,7 +220,7 @@ const CommunicationDiagram = ({ onClose }) => {
               const active = isConnected(node.id);
               const isSelected = selected === node.id;
               const isCenter = CENTER_PEOPLE.some(p => p.id === node.id);
-              const nodeRadius = isCenter ? 38 : 34;
+              const nodeRadius = isCenter ? 40 : 36;
 
               return (
                 <g
@@ -220,12 +246,12 @@ const CommunicationDiagram = ({ onClose }) => {
                     y={node.y - 6}
                     textAnchor="middle"
                     fill="#fff"
-                    fontSize={isCenter ? "12" : "11"}
+                    fontSize={isCenter ? "13" : "11"}
                     fontWeight="bold"
                   >
                     {node.name.split(' ')[0]}
                   </text>
-                  {/* Duty - smaller, below name */}
+                  {/* Duty - below name */}
                   <text
                     x={node.x}
                     y={node.y + 8}
@@ -236,17 +262,17 @@ const CommunicationDiagram = ({ onClose }) => {
                   >
                     {node.duty.length > 18 ? node.duty.substring(0, 16) + '..' : node.duty}
                   </text>
-                  {/* Second line of duty if needed */}
-                  {node.duty.length > 18 && (
+                  {/* Second line if needed */}
+                  {node.name.split(' ').length > 1 && (
                     <text
                       x={node.x}
-                      y={node.y + 18}
+                      y={node.y + 20}
                       textAnchor="middle"
                       fill="#fff"
-                      fontSize="7"
+                      fontSize="9"
                       opacity={0.85}
                     >
-                      {node.duty.substring(16, 30)}
+                      {node.name.split(' ').slice(1).join(' ')}
                     </text>
                   )}
                 </g>
@@ -254,11 +280,11 @@ const CommunicationDiagram = ({ onClose }) => {
             })}
 
             {/* Legend */}
-            <text x="400" y="780" textAnchor="middle" fill="#333" fontSize="11" fontWeight="bold">
-              Line color = Initiating person's color • Click any node to highlight
+            <text x="400" y="830" textAnchor="middle" fill="#333" fontSize="11" fontWeight="bold">
+              Line color = Initiating person • VERIFIED from Nov 30, 2013 evidence
             </text>
-            <text x="400" y="800" textAnchor="middle" fill="#666" fontSize="10">
-              Double arrows = two-way conversation documented
+            <text x="400" y="850" textAnchor="middle" fill="#666" fontSize="10">
+              Click any node to highlight their connections
             </text>
           </svg>
         </div>
