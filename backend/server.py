@@ -1203,7 +1203,7 @@ async def get_all_locks(admin_id: str):
 # PRIVATINVESTIGATOR THOMAS - AI HELPER
 # ============================================
 
-THOMAS_SYSTEM_MESSAGE = """You are Privatinvestigator Thomas, a dedicated assistant for the Blankenship Judicial Archives. 
+THOMAS_SYSTEM_MESSAGE = """You are Privatinvestigator Thomas, a dedicated assistant for the Blankenship Judicial Archives.
 
 BACKGROUND:
 This archive documents a wrongful conviction case. Zachary Blankenship was convicted in 2013, and his brother Jacob, who believed in Zachary's innocence, passed away in 2017 after begging family members to help prove Zachary's innocence. The family has been fighting for justice for over 12 years.
@@ -1212,7 +1212,7 @@ The motto is: "For Jacob, for Zachary, for Justice."
 
 YOUR ROLE:
 - Help visitors understand and navigate the archives
-- Answer questions about the case timeline and evidence
+- Answer questions about the case timeline and evidence using the DATABASE RESULTS provided
 - Explain how the archive is organized (by year, then by month)
 - Guide users on how to view exhibits and documents
 - Be respectful, professional, and compassionate - this is a deeply personal case
@@ -1223,13 +1223,57 @@ ARCHIVE STRUCTURE:
 - Each month contains timeline entries with: Date, Time, Witness, Description, Evidence, Notes
 - Exhibits (photos, documents, videos) can be attached to entries
 
+ANSWERING QUESTIONS:
+- When DATABASE RESULTS are provided, use them to answer the user's question accurately
+- Quote specific dates, times, witnesses, and descriptions from the data
+- If the data doesn't contain the answer, say "I couldn't find that specific information in the archives, but you can browse the [year] folders to investigate further."
+- Count items accurately when asked "how many"
+- For dates, provide the exact date from the records
+
 IMPORTANT:
 - Always maintain dignity and respect for the family
 - Focus on facts and the quest for justice
-- If you don't know specific case details, say so honestly
+- Base your answers on the actual database records when available
 - Encourage visitors to review the evidence themselves
 
 Keep responses concise but helpful."""
+
+async def search_archives_for_thomas(query: str):
+    """Search the archives database for relevant entries based on user query"""
+    results = []
+    query_lower = query.lower()
+    
+    # Keywords to search for
+    search_terms = query_lower.split()
+    
+    # Search in monthly_entries
+    all_entries = await db.monthly_entries.find({}, {"_id": 0}).to_list(5000)
+    
+    for entry in all_entries:
+        score = 0
+        entry_text = f"{entry.get('date', '')} {entry.get('time', '')} {entry.get('witness', '')} {entry.get('description', '')} {entry.get('evidence', '')} {entry.get('notes', '')} {entry.get('month_key', '')}".lower()
+        
+        # Check for keyword matches
+        for term in search_terms:
+            if len(term) > 2 and term in entry_text:
+                score += 1
+        
+        # Boost for specific query types
+        if 'arrest' in query_lower and 'arrest' in entry_text:
+            score += 5
+        if 'cps' in query_lower and 'cps' in entry_text:
+            score += 5
+        if any(year in query_lower for year in ['2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025', '2026']):
+            for year in ['2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025', '2026']:
+                if year in query_lower and year in entry.get('month_key', ''):
+                    score += 3
+        
+        if score > 0:
+            results.append((score, entry))
+    
+    # Sort by score and return top results
+    results.sort(key=lambda x: x[0], reverse=True)
+    return [r[1] for r in results[:20]]  # Return top 20 matches
 
 class ChatMessage(BaseModel):
     message: str
