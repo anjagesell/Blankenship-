@@ -195,7 +195,7 @@ const IndexPage = () => {
       {/* Year Envelope Icons */}
       <div className="container mx-auto px-4 py-8 sm:py-12 relative z-10">
         {/* Year Envelopes Row */}
-        <div className="flex flex-wrap justify-center gap-4 sm:gap-6 md:gap-8 mb-8">
+        <div className="flex flex-wrap justify-center gap-4 sm:gap-6 md:gap-8 lg:gap-10 mb-8">
           {years.map((year) => {
             const isOpen = openYears[year];
             
@@ -203,7 +203,7 @@ const IndexPage = () => {
               <button
                 key={`envelope-${year}`}
                 onClick={() => toggleYear(year)}
-                className={`group flex flex-col items-center gap-2 p-4 rounded-lg transition-all duration-300 hover:scale-110 ${
+                className={`group flex flex-col items-center gap-2 p-4 lg:p-5 xl:p-6 rounded-lg transition-all duration-300 hover:scale-110 ${
                   isOpen ? 'scale-105' : ''
                 }`}
                 style={{
@@ -217,7 +217,7 @@ const IndexPage = () => {
               >
                 {/* CONFIDENTIAL Stamp - Top */}
                 <div 
-                  className="absolute -top-2 left-1/2 -translate-x-1/2 px-2 py-0.5 text-[8px] sm:text-[9px] font-bold tracking-wider"
+                  className="absolute -top-2 lg:-top-3 left-1/2 -translate-x-1/2 px-2 lg:px-3 py-0.5 lg:py-1 text-[8px] sm:text-[9px] lg:text-[11px] xl:text-xs font-bold tracking-wider"
                   style={{
                     background: 'linear-gradient(145deg, #8b0000 0%, #5c0000 100%)',
                     color: '#fff',
@@ -233,52 +233,54 @@ const IndexPage = () => {
                   CONFIDENTIAL
                 </div>
 
-                {/* Evidence Tag - Right side */}
+                {/* Evidence Tag - Right side - Larger on laptop/desktop */}
                 <div 
-                  className="absolute -right-3 top-6 sm:top-8"
+                  className="absolute -right-3 lg:-right-4 xl:-right-5 top-6 sm:top-8 lg:top-10"
                   style={{
-                    width: '28px',
-                    height: '18px',
-                    background: '#fff8dc',
-                    border: '1px solid #8b6914',
-                    boxShadow: '2px 2px 4px rgba(0,0,0,0.4)',
-                    transform: 'rotate(12deg)',
                     zIndex: 10,
                   }}
                 >
                   <div 
-                    className="text-[5px] font-bold text-center pt-[2px]"
-                    style={{ color: '#8b0000', fontFamily: 'Arial, sans-serif' }}
-                  >
-                    EVIDENCE
-                  </div>
-                  <div 
-                    className="text-[6px] font-bold text-center"
-                    style={{ color: '#3E2723', fontFamily: 'Courier, monospace' }}
-                  >
-                    {year}
-                  </div>
-                  {/* String hole */}
-                  <div 
-                    className="absolute -left-0.5 top-1"
+                    className="w-7 h-[18px] sm:w-7 sm:h-[18px] lg:w-10 lg:h-6 xl:w-12 xl:h-7"
                     style={{
-                      width: '3px',
-                      height: '3px',
-                      background: '#333',
-                      borderRadius: '50%',
+                      background: '#fff8dc',
+                      border: '1px solid #8b6914',
+                      boxShadow: '2px 2px 4px rgba(0,0,0,0.4)',
+                      transform: 'rotate(12deg)',
                     }}
-                  />
+                  >
+                    <div 
+                      className="text-[5px] lg:text-[8px] xl:text-[9px] font-bold text-center pt-[2px] lg:pt-[3px]"
+                      style={{ color: '#8b0000', fontFamily: 'Arial, sans-serif' }}
+                    >
+                      EVIDENCE
+                    </div>
+                    <div 
+                      className="text-[6px] lg:text-[8px] xl:text-[10px] font-bold text-center"
+                      style={{ color: '#3E2723', fontFamily: 'Courier, monospace' }}
+                    >
+                      {year}
+                    </div>
+                    {/* String hole */}
+                    <div 
+                      className="absolute -left-0.5 top-1 w-[3px] h-[3px] lg:w-1 lg:h-1"
+                      style={{
+                        background: '#333',
+                        borderRadius: '50%',
+                      }}
+                    />
+                  </div>
                 </div>
 
-                {/* Envelope Icon */}
+                {/* Envelope Icon - Larger on laptop/desktop */}
                 <div 
-                  className="relative mt-2"
+                  className="relative mt-2 lg:mt-3"
                   style={{
                     filter: isOpen ? 'drop-shadow(0 4px 12px rgba(212,175,55,0.6))' : 'drop-shadow(0 2px 6px rgba(0,0,0,0.4))',
                   }}
                 >
                   <Mail 
-                    className={`w-12 h-12 sm:w-14 sm:h-14 transition-all duration-300 ${
+                    className={`w-12 h-12 sm:w-14 sm:h-14 lg:w-20 lg:h-20 xl:w-24 xl:h-24 transition-all duration-300 ${
                       isOpen ? 'text-yellow-400' : 'text-yellow-600/80 group-hover:text-yellow-500'
                     }`}
                     style={{
@@ -288,14 +290,14 @@ const IndexPage = () => {
                   />
                   {/* Open/Closed indicator */}
                   {isOpen ? (
-                    <ChevronUp className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-4 h-4 text-yellow-400" />
+                    <ChevronUp className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-4 h-4 lg:w-5 lg:h-5 text-yellow-400" />
                   ) : (
-                    <ChevronDown className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-4 h-4 text-yellow-600/60 group-hover:text-yellow-500" />
+                    <ChevronDown className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-4 h-4 lg:w-5 lg:h-5 text-yellow-600/60 group-hover:text-yellow-500" />
                   )}
                 </div>
-                {/* Year Label */}
+                {/* Year Label - Larger on laptop/desktop */}
                 <span 
-                  className={`text-lg sm:text-xl font-bold tracking-wide transition-colors ${
+                  className={`text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold tracking-wide transition-colors ${
                     isOpen ? 'text-yellow-400' : 'text-yellow-600/80 group-hover:text-yellow-500'
                   }`}
                   style={{ 
