@@ -266,7 +266,7 @@ const PrivatinvestigatorThomas = () => {
           </form>
         </div>
       )}
-    </>
+    </div>
   );
 };
 
