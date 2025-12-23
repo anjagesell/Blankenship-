@@ -129,20 +129,15 @@ const ExhibitViewer = ({ file, onClose, isAdmin }) => {
           </div>
         </div>
         
-        {/* Content - View Only for visitors, full access for admin */}
+        {/* Content */}
         <div 
-          className={`flex-1 overflow-auto rounded-b-lg flex items-center justify-center ${isAdmin ? '' : 'select-none'}`}
+          className="flex-1 overflow-auto rounded-b-lg flex items-center justify-center"
           style={{
             background: '#1a1a1a',
             border: '2px solid #d4af37',
             borderTop: 'none',
             minHeight: isAudio ? '150px' : '300px',
-            userSelect: isAdmin ? 'auto' : 'none',
-            WebkitUserSelect: isAdmin ? 'auto' : 'none',
-            WebkitTouchCallout: isAdmin ? 'auto' : 'none',
           }}
-          onContextMenu={isAdmin ? undefined : (e) => e.preventDefault()}
-          onDragStart={isAdmin ? undefined : (e) => e.preventDefault()}
         >
           {loading && (
             <div className="absolute inset-0 flex items-center justify-center">
