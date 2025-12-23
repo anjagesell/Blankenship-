@@ -206,13 +206,6 @@ const ExhibitViewer = ({ file, onClose, isAdmin }) => {
             </div>
           ) : null}
         </div>
-        
-        {/* Watermark/Notice for readers */}
-        {!isAdmin && (
-          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 px-4 py-2 rounded text-xs" style={{ background: 'rgba(0,0,0,0.7)', color: '#d4af37' }}>
-            View Only — Protected Evidence
-          </div>
-        )}
       </div>
     </div>
   );
