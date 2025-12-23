@@ -1199,6 +1199,112 @@ async def get_all_locks(admin_id: str):
     return {"locks": active_locks}
 
 
+# ============================================
+# PRIVATINVESTIGATOR THOMAS - AI HELPER
+# ============================================
+
+THOMAS_SYSTEM_MESSAGE = """You are Privatinvestigator Thomas, a dedicated assistant for the Blankenship Judicial Archives. 
+
+BACKGROUND:
+This archive documents a wrongful conviction case. Zachary Blankenship was convicted in 2013, and his brother Jacob, who believed in Zachary's innocence, passed away in 2017 after begging family members to help prove Zachary's innocence. The family has been fighting for justice for over 12 years.
+
+The motto is: "For Jacob, for Zachary, for Justice."
+
+YOUR ROLE:
+- Help visitors understand and navigate the archives
+- Answer questions about the case timeline and evidence
+- Explain how the archive is organized (by year, then by month)
+- Guide users on how to view exhibits and documents
+- Be respectful, professional, and compassionate - this is a deeply personal case
+
+ARCHIVE STRUCTURE:
+- Years from 2013-2026 are organized as folder envelopes
+- Each year contains monthly folders (e.g., November 2013)
+- Each month contains timeline entries with: Date, Time, Witness, Description, Evidence, Notes
+- Exhibits (photos, documents, videos) can be attached to entries
+
+IMPORTANT:
+- Always maintain dignity and respect for the family
+- Focus on facts and the quest for justice
+- If you don't know specific case details, say so honestly
+- Encourage visitors to review the evidence themselves
+
+Keep responses concise but helpful."""
+
+class ChatMessage(BaseModel):
+    message: str
+    session_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+
+class ChatHistory(BaseModel):
+    role: str  # "user" or "assistant"
+    content: str
+    timestamp: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+
+@api_router.post("/thomas/chat")
+async def chat_with_thomas(chat_msg: ChatMessage):
+    """Chat with Privatinvestigator Thomas"""
+    try:
+        llm_key = os.environ.get('EMERGENT_LLM_KEY')
+        if not llm_key:
+            raise HTTPException(status_code=500, detail="AI service not configured")
+        
+        # Get chat history for this session
+        history = await db.thomas_chat_history.find(
+            {"session_id": chat_msg.session_id}
+        ).sort("timestamp", 1).to_list(50)
+        
+        # Build conversation context
+        chat = LlmChat(
+            api_key=llm_key,
+            session_id=chat_msg.session_id,
+            system_message=THOMAS_SYSTEM_MESSAGE
+        ).with_model("openai", "gpt-4o-mini")
+        
+        # Add history to chat context
+        for h in history[-10:]:  # Last 10 messages for context
+            if h["role"] == "user":
+                await chat.send_message(UserMessage(text=h["content"]))
+        
+        # Send the new message
+        user_message = UserMessage(text=chat_msg.message)
+        response = await chat.send_message(user_message)
+        
+        # Store messages in database
+        await db.thomas_chat_history.insert_one({
+            "session_id": chat_msg.session_id,
+            "role": "user",
+            "content": chat_msg.message,
+            "timestamp": datetime.now(timezone.utc).isoformat()
+        })
+        await db.thomas_chat_history.insert_one({
+            "session_id": chat_msg.session_id,
+            "role": "assistant",
+            "content": response,
+            "timestamp": datetime.now(timezone.utc).isoformat()
+        })
+        
+        return {"response": response, "session_id": chat_msg.session_id}
+        
+    except Exception as e:
+        logging.error(f"Thomas chat error: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Chat error: {str(e)}")
+
+@api_router.get("/thomas/history/{session_id}")
+async def get_thomas_history(session_id: str):
+    """Get chat history for a session"""
+    history = await db.thomas_chat_history.find(
+        {"session_id": session_id},
+        {"_id": 0}
+    ).sort("timestamp", 1).to_list(100)
+    return {"history": history}
+
+@api_router.delete("/thomas/history/{session_id}")
+async def clear_thomas_history(session_id: str):
+    """Clear chat history for a session"""
+    await db.thomas_chat_history.delete_many({"session_id": session_id})
+    return {"status": "cleared"}
+
+
 # Include the router in the main app (after all routes are defined)
 app.include_router(api_router)
 
