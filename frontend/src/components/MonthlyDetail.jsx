@@ -664,26 +664,11 @@ const MonthlyDetail = ({ monthDate, isAdmin, adminInfo, onClose }) => {
                       color: '#d4af37',
                       fontFamily: 'Arial, sans-serif',
                       borderRight: '1px solid #8b6914',
-                      width: '40px',
+                      width: '50px',
                     }}
                   >
                     #
                   </th>
-                  {/* Insert column - moved to left for mobile visibility */}
-                  {isAdmin && (
-                    <th 
-                      className="px-1 py-3 text-center text-xs font-bold uppercase tracking-wider"
-                      style={{ 
-                        color: '#2ecc71',
-                        fontFamily: 'Arial, sans-serif',
-                        borderRight: '1px solid #8b6914',
-                        background: 'rgba(46, 204, 113, 0.15)',
-                        width: '50px',
-                      }}
-                    >
-                      ±
-                    </th>
-                  )}
                   <th 
                     className="px-3 py-3 text-left text-xs sm:text-sm font-bold uppercase tracking-wider"
                     style={{ 
