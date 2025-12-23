@@ -12,6 +12,7 @@ import ViolationsCascadeHybrid from '../components/ViolationsCascadeHybrid';
 import VisitorMonitor from '../components/VisitorMonitor';
 import TeamPanel from '../components/TeamPanel';
 import ActivityLog from '../components/ActivityLog';
+import PrivatinvestigatorThomas from '../components/PrivatinvestigatorThomas';
 import { usePageTracker } from '../hooks/usePageTracker';
 
 // Icon mapping
