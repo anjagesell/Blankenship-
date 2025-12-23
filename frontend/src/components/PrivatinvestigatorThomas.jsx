@@ -164,7 +164,7 @@ const PrivatinvestigatorThomas = () => {
         >
           {/* Header */}
           <div 
-            className="p-4 flex items-center justify-between"
+            className="p-4 flex items-center justify-between flex-shrink-0"
             style={{
               background: 'linear-gradient(180deg, #1a0f0a 0%, #2c3e50 100%)',
               borderBottom: '2px solid #d4af37',
