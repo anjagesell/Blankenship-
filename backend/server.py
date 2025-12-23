@@ -1292,16 +1292,40 @@ async def chat_with_thomas(chat_msg: ChatMessage):
         if not llm_key:
             raise HTTPException(status_code=500, detail="AI service not configured")
         
+        # Search the archives for relevant data
+        search_results = await search_archives_for_thomas(chat_msg.message)
+        
+        # Format search results for context
+        context_data = ""
+        if search_results:
+            context_data = "\n\n--- DATABASE RESULTS ---\n"
+            for i, entry in enumerate(search_results[:15], 1):  # Top 15 results
+                context_data += f"\nEntry {i}:\n"
+                context_data += f"  Month: {entry.get('month_key', 'N/A')}\n"
+                context_data += f"  Date: {entry.get('date', 'N/A')}\n"
+                context_data += f"  Time: {entry.get('time', 'N/A')}\n"
+                context_data += f"  Witness: {entry.get('witness', 'N/A')}\n"
+                context_data += f"  Description: {entry.get('description', 'N/A')}\n"
+                if entry.get('evidence'):
+                    context_data += f"  Evidence: {entry.get('evidence')}\n"
+                if entry.get('notes'):
+                    context_data += f"  Notes: {entry.get('notes')}\n"
+            context_data += "\n--- END DATABASE RESULTS ---\n"
+        
         # Get chat history for this session
         history = await db.thomas_chat_history.find(
             {"session_id": chat_msg.session_id}
         ).sort("timestamp", 1).to_list(50)
         
-        # Build conversation context
+        # Build conversation context with search results
+        enhanced_system_message = THOMAS_SYSTEM_MESSAGE
+        if context_data:
+            enhanced_system_message += context_data
+        
         chat = LlmChat(
             api_key=llm_key,
             session_id=chat_msg.session_id,
-            system_message=THOMAS_SYSTEM_MESSAGE
+            system_message=enhanced_system_message
         ).with_model("openai", "gpt-4o-mini")
         
         # Add history to chat context
