@@ -279,6 +279,14 @@ const MonthlyDetail = ({ monthDate, isAdmin, adminInfo, onClose }) => {
   const [saving, setSaving] = useState(false);
   const [month, year] = monthDate.split('/');
   
+  // Ref to track editing state for polling (avoids stale closure)
+  const isEditingRef = useRef(false);
+  
+  // Keep ref in sync with editingId
+  useEffect(() => {
+    isEditingRef.current = editingId !== null;
+  }, [editingId]);
+  
   // Track this monthly folder view for analytics
   useMonthlyPageTracker(monthDate);
   const monthNames = ['', 'January', 'February', 'March', 'April', 'May', 'June', 
@@ -293,15 +301,19 @@ const MonthlyDetail = ({ monthDate, isAdmin, adminInfo, onClose }) => {
   // Get admin name for tracking
   const adminName = adminInfo?.name || 'Admin';
 
-  // Fetch entries from backend
+  // Fetch entries from backend (only when not editing)
   useEffect(() => {
-    fetchEntries();
+    if (!isEditingRef.current) {
+      fetchEntries();
+    }
   }, [monthDate, lastUpdate]);
 
-  // Real-time polling for updates every 5 seconds
+  // Real-time polling for updates every 5 seconds (pauses while editing)
   useEffect(() => {
     const pollInterval = setInterval(() => {
-      fetchEntriesSilent();
+      if (!isEditingRef.current) {
+        fetchEntriesSilent();
+      }
     }, 5000);
     
     return () => clearInterval(pollInterval);
