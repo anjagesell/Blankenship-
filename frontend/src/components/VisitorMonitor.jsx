@@ -515,7 +515,7 @@ const VisitorMonitor = ({ isOpen, onClose }) => {
                         style={{ background: 'rgba(0,0,0,0.3)', border: '1px solid #333' }}
                       >
                         <div className="text-2xl mb-1">
-                          {getCountryFlag(country.country?.substring(0, 2).toUpperCase())}
+                          {getCountryFlag(getCountryCode(country.country))}
                         </div>
                         <div className="text-xs truncate" style={{ color: '#ccc' }}>
                           {country.country || 'Unknown'}
