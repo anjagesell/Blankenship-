@@ -102,39 +102,56 @@ const PrivatinvestigatorThomas = () => {
 
   return (
     <>
-      {/* Chat Toggle Button - Centered Bottom */}
+      {/* Chat Toggle Button - Top Center, Noticeable */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 p-4 rounded-full shadow-2xl transition-all hover:scale-110"
+        className="fixed top-4 left-1/2 -translate-x-1/2 z-50 px-5 py-3 rounded-full shadow-2xl transition-all hover:scale-105 flex items-center gap-3"
         style={{
           background: 'linear-gradient(145deg, #2c3e50 0%, #1a252f 100%)',
           border: '3px solid #d4af37',
           boxShadow: isOpen 
             ? '0 4px 20px rgba(212, 175, 55, 0.6)' 
-            : '0 4px 20px rgba(212, 175, 55, 0.4), 0 0 30px rgba(212, 175, 55, 0.2)',
+            : '0 4px 25px rgba(212, 175, 55, 0.5), 0 0 40px rgba(212, 175, 55, 0.3)',
           animation: isOpen ? 'none' : 'pulse-gold 2s infinite',
         }}
         title="Chat with Privatinvestigator Thomas"
       >
+        <div 
+          className="w-10 h-10 rounded-full flex items-center justify-center"
+          style={{ 
+            background: 'linear-gradient(145deg, #d4af37 0%, #9c7a1f 100%)',
+            border: '2px solid #8b6914',
+          }}
+        >
+          <UserRound className="w-6 h-6" style={{ color: '#1a0f0a' }} />
+        </div>
+        <span 
+          className="font-bold text-sm hidden sm:block"
+          style={{ color: '#d4af37', fontFamily: 'Georgia, serif' }}
+        >
+          Privatinvestigator Thomas
+        </span>
         {isOpen ? (
-          <X className="w-6 h-6" style={{ color: '#d4af37' }} />
+          <X className="w-5 h-5" style={{ color: '#d4af37' }} />
         ) : (
-          <UserRound className="w-6 h-6" style={{ color: '#d4af37' }} />
+          <span className="text-xs px-2 py-1 rounded" style={{ background: 'rgba(212,175,55,0.2)', color: '#d4af37' }}>
+            Ask Me
+          </span>
         )}
       </button>
 
       {/* Pulse animation */}
       <style>{`
         @keyframes pulse-gold {
-          0%, 100% { box-shadow: 0 4px 20px rgba(212, 175, 55, 0.4), 0 0 30px rgba(212, 175, 55, 0.2); }
-          50% { box-shadow: 0 4px 25px rgba(212, 175, 55, 0.7), 0 0 40px rgba(212, 175, 55, 0.4); }
+          0%, 100% { box-shadow: 0 4px 25px rgba(212, 175, 55, 0.5), 0 0 40px rgba(212, 175, 55, 0.3); }
+          50% { box-shadow: 0 4px 30px rgba(212, 175, 55, 0.8), 0 0 50px rgba(212, 175, 55, 0.5); }
         }
       `}</style>
 
-      {/* Chat Window - Centered */}
+      {/* Chat Window - Top Center, Below Button */}
       {isOpen && (
         <div 
-          className="fixed bottom-24 left-1/2 -translate-x-1/2 z-50 w-80 sm:w-96 rounded-lg shadow-2xl overflow-hidden"
+          className="fixed top-20 left-1/2 -translate-x-1/2 z-50 w-80 sm:w-96 rounded-lg shadow-2xl overflow-hidden"
           style={{
             background: 'linear-gradient(145deg, #0a0a12 0%, #1a1a2e 100%)',
             border: '3px solid #d4af37',
