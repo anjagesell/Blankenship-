@@ -863,6 +863,11 @@ const MonthlyDetail = ({ monthDate, isAdmin, adminInfo, onClose }) => {
                               style={{ background: '#fff', border: '2px solid #d4af37', color: '#5D4037', minWidth: '180px' }}
                             />
                           </td>
+                          {/* Exhibits column - shows "Save first" during edit */}
+                          <td className="px-2 py-2 text-center" style={{ borderRight: '1px solid rgba(139,105,20,0.3)' }}>
+                            <span className="text-[10px] italic" style={{ color: '#999' }}>Save first</span>
+                          </td>
+                          {/* Edit column - Save/Cancel buttons */}
                           <td className="px-2 py-2 text-center" style={{ borderRight: '1px solid rgba(139,105,20,0.3)' }}>
                             <div className="flex gap-1 justify-center">
                               <button
@@ -885,9 +890,7 @@ const MonthlyDetail = ({ monthDate, isAdmin, adminInfo, onClose }) => {
                               </button>
                             </div>
                           </td>
-                          <td className="px-2 py-2 text-center" style={{ borderRight: '1px solid rgba(139,105,20,0.3)' }}>
-                            <span className="text-[10px] italic" style={{ color: '#999' }}>Save first</span>
-                          </td>
+                          {/* Delete column - disabled during edit */}
                           <td className="px-2 py-2 text-center" style={{ background: 'rgba(220, 53, 69, 0.1)' }}>
                             <span className="text-[10px] italic" style={{ color: '#999' }}>-</span>
                           </td>
