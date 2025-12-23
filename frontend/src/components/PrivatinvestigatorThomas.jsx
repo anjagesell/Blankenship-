@@ -168,6 +168,7 @@ const PrivatinvestigatorThomas = () => {
       {/* Chat Window - Stationary, Below Button */}
       {isOpen && (
         <div 
+          ref={chatWindowRef}
           className="w-80 sm:w-96 rounded-lg shadow-2xl overflow-hidden mb-4 flex flex-col"
           style={{
             background: 'linear-gradient(145deg, #0a0a12 0%, #1a1a2e 100%)',
