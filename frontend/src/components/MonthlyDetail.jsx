@@ -155,37 +155,24 @@ const ExhibitViewer = ({ file, onClose, isAdmin }) => {
                 maxHeight: '70vh', 
                 transform: `scale(${zoom / 100})`, 
                 transition: 'transform 0.2s ease',
-                pointerEvents: isAdmin ? 'auto' : 'none',
-                userSelect: isAdmin ? 'auto' : 'none',
-                WebkitUserSelect: isAdmin ? 'auto' : 'none',
-                WebkitTouchCallout: isAdmin ? 'auto' : 'none',
               }} 
-              onContextMenu={isAdmin ? undefined : (e) => e.preventDefault()}
-              onDragStart={isAdmin ? undefined : (e) => e.preventDefault()}
-              draggable={isAdmin}
             />
           ) : !loading && isPdf && blobUrl ? (
             /* PDF VIEWER */
             <iframe 
-              src={`${blobUrl}#toolbar=${isAdmin ? '1' : '0'}&navpanes=0&scrollbar=1&view=FitH`} 
+              src={`${blobUrl}#toolbar=1&navpanes=0&scrollbar=1&view=FitH`} 
               title={file.filename} 
               className="w-full h-full" 
               style={{ minHeight: '70vh', background: '#fff' }} 
-              sandbox={isAdmin ? "allow-same-origin allow-scripts" : "allow-same-origin"}
             />
           ) : !loading && isVideo && blobUrl ? (
             /* VIDEO PLAYER */
             <video
               src={blobUrl}
               controls
-              controlsList={isAdmin ? "" : "nodownload noplaybackrate"}
-              disablePictureInPicture={!isAdmin}
               playsInline
               className="max-w-full max-h-[70vh] rounded"
-              style={{
-                background: '#000',
-              }}
-              onContextMenu={isAdmin ? undefined : (e) => e.preventDefault()}
+              style={{ background: '#000' }}
             >
               Your browser does not support video playback.
             </video>
@@ -204,12 +191,7 @@ const ExhibitViewer = ({ file, onClose, isAdmin }) => {
               <audio
                 src={blobUrl}
                 controls
-                controlsList={isAdmin ? "" : "nodownload"}
                 className="w-full"
-                style={{
-                  filter: 'sepia(20%) saturate(70%) grayscale(0) hue-rotate(0deg)',
-                }}
-                onContextMenu={isAdmin ? undefined : (e) => e.preventDefault()}
               >
                 Your browser does not support audio playback.
               </audio>
