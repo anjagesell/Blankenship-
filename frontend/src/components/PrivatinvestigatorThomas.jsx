@@ -259,6 +259,7 @@ const PrivatinvestigatorThomas = () => {
             style={{ borderTop: '2px solid #333', background: 'rgba(0,0,0,0.3)' }}
           >
             <input
+              ref={inputRef}
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
