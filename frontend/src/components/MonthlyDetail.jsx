@@ -896,34 +896,34 @@ const MonthlyDetail = ({ monthDate, isAdmin, adminInfo, onClose }) => {
                         // View Mode
                         <>
                           <td 
-                            className="px-2 py-3 text-center text-xs sm:text-sm font-bold"
+                            className="px-2 py-3 text-center text-xs sm:text-sm font-bold relative group/row"
                             style={{ color: '#8b6914', fontFamily: 'Courier, monospace', borderRight: '1px solid rgba(139,105,20,0.3)' }}
                           >
-                            {index + 1}
-                          </td>
-                          {/* Insert buttons - visible to Admin, positioned after # for mobile visibility */}
-                          {isAdmin && (
-                            <td className="px-1 py-2 text-center" style={{ borderRight: '1px solid rgba(139,105,20,0.3)', background: 'rgba(46, 204, 113, 0.05)' }}>
-                              <div className="flex flex-col items-center gap-1">
+                            <span>{index + 1}</span>
+                            {/* Insert buttons - appear on hover for Admin */}
+                            {isAdmin && (
+                              <div className="absolute inset-0 flex items-center justify-center gap-0.5 opacity-0 group-hover/row:opacity-100 transition-opacity"
+                                style={{ background: 'rgba(46, 204, 113, 0.95)' }}
+                              >
                                 <button
-                                  onClick={() => handleInsert(index, 'above')}
+                                  onClick={(e) => { e.stopPropagation(); handleInsert(index, 'above'); }}
                                   className="p-1 rounded hover:scale-110 transition-all"
-                                  style={{ background: 'linear-gradient(145deg, #2ecc71 0%, #27ae60 100%)', color: '#fff' }}
+                                  style={{ background: '#fff', color: '#27ae60' }}
                                   title="Insert line above"
                                 >
                                   <ArrowUp className="w-3 h-3" />
                                 </button>
                                 <button
-                                  onClick={() => handleInsert(index, 'below')}
+                                  onClick={(e) => { e.stopPropagation(); handleInsert(index, 'below'); }}
                                   className="p-1 rounded hover:scale-110 transition-all"
-                                  style={{ background: 'linear-gradient(145deg, #2ecc71 0%, #27ae60 100%)', color: '#fff' }}
+                                  style={{ background: '#fff', color: '#27ae60' }}
                                   title="Insert line below"
                                 >
                                   <ArrowDown className="w-3 h-3" />
                                 </button>
                               </div>
-                            </td>
-                          )}
+                            )}
+                          </td>
                           <td 
                             className="px-3 py-3 text-xs sm:text-sm font-semibold whitespace-nowrap"
                             style={{ color: '#3E2723', fontFamily: 'Courier, monospace', borderRight: '1px solid rgba(139,105,20,0.3)' }}
