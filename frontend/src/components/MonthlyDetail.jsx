@@ -840,20 +840,22 @@ const MonthlyDetail = ({ monthDate, isAdmin, adminInfo, onClose }) => {
                             <input
                               type="text"
                               value={editForm.date}
-                              onChange={(e) => handleChange('date', e.target.value)}
-                              placeholder="MM/DD/YYYY"
+                              onChange={(e) => handleChange('date', formatDateInput(e.target.value))}
+                              placeholder="MMDDYYYY"
                               className="w-full px-2 py-1 text-xs rounded"
                               style={{ background: '#fff', border: '1px solid #8b6914', color: '#3E2723', fontFamily: 'Courier, monospace' }}
+                              inputMode="numeric"
                             />
                           </td>
                           <td className="px-2 py-2" style={{ borderRight: '1px solid rgba(139,105,20,0.3)' }}>
                             <input
                               type="text"
                               value={editForm.time}
-                              onChange={(e) => handleChange('time', e.target.value)}
-                              placeholder="HH:MM"
+                              onChange={(e) => handleChange('time', formatTimeInput(e.target.value))}
+                              placeholder="HHMM"
                               className="w-full px-2 py-1 text-xs rounded"
                               style={{ background: '#fff', border: '1px solid #8b6914', color: '#3E2723', fontFamily: 'Courier, monospace' }}
+                              inputMode="text"
                             />
                           </td>
                           <td className="px-2 py-2" style={{ borderRight: '1px solid rgba(139,105,20,0.3)' }}>
