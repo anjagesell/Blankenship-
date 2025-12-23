@@ -249,7 +249,6 @@ const PrivatinvestigatorThomas = () => {
                 </div>
               </div>
             )}
-            <div ref={messagesEndRef} />
           </div>
 
           {/* Input - Always visible at bottom */}
