@@ -102,28 +102,39 @@ const PrivatinvestigatorThomas = () => {
 
   return (
     <>
-      {/* Chat Toggle Button */}
+      {/* Chat Toggle Button - Centered Bottom */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 left-6 z-50 p-4 rounded-full shadow-2xl transition-all hover:scale-110"
+        className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 p-4 rounded-full shadow-2xl transition-all hover:scale-110"
         style={{
           background: 'linear-gradient(145deg, #2c3e50 0%, #1a252f 100%)',
           border: '3px solid #d4af37',
-          boxShadow: '0 4px 20px rgba(212, 175, 55, 0.4)',
+          boxShadow: isOpen 
+            ? '0 4px 20px rgba(212, 175, 55, 0.6)' 
+            : '0 4px 20px rgba(212, 175, 55, 0.4), 0 0 30px rgba(212, 175, 55, 0.2)',
+          animation: isOpen ? 'none' : 'pulse-gold 2s infinite',
         }}
         title="Chat with Privatinvestigator Thomas"
       >
         {isOpen ? (
           <X className="w-6 h-6" style={{ color: '#d4af37' }} />
         ) : (
-          <MessageCircle className="w-6 h-6" style={{ color: '#d4af37' }} />
+          <UserRound className="w-6 h-6" style={{ color: '#d4af37' }} />
         )}
       </button>
 
-      {/* Chat Window */}
+      {/* Pulse animation */}
+      <style>{`
+        @keyframes pulse-gold {
+          0%, 100% { box-shadow: 0 4px 20px rgba(212, 175, 55, 0.4), 0 0 30px rgba(212, 175, 55, 0.2); }
+          50% { box-shadow: 0 4px 25px rgba(212, 175, 55, 0.7), 0 0 40px rgba(212, 175, 55, 0.4); }
+        }
+      `}</style>
+
+      {/* Chat Window - Centered */}
       {isOpen && (
         <div 
-          className="fixed bottom-24 left-6 z-50 w-80 sm:w-96 rounded-lg shadow-2xl overflow-hidden"
+          className="fixed bottom-24 left-1/2 -translate-x-1/2 z-50 w-80 sm:w-96 rounded-lg shadow-2xl overflow-hidden"
           style={{
             background: 'linear-gradient(145deg, #0a0a12 0%, #1a1a2e 100%)',
             border: '3px solid #d4af37',
