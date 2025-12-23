@@ -222,6 +222,39 @@ const MonthlyDetail = ({ monthDate, isAdmin, adminInfo, onClose }) => {
   // Ref to track editing state for polling (avoids stale closure)
   const isEditingRef = useRef(false);
   
+  // Auto-format date as user types: 12022013 → 12/02/2013
+  const formatDateInput = (value) => {
+    // Remove all non-digits
+    const digits = value.replace(/\D/g, '');
+    
+    // Format as MM/DD/YYYY
+    if (digits.length <= 2) {
+      return digits;
+    } else if (digits.length <= 4) {
+      return `${digits.slice(0, 2)}/${digits.slice(2)}`;
+    } else {
+      return `${digits.slice(0, 2)}/${digits.slice(2, 4)}/${digits.slice(4, 8)}`;
+    }
+  };
+  
+  // Auto-format time as user types: 1230 → 12:30
+  const formatTimeInput = (value) => {
+    // Remove all non-digits and non-letters (for am/pm)
+    const cleaned = value.replace(/[^0-9apmAPM:\s]/g, '');
+    
+    // Extract just digits for the time part
+    const digits = cleaned.replace(/[^0-9]/g, '');
+    const suffix = cleaned.match(/[apmAPM]+/gi);
+    const suffixStr = suffix ? ' ' + suffix[0].toLowerCase() : '';
+    
+    // Format as HH:MM
+    if (digits.length <= 2) {
+      return digits + suffixStr;
+    } else {
+      return `${digits.slice(0, 2)}:${digits.slice(2, 4)}${suffixStr}`;
+    }
+  };
+  
   // Keep ref in sync with editingId
   useEffect(() => {
     isEditingRef.current = editingId !== null;
