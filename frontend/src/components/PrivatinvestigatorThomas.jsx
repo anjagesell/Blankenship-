@@ -15,6 +15,7 @@ const PrivatinvestigatorThomas = () => {
     sessionStorage.setItem('thomas_session_id', newId);
     return newId;
   });
+  const messagesContainerRef = useRef(null);
   const messagesEndRef = useRef(null);
 
   // Load chat history on mount
@@ -24,10 +25,13 @@ const PrivatinvestigatorThomas = () => {
     }
   }, [isOpen]);
 
-  // Scroll to bottom when messages change
+  // Scroll to bottom within the messages container only (not the whole page)
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
+    if (messagesContainerRef.current) {
+      // Scroll within the container, not the page
+      messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
+    }
+  }, [messages, loading]);
 
   const loadHistory = async () => {
     try {
