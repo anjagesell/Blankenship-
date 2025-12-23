@@ -38,7 +38,7 @@ const ExhibitViewer = ({ file, onClose, isAdmin }) => {
   const [loading, setLoading] = useState(true);
   const [blobUrl, setBlobUrl] = useState(null);
   
-  // Load file as blob to prevent direct URL access/download
+  // Load file as blob
   useEffect(() => {
     if (!file) return;
     
@@ -69,34 +69,6 @@ const ExhibitViewer = ({ file, onClose, isAdmin }) => {
     };
   }, [file]);
   
-  // Block all download/save attempts - only for non-admin visitors
-  useEffect(() => {
-    if (isAdmin) return; // Admin can copy/paste freely
-    
-    const preventActions = (e) => {
-      // Block right-click
-      if (e.type === 'contextmenu') {
-        e.preventDefault();
-        return false;
-      }
-      // Block keyboard shortcuts (Ctrl+S, Ctrl+Shift+S, etc.)
-      if (e.type === 'keydown' && (e.ctrlKey || e.metaKey)) {
-        if (e.key === 's' || e.key === 'S' || e.key === 'p' || e.key === 'P') {
-          e.preventDefault();
-          return false;
-        }
-      }
-    };
-    
-    document.addEventListener('contextmenu', preventActions);
-    document.addEventListener('keydown', preventActions);
-    
-    return () => {
-      document.removeEventListener('contextmenu', preventActions);
-      document.removeEventListener('keydown', preventActions);
-    };
-  }, [isAdmin]);
-  
   if (!file) return null;
   
   const fileType = file.file_type?.toLowerCase() || '';
@@ -111,12 +83,10 @@ const ExhibitViewer = ({ file, onClose, isAdmin }) => {
       className="fixed inset-0 z-[9999] flex items-center justify-center p-2 sm:p-4"
       style={{ background: 'rgba(0, 0, 0, 0.95)' }}
       onClick={onClose}
-      onContextMenu={isAdmin ? undefined : (e) => e.preventDefault()}
     >
       <div 
         className="relative w-full max-w-5xl max-h-[90vh] flex flex-col"
         onClick={(e) => e.stopPropagation()}
-        onContextMenu={isAdmin ? undefined : (e) => e.preventDefault()}
       >
         {/* Header */}
         <div 
