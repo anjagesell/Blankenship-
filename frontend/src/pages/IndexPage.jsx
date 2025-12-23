@@ -695,9 +695,6 @@ const IndexPage = () => {
         onClose={() => setShowActivityLog(false)}
         adminInfo={adminInfo}
       />
-
-      {/* Privatinvestigator Thomas - AI Helper */}
-      <PrivatinvestigatorThomas />
     </div>
   );
 };
