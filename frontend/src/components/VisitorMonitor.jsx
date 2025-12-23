@@ -103,6 +103,64 @@ const VisitorMonitor = ({ isOpen, onClose }) => {
     }
   };
 
+  // Map country names to ISO codes for flags
+  const getCountryCode = (countryName) => {
+    if (!countryName) return null;
+    const countryMap = {
+      'united states': 'US',
+      'usa': 'US',
+      'germany': 'DE',
+      'deutschland': 'DE',
+      'united kingdom': 'GB',
+      'uk': 'GB',
+      'great britain': 'GB',
+      'canada': 'CA',
+      'australia': 'AU',
+      'france': 'FR',
+      'italy': 'IT',
+      'spain': 'ES',
+      'netherlands': 'NL',
+      'belgium': 'BE',
+      'switzerland': 'CH',
+      'austria': 'AT',
+      'sweden': 'SE',
+      'norway': 'NO',
+      'denmark': 'DK',
+      'finland': 'FI',
+      'poland': 'PL',
+      'ireland': 'IE',
+      'portugal': 'PT',
+      'greece': 'GR',
+      'russia': 'RU',
+      'china': 'CN',
+      'japan': 'JP',
+      'south korea': 'KR',
+      'india': 'IN',
+      'brazil': 'BR',
+      'mexico': 'MX',
+      'argentina': 'AR',
+      'south africa': 'ZA',
+      'new zealand': 'NZ',
+      'singapore': 'SG',
+      'hong kong': 'HK',
+      'taiwan': 'TW',
+      'philippines': 'PH',
+      'indonesia': 'ID',
+      'malaysia': 'MY',
+      'thailand': 'TH',
+      'vietnam': 'VN',
+      'israel': 'IL',
+      'turkey': 'TR',
+      'egypt': 'EG',
+      'ukraine': 'UA',
+      'czech republic': 'CZ',
+      'czechia': 'CZ',
+      'hungary': 'HU',
+      'romania': 'RO',
+    };
+    return countryMap[countryName.toLowerCase()] || countryName.substring(0, 2).toUpperCase();
+  };
+
   const getPageDisplayName = (pageName) => {
     if (!pageName) return 'Unknown';
     
