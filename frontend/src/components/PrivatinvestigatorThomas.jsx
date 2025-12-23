@@ -123,7 +123,7 @@ const PrivatinvestigatorThomas = () => {
             border: '2px solid #8b6914',
           }}
         >
-          <UserRound className="w-6 h-6" style={{ color: '#1a0f0a' }} />
+          <span className="text-2xl">🕵️‍♂️</span>
         </div>
         <span 
           className="font-bold text-sm hidden sm:block"
