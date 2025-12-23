@@ -37,10 +37,10 @@ const PrivatinvestigatorThomas = () => {
         if (data.history && data.history.length > 0) {
           setMessages(data.history);
         } else {
-          // Add welcome message
+          // Add welcome message - judicial style
           setMessages([{
             role: 'assistant',
-            content: "Guten Tag, I'm Privatinvestigator Thomas. I'm here to help you navigate the Blankenship Judicial Archives and answer questions about the case. How may I assist you today?\n\n*For Jacob, for Zachary, for Justice.*"
+            content: "I'm here to assist you in answering your questions regarding this case file.\n\nNeed help navigating? Just ask.\n\nNeed help locating something specific — a name, a time, a circumstance, or even a phrase? Be my guest.\n\nGive it a try: I'm here to be of help to you.\n\n— Privatinvestigator Thomas"
           }]);
         }
       }
@@ -48,7 +48,7 @@ const PrivatinvestigatorThomas = () => {
       console.error('Failed to load history:', err);
       setMessages([{
         role: 'assistant',
-        content: "Guten Tag, I'm Privatinvestigator Thomas. I'm here to help you navigate the Blankenship Judicial Archives. How may I assist you?"
+        content: "I'm here to assist you in answering your questions regarding this case file.\n\nNeed help navigating? Just ask.\n\nGive it a try: I'm here to be of help to you.\n\n— Privatinvestigator Thomas"
       }]);
     }
   };
