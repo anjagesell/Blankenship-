@@ -906,8 +906,11 @@ const MonthlyDetail = ({ monthDate, isAdmin, adminInfo, onClose }) => {
                               </button>
                             </div>
                           </td>
-                          <td className="px-2 py-2 text-center" style={{ background: 'rgba(220, 53, 69, 0.1)' }}>
+                          <td className="px-2 py-2 text-center" style={{ borderRight: '1px solid rgba(139,105,20,0.3)' }}>
                             <span className="text-[10px] italic" style={{ color: '#999' }}>Save first</span>
+                          </td>
+                          <td className="px-2 py-2 text-center" style={{ background: 'rgba(220, 53, 69, 0.1)' }}>
+                            <span className="text-[10px] italic" style={{ color: '#999' }}>-</span>
                           </td>
                         </>
                       ) : (
