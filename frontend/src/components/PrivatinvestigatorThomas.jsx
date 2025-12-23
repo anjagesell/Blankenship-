@@ -159,7 +159,8 @@ const PrivatinvestigatorThomas = () => {
           style={{
             background: 'linear-gradient(145deg, #0a0a12 0%, #1a1a2e 100%)',
             border: '3px solid #d4af37',
-            maxHeight: '70vh',
+            height: 'auto',
+            maxHeight: 'min(400px, 50vh)',
           }}
         >
           {/* Header */}
