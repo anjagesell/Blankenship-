@@ -174,13 +174,13 @@ const PrivatinvestigatorThomas = () => {
                   border: '2px solid #8b6914',
                 }}
               >
-                <span className="text-lg">🕵️</span>
+                <span className="text-xl">🕵️‍♂️</span>
               </div>
               <div>
                 <h3 className="font-bold text-sm" style={{ color: '#d4af37', fontFamily: 'Georgia, serif' }}>
                   Privatinvestigator Thomas
                 </h3>
-                <p className="text-xs" style={{ color: '#888' }}>Archive Assistant</p>
+                <p className="text-xs" style={{ color: '#888' }}>Case File Assistant</p>
               </div>
             </div>
             <button 
