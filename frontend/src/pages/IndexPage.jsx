@@ -187,6 +187,11 @@ const IndexPage = () => {
         </div>
       </div>
 
+      {/* Privatinvestigator Thomas - AI Helper (Stationary, Above Files) */}
+      <div className="container mx-auto px-4 pt-6 relative z-10">
+        <PrivatinvestigatorThomas />
+      </div>
+
       {/* Year Envelope Icons */}
       <div className="container mx-auto px-4 py-8 sm:py-12 relative z-10">
         {/* Year Envelopes Row */}
