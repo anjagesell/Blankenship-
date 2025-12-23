@@ -237,10 +237,10 @@ const PrivatinvestigatorThomas = () => {
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Input */}
+          {/* Input - Always visible at bottom */}
           <form 
             onSubmit={sendMessage}
-            className="p-3 flex gap-2"
+            className="p-3 flex gap-2 flex-shrink-0"
             style={{ borderTop: '2px solid #333', background: 'rgba(0,0,0,0.3)' }}
           >
             <input
