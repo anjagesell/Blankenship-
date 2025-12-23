@@ -69,8 +69,10 @@ const ExhibitViewer = ({ file, onClose, isAdmin }) => {
     };
   }, [file]);
   
-  // Block all download/save attempts
+  // Block all download/save attempts - only for non-admin visitors
   useEffect(() => {
+    if (isAdmin) return; // Admin can copy/paste freely
+    
     const preventActions = (e) => {
       // Block right-click
       if (e.type === 'contextmenu') {
@@ -93,7 +95,7 @@ const ExhibitViewer = ({ file, onClose, isAdmin }) => {
       document.removeEventListener('contextmenu', preventActions);
       document.removeEventListener('keydown', preventActions);
     };
-  }, []);
+  }, [isAdmin]);
   
   if (!file) return null;
   
