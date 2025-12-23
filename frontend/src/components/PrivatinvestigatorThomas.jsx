@@ -202,7 +202,7 @@ const PrivatinvestigatorThomas = () => {
           <div 
             ref={messagesContainerRef}
             className="p-4 space-y-4 overflow-y-auto flex-1"
-            style={{ minHeight: '150px', maxHeight: '40vh' }}
+            style={{ minHeight: '100px', maxHeight: '250px' }}
           >
             {messages.map((msg, index) => (
               <div 
