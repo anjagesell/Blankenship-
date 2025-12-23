@@ -111,12 +111,12 @@ const ExhibitViewer = ({ file, onClose, isAdmin }) => {
       className="fixed inset-0 z-[9999] flex items-center justify-center p-2 sm:p-4"
       style={{ background: 'rgba(0, 0, 0, 0.95)' }}
       onClick={onClose}
-      onContextMenu={(e) => e.preventDefault()}
+      onContextMenu={isAdmin ? undefined : (e) => e.preventDefault()}
     >
       <div 
         className="relative w-full max-w-5xl max-h-[90vh] flex flex-col"
         onClick={(e) => e.stopPropagation()}
-        onContextMenu={(e) => e.preventDefault()}
+        onContextMenu={isAdmin ? undefined : (e) => e.preventDefault()}
       >
         {/* Header */}
         <div 
