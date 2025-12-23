@@ -17,6 +17,9 @@ import base64
 from io import BytesIO
 import httpx
 
+# Import LLM chat for Privatinvestigator Thomas
+from emergentintegrations.llm.chat import LlmChat, UserMessage
+
 # Try to import pillow-heif for HEIC conversion (universal compatibility)
 try:
     import pillow_heif
