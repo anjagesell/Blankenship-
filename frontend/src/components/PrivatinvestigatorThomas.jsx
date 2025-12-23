@@ -16,12 +16,25 @@ const PrivatinvestigatorThomas = () => {
     return newId;
   });
   const messagesContainerRef = useRef(null);
-  const messagesEndRef = useRef(null);
+  const chatWindowRef = useRef(null);
+  const inputRef = useRef(null);
 
   // Load chat history on mount
   useEffect(() => {
     if (isOpen && messages.length === 0) {
       loadHistory();
+    }
+  }, [isOpen]);
+
+  // When chat opens, scroll the chat window into view on mobile
+  useEffect(() => {
+    if (isOpen && chatWindowRef.current) {
+      // Small delay to let the DOM render
+      setTimeout(() => {
+        chatWindowRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        // Focus the input field
+        inputRef.current?.focus();
+      }, 100);
     }
   }, [isOpen]);
 
