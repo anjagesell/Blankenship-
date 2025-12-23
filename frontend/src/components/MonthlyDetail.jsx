@@ -868,14 +868,14 @@ const MonthlyDetail = ({ monthDate, isAdmin, adminInfo, onClose }) => {
                               style={{ background: '#fff', border: '1px solid #8b6914', color: '#8b0000' }}
                             />
                           </td>
-                          <td className="px-2 py-2" style={{ borderRight: '1px solid rgba(139,105,20,0.3)' }}>
+                          <td className="px-2 py-2" style={{ borderRight: '1px solid rgba(139,105,20,0.3)', minWidth: '200px' }}>
                             <textarea
                               value={editForm.notes}
                               onChange={(e) => handleChange('notes', e.target.value)}
                               placeholder="Notes"
-                              rows="2"
+                              rows="3"
                               className="w-full px-2 py-1 text-xs rounded"
-                              style={{ background: '#fff', border: '1px solid #8b6914', color: '#5D4037' }}
+                              style={{ background: '#fff', border: '2px solid #d4af37', color: '#5D4037', minWidth: '180px' }}
                             />
                           </td>
                           <td className="px-2 py-2 text-center" style={{ borderRight: '1px solid rgba(139,105,20,0.3)' }}>
