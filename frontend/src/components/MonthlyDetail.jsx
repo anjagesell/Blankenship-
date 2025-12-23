@@ -818,6 +818,12 @@ const MonthlyDetail = ({ monthDate, isAdmin, adminInfo, onClose }) => {
                           <td className="px-2 py-2 text-center text-xs font-bold" style={{ color: '#8b6914', borderRight: '1px solid rgba(139,105,20,0.3)' }}>
                             {index + 1}
                           </td>
+                          {/* Empty cell for insert buttons column alignment when admin */}
+                          {isAdmin && (
+                            <td className="px-1 py-2" style={{ borderRight: '1px solid rgba(139,105,20,0.3)', background: 'rgba(46, 204, 113, 0.05)' }}>
+                              {/* Insert buttons hidden during edit */}
+                            </td>
+                          )}
                           <td className="px-2 py-2" style={{ borderRight: '1px solid rgba(139,105,20,0.3)' }}>
                             <input
                               type="text"
