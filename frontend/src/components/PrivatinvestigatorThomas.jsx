@@ -101,11 +101,11 @@ const PrivatinvestigatorThomas = () => {
   };
 
   return (
-    <>
-      {/* Chat Toggle Button - Top Center, Noticeable */}
+    <div className="w-full flex flex-col items-center">
+      {/* Chat Toggle Button - Stationary, Above Files */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed top-4 left-1/2 -translate-x-1/2 z-50 px-5 py-3 rounded-full shadow-2xl transition-all hover:scale-105 flex items-center gap-3"
+        className="px-5 py-3 rounded-full shadow-2xl transition-all hover:scale-105 flex items-center gap-3 mb-4"
         style={{
           background: 'linear-gradient(145deg, #2c3e50 0%, #1a252f 100%)',
           border: '3px solid #d4af37',
@@ -148,14 +148,14 @@ const PrivatinvestigatorThomas = () => {
         }
       `}</style>
 
-      {/* Chat Window - Top Center, Below Button */}
+      {/* Chat Window - Stationary, Below Button */}
       {isOpen && (
         <div 
-          className="fixed top-20 left-1/2 -translate-x-1/2 z-50 w-80 sm:w-96 rounded-lg shadow-2xl overflow-hidden"
+          className="w-80 sm:w-96 rounded-lg shadow-2xl overflow-hidden mb-4"
           style={{
             background: 'linear-gradient(145deg, #0a0a12 0%, #1a1a2e 100%)',
             border: '3px solid #d4af37',
-            maxHeight: '70vh',
+            maxHeight: '60vh',
           }}
         >
           {/* Header */}
