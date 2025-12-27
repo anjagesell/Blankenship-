@@ -750,8 +750,13 @@ async def create_monthly_entry(entry: MonthlyEntryCreate, admin_password: str, e
         updated_at=datetime.now(timezone.utc).isoformat()
     )
     
-    await db.monthly_entries.insert_one(new_entry.model_dump())
-    return new_entry.model_dump()
+    entry_dict = new_entry.model_dump()
+    await db.monthly_entries.insert_one(entry_dict)
+    
+    # ✅ AUTO-BACKUP: Save entry to seed_data.json
+    await backup_entry_to_seed(entry_dict)
+    
+    return entry_dict
 
 # Update a monthly entry (admin only)
 @api_router.put("/monthly/{entry_id}")
