@@ -350,6 +350,9 @@ async def upload_file(
         
         await db.uploaded_files.insert_one(file_record)
         
+        # ✅ AUTO-BACKUP: Save file to seed_files.json and uploads directory
+        await backup_file_to_seed(file_record, file_content)
+        
         return FileUploadResponse(
             file_id=file_id,
             filename=file.filename,
