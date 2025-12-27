@@ -470,6 +470,42 @@ async def clear_all_files(admin_password: str):
         "deleted_count": result.deleted_count
     }
 
+# Get file info with actual type detection
+@api_router.get("/file-info/{file_id}")
+async def get_file_info(file_id: str):
+    """Get file metadata including actual detected type for cross-platform compatibility"""
+    file_record = await db.uploaded_files.find_one(
+        {"file_id": file_id},
+        {"_id": 0, "file_content": 0}
+    )
+    
+    if not file_record:
+        raise HTTPException(status_code=404, detail="File not found")
+    
+    actual_type = None
+    file_path = None
+    
+    # Try to find the file and detect actual type
+    if "file_path" in file_record:
+        file_path = Path(file_record["file_path"])
+        if file_path.exists():
+            actual_type = detect_actual_mime_type(file_path)
+    
+    if not file_path or not file_path.exists():
+        for upload_file in UPLOAD_DIR.iterdir():
+            if file_id in upload_file.name:
+                actual_type = detect_actual_mime_type(upload_file)
+                break
+    
+    return {
+        "file_id": file_record["file_id"],
+        "filename": file_record["filename"],
+        "labeled_type": file_record.get("file_type", ""),
+        "actual_type": actual_type or ALLOWED_EXTENSIONS.get(file_record.get("file_type", ""), "application/octet-stream"),
+        "is_heic": actual_type == "image/heic" if actual_type else False,
+        "file_size": file_record.get("file_size", 0)
+    }
+
 
 # ============================================
 # TIMELINE DATA PERSISTENCE
