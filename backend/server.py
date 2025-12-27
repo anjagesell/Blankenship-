@@ -393,6 +393,10 @@ async def download_file(file_id: str):
     if "file_path" in file_record:
         file_path = Path(file_record["file_path"])
         if file_path.exists():
+            # Detect actual MIME type from file content
+            actual_mime = detect_actual_mime_type(file_path)
+            if actual_mime:
+                media_type = actual_mime
             return FileResponse(
                 path=file_path,
                 media_type=media_type,
@@ -403,6 +407,10 @@ async def download_file(file_id: str):
     # Last resort: Search in uploads directory by file_id
     for upload_file in UPLOAD_DIR.iterdir():
         if file_id in upload_file.name:
+            # Detect actual MIME type from file content
+            actual_mime = detect_actual_mime_type(upload_file)
+            if actual_mime:
+                media_type = actual_mime
             return FileResponse(
                 path=upload_file,
                 media_type=media_type,
