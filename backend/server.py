@@ -725,15 +725,29 @@ async def seed_database():
         else:
             logging.info(f"Database has {count} entries, skipping seed.")
         
-        # Seed file records (exhibits)
-        file_count = await db.file_uploads.count_documents({})
+        # Seed file records (exhibits) - use uploaded_files collection to match API
+        file_count = await db.uploaded_files.count_documents({})
         if file_count == 0 and SEED_FILES_FILE.exists():
             logging.info("File records empty, seeding exhibits...")
             with open(SEED_FILES_FILE, 'r') as f:
                 seed_files = json.load(f)
             
             if seed_files:
-                await db.file_uploads.insert_many(seed_files)
+                # Add file_path to each record for filesystem serving
+                for file_record in seed_files:
+                    # Look for file in uploads directory matching file_id prefix
+                    file_pattern = f"{file_record['file_id']}_{file_record['filename']}"
+                    file_path = UPLOAD_DIR / file_pattern
+                    if file_path.exists():
+                        file_record['file_path'] = str(file_path)
+                    else:
+                        # Try alternate pattern (just filename)
+                        for f in UPLOAD_DIR.iterdir():
+                            if file_record['file_id'] in f.name:
+                                file_record['file_path'] = str(f)
+                                break
+                
+                await db.uploaded_files.insert_many(seed_files)
                 logging.info(f"Successfully seeded {len(seed_files)} file records!")
         else:
             logging.info(f"Database has {file_count} file records, skipping file seed.")
