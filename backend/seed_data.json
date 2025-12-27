@@ -1,6 +1,6 @@
 [
   {
-    "id": "14633e25-90f5-432b-b0ad-2ff109865bc9",
+    "id": "9bb823da-525d-474e-8500-70be3856b9c4",
     "month_key": "11/2013",
     "date": "11/30/2013",
     "time": "8:30 am",
@@ -8,11 +8,13 @@
     "description": "Tammy's employment",
     "evidence": "Timecard of Big Lots Mooresville",
     "notes": "Tammy overslept and ran late for work. She was supposed to bring Rylie to Gabriele Blankenship's home for babysitting, as usual. However, since Zachary was home and both he and Rylie were still asleep, Tammy decided not to take her \u2014 a natural reaction given the circumstances. Already running late and under stress, Tammy forgot to call Gabriele to inform her she wasn't bringing Rylie. **[CONTEXT: Explains why child was home with father that morning.]**",
-    "created_at": "2025-12-27T17:31:43.708601+00:00",
-    "updated_at": "2025-12-27T17:31:43.708631+00:00"
+    "created_at": "2025-12-22T10:00:44.054534+00:00",
+    "updated_at": "2025-12-25T05:51:37.969325+00:00",
+    "created_by": "",
+    "last_edited_by": "Larsen"
   },
   {
-    "id": "77b2b24a-5e17-48e6-abb3-f80f116aa929",
+    "id": "d1bfd6b1-0e2a-49c0-b3f5-1cbfecdf4033",
     "month_key": "11/2013",
     "date": "11/30/2013",
     "time": "11:30 am",
@@ -20,11 +22,13 @@
     "description": "Physician Chart/Medical Evaluation",
     "evidence": "Report PAB120",
     "notes": "Medical findings: Hymen intact. No distress. GU exam unremarkable. **No evidence of trauma or abuse.**",
-    "created_at": "2025-12-27T17:31:43.836582+00:00",
-    "updated_at": "2025-12-27T17:31:43.836596+00:00"
+    "created_at": "2025-12-22T10:00:43.926251+00:00",
+    "updated_at": "2025-12-25T05:51:46.891734+00:00",
+    "created_by": "",
+    "last_edited_by": "Larsen"
   },
   {
-    "id": "2007f02a-4d1f-4f37-866a-6ab696aea8a2",
+    "id": "1f8e1c92-6119-46ea-9344-586fc45bb4b1",
     "month_key": "11/2013",
     "date": "11/30/2013",
     "time": "11:52",
@@ -32,11 +36,13 @@
     "description": "Incident Report incl. Narrative",
     "evidence": "Ori # NC0180000",
     "notes": "Officer reports Nurse stated: 'Rylie seems fine, sees no signs of sexual assault. After speaking with Rylie alone, no signs of abuse.' Keith B. claims it is 'nothing unusual' for Rylie to be naked from waist down. Rylie allegedly said 'dad put his thing on her butt.' Keith B. claims he has not spoken to Tammy B. nor Zachary since leaving the house. **[INCONSISTENCY: Keith has their phone number and DID see both parents after leaving the residence.]**",
-    "created_at": "2025-12-27T17:31:43.952021+00:00",
-    "updated_at": "2025-12-27T17:31:43.952036+00:00"
+    "created_at": "2025-12-22T10:00:43.986310+00:00",
+    "updated_at": "2025-12-25T05:51:57.518543+00:00",
+    "created_by": "",
+    "last_edited_by": "Larsen"
   },
   {
-    "id": "b7acb15e-8ef7-40ba-8141-e3e375fd4ee8",
+    "id": "8d4eac6d-7f46-498c-a962-4594e640c9f9",
     "month_key": "11/2013",
     "date": "11/30/2013",
     "time": "12:15 pm",
@@ -44,11 +50,13 @@
     "description": "CPS Sherri Stock phones Officer  Coffey.",
     "evidence": "Narrative Notes of CPS.",
     "notes": "CPS Sherri Stock reports to Deputy Coffey: 'Child has a burn (severity unknown) and allegedly disclosed sexual abuse.' **[NOTE: \"Allegedly disclosed\" \u2014 no direct witness to disclosure at this point.]**",
-    "created_at": "2025-12-27T17:31:44.019428+00:00",
-    "updated_at": "2025-12-27T17:31:44.019448+00:00"
+    "created_at": "2025-12-22T10:00:43.993598+00:00",
+    "updated_at": "2025-12-25T05:52:05.693626+00:00",
+    "created_by": "",
+    "last_edited_by": "Larsen"
   },
   {
-    "id": "035ae7a5-620e-4b8b-808a-751f05bae98c",
+    "id": "e61eb370-afd8-4150-9d15-6ec3c1495bba",
     "month_key": "11/2013",
     "date": "11/30/2013",
     "time": "12:30 pm",
@@ -56,11 +64,13 @@
     "description": "CPS SW speaks to CPS Amber Mecimore on Telephone. SW Stock claims to follow up with DS Coffey later due to Home visit in unrelated case.",
     "evidence": "Narrative Notes of CPS",
     "notes": "Documentation establishes chain of communication between CPS workers regarding case information. **[CHAIN OF CUSTODY: Verbal information transfer documented.]**",
-    "created_at": "2025-12-27T17:31:44.086663+00:00",
-    "updated_at": "2025-12-27T17:31:44.086678+00:00"
+    "created_at": "2025-12-22T10:00:43.995368+00:00",
+    "updated_at": "2025-12-25T05:52:13.598075+00:00",
+    "created_by": "",
+    "last_edited_by": "Larsen"
   },
   {
-    "id": "dc90150a-78b6-421a-adac-65244d4e7f63",
+    "id": "f4639498-580c-42a9-a3e6-f8a459e4c2be",
     "month_key": "11/2013",
     "date": "11/30/2013",
     "time": "12:50 pm",
@@ -68,11 +78,13 @@
     "description": "CPS intake report claims Sexual Maltreatment and neglect.",
     "evidence": "CPS Intake Report",
     "notes": "Defense received only partial documents. However, on page 1, the **Perpetrator is listed as Tammy B., NOT Zachary B.** \u2014 yet this document was presented as proof of crime. Rylie allegedly stated another version: 'Daddy put his weiner on my cushy.' CPS Jennifer Owens learns Z. Blankenship is handicapped with ADHD, blind in one eye, and has learning disabilities. When asked if child was in danger, CPS answered: **'No.'** **[KEY EVIDENCE: Wrong perpetrator listed. Multiple versions of child's statement.]**",
-    "created_at": "2025-12-27T17:31:44.200852+00:00",
-    "updated_at": "2025-12-27T17:31:44.200866+00:00"
+    "created_at": "2025-12-22T10:00:43.997180+00:00",
+    "updated_at": "2025-12-25T05:52:24.744268+00:00",
+    "created_by": "",
+    "last_edited_by": "Larsen"
   },
   {
-    "id": "1cbc5dd3-e61c-4947-b2bb-fe2b1aebef0d",
+    "id": "6d8af5a6-9580-41e3-92ba-bd5d055ec2fd",
     "month_key": "11/2013",
     "date": "11/30/2013",
     "time": "12:50 pm",
@@ -80,11 +92,13 @@
     "description": "Intake Report Narrative synopsis",
     "evidence": "CPS Narrative Log",
     "notes": "SW Mecimore spoke with S.A.N.E. Nurse Amy Walker regarding the reason grandparents Keith and Gabriele Blankenship brought Rylie to ER. Grandparents confirm Rylie being without diaper is normal due to potty training. Child allegedly said: 'Daddy put his weenie on my butt.' **S.A.N.E. Nurse Walker: After completing exam, sees NO signs of abuse. When asked questions, child disclosed NO abuse.** **[KEY EVIDENCE: Medical professional found no signs of abuse; child made no disclosure during exam.]**",
-    "created_at": "2025-12-27T17:31:44.274368+00:00",
-    "updated_at": "2025-12-27T17:31:44.274381+00:00"
+    "created_at": "2025-12-22T10:00:44.021827+00:00",
+    "updated_at": "2025-12-25T05:52:34.363590+00:00",
+    "created_by": "",
+    "last_edited_by": "Larsen"
   },
   {
-    "id": "bf3075da-a19c-4869-aed3-8fc797143627",
+    "id": "fef08f8c-eae2-4f0e-870c-ef645f988a67",
     "month_key": "11/2013",
     "date": "11/30/2013",
     "time": "1:22 pm",
@@ -92,11 +106,13 @@
     "description": "CPS Amber Mecimore requests Iredell County assistant SW Pam Frazier.",
     "evidence": "Narrative Log",
     "notes": "No additional information documented from this contact.",
-    "created_at": "2025-12-27T17:31:44.339424+00:00",
-    "updated_at": "2025-12-27T17:31:44.339440+00:00"
+    "created_at": "2025-12-22T10:00:44.024148+00:00",
+    "updated_at": "2025-12-25T05:52:41.994091+00:00",
+    "created_by": "",
+    "last_edited_by": "Larsen"
   },
   {
-    "id": "636072ef-c275-4ff8-a1f8-d09b1d8df3c7",
+    "id": "39c413bb-5410-4b9e-8302-ab990e3a459b",
     "month_key": "11/2013",
     "date": "11/30/2013",
     "time": "3:30 pm",
@@ -104,11 +120,13 @@
     "description": "Telephone call.",
     "evidence": "Narrative Log",
     "notes": "CPS Pam Frazier states she has **no concerns** during home visit. Child made **no disclosure** to SW. SW noted grandparents made a point to mention: (1) Father stays on computer frequently, and (2) When grandparents visited his home, they were 'yelled at to wait a minute' when they knocked. **[NOTE: No concerns documented, yet grandparents' comments treated as suspicious.]**",
-    "created_at": "2025-12-27T17:31:44.452020+00:00",
-    "updated_at": "2025-12-27T17:31:44.452033+00:00"
+    "created_at": "2025-12-22T10:00:44.026215+00:00",
+    "updated_at": "2025-12-25T05:52:52.349118+00:00",
+    "created_by": "",
+    "last_edited_by": "Larsen"
   },
   {
-    "id": "6f5eb348-9dcf-46dd-a4d3-529887b08c8d",
+    "id": "f59c6a67-b419-4a7c-a421-2b7d9d7a6671",
     "month_key": "11/2013",
     "date": "11/30/2013",
     "time": "4:00 pm",
@@ -116,11 +134,13 @@
     "description": "CPS Mecimore and CPC Pam Frazier arrange Home visit with Tammy Blankenship.",
     "evidence": "CPS Narrative log",
     "notes": "CPS Sherri Stock and SW Mecimore arrange home visit for 6:30 PM with Tammy Blankenship, specifically noting: **'The father will be at work.'** CPS Sherri Stock agrees to initiate 'the investigation' with mother only. **[CONCERN: Investigation deliberately scheduled when father absent.]**",
-    "created_at": "2025-12-27T17:31:44.517972+00:00",
-    "updated_at": "2025-12-27T17:31:44.517984+00:00"
+    "created_at": "2025-12-22T10:00:44.028688+00:00",
+    "updated_at": "2025-12-25T05:53:01.828468+00:00",
+    "created_by": "",
+    "last_edited_by": "Larsen"
   },
   {
-    "id": "e5770ca4-4e4e-41f7-864a-5c32790ee0c5",
+    "id": "f3fcbee5-3552-48a7-8d3e-ef092c46dd38",
     "month_key": "11/2013",
     "date": "11/30/2013",
     "time": "6:33 pm",
@@ -128,11 +148,13 @@
     "description": "Extensive Interrogation under Color of Law.",
     "evidence": "CPS Narrative Log",
     "notes": "SW Sherri Stock interrogates Tammy B., then leaves. Returns later with directives from Supervisor SW Reitzel to interview the 2-year-old child **alone**. SW Stock takes child into room alone \u2014 **no recordings, no witnesses for interpretation.** When asked if she is scared of anyone: **'No.'** When asked if anyone hurts her, child allegedly answers: **'My Daddy puts his weenie inside my coochie.'** **[CRITICAL \u2014 LANGUAGE Origin and content:]** Up to this point, Rylie had NEVER used the word 'inside' and 'coochie' with others. Also key  is 'length of sentence structure'  which SW Sherri Stock attributes to that of Rylie. This is the word used by **grandmother Gabriele Blankenship** to refer to vagina \u2014 stemming from the Alan Jackson song 'Way Down Yonder on the Chattahoochee' ('...hotter than a hoochie coochie') which Gabriele sang with her sons in the late 1980s. Additionally 'this origin clarification had been given to Bobbi Jo Christopher in a personal phone call of hers to Europe as the person made the argument that the verbiage Rylie is allegedly using by multiple people doesn't fit.' 'Something is off' and then suddenly the word 'coochie' is predominant. **[KEY EVIDENCE: Child's language traced to grandmother, NOT father. No recording exists. No witness present.]**",
-    "created_at": "2025-12-27T17:31:44.579645+00:00",
-    "updated_at": "2025-12-27T17:31:44.579660+00:00"
+    "created_at": "2025-12-22T10:00:44.031320+00:00",
+    "updated_at": "2025-12-25T06:55:08.350705+00:00",
+    "created_by": "",
+    "last_edited_by": "Larsen"
   },
   {
-    "id": "323b8e82-86cd-4b50-b12d-e87185d383ce",
+    "id": "47678edb-d5b7-4f26-99bb-e0a9cee05a9a",
     "month_key": "11/2013",
     "date": "11/30/2013",
     "time": "8:35 pm",
@@ -140,11 +162,13 @@
     "description": "Telephone call",
     "evidence": "CPS Narrative Log",
     "notes": "Keith Blankenship tells CPS Mecimore that he and Gabriele have no CPS history nor criminal history, and offers permanent placement in their home. **[CONTRADICTION \u2014 FACTUAL ERROR:]** Keith and Gabriele DO have criminal history in Europe. They were investigated for Gabriele's drug addiction and for having abused their two sons before fleeing to the USA in 1998. Keith denies any sexual abuse of or by Zachary. **[KEY EVIDENCE: False statement made to CPS regarding criminal history.]**",
-    "created_at": "2025-12-27T17:31:44.650927+00:00",
-    "updated_at": "2025-12-27T17:31:44.650946+00:00"
+    "created_at": "2025-12-22T10:00:44.038849+00:00",
+    "updated_at": "2025-12-25T05:53:26.694846+00:00",
+    "created_by": "",
+    "last_edited_by": "Larsen"
   },
   {
-    "id": "10fdebeb-dd99-459f-863f-246a9001e73c",
+    "id": "401f3d75-6e39-447d-98d4-5ea573995923",
     "month_key": "11/2013",
     "date": "11/30/2013",
     "time": "9:00 pm",
@@ -152,11 +176,13 @@
     "description": "Telephone call",
     "evidence": "CPS Narrative Log",
     "notes": "SW Amber Mecimore's sole inquiry was to 'build a case' \u2014 asking if Nurse Amy Walker used a scope during the genital exam. Nurse Walker said no. **Nurse reiterates:** Rylie made **no disclosure** of being hurt when pointing to body parts, including genitalia. **[KEY EVIDENCE: CPS focused on building case despite medical professional finding no evidence.]**",
-    "created_at": "2025-12-27T17:31:44.716198+00:00",
-    "updated_at": "2025-12-27T17:31:44.716209+00:00"
+    "created_at": "2025-12-22T10:00:44.041415+00:00",
+    "updated_at": "2025-12-25T05:53:38.986467+00:00",
+    "created_by": "",
+    "last_edited_by": "Larsen"
   },
   {
-    "id": "fbd99e58-93df-47ac-a9a5-c9c997d2e3ef",
+    "id": "eb3cde90-c9f0-4ee3-902b-1db68070a02a",
     "month_key": "11/2013",
     "date": "11/30/2013",
     "time": "9:02 pm",
@@ -164,11 +190,13 @@
     "description": "Home visit / Employment visit Burger King",
     "evidence": "CPS Narrative Log",
     "notes": "**Under Color of Law:** SW Sheri Stock arranged to pick Zachary up from work prematurely. She interrogated him, aiming to elicit self-incrimination. Zachary **denied all allegations**. He expressed willingness to work with Law Enforcement and SW to find the truth. SW Stock drove him home from his employment. **[CONCERN: Interrogation conducted without legal counsel; designed to pressure confession.]**",
-    "created_at": "2025-12-27T17:31:44.778510+00:00",
-    "updated_at": "2025-12-27T17:31:44.778528+00:00"
+    "created_at": "2025-12-22T10:00:44.044026+00:00",
+    "updated_at": "2025-12-25T05:53:49.818961+00:00",
+    "created_by": "",
+    "last_edited_by": "Larsen"
   },
   {
-    "id": "5e39baa0-66f1-4a32-bd12-26234f6a2cd8",
+    "id": "e7793101-8499-41fb-a162-0823e4acfb0d",
     "month_key": "11/2013",
     "date": "11/30/2013",
     "time": "10:30 pm",
@@ -176,11 +204,13 @@
     "description": "Notes of drive from Burger King to Home of the Blankenship's",
     "evidence": "CPS Narrative Log",
     "notes": "Tammy and child Rylie are instructed to leave their home. **No Contact Order** issued against Zachary. **[ACTION: Family separated based on unverified allegations; no physical evidence of abuse.]**",
-    "created_at": "2025-12-27T17:31:44.840060+00:00",
-    "updated_at": "2025-12-27T17:31:44.840074+00:00"
+    "created_at": "2025-12-22T10:00:44.049026+00:00",
+    "updated_at": "2025-12-25T05:53:59.217069+00:00",
+    "created_by": "",
+    "last_edited_by": "Larsen"
   },
   {
-    "id": "5a68ae8d-5775-430f-8a3a-849b1baa615f",
+    "id": "a741e5e8-673c-4513-999f-68b85d67d3ae",
     "month_key": "12/2013",
     "date": "12/02/2013",
     "time": "02:00 pm",
@@ -188,11 +218,13 @@
     "description": "Preperational notes for Forensic CME Interview Rylie Blankenship ",
     "evidence": "CPS Narrative Log",
     "notes": "CPS SW Jennifer Owens called Tammy Blankenship. Writes confusing notes regarding telephone call context. **[CRITICAL ERROR:]** Claims 'Tammy has CPS history, in which her children were removed due to sexual abuse by their father' \u2014 **although Tammy had no prior children.** Later in notes, Jennifer switched the names and speaks of Vickie Toppings (Tammy's sister). CPS Jennifer Owens and Officer McCombs schedule CME Forensic appointment for Rylie on 12/03/2013 at 9:30 AM with Beth Oshbar. Provided driving directions to CCSO. **[KEY EVIDENCE: CPS worker confused identities and made false statements in official documentation.]**",
-    "created_at": "2025-12-27T17:31:52.417359+00:00",
-    "updated_at": "2025-12-27T17:31:52.417372+00:00"
+    "created_at": "2025-12-23T16:35:39.553147+00:00",
+    "updated_at": "2025-12-25T06:09:10.924969+00:00",
+    "created_by": "Larsen",
+    "last_edited_by": "Larsen"
   },
   {
-    "id": "002f16ce-af2e-45e1-b1dd-6d0e92711e7f",
+    "id": "fa45c35d-04f2-4945-871a-965abc104668",
     "month_key": "12/2013",
     "date": "12/03/2013",
     "time": "09:00 am",
@@ -200,11 +232,13 @@
     "description": "Official Interogation of Tammy Blankenship and Rylie Blankenship at Catawba County Sheriff's Office. ",
     "evidence": "1) CPS Narrative Notes 2)  PD recorded Information Sheet",
     "notes": "Tammy Blankenship was separated from Rylie during Interview/Interrogation. Reports Rylie 'spent the night with Gabriele and Keith Thursday and she picked Rylie back up on Friday'. On Saturday Nov. 30, 2013, Gabriele and Keith Blankenship came to her job to ask if they could pick up Rylie; she agreed. **Gabriele told her to 'call them before she gets off work' \u2014 strange, as they never requested this before.** Upon Tammy's arrival after work, Gabriele said: 'Something happened and she was not going to like it.' Meanwhile the phone rings \u2014 'CPS was on the phone. Keith Blankenship answered and said 'yeah, she's here' and gave the phone to Tammy.' **[KEY EVIDENCE: Strong indication phone call was PRE-ARRANGED between grandparents and CPS.]** CPS had only then officially notified parent Tammy about the alleged rape \u2014 yet had known about it since 11:00 AM same morning due to Lake Norman Hospital admittance. **[PARENTAL LAW VIOLATION: Zachary was not officially notified AT ALL.]** Grandparents told Tammy: 'Daddy put his weenie in my coochie' \u2014 **Note: In earlier statement, Blankenships claimed 'on' not 'in'.** Porn topic appears. Tammy later claimed in interview Zachary has porn on his PC \u2014 **later substantiated as a LIE. No porn was found on any devices in either Tammy's nor Zachary's possession.** However Tammy Blankenship had been bestohlen by Bobbi Jo Christopher of Family Hierlooms and evidence of Zacharys bloodstained clothing due to itching heat rashes were disposed of by Bobbi Jo Christopher when she found out this physical evidence as to 'why Zachary preferred to be minimalist in clothing' most of his childhood and teenage and years 'at home' as often as possible. It also being normal as he growing \nup in Europe. ",
-    "created_at": "2025-12-27T17:31:52.489315+00:00",
-    "updated_at": "2025-12-27T17:31:52.489326+00:00"
+    "created_at": "2025-12-23T18:43:31.919914+00:00",
+    "updated_at": "2025-12-25T07:15:33.548429+00:00",
+    "created_by": "Larsen",
+    "last_edited_by": "Larsen"
   },
   {
-    "id": "c4d6959d-9640-4344-abef-3d2369079a35",
+    "id": "b0e6f992-ff57-4bcf-9c01-013244ed2142",
     "month_key": "12/2013",
     "date": "12/04/2013",
     "time": "09:30 am",
@@ -212,11 +246,13 @@
     "description": "Forensic CME Evaluation/Investigation ",
     "evidence": "1) 3 CPS Narrative Notes, 2) Child Advocacy Protection Center Report, 3) LabCorp Burlington Final Report.",
     "notes": "CPS Jennifer Owens ordered under Color of Law a CME be completed on Rylie Blankenship. **[CONCERN: Jennifer Owens writes notes very graphically, yet forensics does NOT match the graphical wording used.]** Example: 'photographed vaginal area and all marks and bruising' \u2014 **whereas NO marks or bruising were located on or around vagina.** Her description allows the Jury to 'ascertain' there had been abuse when there was none. **[CRITICAL: The actual Lab Report CONTRADICTS her 'professional observation'.]** A male urethra swab/endocervical swab was administered on Rylie \u2014 meaning the inner part of the cervix was inserted. **[DOCUMENT TAMPERING:]** Documents provided to Judge and Jury exist in 2 SEPARATE versions: (1) Beth Oshbar's report claims 'Hymen essentially normal' and (2) Another version where 'someone' OMITS this extremely important detail. Handwritten notes also changed dimensions of accusations according to necessity of fraudulent intent. **[TIMELINE IMPOSSIBILITY:]** Photos of Rylie used in conviction were taken on 12/04/2013 \u2014 nearly 5 DAYS after 'No Contact Order' was issued against Zachary. After Tammy stopped adhering to the fabricated agenda, she was targeted and removed from Rylie's life. CPS Jennifer Owens and Officer McCombs used this forged CME against Zachary for prosecution. **[KEY EVIDENCE: On 11/30/2013 exam was UNREMARKABLE \u2014 suddenly after being in CPS care, child has multiple bruises and cervical exam.]** Meanwhile, Bobbi Jo Christopher (who will ultimately 'win' custody) is conspiring with CPS Jennifer Owens and Gabriele Blankenship against Tammy and Zachary, while being 'extremely friendly' to both parents. **Ergo: Dishonest. Deceitful.**",
-    "created_at": "2025-12-27T17:31:52.559461+00:00",
-    "updated_at": "2025-12-27T17:31:52.559473+00:00"
+    "created_at": "2025-12-23T19:26:01.626918+00:00",
+    "updated_at": "2025-12-25T06:12:29.861570+00:00",
+    "created_by": "Larsen",
+    "last_edited_by": "Larsen"
   },
   {
-    "id": "be54c36f-597b-491f-a333-83c288e45edd",
+    "id": "c0ed0756-89a6-4380-9a63-9d742c055b9b",
     "month_key": "12/2013",
     "date": "12/05/2013",
     "time": "08:15 am",
@@ -224,11 +260,13 @@
     "description": "Disposition of continued Hearsay  Face to Face meeting. ",
     "evidence": "CPS Narrative Log ",
     "notes": "Now officially Foster Parent, Bobbi Jo Christopher has Rylie full-time without intervention of Tammy picking her up or visiting. She begins speaking lowly of Tammy, catering to CPS needs. Generous amounts of 'alleged statements made by Tammy to Bobbi Jo' which Bobbi Jo Christopher divulges to CPS. **[STATEMENT CHANGE:]** Unlike Nov. 30, 2013 statements at Lake Norman where it is stated: 'Rylie coming towards Gabriele without diaper on', in Bobbi Jo Christopher hearsay version allegedly stemming from Tammy says she had been told: 'Zachary was sitting on couch, naked and Rylie was straddling the arm of the couch in a T-shirt.' **[NOTE:]** Bobbi Jo Christopher's latent attempt to minimize effect on child by stating 'Rylie once walked in on her daughter Lilly whilst in bathroom and saw she was on her period' \u2014 this being the SECOND time this child was confronted with impression of 'blood coming out' and thus repeating this to others. **[CONCERN:]** This statement's origin is being pursued by Jennifer Owens and Prosecution as proof of rape by father, despite having NO physical evidence and dispite having possible alternative explanations. **[SUSPICIOUS:]** Additionally Child made NO 'unprovoked claim' to Foster Parent between Nov. 30 and Dec. 5, despite having diaper changed, bathed, and being alone with kinship often \u2014 which warrants scrutiny of Bobbi Jo Christopher's motivations.",
-    "created_at": "2025-12-27T17:31:52.619280+00:00",
-    "updated_at": "2025-12-27T17:31:52.619290+00:00"
+    "created_at": "2025-12-23T21:20:58.847279+00:00",
+    "updated_at": "2025-12-25T07:03:31.086958+00:00",
+    "created_by": "Larsen",
+    "last_edited_by": "Larsen"
   },
   {
-    "id": "3db63a75-9d99-4edc-a057-d2dbf34cb715",
+    "id": "6e8a174f-9cff-4d98-9905-793b29b3b060",
     "month_key": "12/2013",
     "date": "12/06/2013",
     "time": "06:00 pm",
@@ -236,11 +274,13 @@
     "description": "Telefon call between CPS Jennifer Owen and Tammy Blankenship ",
     "evidence": "CPS Narrative Log",
     "notes": "CPS Jennifer Owens contacts Tammy via phone. Tammy reveals she no longer stays in church basement and moved back in with husband Zachary \u2014 the No Contact Order was regarding Rylie only, who now lives with Bobbi Jo and Eddie full-time. She reiterates: **'Zachary did not do anything to Rylie and he is very protective of his child, more so than she.'** Tammy explains their personal living standards. Tammy attempts to convey Gabriele and Keith Blankenship's intent, wanting to blame them for the chaos, claiming they seek permanent custody. When asked, Tammy states Zachary was 'dressed comfortably' \u2014 naked at home. Conversation about nudist lifestyle ensued. **[PROFILING:]** According to CPS notes, Tammy claims Rylie 'asked him to put his weener in her coochie.' CPS Jennifer Owens SUGGESTS this confirms concern of abuse by Zachary. **[CRITICAL: Up to this point, Rylie has NOT been monitored or recorded once having factually said this unless being triggered or coerced by adults.]** Tammy maintains Gabriele and Keith Blankenship abuse her and coerce her to say Zachary did it. She remains steadfast. **[KEY EVIDENCE: Jennifer Owens TWISTING meanings of Tammy's words to fit a profile, based on prior conversation with Bobbi Jo Christopher the day before. She was PROFILING instead of seeking truth.]**",
-    "created_at": "2025-12-27T17:31:52.691261+00:00",
-    "updated_at": "2025-12-27T17:31:52.691274+00:00"
+    "created_at": "2025-12-23T23:07:24.626426+00:00",
+    "updated_at": "2025-12-25T06:13:02.804916+00:00",
+    "created_by": "Larsen",
+    "last_edited_by": "Larsen"
   },
   {
-    "id": "24a079d5-5688-41b8-a9f1-df9c47bc3d68",
+    "id": "6ad4d048-a750-4bb0-8214-fa8966f16ba8",
     "month_key": "12/2013",
     "date": "12/12/2013",
     "time": "08:15",
@@ -248,11 +288,13 @@
     "description": "Forensic Interview with Riley nearly 3 year old female child against the mechanisms of 4 adults women. ",
     "evidence": "CPS Narrative Logn",
     "notes": "Rylie was interviewed alone by Adrienne Opdyke; all others observed. **[KEY OBSERVATION:]** During the ENTIRE interview, she herself mentioned her father Zachary ONCE \u2014 and only in reference to how old she is: 'she answers: Daddy.' **[LANGUAGE ANOMALY:]** Noticeable is her initial short sentence structures, typically childlike. Further into interrogation, her sentences become MORE 'adult complex' in wording. **[INDOCTRINATION:]** Rylie was being indoctrinated to call her great-cousin (now foster mom) 'grandmother' (mamaw). **[CONCERN:]** Many 'inaudible' references \u2014 typically used by investigators when trying to COVER evidence of innocence. According to Pediatrics, Rylie spoke in 3-4 word articulations at age 3. **[PROCEDURAL VIOLATION: 4 adult women against the mechanisms of a nearly 3-year-old child.]**",
-    "created_at": "2025-12-27T17:31:52.749836+00:00",
-    "updated_at": "2025-12-27T17:31:52.749849+00:00"
+    "created_at": "2025-12-24T04:46:20.594422+00:00",
+    "updated_at": "2025-12-25T06:13:15.997744+00:00",
+    "created_by": "Larsen",
+    "last_edited_by": "Larsen"
   },
   {
-    "id": "6a0a08be-43b2-48f2-97ed-acd17d0c019c",
+    "id": "d83ad03a-25d1-43cd-84f3-d6ccd09b5f43",
     "month_key": "12/2013",
     "date": "12/13/2013",
     "time": "08:44 am",
@@ -260,11 +302,13 @@
     "description": "Search Warrants issued",
     "evidence": "Documents ",
     "notes": "**Search Warrant #1** issued 12/13/2013 was IMPROPERLY DOCUMENTED. Proclaimed grounds as evidence: 1st Degree Rape I 14-27.2(A)(1) and I 14-27.4(A)(1). Gabriele Blankenship claims Rylie told her: 'Daddy put his weenie on my butt.' **[BYPASS OF EVIDENCE:]** Officer McCombs BYPASSES her independent investigation showing Rylie had been seen on Nov. 30, 2013 by S.A.N.E. Specialist with NO findings corroborating the allegations. **Search Warrant #2:** Errored altogether. **Search Warrant #3:** Incomplete return of service. **Search Warrant #4:** Incomplete return of service. **[KEY EVIDENCE: Multiple procedural violations in warrant documentation.]**",
-    "created_at": "2025-12-27T17:31:52.812857+00:00",
-    "updated_at": "2025-12-27T17:31:52.812867+00:00"
+    "created_at": "2025-12-24T05:45:19.902584+00:00",
+    "updated_at": "2025-12-25T06:13:27.580963+00:00",
+    "created_by": "Larsen",
+    "last_edited_by": "Larsen"
   },
   {
-    "id": "a17bff4b-a2e8-4f6b-a8f2-c641f63c13d9",
+    "id": "7e46226b-76f9-44a0-8892-2a345e29d228",
     "month_key": "12/2013",
     "date": "12/13/2013",
     "time": "09:30 am",
@@ -272,11 +316,13 @@
     "description": "Arrest Warrant issued on 12.12.2013. \nSeized Inventory doc.\nMiranda Rights (under McCombs and Scronce). \nSynopsis of Crime report. \nProsecution Summary Sheet. \n\n'After' Interrogation w/ Investigator Marcella McCombs and Sgt. Scronce. (Recorded)  additionally a continued Interogation by CPS SW Jennifer Owens alone w/ Zachary B. took place.(this being unrecorded other than her opinion in CPS Narrative Log later this day) ",
     "evidence": "Arrest Documentation Case# 2013-5438 ",
     "notes": "On **December 12, 2013**, Zachary Blankenship was arrested on grounds of Rape of a child. **[TIMELINE IMPOSSIBILITY:]** Date of offense listed as: between Dec. 1, 2013 through Dec. 12, 2013. **THIS IS IMPOSSIBLE** \u2014 Zachary Blankenship was under 'No Contact Order' implemented Under Color of Law through SW Jennifer Owens, which Zachary DID NOT VIOLATE since Nov. 30, 2013 at 10:00 PM. **[CHILD'S WHEREABOUTS:]** Rylie was removed from Zachary and Tammy's residence and resided since Nov. 30, 2013 at: (1) Basement of Shepherd's Baptist Church, (2) Vickie Toppings' home, (3) Home of Gabriele Blankenship, and (4) With Bobbi Jo Christopher \u2014 during the ENTIRE time frame which Marcella McCombs claims the rape offense was committed by Zachary. **[KEY EVIDENCE: Arrest Warrant 13CR 057195 is INVALID \u2014 Zachary had NO ACCESS to the child during the alleged offense dates.]**",
-    "created_at": "2025-12-27T17:31:52.882260+00:00",
-    "updated_at": "2025-12-27T17:31:52.882273+00:00"
+    "created_at": "2025-12-24T14:00:39.115386+00:00",
+    "updated_at": "2025-12-25T06:13:40.788872+00:00",
+    "created_by": "Larsen",
+    "last_edited_by": "Larsen"
   },
   {
-    "id": "3738346f-0002-4765-ae5c-1b3ff445b7e7",
+    "id": "577054f5-8194-498c-b795-de7c5e840be7",
     "month_key": "12/2013",
     "date": "12/13/2013",
     "time": "02:00 pm",
@@ -284,7 +330,9 @@
     "description": "Illegal interrogation by CPS Jennifer Owens 'after' Police Interrogation. ",
     "evidence": "CPS Narrative Log",
     "notes": "CPS Jennifer Owens interrogated Zachary Blankenship **without counsel present** AFTER prior interrogation by PD. She calls it 'met with Zack' as if it were a casual arrangement. **[FAILURE OF DUTY:]** As primary CPS case worker, one would think she would have met Zachary even ONCE prior to this date \u2014 yet she failed to do so. **[DURESS:]** Zachary, under duress, was willing to say he shot President JFK if only someone would allow him to sleep and rest. **[SELF-CONTRADICTION:]** In her notes, Jennifer Owens initially claims Zachary incriminated himself: '...stuck his finger inside her.' Later she claims: '...did NOT stick his finger inside her.' **[PATTERN:]** Throughout this entire case since Nov. 30, 2013, Jennifer Owens writes official reports either CONTRADICTING herself, NULLIFYING initial reports, REPLACING them, and CHANGING wording after her momentary agenda is achieved. **[KEY EVIDENCE:]** NOT ONCE did Zachary Blankenship in RECORDED proceedings during interrogation with Marcella McCombs admit to ANY rape \u2014 yet CPS Jennifer Owens took it upon herself to make a non-provable alleged statement be taken as factual. **[PERSONAL NOTE:]** I recall him calling for help the night before. His mindset: 'This will clear itself back up. Mom is just mad like always \u2014 you know how she is, she'll fly off the handle and say stupid stuff. Usually takes her a few hours and then she realizes what she's done. I don't have enough money for an attorney so I'm thinking about going to McCombs and explaining how all of this junk even started between me and my mom. I really do think she wants Rylie. But that's not happening.'",
-    "created_at": "2025-12-27T17:31:52.949779+00:00",
-    "updated_at": "2025-12-27T17:31:52.949791+00:00"
+    "created_at": "2025-12-24T15:47:49.785321+00:00",
+    "updated_at": "2025-12-25T06:13:59.807089+00:00",
+    "created_by": "Larsen",
+    "last_edited_by": "Larsen"
   }
 ]
