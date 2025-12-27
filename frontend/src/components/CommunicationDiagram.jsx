@@ -1,0 +1,418 @@
+import React, { useState } from 'react';
+import { X } from 'lucide-react';
+
+// CENTER FAMILY - Horizontal line: Keith, Gabi, Zachary, Tammy
+const CENTER_PEOPLE = [
+  { id: 'keith', name: 'Keith', duty: 'Grandfather (Accuser)', color: '#e74c3c' },
+  { id: 'gabi', name: 'Gabi', duty: 'Grandmother (Accuser)', color: '#ff9500' },
+  { id: 'zachary', name: 'Zachary', duty: 'Father (Accused)', color: '#00bcd4' },
+  { id: 'tammy', name: 'Tammy', duty: 'Mother', color: '#27ae60' },
+];
+
+// OUTER RING - Everyone else
+const OUTER_PEOPLE = [
+  { id: 'rylie', name: 'Rylie', duty: 'Child (2 yrs)', color: '#1abc9c' },
+  { id: 'amy', name: 'Amy Walker', duty: 'S.A.N.E. Nurse', color: '#3498db' },
+  { id: 'coffey', name: 'Officer Coffey', duty: "Sheriff's Dept", color: '#7f8c8d' },
+  { id: 'reitzel', name: 'SW Reitzel', duty: 'CPS Supervisor', color: '#5c6bc0' },
+  { id: 'amber', name: 'Amber Mecimore', duty: 'CPS Social Worker', color: '#9c27b0' },
+  { id: 'jennifer', name: 'Jennifer Owens', duty: 'CPS Intake', color: '#8e44ad' },
+  { id: 'pam', name: 'Pam Frazier', duty: 'CPS (Iredell Co.)', color: '#673ab7' },
+  { id: 'sherri', name: 'Sherri Stock', duty: 'CPS Social Worker', color: '#e91e63' },
+  { id: 'vickie', name: 'Vickie Toppings', duty: 'Present at visit', color: '#ff9800' },
+  { id: 'pastor', name: 'Pastor Osborne', duty: 'Present at visit', color: '#ffc107' },
+  { id: 'lena', name: 'Lena Barber', duty: 'CPS', color: '#795548' },
+  { id: 'biglots', name: 'Big Lots', duty: 'Mooresville', color: '#00897b' },
+];
+
+// VERIFIED CONNECTIONS FROM EVIDENCE
+const CONNECTIONS = [
+  // FAMILY CONVERSATIONS
+  ['keith', 'gabi'],
+  ['keith', 'tammy'],
+  ['keith', 'zachary'],
+  ['gabi', 'tammy'],
+  ['gabi', 'zachary'],
+  ['tammy', 'zachary'],
+  ['tammy', 'rylie'],
+  ['zachary', 'rylie'],
+  ['keith', 'rylie'],
+  ['gabi', 'rylie'],
+  
+  // GABI'S INTERACTIONS (verified from entries)
+  ['gabi', 'amy'],        // Entry 1, 6 - At ER when Rylie examined
+  ['gabi', 'coffey'],     // Entry 2 - Present at ER with Keith
+  ['gabi', 'amber'],      // Entry 5 - CPS intake call
+  ['gabi', 'jennifer'],   // Entry 5 - CPS intake
+  ['gabi', 'pam'],        // Entry 8 - Home visit by Pam Frazier
+  
+  // KEITH'S INTERACTIONS
+  ['keith', 'amy'],       // Entry 1, 6 - At ER
+  ['keith', 'coffey'],    // Entry 2 - Spoke with officer at ER
+  ['keith', 'amber'],     // Entry 11 - Phone call about placement
+  ['keith', 'pam'],       // Entry 8 - Home visit
+  
+  // AMY WALKER (NURSE) INTERACTIONS
+  ['amy', 'rylie'],       // Entry 1 - Medical exam
+  ['amy', 'coffey'],      // Entry 2 - Told officer findings
+  ['amy', 'amber'],       // Entry 6, 12 - Phone calls with CPS
+  ['amy', 'sherri'],      // Entry 3 - Sherri spoke with Amy before calling Coffey
+  
+  // OFFICER COFFEY
+  ['coffey', 'rylie'],    // Entry 2 - Spoke with child alone
+  ['coffey', 'sherri'],   // Entry 3 - Phone call from Sherri
+  
+  // SHERRI STOCK INTERACTIONS
+  ['sherri', 'amber'],    // Entry 4, 9 - CPS coordination
+  ['sherri', 'tammy'],    // Entry 10 - Interrogation
+  ['sherri', 'rylie'],    // Entry 10 - Interviewed child alone
+  ['sherri', 'reitzel'],  // Entry 10 - Got supervisor directives
+  ['sherri', 'zachary'],  // Entry 13, 14 - Picked up from work, interrogated
+  ['sherri', 'vickie'],   // Entry 13 - Present at visit
+  ['sherri', 'pastor'],   // Entry 13 - Present at visit
+  ['sherri', 'lena'],     // Entry 13 - CPS present
+  
+  // AMBER MECIMORE INTERACTIONS
+  ['amber', 'jennifer'],  // Entry 5 - Intake report
+  ['amber', 'pam'],       // Entry 7, 8 - Requested assistance, got report
+  
+  // PAM FRAZIER
+  ['pam', 'tammy'],       // Entry 8 - Home visit
+  ['pam', 'rylie'],       // Entry 8 - Child made no disclosure
+  
+  // TAMMY'S EMPLOYMENT
+  ['tammy', 'biglots'],   // Entry 1 - Tammy at work 8:30 am
+];
+
+const CommunicationDiagram = ({ onClose }) => {
+  const [selected, setSelected] = useState(null);
+
+  const cx = 400;
+  const cy = 400;
+
+  // Position CENTER family in HORIZONTAL LINE
+  const spacing = 90;
+  const centerY = cy;
+  const startX = cx - (spacing * 1.5);
+  
+  const centerPositions = [
+    { x: startX, y: centerY },              // Keith
+    { x: startX + spacing, y: centerY },    // Gabi
+    { x: startX + spacing * 2, y: centerY }, // Zachary
+    { x: startX + spacing * 3, y: centerY }, // Tammy
+  ];
+
+  const centerNodes = CENTER_PEOPLE.map((p, i) => ({
+    ...p,
+    x: centerPositions[i].x,
+    y: centerPositions[i].y,
+  }));
+
+  // Position OUTER people in circle around center
+  const outerRadius = 280;
+  const outerNodes = OUTER_PEOPLE.map((p, i) => {
+    const angle = (i / OUTER_PEOPLE.length) * 2 * Math.PI - Math.PI / 2;
+    return {
+      ...p,
+      x: cx + Math.cos(angle) * outerRadius,
+      y: cy + Math.sin(angle) * outerRadius,
+    };
+  });
+
+  const allNodes = [...centerNodes, ...outerNodes];
+
+  const getNode = (id) => allNodes.find(n => n.id === id);
+
+  const isConnected = (id) => {
+    if (!selected) return true;
+    if (id === selected) return true;
+    return CONNECTIONS.some(([a, b]) => 
+      (a === selected && b === id) || (b === selected && a === id)
+    );
+  };
+
+  // Check if line needs to curve around center family
+  const needsCurve = (from, to) => {
+    const centerIds = ['keith', 'gabi', 'zachary', 'tammy'];
+    const fromIsCenter = centerIds.includes(from.id);
+    const toIsCenter = centerIds.includes(to.id);
+    
+    // If both are center or neither crosses center, no curve needed
+    if (fromIsCenter && toIsCenter) return false;
+    if (fromIsCenter || toIsCenter) return false;
+    
+    // Check if line would cross center horizontal area
+    const minY = centerY - 50;
+    const maxY = centerY + 50;
+    const minX = startX - 40;
+    const maxX = startX + spacing * 3 + 40;
+    
+    // If one is above and one is below center, it crosses
+    if ((from.y < minY && to.y > maxY) || (from.y > maxY && to.y < minY)) {
+      // And if both are within center x range
+      if ((from.x > minX && from.x < maxX) || (to.x > minX && to.x < maxX)) {
+        return true;
+      }
+    }
+    
+    return false;
+  };
+
+  // Generate curved path
+  const getCurvedPath = (from, to, fromId) => {
+    const offset = 35;
+    const dx = to.x - from.x;
+    const dy = to.y - from.y;
+    const len = Math.sqrt(dx * dx + dy * dy);
+    
+    const x1 = from.x + (dx / len) * offset;
+    const y1 = from.y + (dy / len) * offset;
+    const x2 = to.x - (dx / len) * offset;
+    const y2 = to.y - (dy / len) * offset;
+    
+    if (needsCurve(from, to)) {
+      // Curve around - go to the side
+      const curveDir = from.x < cx ? -1 : 1; // Curve left or right
+      const controlX = from.x < to.x ? Math.min(from.x, to.x) - 100 : Math.max(from.x, to.x) + 100;
+      const controlY = cy;
+      
+      return `M ${x1} ${y1} Q ${controlX} ${controlY} ${x2} ${y2}`;
+    }
+    
+    return null; // Use straight line
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90">
+      <div className="bg-white rounded-lg w-full max-w-5xl h-[90vh] flex flex-col">
+        {/* Header */}
+        <div className="flex justify-between items-center p-4 border-b border-amber-600 bg-slate-800">
+          <h2 className="text-xl font-bold text-amber-500">Who Spoke With Whom — Nov 30, 2013</h2>
+          <button onClick={onClose} className="text-red-400 hover:text-red-300">
+            <X size={24} />
+          </button>
+        </div>
+
+        {/* Diagram */}
+        <div className="flex-1 overflow-auto bg-white p-4">
+          <svg viewBox="0 0 800 900" className="w-full h-full">
+            {/* Arrow markers */}
+            <defs>
+              {/* Small black arrows for family-to-family connections */}
+              <marker
+                id="arrow-end-family"
+                markerWidth="6"
+                markerHeight="5"
+                refX="5"
+                refY="2.5"
+                orient="auto"
+              >
+                <polygon points="0 0, 6 2.5, 0 5" fill="#333" />
+              </marker>
+              <marker
+                id="arrow-start-family"
+                markerWidth="6"
+                markerHeight="5"
+                refX="1"
+                refY="2.5"
+                orient="auto-start-reverse"
+              >
+                <polygon points="6 0, 0 2.5, 6 5" fill="#333" />
+              </marker>
+              
+              {/* Small BLACK arrows for all other connections (tips only) */}
+              <marker
+                id="arrow-end-black"
+                markerWidth="7"
+                markerHeight="6"
+                refX="6"
+                refY="3"
+                orient="auto"
+              >
+                <polygon points="0 0, 7 3, 0 6" fill="#333" />
+              </marker>
+              <marker
+                id="arrow-start-black"
+                markerWidth="7"
+                markerHeight="6"
+                refX="1"
+                refY="3"
+                orient="auto-start-reverse"
+              >
+                <polygon points="7 0, 0 3, 7 6" fill="#333" />
+              </marker>
+            </defs>
+
+            {/* FAMILY label above the horizontal line */}
+            <text x={cx} y={centerY - 60} textAnchor="middle" fill="#8b6914" fontSize="16" fontWeight="bold">
+              — FAMILY —
+            </text>
+
+            {/* Connection lines */}
+            {CONNECTIONS.map(([fromId, toId], i) => {
+              const from = getNode(fromId);
+              const to = getNode(toId);
+              if (!from || !to) return null;
+
+              const isActive = selected && (fromId === selected || toId === selected);
+              const lineColor = from.color;
+              
+              // Check if this is a family-to-family connection
+              const familyIds = ['keith', 'gabi', 'zachary', 'tammy'];
+              const isFamilyConnection = familyIds.includes(fromId) && familyIds.includes(toId);
+              
+              const curvedPath = getCurvedPath(from, to, fromId);
+              
+              if (curvedPath) {
+                // Curved line
+                return (
+                  <path
+                    key={i}
+                    d={curvedPath}
+                    fill="none"
+                    stroke={isFamilyConnection ? '#333' : lineColor}
+                    strokeWidth={isFamilyConnection ? 1.5 : (isActive ? 5 : 3)}
+                    opacity={selected ? (isActive ? 1 : 0.15) : (isFamilyConnection ? 0.8 : 0.65)}
+                    markerEnd={isFamilyConnection ? 'url(#arrow-end-family)' : 'url(#arrow-end-black)'}
+                    markerStart={isFamilyConnection ? 'url(#arrow-start-family)' : 'url(#arrow-start-black)'}
+                  />
+                );
+              } else {
+                // Straight line
+                const dx = to.x - from.x;
+                const dy = to.y - from.y;
+                const len = Math.sqrt(dx * dx + dy * dy);
+                const centerIds = ['keith', 'gabi', 'zachary', 'tammy'];
+                const fromIsCenter = centerIds.includes(fromId);
+                const toIsCenter = centerIds.includes(toId);
+                const offset = 25;
+
+                const x1 = from.x + (dx / len) * offset;
+                const y1 = from.y + (dy / len) * offset;
+                const x2 = to.x - (dx / len) * offset;
+                const y2 = to.y - (dy / len) * offset;
+
+                return (
+                  <line
+                    key={i}
+                    x1={x1} y1={y1}
+                    x2={x2} y2={y2}
+                    stroke={isFamilyConnection ? '#333' : lineColor}
+                    strokeWidth={isFamilyConnection ? 1.5 : (isActive ? 5 : 3)}
+                    opacity={selected ? (isActive ? 1 : 0.15) : (isFamilyConnection ? 0.8 : 0.65)}
+                    markerEnd={isFamilyConnection ? 'url(#arrow-end-family)' : 'url(#arrow-end-black)'}
+                    markerStart={isFamilyConnection ? 'url(#arrow-start-family)' : 'url(#arrow-start-black)'}
+                  />
+                );
+              }
+            })}
+
+            {/* Nodes */}
+            {allNodes.map(node => {
+              const active = isConnected(node.id);
+              const isSelected = selected === node.id;
+              const isCenter = CENTER_PEOPLE.some(p => p.id === node.id);
+              const nodeRadius = isCenter ? 22 : 32;  // Smaller squares for family
+
+              return (
+                <g
+                  key={node.id}
+                  onClick={() => setSelected(isSelected ? null : node.id)}
+                  style={{ cursor: 'pointer' }}
+                  opacity={active ? 1 : 0.2}
+                >
+                  {isSelected && (
+                    isCenter ? (
+                      <rect 
+                        x={node.x - nodeRadius - 8} 
+                        y={node.y - nodeRadius - 8} 
+                        width={(nodeRadius + 8) * 2} 
+                        height={(nodeRadius + 8) * 2} 
+                        rx={3}
+                        fill={node.color} 
+                        opacity={0.3} 
+                      />
+                    ) : (
+                      <circle cx={node.x} cy={node.y} r={nodeRadius + 10} fill={node.color} opacity={0.3} />
+                    )
+                  )}
+                  
+                  {/* SQUARE for family, CIRCLE for others */}
+                  {isCenter ? (
+                    <rect
+                      x={node.x - nodeRadius}
+                      y={node.y - nodeRadius}
+                      width={nodeRadius * 2}
+                      height={nodeRadius * 2}
+                      rx={3}
+                      fill={node.color}
+                      stroke="#d4af37"
+                      strokeWidth={3}
+                    />
+                  ) : (
+                    <circle
+                      cx={node.x}
+                      cy={node.y}
+                      r={nodeRadius}
+                      fill={node.color}
+                      stroke="#fff"
+                      strokeWidth={3}
+                    />
+                  )}
+                  
+                  {/* Name */}
+                  <text
+                    x={node.x}
+                    y={isCenter ? node.y + 2 : node.y - 5}
+                    textAnchor="middle"
+                    fill="#fff"
+                    fontSize={isCenter ? "10" : "10"}
+                    fontWeight="bold"
+                  >
+                    {node.name.split(' ')[0]}
+                  </text>
+                  {/* Duty - only show for circles */}
+                  {!isCenter && (
+                    <text
+                      x={node.x}
+                      y={node.y + 8}
+                      textAnchor="middle"
+                      fill="#fff"
+                      fontSize="7"
+                      opacity={0.95}
+                    >
+                      {node.duty.length > 16 ? node.duty.substring(0, 14) + '..' : node.duty}
+                    </text>
+                  )}
+                  {/* Last name if exists - only for circles */}
+                  {!isCenter && node.name.split(' ').length > 1 && (
+                    <text
+                      x={node.x}
+                      y={node.y + 19}
+                      textAnchor="middle"
+                      fill="#fff"
+                      fontSize="8"
+                      opacity={0.85}
+                    >
+                      {node.name.split(' ').slice(1).join(' ')}
+                    </text>
+                  )}
+                </g>
+              );
+            })}
+
+            {/* Legend */}
+            <text x="400" y="830" textAnchor="middle" fill="#333" fontSize="11" fontWeight="bold">
+              Line color = Initiating person • VERIFIED from Nov 30, 2013 evidence
+            </text>
+            <text x="400" y="850" textAnchor="middle" fill="#666" fontSize="10">
+              Click any node to highlight their connections
+            </text>
+          </svg>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default CommunicationDiagram;
