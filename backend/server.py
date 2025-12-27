@@ -581,12 +581,15 @@ async def get_monthly_entries(month_key: str):
 
 # Create a new monthly entry (admin only)
 @api_router.post("/monthly/create")
-async def create_monthly_entry(entry: MonthlyEntryCreate, admin_password: str):
-    """Create a new monthly detail entry (admin only)"""
+async def create_monthly_entry(entry: MonthlyEntryCreate, admin_password: str, entry_id: Optional[str] = None):
+    """Create a new monthly detail entry (admin only). Optionally specify entry_id for seeding."""
     verify_admin_password(admin_password)
     
+    # Use provided entry_id or generate new one
+    new_id = entry_id if entry_id else str(uuid.uuid4())
+    
     new_entry = MonthlyEntry(
-        id=str(uuid.uuid4()),
+        id=new_id,
         **entry.model_dump(),
         created_at=datetime.now(timezone.utc).isoformat(),
         updated_at=datetime.now(timezone.utc).isoformat()
