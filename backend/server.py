@@ -316,6 +316,38 @@ async def get_files_for_entry(entry_id: str):
     ]
 
 # Download/view a file
+def detect_actual_mime_type(file_path: Path) -> str:
+    """Detect actual MIME type from file content (magic bytes) for cross-platform compatibility"""
+    try:
+        with open(file_path, 'rb') as f:
+            header = f.read(32)
+        
+        # PNG: 89 50 4E 47
+        if header[:4] == b'\x89PNG':
+            return "image/png"
+        # JPEG: FF D8 FF
+        if header[:3] == b'\xff\xd8\xff':
+            return "image/jpeg"
+        # HEIC/HEIF: Contains 'ftyp' followed by 'heic', 'heix', 'hevc', 'mif1'
+        if b'ftyp' in header[:12]:
+            if b'heic' in header or b'heix' in header or b'hevc' in header or b'mif1' in header:
+                return "image/heic"
+            if b'avif' in header:
+                return "image/avif"
+        # GIF: GIF87a or GIF89a
+        if header[:6] in [b'GIF87a', b'GIF89a']:
+            return "image/gif"
+        # WebP: RIFF....WEBP
+        if header[:4] == b'RIFF' and header[8:12] == b'WEBP':
+            return "image/webp"
+        # PDF: %PDF
+        if header[:4] == b'%PDF':
+            return "application/pdf"
+    except Exception as e:
+        logger.warning(f"Could not detect MIME type: {e}")
+    
+    return None
+
 @api_router.get("/file/{file_id}")
 async def download_file(file_id: str):
     """Download or view an uploaded file - optimized for all platforms (Android, iOS, HarmonyOS, KaiOS, SailfishOS)"""
