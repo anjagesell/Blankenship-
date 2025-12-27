@@ -17,6 +17,7 @@ import base64
 
 
 ROOT_DIR = Path(__file__).parent
+SEED_DATA_FILE = ROOT_DIR / 'seed_data.json'
 # Load .env file but don't override existing environment variables (K8s will set these)
 load_dotenv(ROOT_DIR / '.env', override=False)
 
