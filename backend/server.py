@@ -38,6 +38,74 @@ db = client[db_name]
 UPLOAD_DIR = Path("/app/backend/uploads")
 UPLOAD_DIR.mkdir(exist_ok=True)
 
+# ============================================
+# AUTOMATIC BACKUP SYSTEM
+# Ensures new uploads persist across forks/deployments
+# ============================================
+
+async def backup_entry_to_seed(entry_data: dict):
+    """Automatically backup a new entry to seed_data.json"""
+    try:
+        # Load existing seed data
+        seed_data = []
+        if SEED_DATA_FILE.exists():
+            with open(SEED_DATA_FILE, 'r') as f:
+                seed_data = json.load(f)
+        
+        # Check if entry already exists
+        existing_ids = {e['id'] for e in seed_data}
+        if entry_data['id'] not in existing_ids:
+            # Add new entry (without MongoDB _id)
+            clean_entry = {k: v for k, v in entry_data.items() if k != '_id'}
+            seed_data.append(clean_entry)
+            
+            # Save updated seed data
+            with open(SEED_DATA_FILE, 'w') as f:
+                json.dump(seed_data, f, indent=2)
+            
+            logging.info(f"✅ Auto-backup: Entry {entry_data['id'][:8]}... saved to seed_data.json")
+    except Exception as e:
+        logging.error(f"❌ Auto-backup failed for entry: {e}")
+
+async def backup_file_to_seed(file_record: dict, file_content: bytes = None):
+    """Automatically backup a new file record to seed_files.json and save file to uploads"""
+    try:
+        # Load existing seed files
+        seed_files = []
+        if SEED_FILES_FILE.exists():
+            with open(SEED_FILES_FILE, 'r') as f:
+                seed_files = json.load(f)
+        
+        # Check if file already exists
+        existing_ids = {f['file_id'] for f in seed_files}
+        if file_record['file_id'] not in existing_ids:
+            # Save actual file to uploads directory
+            if file_content:
+                file_path = UPLOAD_DIR / f"{file_record['file_id']}_{file_record['filename']}"
+                with open(file_path, 'wb') as f:
+                    f.write(file_content)
+                logging.info(f"✅ Auto-backup: File saved to {file_path}")
+            
+            # Create clean record (without file_content for seed file)
+            clean_record = {
+                'file_id': file_record['file_id'],
+                'filename': file_record['filename'],
+                'file_type': file_record['file_type'],
+                'file_size': file_record['file_size'],
+                'upload_date': file_record['upload_date'],
+                'entry_id': file_record['entry_id'],
+                'file_path': str(UPLOAD_DIR / f"{file_record['file_id']}_{file_record['filename']}")
+            }
+            seed_files.append(clean_record)
+            
+            # Save updated seed files
+            with open(SEED_FILES_FILE, 'w') as f:
+                json.dump(seed_files, f, indent=2)
+            
+            logging.info(f"✅ Auto-backup: File record {file_record['file_id'][:8]}... saved to seed_files.json")
+    except Exception as e:
+        logging.error(f"❌ Auto-backup failed for file: {e}")
+
 # Admin password for upload verification
 ADMIN_PASSWORD = "02071951"
 
