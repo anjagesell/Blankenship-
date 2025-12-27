@@ -219,7 +219,7 @@ async def update_route_analysis(route: RouteAnalysis):
     return route_dict
 
 # Year Folders endpoints
-@api_router.get("/folders", response_model=List[dict])
+@api_router.get("/folders")
 async def get_folders():
     folders = await db.folders.find({}, {"_id": 0}).to_list(100)
     if not folders:
@@ -237,7 +237,7 @@ async def get_folders():
             }
             default_folders.append(folder)
         if default_folders:
-            await db.folders.insert_many(default_folders)
+            await db.folders.insert_many([dict(f) for f in default_folders])
         return default_folders
     return folders
 
