@@ -318,7 +318,7 @@ async def get_files_for_entry(entry_id: str):
 # Download/view a file
 @api_router.get("/file/{file_id}")
 async def download_file(file_id: str):
-    """Download or view an uploaded file from MongoDB storage"""
+    """Download or view an uploaded file - optimized for all platforms (Android, iOS, HarmonyOS, KaiOS, SailfishOS)"""
     # Get file record from database
     file_record = await db.uploaded_files.find_one(
         {"file_id": file_id},
@@ -328,47 +328,54 @@ async def download_file(file_id: str):
     if not file_record:
         raise HTTPException(status_code=404, detail="File not found")
     
-    # Check if file content is stored in MongoDB (new method)
+    # Determine media type - with extended support for all platforms
+    ext = file_record.get("file_type", "").lower()
+    media_type = ALLOWED_EXTENSIONS.get(ext, "application/octet-stream")
+    
+    # Cross-platform compatible headers
+    cross_platform_headers = {
+        "Content-Disposition": f'inline; filename="{file_record["filename"]}"',
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type, Accept, Range",
+        "Access-Control-Expose-Headers": "Content-Disposition, Content-Length, Content-Range",
+        "Cache-Control": "public, max-age=3600",
+        "X-Content-Type-Options": "nosniff",
+        # Support for range requests (important for mobile browsers)
+        "Accept-Ranges": "bytes",
+    }
+    
+    # Check if file content is stored in MongoDB (base64 encoded)
     if "file_content" in file_record:
-        # Decode base64 content
         try:
             file_content = base64.b64decode(file_record["file_content"])
+            return Response(
+                content=file_content,
+                media_type=media_type,
+                headers=cross_platform_headers
+            )
         except Exception as e:
-            raise HTTPException(status_code=500, detail="Failed to decode file content")
-        
-        # Determine media type
-        ext = file_record["file_type"]
-        media_type = ALLOWED_EXTENSIONS.get(ext, "application/octet-stream")
-        
-        # Return file from MongoDB
-        return Response(
-            content=file_content,
-            media_type=media_type,
-            headers={
-                "Content-Disposition": f'inline; filename="{file_record["filename"]}"',
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Expose-Headers": "Content-Disposition",
-                "Cache-Control": "public, max-age=3600"
-            }
-        )
+            logger.error(f"Failed to decode file content: {e}")
     
-    # Fallback: Try filesystem (for backward compatibility with old uploads)
+    # Fallback: Try filesystem (for seeded files)
     if "file_path" in file_record:
         file_path = Path(file_record["file_path"])
-        
         if file_path.exists():
-            ext = file_record["file_type"]
-            media_type = ALLOWED_EXTENSIONS.get(ext, "application/octet-stream")
-            
             return FileResponse(
                 path=file_path,
                 media_type=media_type,
                 filename=file_record["filename"],
-                headers={
-                    "Access-Control-Allow-Origin": "*",
-                    "Access-Control-Expose-Headers": "Content-Disposition",
-                    "Cache-Control": "public, max-age=3600"
-                }
+                headers=cross_platform_headers
+            )
+    
+    # Last resort: Search in uploads directory by file_id
+    for upload_file in UPLOAD_DIR.iterdir():
+        if file_id in upload_file.name:
+            return FileResponse(
+                path=upload_file,
+                media_type=media_type,
+                filename=file_record["filename"],
+                headers=cross_platform_headers
             )
     
     raise HTTPException(status_code=404, detail="File content not found")
