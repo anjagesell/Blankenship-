@@ -629,6 +629,22 @@ async def delete_monthly_entry(entry_id: str, admin_password: str):
     return {"status": "success", "message": "Monthly entry deleted"}
 
 
+# Clear all entries for a month (admin only) - for re-seeding
+@api_router.delete("/monthly/clear/{month_key}")
+async def clear_monthly_entries(month_key: str, admin_password: str):
+    """Clear all entries for a specific month (admin only)"""
+    verify_admin_password(admin_password)
+    
+    decoded_key = month_key.replace("-", "/")
+    result = await db.monthly_entries.delete_many({"month_key": decoded_key})
+    
+    return {
+        "status": "success", 
+        "message": f"Cleared {result.deleted_count} entries for {decoded_key}",
+        "deleted_count": result.deleted_count
+    }
+
+
 # Reassign line numbers for a month (admin only)
 @api_router.post("/monthly/{month_key}/reassign")
 async def reassign_line_numbers(month_key: str, admin_password: str):
