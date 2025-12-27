@@ -204,8 +204,10 @@ async def verify_password(data: PasswordVerify):
 async def get_route_analysis():
     route = await db.route_analysis.find_one({}, {"_id": 0})
     if not route:
-        # Initialize with default data
-        await db.route_analysis.insert_one(DEFAULT_ROUTE_ANALYSIS)
+        # Initialize with default data - make a copy to avoid _id issues
+        route_data = dict(DEFAULT_ROUTE_ANALYSIS)
+        await db.route_analysis.insert_one(route_data)
+        # Return the original default (without _id)
         return DEFAULT_ROUTE_ANALYSIS
     return route
 
