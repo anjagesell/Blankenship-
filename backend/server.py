@@ -681,6 +681,36 @@ async def reassign_line_numbers(month_key: str, admin_password: str):
 app.include_router(api_router)
 
 
+@app.on_event("startup")
+async def seed_database():
+    """Auto-seed database with initial data on startup if empty"""
+    import json
+    try:
+        # Check if monthly_entries collection is empty
+        count = await db.monthly_entries.count_documents({})
+        if count == 0 and SEED_DATA_FILE.exists():
+            logging.info("Database empty, seeding with initial data...")
+            with open(SEED_DATA_FILE, 'r') as f:
+                seed_data = json.load(f)
+            
+            if seed_data:
+                # Prepare entries for insertion
+                for entry in seed_data:
+                    # Use existing id or create new one
+                    if 'id' not in entry:
+                        entry['id'] = str(uuid.uuid4())
+                    # Set created_at if not present
+                    if 'created_at' not in entry:
+                        entry['created_at'] = datetime.now(timezone.utc).isoformat()
+                
+                await db.monthly_entries.insert_many(seed_data)
+                logging.info(f"Successfully seeded {len(seed_data)} entries!")
+        else:
+            logging.info(f"Database has {count} entries, skipping seed.")
+    except Exception as e:
+        logging.error(f"Error seeding database: {e}")
+
+
 @app.on_event("shutdown")
 async def shutdown_db_client():
     client.close()
