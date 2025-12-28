@@ -1008,25 +1008,22 @@ async def seed_database():
             with open(SEED_FILES_FILE, 'r') as f:
                 seed_files = json.load(f)
             
+            logging.info(f"Found {len(seed_files)} files in seed file")
+            
             if seed_files:
                 # Get existing file IDs
                 existing_files = await db.uploaded_files.find({}, {"file_id": 1, "_id": 0}).to_list(100000)
                 existing_file_ids = {f['file_id'] for f in existing_files}
+                logging.info(f"Existing files in DB: {len(existing_file_ids)}")
                 
                 # Add missing files
                 new_files = []
                 for file_record in seed_files:
                     if file_record['file_id'] not in existing_file_ids:
-                        # Set file_path
-                        file_pattern = f"{file_record['file_id']}_{file_record['filename']}"
-                        file_path = UPLOAD_DIR / file_pattern
-                        if file_path.exists():
-                            file_record['file_path'] = str(file_path)
-                        else:
-                            for f in UPLOAD_DIR.iterdir():
-                                if file_record['file_id'] in f.name:
-                                    file_record['file_path'] = str(f)
-                                    break
+                        # Ensure file_path is set correctly
+                        if 'file_path' not in file_record or not file_record['file_path']:
+                            file_pattern = f"{file_record['file_id']}_{file_record['filename']}"
+                            file_record['file_path'] = str(UPLOAD_DIR / file_pattern)
                         new_files.append(file_record)
                 
                 if new_files:
@@ -1034,6 +1031,8 @@ async def seed_database():
                     logging.info(f"Added {len(new_files)} new file records!")
                 else:
                     logging.info(f"All {len(seed_files)} file records already exist.")
+        else:
+            logging.warning(f"Seed files not found at {SEED_FILES_FILE}")
             
     except Exception as e:
         logging.error(f"Error seeding database: {e}")
