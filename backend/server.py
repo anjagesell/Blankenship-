@@ -728,11 +728,60 @@ async def delete_timeline_entry(entry_id: str, admin_password: str):
 # Get all entries for a specific month
 @api_router.get("/monthly/{month_key}", response_model=List[MonthlyEntry])
 async def get_monthly_entries(month_key: str):
-    """Get all entries for a specific month (e.g., '10/2013')"""
+    """Get all entries for a specific month (e.g., '10/2013') - sorted chronologically by date and time"""
     # URL decode the month_key since it may contain /
     decoded_key = month_key.replace("-", "/")
-    entries = await db.monthly_entries.find({"month_key": decoded_key}, {"_id": 0}).sort("line_number", 1).to_list(1000)
-    return entries
+    entries = await db.monthly_entries.find({"month_key": decoded_key}, {"_id": 0}).to_list(1000)
+    
+    # Sort entries chronologically by date and time
+    def parse_date_time(entry):
+        date_str = entry.get('date', '')
+        time_str = entry.get('time', '').lower().strip()
+        
+        # Parse date (MM/DD/YYYY)
+        try:
+            parts = date_str.split('/')
+            if len(parts) == 3:
+                month, day, year = int(parts[0]), int(parts[1]), int(parts[2])
+            else:
+                month, day, year = 1, 1, 2000
+        except:
+            month, day, year = 1, 1, 2000
+        
+        # Parse time to minutes since midnight for sorting
+        hour, minute = 0, 0
+        try:
+            # Handle various time formats
+            time_str = time_str.replace('.', ':').replace('am', ' am').replace('pm', ' pm')
+            is_pm = 'pm' in time_str
+            is_am = 'am' in time_str
+            time_str = time_str.replace('am', '').replace('pm', '').strip()
+            
+            if ':' in time_str:
+                parts = time_str.split(':')
+                hour = int(parts[0])
+                minute = int(parts[1]) if len(parts) > 1 else 0
+            elif time_str.isdigit():
+                # Handle military time like "1300"
+                if len(time_str) == 4:
+                    hour = int(time_str[:2])
+                    minute = int(time_str[2:])
+                elif len(time_str) <= 2:
+                    hour = int(time_str)
+            
+            # Convert to 24-hour format
+            if is_pm and hour < 12:
+                hour += 12
+            elif is_am and hour == 12:
+                hour = 0
+        except:
+            pass
+        
+        # Return sortable tuple: (year, month, day, hour, minute)
+        return (year, month, day, hour, minute)
+    
+    sorted_entries = sorted(entries, key=parse_date_time)
+    return sorted_entries
 
 # Create a new monthly entry (admin only)
 @api_router.post("/monthly/create")
