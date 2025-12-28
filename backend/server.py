@@ -376,16 +376,23 @@ async def get_files_for_entry(entry_id: str):
         {"_id": 0}
     ).to_list(1000)
     
-    return [
-        FileInfo(
+    result = []
+    for f in files:
+        # Handle missing fields gracefully (for seeded files)
+        file_path = f.get("file_path", "")
+        file_size = f.get("file_size", 0)
+        if file_size == 0 and file_path and os.path.exists(file_path):
+            file_size = os.path.getsize(file_path)
+        
+        result.append(FileInfo(
             file_id=f["file_id"],
             filename=f["filename"],
-            file_type=f["file_type"],
-            file_size=f["file_size"],
-            upload_date=f["upload_date"],
+            file_type=f.get("file_type", "image/jpeg"),  # Default to JPEG
+            file_size=file_size,
+            upload_date=f.get("upload_date", f.get("uploaded_at", datetime.now(timezone.utc).isoformat())),
             entry_id=f["entry_id"]
-        ) for f in files
-    ]
+        ))
+    return result
 
 # Download/view a file
 def detect_actual_mime_type(file_path: Path) -> str:
