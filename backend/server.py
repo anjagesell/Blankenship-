@@ -802,6 +802,9 @@ async def create_monthly_entry(entry: MonthlyEntryCreate, admin_password: str, e
     entry_dict = new_entry.model_dump()
     await db.monthly_entries.insert_one(entry_dict)
     
+    # Remove _id before returning (MongoDB adds it)
+    entry_dict.pop('_id', None)
+    
     # ✅ AUTO-BACKUP: Save entry to seed_data.json
     await backup_entry_to_seed(entry_dict)
     
