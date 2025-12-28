@@ -893,22 +893,70 @@ async def seed_database():
                 seed_files = json.load(f)
             
             if seed_files:
-                # Add file_path to each record for filesystem serving
+                # Get all entries to build date-to-id mapping
+                entries = await db.monthly_entries.find({}, {"_id": 0}).to_list(1000)
+                
+                # Build mapping: (month_key, date, time) -> entry_id
+                # This ensures files link to correct entries even if IDs changed
+                entry_map = {}
+                for e in entries:
+                    key = (e.get('month_key', ''), e.get('date', ''), e.get('time', ''))
+                    entry_map[key] = e['id']
+                    # Also map by just date for simpler matching
+                    date_key = e.get('date', '')
+                    if date_key not in entry_map:
+                        entry_map[date_key] = e['id']
+                
+                # Load seed_data to get original entry details for mapping
+                original_entries = {}
+                if SEED_DATA_FILE.exists():
+                    with open(SEED_DATA_FILE, 'r') as f:
+                        seed_data = json.load(f)
+                    for e in seed_data:
+                        original_entries[e['id']] = e
+                
+                # Process each file record
+                files_to_insert = []
                 for file_record in seed_files:
-                    # Look for file in uploads directory matching file_id prefix
+                    old_entry_id = file_record.get('entry_id', '')
+                    
+                    # Try to find the correct new entry_id
+                    new_entry_id = None
+                    
+                    # First, check if the old_entry_id still exists in current entries
+                    for e in entries:
+                        if e['id'] == old_entry_id:
+                            new_entry_id = old_entry_id
+                            break
+                    
+                    # If not found, try to match by date/time from original entry
+                    if not new_entry_id and old_entry_id in original_entries:
+                        orig = original_entries[old_entry_id]
+                        key = (orig.get('month_key', ''), orig.get('date', ''), orig.get('time', ''))
+                        if key in entry_map:
+                            new_entry_id = entry_map[key]
+                        elif orig.get('date', '') in entry_map:
+                            new_entry_id = entry_map[orig.get('date', '')]
+                    
+                    if new_entry_id:
+                        file_record['entry_id'] = new_entry_id
+                    
+                    # Set file_path
                     file_pattern = f"{file_record['file_id']}_{file_record['filename']}"
                     file_path = UPLOAD_DIR / file_pattern
                     if file_path.exists():
                         file_record['file_path'] = str(file_path)
                     else:
-                        # Try alternate pattern (just filename)
                         for f in UPLOAD_DIR.iterdir():
                             if file_record['file_id'] in f.name:
                                 file_record['file_path'] = str(f)
                                 break
+                    
+                    files_to_insert.append(file_record)
                 
-                await db.uploaded_files.insert_many(seed_files)
-                logging.info(f"Successfully seeded {len(seed_files)} file records!")
+                if files_to_insert:
+                    await db.uploaded_files.insert_many(files_to_insert)
+                    logging.info(f"Successfully seeded {len(files_to_insert)} file records!")
         else:
             logging.info(f"Database has {file_count} file records, skipping file seed.")
             
