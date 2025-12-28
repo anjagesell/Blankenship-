@@ -1138,5 +1138,33 @@
     "updated_at": "2025-12-28T21:33:05.853031+00:00",
     "created_by": "System",
     "last_edited_by": "System"
+  },
+  {
+    "id": "5e3d0482-b898-4838-9bd8-7d45ec7af8e6",
+    "month_key": "01/2018",
+    "date": "01/01/2018",
+    "time": "9:00 AM",
+    "witness": "Curry Law Firm, PC",
+    "description": "Legal Letter - Termination of Parental Rights Case Update",
+    "evidence": "Legal Correspondence, Case Documents",
+    "notes": "Letter from Curry Law Firm, PC to Zackary Allen Blankenship (inmate) regarding termination of parental rights case. Details: Case continued until February 7, 2019. Firm issued writ for client appearance. Enclosed documents require client review and signature: proposed Reply to petition, verification page, civil affidavit of indigency. All documents require notarization. Letter also references pending appeal to Supreme Court of North Carolina and its potential impact on the case.",
+    "created_at": "2025-12-28T21:40:59.711684+00:00",
+    "updated_at": "2025-12-28T21:40:59.711684+00:00",
+    "created_by": "System",
+    "last_edited_by": "System"
+  },
+  {
+    "id": "3b733144-090a-4a60-90d1-b72e16d8136a",
+    "month_key": "06/2018",
+    "date": "06/05/2018",
+    "time": "9:00 AM",
+    "witness": "North Carolina Court of Appeals",
+    "description": "Court of Appeals Opinion - State v. Blankenship (Hearsay and Evidence Analysis)",
+    "evidence": "Court Opinion, Legal Analysis, Case Citations",
+    "notes": "Court of Appeals opinion analyzing admissibility of hearsay evidence in State v. Zachary Allen Blankenship. Document discusses: (1) Rose's statements to grandparents Gabrielle and Keith regarding alleged abuse on November 30, 2013 and December 12, 2013; (2) Legal standards for hearsay exceptions under Rules 803(1), 803(3), 803(4), and 804(b)(5); (3) Defendant's motion to suppress confession (denied January 6, 2017); (4) 'Plain error' and 'abuse of discretion' standards for reviewing evidentiary rulings; (5) Corpus delicti rule analysis referencing State v. Sweat. Key testimony includes statements about inappropriate conduct and forensic examination findings from December 4, 2013.",
+    "created_at": "2025-12-28T21:40:59.711684+00:00",
+    "updated_at": "2025-12-28T21:40:59.711684+00:00",
+    "created_by": "System",
+    "last_edited_by": "System"
   }
 ]
