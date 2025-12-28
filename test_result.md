@@ -101,3 +101,62 @@
 #====================================================================================================
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
+
+user_problem_statement: "Reorganize 91 documents from 2014.zip - each date should have its own line with time and adjoining exhibits that correlate"
+
+backend:
+  - task: "2014 Documents Reorganization - 1 entry per date"
+    implemented: true
+    working: true
+    file: "backend/seed_data.json, backend/seed_files.json"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Reorganized 91 documents into 15 unique date entries. Each entry has date, time, witness, description, evidence, notes. Files correctly linked to entries via entry_id."
+  
+  - task: "API endpoints for 2014 months"
+    implemented: true
+    working: true
+    file: "backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "API endpoints /api/monthly/01-2014, /api/monthly/02-2014, etc. return correct entries. Verified via curl."
+
+frontend:
+  - task: "Display 2014 entries in MonthlyDetail view"
+    implemented: true
+    working: true
+    file: "frontend/src/components/MonthlyDetail.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Screenshot verified - January 2014 shows 2 entries (01/13 and 01/23) with times, witnesses, descriptions and exhibit buttons"
+
+metadata:
+  created_by: "main_agent"
+  version: "1.0"
+  test_sequence: 1
+  run_ui: true
+
+test_plan:
+  current_focus:
+    - "2014 Documents Reorganization - 1 entry per date"
+    - "API endpoints for 2014 months"
+    - "Display 2014 entries in MonthlyDetail view"
+  stuck_tasks: []
+  test_all: true
+  test_priority: "high_first"
+
+agent_communication:
+  - agent: "main"
+    message: "Completed reorganization of 91 documents from 2014.zip into 15 unique date entries. Each entry now has: date, time, witness, description, evidence, notes. Files are correctly linked. Screenshots verified January 2014 shows multiple entries with times. Please test: 1) API returns correct number of entries for each 2014 month, 2) Frontend displays all entries with correct data, 3) Exhibit files are accessible. Visitor password: 05052017"
