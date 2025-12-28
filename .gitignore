@@ -43,8 +43,5 @@ backend/2015.zip
 backend/2019.zip
 backend/Dezember2.zip
 backend/Dezember.zip
--e 
-# Environment files
-*.env
-*.env.*
+# Note: .env files are intentionally tracked for deployment
 frontend/node_modules/.cache/default-development/0.pack
