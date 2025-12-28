@@ -84,18 +84,6 @@
     "updated_at": "2025-12-27T17:31:44.274381+00:00"
   },
   {
-    "id": "bf3075da-a19c-4869-aed3-8fc797143627",
-    "month_key": "11/2013",
-    "date": "11/30/2013",
-    "time": "1:22 pm",
-    "witness": "CPS Amber Mecimore / CPS Pam Frazier",
-    "description": "CPS Amber Mecimore requests Iredell County assistant SW Pam Frazier.",
-    "evidence": "Narrative Log",
-    "notes": "No additional information documented from this contact.",
-    "created_at": "2025-12-27T17:31:44.339424+00:00",
-    "updated_at": "2025-12-27T17:31:44.339440+00:00"
-  },
-  {
     "id": "636072ef-c275-4ff8-a1f8-d09b1d8df3c7",
     "month_key": "11/2013",
     "date": "11/30/2013",
@@ -470,6 +458,46 @@
     "last_edited_by": "System"
   },
   {
+    "id": "06c684ae-2483-4698-ae42-d3f07e6f87ad",
+    "month_key": "10/2013",
+    "date": "02/16/2012",
+    "time": "",
+    "witness": "DNA Collection Forms - Zackary Allen Blankenship",
+    "description": "DNA Collection Form for Arrestees - Iredell County & Catawba County",
+    "evidence": "DNA Collection documentation",
+    "notes": "Agency: CCSO. Offenses: Indecent Liberties with Child, First Degree Sex Offense Child",
+    "created_at": "2025-12-28T16:08:20.088564+00:00",
+    "updated_at": "2025-12-28T16:08:20.088575+00:00",
+    "created_by": "System",
+    "last_edited_by": "System"
+  },
+  {
+    "id": "a709204c-96c5-4c66-b1ee-e752c6468eed",
+    "month_key": "10/2013",
+    "date": "02/18/2014",
+    "time": "",
+    "witness": "Bobbi Jo Christopher - Witness Statements & Text Messages",
+    "description": "Text messages and written observations documenting concerns about Rylie Blankenship care by Gabi and Keith Blankenship. Includes therapist reports, medical visit discrepancies, and disturbing incidents.",
+    "evidence": "Text messages, written statements, dated observations (Feb 18, March 21, April 2, 2014)",
+    "notes": "SYNOPSIS - Bobbi Jo Christopher Witness Statements (Feb-April 2014):\n\nThese documents contain observations and text messages from Bobbi Jo Christopher regarding the care of Rylie Blankenship by Gabi and Keith Blankenship. Key points include:\n\n1. DIETARY CONCERNS: Gabi and Keith reportedly allowed Rylie unrestricted access to junk food (glazed doughnuts, chips, sweet tea, Mountain Dew) while claiming Zack and Tammy fed her poorly.\n\n2. SLEEP DISRUPTION: Claims that Rylie was kept awake by video games and allowed to sleep at 6:00pm due to exhaustion.\n\n3. MEDICAL VISIT DISCREPANCIES: During Christmas 2013 visit, Gabi reported Rylie had fever/sore throat, but doctor found no fever, no throat irritation - only minor runny nose and ear wax.\n\n4. DISTURBING REQUESTS: Gabi asked Bobbi Jo to have doctor check Rylie for STDs (claiming Zack had STDs - denied by Tammy), surgically remove ear wax, and check vagina for tears. When told no STDs found, Gabi responded \"I could have sworn it was STD.\"\n\n5. \"POINTIES\" INCIDENT (April 2, 2014): Rylie stood on tip-toes in corner saying \"The pointies hurt my feet\" and \"THE ONES NANA HAS\" - described as giving witness \"chills\" and \"creeps.\"\n\n6. THERAPIST CONCERNS: Rylie told therapist \"really disturbing things about Gabi\" including \"a lot of abusive things\" leading to potential child abuse investigation.\n\n7. DSS INVOLVEMENT: A DSS worker from Iredell County was mentioned in connection with Rylie's care.\n\nLEGAL NOTE:\nIn North Carolina, statements made to Child Protective Services (CPS) during investigations are not given under oath and therefore do not constitute perjury, even if later contradicted. However, a person may still be held legally accountable if they knowingly provide false or misleading factual statements to CPS that cause or influence an investigation, medical examination, or referral for criminal charges. Such conduct may fall under North Carolina's false-reporting statute (N.C. Gen. Stat. \u00a7 14-225) or the common-law offense of obstruction of justice, particularly where the statements were intentionally made to mislead authorities or advance a personal purpose. Additionally, false factual accusations communicated to CPS may lose any qualified privilege if made with knowledge of falsity or reckless disregard for the truth.",
+    "created_at": "2025-12-28T17:27:37.855296+00:00",
+    "updated_at": "2025-12-28T17:27:37.855308+00:00",
+    "created_by": "System",
+    "last_edited_by": "System"
+  },
+  {
+    "id": "bf3075da-a19c-4869-aed3-8fc797143627",
+    "month_key": "11/2013",
+    "date": "11/30/2013",
+    "time": "1:22 pm",
+    "witness": "CPS Amber Mecimore / CPS Pam Frazier",
+    "description": "CPS Amber Mecimore requests Iredell County assistant SW Pam Frazier.",
+    "evidence": "Narrative Log",
+    "notes": "No additional information documented from this contact.",
+    "created_at": "2025-12-27T17:31:44.339424+00:00",
+    "updated_at": "2025-12-27T17:31:44.339440+00:00"
+  },
+  {
     "id": "9bb823da-525d-474e-8500-70be3856b9c4",
     "month_key": "11/2013",
     "date": "11/30/2013",
@@ -650,30 +678,16 @@
     "updated_at": "2025-12-27T17:31:44.840074+00:00"
   },
   {
-    "id": "06c684ae-2483-4698-ae42-d3f07e6f87ad",
-    "month_key": "10/2013",
-    "date": "02/16/2012",
+    "id": "7f13be2e-50a4-4423-9c84-d3216d2febbe",
+    "month_key": "01/2014",
+    "date": "01/13/2014",
     "time": "",
-    "witness": "DNA Collection Forms - Zackary Allen Blankenship",
-    "description": "DNA Collection Form for Arrestees - Iredell County & Catawba County",
-    "evidence": "DNA Collection documentation",
-    "notes": "Agency: CCSO. Offenses: Indecent Liberties with Child, First Degree Sex Offense Child",
-    "created_at": "2025-12-28T16:08:20.088564+00:00",
-    "updated_at": "2025-12-28T16:08:20.088575+00:00",
-    "created_by": "System",
-    "last_edited_by": "System"
-  },
-  {
-    "id": "a709204c-96c5-4c66-b1ee-e752c6468eed",
-    "month_key": "10/2013",
-    "date": "02/18/2014",
-    "time": "",
-    "witness": "Bobbi Jo Christopher - Witness Statements & Text Messages",
-    "description": "Text messages and written observations documenting concerns about Rylie Blankenship care by Gabi and Keith Blankenship. Includes therapist reports, medical visit discrepancies, and disturbing incidents.",
-    "evidence": "Text messages, written statements, dated observations (Feb 18, March 21, April 2, 2014)",
-    "notes": "SYNOPSIS - Bobbi Jo Christopher Witness Statements (Feb-April 2014):\n\nThese documents contain observations and text messages from Bobbi Jo Christopher regarding the care of Rylie Blankenship by Gabi and Keith Blankenship. Key points include:\n\n1. DIETARY CONCERNS: Gabi and Keith reportedly allowed Rylie unrestricted access to junk food (glazed doughnuts, chips, sweet tea, Mountain Dew) while claiming Zack and Tammy fed her poorly.\n\n2. SLEEP DISRUPTION: Claims that Rylie was kept awake by video games and allowed to sleep at 6:00pm due to exhaustion.\n\n3. MEDICAL VISIT DISCREPANCIES: During Christmas 2013 visit, Gabi reported Rylie had fever/sore throat, but doctor found no fever, no throat irritation - only minor runny nose and ear wax.\n\n4. DISTURBING REQUESTS: Gabi asked Bobbi Jo to have doctor check Rylie for STDs (claiming Zack had STDs - denied by Tammy), surgically remove ear wax, and check vagina for tears. When told no STDs found, Gabi responded \"I could have sworn it was STD.\"\n\n5. \"POINTIES\" INCIDENT (April 2, 2014): Rylie stood on tip-toes in corner saying \"The pointies hurt my feet\" and \"THE ONES NANA HAS\" - described as giving witness \"chills\" and \"creeps.\"\n\n6. THERAPIST CONCERNS: Rylie told therapist \"really disturbing things about Gabi\" including \"a lot of abusive things\" leading to potential child abuse investigation.\n\n7. DSS INVOLVEMENT: A DSS worker from Iredell County was mentioned in connection with Rylie's care.\n\nLEGAL NOTE:\nIn North Carolina, statements made to Child Protective Services (CPS) during investigations are not given under oath and therefore do not constitute perjury, even if later contradicted. However, a person may still be held legally accountable if they knowingly provide false or misleading factual statements to CPS that cause or influence an investigation, medical examination, or referral for criminal charges. Such conduct may fall under North Carolina's false-reporting statute (N.C. Gen. Stat. \u00a7 14-225) or the common-law offense of obstruction of justice, particularly where the statements were intentionally made to mislead authorities or advance a personal purpose. Additionally, false factual accusations communicated to CPS may lose any qualified privilege if made with knowledge of falsity or reckless disregard for the truth.",
-    "created_at": "2025-12-28T17:27:37.855296+00:00",
-    "updated_at": "2025-12-28T17:27:37.855308+00:00",
+    "witness": "State of North Carolina - Twenty-Fifth Prosecutorial District",
+    "description": "Plea Offer and Legal Documentation. State vs. Zachary Allen Blankenship. Includes court orders, conditions of release, custody stipulations, sex offender evaluations, reunification requirements, and related case documents.",
+    "evidence": "Court documents, plea offers, legal forms, custody orders",
+    "notes": "2014 LEGAL CASE DOCUMENTATION\n\nThis collection contains 91 exhibits documenting the legal proceedings involving Zachary Allen Blankenship in 2014, including:\n\n1. PLEA OFFER (January 13, 2014): State's offer for defendant to plead guilty to consolidated charges including:\n   - Three charges of sex offense (adult offender)\n   - Four charges of taking indecent liberties with children\n   - One charge of rape of a child\n   - Prior felony record level II with 2 points stipulated\n\n2. COURT ORDERS: Custody and reunification requirements for Mr. and Mrs. Blankenship including:\n   - Mental health evaluations\n   - Sex offender specific evaluations\n   - Therapeutic interventions\n   - Stable housing and employment requirements\n   - Supervised visitation conditions\n   \n3. CONDITIONS OF RELEASE: Documentation of release modifications, detention facility transfers, and court appearance logistics.\n\n4. CASE MANAGEMENT: Various administrative and procedural documents from the judicial process.\n\nProsecuting Authority: James C. Gaither, Jr., District Attorney\nJurisdiction: Catawba County, North Carolina",
+    "created_at": "2025-12-28T19:04:18.166777+00:00",
+    "updated_at": "2025-12-28T19:04:18.166788+00:00",
     "created_by": "System",
     "last_edited_by": "System"
   }
