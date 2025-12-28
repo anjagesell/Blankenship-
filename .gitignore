@@ -160,3 +160,7 @@ backend/dezember.zip
 *.env
 *.env.*
 backend/2014.zip
+-e 
+# Environment files
+*.env
+*.env.*
