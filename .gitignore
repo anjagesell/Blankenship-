@@ -97,3 +97,7 @@ backend/2019.zip
 # Environment files
 -e 
 # Environment files
+-e 
+# Environment files
+*.env
+*.env.*
