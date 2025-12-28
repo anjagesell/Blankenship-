@@ -164,3 +164,7 @@ backend/2014.zip
 # Environment files
 *.env
 *.env.*
+-e 
+# Environment files
+*.env
+*.env.*
