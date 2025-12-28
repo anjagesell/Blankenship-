@@ -886,41 +886,5 @@
     "updated_at": "2025-12-28T19:43:34.848458+00:00",
     "created_by": "System",
     "last_edited_by": "System"
-  },
-  {
-    "id": "e985d363-0a51-451d-9933-81b94a88ec9e",
-    "month_key": "01/2014",
-    "date": "01/01/2014",
-    "time": "12:00 PM",
-    "witness": "Test Entry",
-    "description": "Test entry - verifying admin auth works",
-    "evidence": "None",
-    "notes": "Testing admin authentication",
-    "created_at": "2025-12-28T20:17:32.433714+00:00",
-    "updated_at": "2025-12-28T20:17:32.433723+00:00"
-  },
-  {
-    "id": "358be566-4b23-416c-9082-8073da705f0b",
-    "month_key": "01/2014",
-    "date": "01/01/2014",
-    "time": "12:00 PM",
-    "witness": "Test Entry",
-    "description": "Test entry - verifying admin auth works",
-    "evidence": "None",
-    "notes": "Testing admin authentication",
-    "created_at": "2025-12-28T20:17:39.979532+00:00",
-    "updated_at": "2025-12-28T20:17:39.979541+00:00"
-  },
-  {
-    "id": "6362dc29-e9c1-4823-b812-0065c8690487",
-    "month_key": "01/2014",
-    "date": "01/01/2014",
-    "time": "12:00 PM",
-    "witness": "Test Entry",
-    "description": "Test entry - verifying admin auth works",
-    "evidence": "None",
-    "notes": "Testing admin authentication",
-    "created_at": "2025-12-28T20:18:13.093046+00:00",
-    "updated_at": "2025-12-28T20:18:13.093054+00:00"
   }
 ]
