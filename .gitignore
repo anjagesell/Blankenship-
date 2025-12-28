@@ -45,3 +45,7 @@ backend/Dezember2.zip
 backend/Dezember.zip
 # Note: .env files are intentionally tracked for deployment
 frontend/node_modules/.cache/default-development/0.pack
+-e 
+# Environment files
+*.env
+*.env.*
