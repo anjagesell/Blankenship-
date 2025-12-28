@@ -886,5 +886,17 @@
     "updated_at": "2025-12-28T19:43:34.848458+00:00",
     "created_by": "System",
     "last_edited_by": "System"
+  },
+  {
+    "id": "e985d363-0a51-451d-9933-81b94a88ec9e",
+    "month_key": "01/2014",
+    "date": "01/01/2014",
+    "time": "12:00 PM",
+    "witness": "Test Entry",
+    "description": "Test entry - verifying admin auth works",
+    "evidence": "None",
+    "notes": "Testing admin authentication",
+    "created_at": "2025-12-28T20:17:32.433714+00:00",
+    "updated_at": "2025-12-28T20:17:32.433723+00:00"
   }
 ]
