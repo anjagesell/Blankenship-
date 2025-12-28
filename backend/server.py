@@ -863,102 +863,61 @@ app.include_router(api_router)
 
 @app.on_event("startup")
 async def seed_database():
-    """Auto-seed database with initial data on startup if empty"""
+    """Auto-seed database with initial data on startup - adds missing entries and files"""
     import json
     try:
-        # Seed monthly entries
-        count = await db.monthly_entries.count_documents({})
-        if count == 0 and SEED_DATA_FILE.exists():
-            logging.info("Database empty, seeding with initial data...")
+        # Seed monthly entries - add any missing entries
+        if SEED_DATA_FILE.exists():
             with open(SEED_DATA_FILE, 'r') as f:
                 seed_data = json.load(f)
             
             if seed_data:
-                for entry in seed_data:
-                    if 'id' not in entry:
-                        entry['id'] = str(uuid.uuid4())
-                    if 'created_at' not in entry:
-                        entry['created_at'] = datetime.now(timezone.utc).isoformat()
+                # Get existing entry IDs
+                existing_entries = await db.monthly_entries.find({}, {"id": 1, "_id": 0}).to_list(10000)
+                existing_ids = {e['id'] for e in existing_entries}
                 
-                await db.monthly_entries.insert_many(seed_data)
-                logging.info(f"Successfully seeded {len(seed_data)} entries!")
-        else:
-            logging.info(f"Database has {count} entries, skipping seed.")
+                # Add missing entries
+                new_entries = [e for e in seed_data if e['id'] not in existing_ids]
+                if new_entries:
+                    for entry in new_entries:
+                        if 'created_at' not in entry:
+                            entry['created_at'] = datetime.now(timezone.utc).isoformat()
+                    await db.monthly_entries.insert_many(new_entries)
+                    logging.info(f"Added {len(new_entries)} new entries!")
+                else:
+                    logging.info(f"All {len(seed_data)} entries already exist.")
         
-        # Seed file records (exhibits) - use uploaded_files collection to match API
-        file_count = await db.uploaded_files.count_documents({})
-        if file_count == 0 and SEED_FILES_FILE.exists():
-            logging.info("File records empty, seeding exhibits...")
+        # Seed file records - add any missing files
+        if SEED_FILES_FILE.exists():
             with open(SEED_FILES_FILE, 'r') as f:
                 seed_files = json.load(f)
             
             if seed_files:
-                # Get all entries to build date-to-id mapping
-                entries = await db.monthly_entries.find({}, {"_id": 0}).to_list(1000)
+                # Get existing file IDs
+                existing_files = await db.uploaded_files.find({}, {"file_id": 1, "_id": 0}).to_list(100000)
+                existing_file_ids = {f['file_id'] for f in existing_files}
                 
-                # Build mapping: (month_key, date, time) -> entry_id
-                # This ensures files link to correct entries even if IDs changed
-                entry_map = {}
-                for e in entries:
-                    key = (e.get('month_key', ''), e.get('date', ''), e.get('time', ''))
-                    entry_map[key] = e['id']
-                    # Also map by just date for simpler matching
-                    date_key = e.get('date', '')
-                    if date_key not in entry_map:
-                        entry_map[date_key] = e['id']
-                
-                # Load seed_data to get original entry details for mapping
-                original_entries = {}
-                if SEED_DATA_FILE.exists():
-                    with open(SEED_DATA_FILE, 'r') as f:
-                        seed_data = json.load(f)
-                    for e in seed_data:
-                        original_entries[e['id']] = e
-                
-                # Process each file record
-                files_to_insert = []
+                # Add missing files
+                new_files = []
                 for file_record in seed_files:
-                    old_entry_id = file_record.get('entry_id', '')
-                    
-                    # Try to find the correct new entry_id
-                    new_entry_id = None
-                    
-                    # First, check if the old_entry_id still exists in current entries
-                    for e in entries:
-                        if e['id'] == old_entry_id:
-                            new_entry_id = old_entry_id
-                            break
-                    
-                    # If not found, try to match by date/time from original entry
-                    if not new_entry_id and old_entry_id in original_entries:
-                        orig = original_entries[old_entry_id]
-                        key = (orig.get('month_key', ''), orig.get('date', ''), orig.get('time', ''))
-                        if key in entry_map:
-                            new_entry_id = entry_map[key]
-                        elif orig.get('date', '') in entry_map:
-                            new_entry_id = entry_map[orig.get('date', '')]
-                    
-                    if new_entry_id:
-                        file_record['entry_id'] = new_entry_id
-                    
-                    # Set file_path
-                    file_pattern = f"{file_record['file_id']}_{file_record['filename']}"
-                    file_path = UPLOAD_DIR / file_pattern
-                    if file_path.exists():
-                        file_record['file_path'] = str(file_path)
-                    else:
-                        for f in UPLOAD_DIR.iterdir():
-                            if file_record['file_id'] in f.name:
-                                file_record['file_path'] = str(f)
-                                break
-                    
-                    files_to_insert.append(file_record)
+                    if file_record['file_id'] not in existing_file_ids:
+                        # Set file_path
+                        file_pattern = f"{file_record['file_id']}_{file_record['filename']}"
+                        file_path = UPLOAD_DIR / file_pattern
+                        if file_path.exists():
+                            file_record['file_path'] = str(file_path)
+                        else:
+                            for f in UPLOAD_DIR.iterdir():
+                                if file_record['file_id'] in f.name:
+                                    file_record['file_path'] = str(f)
+                                    break
+                        new_files.append(file_record)
                 
-                if files_to_insert:
-                    await db.uploaded_files.insert_many(files_to_insert)
-                    logging.info(f"Successfully seeded {len(files_to_insert)} file records!")
-        else:
-            logging.info(f"Database has {file_count} file records, skipping file seed.")
+                if new_files:
+                    await db.uploaded_files.insert_many(new_files)
+                    logging.info(f"Added {len(new_files)} new file records!")
+                else:
+                    logging.info(f"All {len(seed_files)} file records already exist.")
             
     except Exception as e:
         logging.error(f"Error seeding database: {e}")
