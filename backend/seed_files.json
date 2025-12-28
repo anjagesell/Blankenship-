@@ -4249,5 +4249,19 @@
     "file_path": "/app/backend/uploads/79f4ca85-b426-405e-970d-f1cdb10b0eb5_IMG_0813.jpg",
     "entry_id": "c7369cb4-1141-45e1-a14f-4a7961b1ad6a",
     "uploaded_at": "2025-12-28T21:47:51.879952+00:00"
+  },
+  {
+    "file_id": "1fe0a3b2-1366-4581-a14d-dec40282da94",
+    "filename": "IMG_0564.jpg",
+    "file_path": "/app/backend/uploads/1fe0a3b2-1366-4581-a14d-dec40282da94_IMG_0564.jpg",
+    "entry_id": "62b7c857-555b-44c9-bc37-d6b9b287e50c",
+    "uploaded_at": "2025-12-28T21:52:19.311194+00:00"
+  },
+  {
+    "file_id": "f2220abc-4665-4c73-932f-bb404d881940",
+    "filename": "IMG_0565.jpg",
+    "file_path": "/app/backend/uploads/f2220abc-4665-4c73-932f-bb404d881940_IMG_0565.jpg",
+    "entry_id": "62b7c857-555b-44c9-bc37-d6b9b287e50c",
+    "uploaded_at": "2025-12-28T21:52:19.311194+00:00"
   }
 ]

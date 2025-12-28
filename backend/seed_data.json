@@ -1264,5 +1264,19 @@
     "updated_at": "2025-12-28T21:47:51.879952+00:00",
     "created_by": "System",
     "last_edited_by": "System"
+  },
+  {
+    "id": "62b7c857-555b-44c9-bc37-d6b9b287e50c",
+    "month_key": "12/2013",
+    "date": "12/13/2013",
+    "time": "9:00 AM",
+    "witness": "State of North Carolina, General Court of Justice, District Court Division",
+    "description": "Juvenile Summons and Notice of Hearing on Petition - Abuse, Neglect, Dependency Allegations",
+    "evidence": "Juvenile Summons (AOC-J-142), Notice of Hearing",
+    "notes": "Formal legal summons issued December 13, 2013 for juvenile case involving Rylie Alyzabeth Blankenship (DOB: 01/03/2011). Allegations: Abuse, Neglect, Dependency. Parents: Tammy Michelle Moubray Blankenship and Zachary Allen Blankenship. Attorneys: Scott Conrad (Mother), Ed DeTorres (Father). Pre-Adjudication Hearing scheduled for 01/06/2014 at 9:00 AM at Newton District Juvenile Court. Hearing on Petition scheduled for 02/10/2014 at 9:00 AM. Document outlines potential court interventions including custody removal, child support orders, and treatment provisions per G.S. 7B-1111 and G.S. 7B-904.",
+    "created_at": "2025-12-28T21:52:19.311194+00:00",
+    "updated_at": "2025-12-28T21:52:19.311194+00:00",
+    "created_by": "System",
+    "last_edited_by": "System"
   }
 ]
