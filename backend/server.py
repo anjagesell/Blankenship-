@@ -912,9 +912,66 @@ app.include_router(api_router)
 
 @app.on_event("startup")
 async def seed_database():
-    """Auto-seed database with initial data on startup - adds missing entries and files"""
+    """Auto-seed database with initial data on startup - adds missing entries and files, removes duplicates"""
     import json
     try:
+        # FIRST: Clean up any duplicate entries (e.g., from European date format)
+        logging.info("Checking for duplicate entries to clean up...")
+        all_entries = await db.monthly_entries.find({}, {"_id": 0}).to_list(10000)
+        
+        # Group by (month_key, date, witness prefix) to find duplicates
+        seen = {}
+        duplicates_to_remove = []
+        for e in all_entries:
+            # Normalize date - convert European format (DD/MM/YYYY) to US format if needed
+            date = e.get('date', '')
+            witness = e.get('witness', '')[:30]
+            month_key = e.get('month_key', '')
+            
+            # Skip entries with European date format (day > 12 in first position)
+            if date and '/' in date:
+                parts = date.split('/')
+                if len(parts) >= 2:
+                    first_num = int(parts[0]) if parts[0].isdigit() else 0
+                    if first_num > 12:  # This is European format DD/MM/YYYY - mark for removal
+                        duplicates_to_remove.append(e['id'])
+                        logging.info(f"Marking European format entry for removal: {date}")
+                        continue
+            
+            key = (month_key, date, witness)
+            if key in seen:
+                # Keep the one with more content
+                existing = seen[key]
+                if len(e.get('notes', '') or '') > len(existing.get('notes', '') or ''):
+                    duplicates_to_remove.append(existing['id'])
+                    seen[key] = e
+                else:
+                    duplicates_to_remove.append(e['id'])
+            else:
+                seen[key] = e
+        
+        if duplicates_to_remove:
+            # Move files from duplicates to the kept entry
+            for dup_id in duplicates_to_remove:
+                # Find which entry this duplicate matches
+                dup_entry = next((e for e in all_entries if e['id'] == dup_id), None)
+                if dup_entry:
+                    date = dup_entry.get('date', '')
+                    witness = dup_entry.get('witness', '')[:30]
+                    month_key = dup_entry.get('month_key', '')
+                    key = (month_key, date, witness)
+                    kept_entry = seen.get(key)
+                    if kept_entry and kept_entry['id'] != dup_id:
+                        # Move files to kept entry
+                        await db.uploaded_files.update_many(
+                            {"entry_id": dup_id},
+                            {"$set": {"entry_id": kept_entry['id']}}
+                        )
+            
+            # Delete duplicate entries
+            result = await db.monthly_entries.delete_many({"id": {"$in": duplicates_to_remove}})
+            logging.info(f"Removed {result.deleted_count} duplicate entries")
+        
         # Seed monthly entries - add any missing entries
         if SEED_DATA_FILE.exists():
             with open(SEED_DATA_FILE, 'r') as f:
