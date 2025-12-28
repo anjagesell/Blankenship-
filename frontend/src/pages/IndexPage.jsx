@@ -74,6 +74,10 @@ const IndexPage = () => {
     if (entry.id === 0) {
       if (!acc['2013']) acc['2013'] = [];
       acc['2013'].push(entry);
+    } else if (entry.date === 'medchecks') {
+      // Medchecks is a special standalone folder
+      if (!acc['Medchecks']) acc['Medchecks'] = [];
+      acc['Medchecks'].push(entry);
     } else if (entry.date) {
       const year = entry.date.split('/')[1];
       if (!acc[year]) acc[year] = [];
@@ -82,7 +86,12 @@ const IndexPage = () => {
     return acc;
   }, {});
 
-  const years = Object.keys(entriesByYear).sort();
+  // Sort years with Medchecks at the end
+  const years = Object.keys(entriesByYear).sort((a, b) => {
+    if (a === 'Medchecks') return 1;
+    if (b === 'Medchecks') return -1;
+    return a.localeCompare(b);
+  });
 
   const toggleYear = (year) => {
     setOpenYears(prev => ({
