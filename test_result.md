@@ -156,13 +156,13 @@ metadata:
 
 test_plan:
   current_focus:
-    - "2014 Documents Reorganization - 1 entry per date"
-    - "API endpoints for 2014 months"
     - "Display 2014 entries in MonthlyDetail view"
   stuck_tasks: []
-  test_all: true
+  test_all: false
   test_priority: "high_first"
 
 agent_communication:
   - agent: "main"
     message: "Completed reorganization of 91 documents from 2014.zip into 15 unique date entries. Each entry now has: date, time, witness, description, evidence, notes. Files are correctly linked. Screenshots verified January 2014 shows multiple entries with times. Please test: 1) API returns correct number of entries for each 2014 month, 2) Frontend displays all entries with correct data, 3) Exhibit files are accessible. Visitor password: 05052017"
+  - agent: "testing"
+    message: "✅ BACKEND TESTING COMPLETE: All 2014 documents reorganization tests PASSED. Verified 15 entries across 7 months (total 91 files). All monthly API endpoints working correctly. File download endpoints functional. Specific January/February requirements met. Backend reorganization is working perfectly. Only frontend testing remains (not in my scope)."
