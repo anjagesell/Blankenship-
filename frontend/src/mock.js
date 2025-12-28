@@ -77,7 +77,24 @@ export const indexEntries = [
   { id: 60, header: 'September 2019 Entry', date: '09/2019', description: 'Fall begins' },
   { id: 61, header: 'October 2019 Entry', date: '10/2019', description: 'Autumn continues' },
   { id: 62, header: 'November 2019 Entry', date: '11/2019', description: 'Late fall' },
-  { id: 63, header: 'December 2019 Entry', date: '12/2019', description: 'Year-end' }
+  { id: 63, header: 'December 2019 Entry', date: '12/2019', description: 'Year-end' },
+  
+  // 2020
+  { id: 64, header: 'January 2020 Entry', date: '01/2020', description: 'New year begins' },
+  { id: 65, header: 'February 2020 Entry', date: '02/2020', description: 'Winter continues' },
+  { id: 66, header: 'March 2020 Entry', date: '03/2020', description: 'Spring approaches' },
+  { id: 67, header: 'April 2020 Entry', date: '04/2020', description: 'Spring season' },
+  { id: 68, header: 'May 2020 Entry', date: '05/2020', description: 'Late spring' },
+  { id: 69, header: 'June 2020 Entry', date: '06/2020', description: 'Summer begins' },
+  { id: 70, header: 'July 2020 Entry', date: '07/2020', description: 'Mid-summer' },
+  { id: 71, header: 'August 2020 Entry', date: '08/2020', description: 'Late summer' },
+  { id: 72, header: 'September 2020 Entry', date: '09/2020', description: 'Fall begins' },
+  { id: 73, header: 'October 2020 Entry', date: '10/2020', description: 'Autumn continues' },
+  { id: 74, header: 'November 2020 Entry', date: '11/2020', description: 'Late fall' },
+  { id: 75, header: 'December 2020 Entry', date: '12/2020', description: 'Year-end' },
+  
+  // Medchecks (Special Category)
+  { id: 76, header: 'Medchecks', date: 'medchecks', description: 'Medical records and evaluations', icon: 'FileText' }
 ];
 
 // Mock content for individual pages
