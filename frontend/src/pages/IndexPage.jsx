@@ -174,6 +174,27 @@ const IndexPage = () => {
             </div>
             <MapPin className="w-5 h-5 ml-2" />
           </button>
+
+          {/* Officials/Witnesses Button */}
+          <button
+            onClick={() => setShowOfficialsWitnesses(true)}
+            className="px-6 py-3 rounded-lg flex items-center gap-3 transition-all hover:scale-105 shadow-lg"
+            style={{
+              background: 'linear-gradient(145deg, #3d2a1a 0%, #1f1510 100%)',
+              color: '#d4af37',
+              border: '3px solid #d4af37',
+              fontFamily: 'Georgia, serif',
+              fontWeight: 'bold',
+              boxShadow: '0 4px 20px rgba(212,175,55,0.3)',
+            }}
+          >
+            <span className="text-2xl">👥</span>
+            <div className="text-left">
+              <div className="text-base">Officials / Witnesses</div>
+              <div className="text-xs text-yellow-600/70 font-normal">All Case Personnel — Categorized List</div>
+            </div>
+            <Users className="w-5 h-5 ml-2" />
+          </button>
         </div>
       </div>
 
