@@ -669,7 +669,9 @@ const IndexPage = () => {
       )}
 
       {/* Detective Thomas AI Assistant */}
-      <DetectiveThomas />
+      {showDetectiveThomas && (
+        <DetectiveThomas onClose={() => setShowDetectiveThomas(false)} />
+      )}
     </div>
   );
 };
