@@ -9,6 +9,7 @@ import CommunicationDiagram from '../components/CommunicationDiagram';
 import RouteAnalysis from '../components/RouteAnalysis';
 import EmbeddedRouteMap from '../components/EmbeddedRouteMap';
 import ViolationsCascade from '../components/ViolationsCascade';
+import OfficialsWitnesses from '../components/OfficialsWitnesses';
 
 // Icon mapping
 const iconMap = {
@@ -31,6 +32,7 @@ const IndexPage = () => {
   const [showCommunicationDiagram, setShowCommunicationDiagram] = useState(false);
   const [showRouteAnalysis, setShowRouteAnalysis] = useState(false);
   const [showViolationsCascade, setShowViolationsCascade] = useState(false);
+  const [showOfficialsWitnesses, setShowOfficialsWitnesses] = useState(false);
 
   // Add keyboard shortcut - press 'D' to open diagram
   useEffect(() => {
