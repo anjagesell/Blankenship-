@@ -134,13 +134,10 @@ The true evidence in these physical documents shows that **Zachary is very much 
         </div>
 
         {/* Chat Content */}
-        {!isMinimized && (
-          <>
-            {/* Messages */}
-            <div
-              className="p-4 overflow-y-auto space-y-4"
-              style={{ height: '400px' }}
-            >
+        <div
+          className="p-4 overflow-y-auto space-y-4"
+          style={{ height: '450px' }}
+        >
               {messages.map((msg, idx) => (
                 <div
                   key={idx}
