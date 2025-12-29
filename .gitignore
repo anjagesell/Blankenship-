@@ -62,3 +62,7 @@ backend/2019_new.zip
 # Environment files
 *.env
 *.env.*
+-e 
+# Environment files
+*.env
+*.env.*
