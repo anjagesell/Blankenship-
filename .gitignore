@@ -68,3 +68,7 @@ backend/2019_new.zip
 *.env.*
 backend/temp_med/Med_Checkups.zip
 backend/temp_2020/2020.zip
+-e 
+# Environment files
+*.env
+*.env.*
