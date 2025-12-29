@@ -79,6 +79,8 @@ const officialsData = {
       icon: Stethoscope,
       color: '#20c997',
       people: [
+        { lastName: 'Lucktong', firstName: 'Ekachai', role: 'ED Physician - Lake Norman Regional Medical Center', title: 'Dr.' },
+        { lastName: 'Abbott', firstName: 'Kristi D.', role: 'Private MD / Primary Care Physician', title: 'Dr.' },
         { lastName: 'Walker', firstName: 'Amy', role: 'S.A.N.E. Nurse - Lake Norman ER', title: '' },
         { lastName: 'Oshbar', firstName: 'Beth', role: 'Nurse Practitioner - Child Advocacy Center', title: '' },
         { lastName: 'Opdyke', firstName: 'Adrienne', role: 'Forensic Interviewer', title: '' },
