@@ -1209,5 +1209,19 @@
     "updated_at": "2025-12-29T18:04:38.110571+00:00",
     "created_by": "Medical Records Import",
     "last_edited_by": "Medical Records Import"
+  },
+  {
+    "id": "2020-federal-habeas-resentencing",
+    "month_key": "01/2020",
+    "date": "01/21/2020",
+    "time": "N/A",
+    "witness": "NC Court System, Federal Court, NC Prisoner Legal Services",
+    "description": "2020 Federal Habeas Corpus Petition & Resentencing Documents (78 Exhibits)",
+    "evidence": "Federal Habeas Petition 1:20-cv-00680-LCB-JLW, Resentencing Order",
+    "notes": "**2020 LEGAL PROCEEDINGS - FEDERAL HABEAS & RESENTENCING**\n\nKey Events: Jan 21, 2020 Resentencing, July 24, 2020 Federal Habeas Filed.\n\nPetitioner: Zachary Allen Blankenship\nRespondent: Erik A. Hooks, Secretary NC DPS\nCase: 1:20-cv-00680-LCB-JLW\n\n78 exhibits documenting federal habeas petition, resentencing, and legal correspondence.",
+    "created_at": "2025-12-29T18:18:39.546903+00:00",
+    "updated_at": "2025-12-29T18:18:39.546917+00:00",
+    "created_by": "2020 Document Import",
+    "last_edited_by": "2020 Document Import"
   }
 ]
