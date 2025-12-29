@@ -10,6 +10,7 @@ const officialsData = {
       icon: Scale,
       color: '#d4af37',
       people: [
+        { lastName: 'Hunter Jr.', firstName: 'Robert N.', role: 'Judge - NC Court of Appeals', title: 'Judge' },
         { lastName: 'Brady', firstName: 'Robert M.', role: 'District Court Judge', title: 'Hon.' },
         { lastName: 'Joe', firstName: 'Regina M.', role: 'District Court Judge', title: 'Judge' },
         { lastName: 'Poovey', firstName: 'Nathaniel', role: 'Judge', title: 'Judge' },
@@ -33,6 +34,7 @@ const officialsData = {
         { lastName: 'Eckard', firstName: 'D.', role: 'Law Enforcement', title: '' },
         { lastName: 'Scerance', firstName: '', role: 'Catawba County Sheriff\'s Office', title: '' },
         { lastName: 'Scott', firstName: '', role: 'Law Enforcement Officer', title: '' },
+        { lastName: 'Ishee', firstName: 'Todd', role: 'Prison Official - NC Dept. of Public Safety', title: '' },
       ]
     },
     {
@@ -62,6 +64,8 @@ const officialsData = {
       people: [
         { lastName: 'Gaither Jr.', firstName: 'James C.', role: 'District Attorney', title: '' },
         { lastName: 'Lerner', firstName: 'David', role: 'District Attorney', title: '' },
+        { lastName: 'Stein', firstName: 'Joshua H.', role: 'NC Attorney General', title: '' },
+        { lastName: 'Middleton', firstName: 'Anne M.', role: 'Special Deputy Attorney General (Prosecution)', title: '' },
         { lastName: 'Van Buren', firstName: '', role: 'Assistant District Attorney / Prosecutor', title: '' },
         { lastName: 'Conrad', firstName: 'Scott D.', role: 'Attorney at Law', title: '' },
         { lastName: 'Pearce', firstName: 'Herbert', role: 'Attorney for Defendant (Resentencing)', title: '' },
@@ -85,9 +89,9 @@ const officialsData = {
       people: [
         { lastName: 'Lucktong', firstName: 'Ekachai', role: 'ED Physician - Lake Norman Regional Medical Center', title: 'Dr.' },
         { lastName: 'Abbott', firstName: 'Kristi D.', role: 'Private MD / Primary Care Physician', title: 'Dr.' },
-        { lastName: 'Walker', firstName: 'Amy', role: 'S.A.N.E. Nurse - Lake Norman ER', title: '' },
+        { lastName: 'Walker (Mahaffey)', firstName: 'Amy', role: 'S.A.N.E. Nurse - Lake Norman ER', title: '' },
         { lastName: 'Oshbar', firstName: 'Beth', role: 'Nurse Practitioner - Child Advocacy Center', title: '' },
-        { lastName: 'Opdyke', firstName: 'Adrienne', role: 'Forensic Interviewer', title: '' },
+        { lastName: 'Opdike', firstName: 'Adrienne', role: 'Forensic Interviewer', title: '' },
         { lastName: 'Loudermelt (Wachsmuth)', firstName: 'Connie', role: 'Therapist', title: '' },
         { lastName: 'Pellegrino', firstName: '', role: 'Physician', title: 'Dr.' },
       ]
