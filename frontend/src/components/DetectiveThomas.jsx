@@ -32,10 +32,10 @@ The true evidence in these physical documents shows that **Zachary is very much 
   }, [messages]);
 
   useEffect(() => {
-    if (isOpen && !isMinimized && inputRef.current) {
+    if (!isMinimized && inputRef.current) {
       inputRef.current.focus();
     }
-  }, [isOpen, isMinimized]);
+  }, [isMinimized]);
 
   const sendMessage = async () => {
     if (!input.trim() || isLoading) return;
