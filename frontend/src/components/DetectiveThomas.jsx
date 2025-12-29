@@ -181,7 +181,7 @@ The true evidence in these physical documents shows that **Zachary is very much 
                   <div
                     className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center"
                     style={{
-                      background: 'linear-gradient(145deg, #d4af37 0%, #b8962e 100%)'
+                      background: 'linear-gradient(145deg, #00ff88 0%, #00cc6a 100%)'
                     }}
                   >
                     <Shield className="w-4 h-4 text-black" />
