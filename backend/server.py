@@ -440,6 +440,26 @@ def detect_actual_mime_type(file_path: Path) -> str:
     
     return None
 
+def convert_heic_to_jpeg(file_path: Path) -> bytes:
+    """Convert HEIC/HEIF file to JPEG bytes for browser compatibility"""
+    if not HEIC_SUPPORT:
+        return None
+    try:
+        with Image.open(file_path) as img:
+            # Convert to RGB if necessary (HEIC can have alpha channel)
+            if img.mode in ('RGBA', 'P'):
+                img = img.convert('RGB')
+            
+            # Save to bytes buffer as JPEG
+            buffer = BytesIO()
+            img.save(buffer, format='JPEG', quality=90)
+            buffer.seek(0)
+            logging.info(f"✅ Converted HEIC to JPEG: {file_path.name}")
+            return buffer.getvalue()
+    except Exception as e:
+        logging.error(f"❌ HEIC conversion failed for {file_path}: {e}")
+        return None
+
 @api_router.get("/file/{file_id}")
 async def download_file(file_id: str):
     """Download or view an uploaded file - optimized for all platforms (Android, iOS, HarmonyOS, KaiOS, SailfishOS)"""
