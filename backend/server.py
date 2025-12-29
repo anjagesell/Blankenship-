@@ -15,6 +15,7 @@ from datetime import datetime, timezone
 import shutil
 import mimetypes
 import base64
+from emergentintegrations.llm.chat import LlmChat, UserMessage
 
 
 ROOT_DIR = Path(__file__).parent
