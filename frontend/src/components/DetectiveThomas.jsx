@@ -1,8 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { MessageCircle, X, Send, User, Shield, Loader2, Minimize2, Maximize2 } from 'lucide-react';
 
-const DetectiveThomas = () => {
-  const [isOpen, setIsOpen] = useState(false);
+const DetectiveThomas = ({ onClose }) => {
   const [isMinimized, setIsMinimized] = useState(false);
   const [messages, setMessages] = useState([
     {
