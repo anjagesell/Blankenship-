@@ -196,6 +196,27 @@ const IndexPage = () => {
             </div>
             <Users className="w-5 h-5 ml-2" />
           </button>
+
+          {/* Ask PI Thomas Button */}
+          <button
+            onClick={() => setShowDetectiveThomas(true)}
+            className="px-6 py-3 rounded-lg flex items-center gap-3 transition-all hover:scale-105 shadow-lg"
+            style={{
+              background: 'linear-gradient(145deg, #1a3a52 0%, #0d1f2d 100%)',
+              color: '#00ff88',
+              border: '3px solid #00ff88',
+              fontFamily: 'Georgia, serif',
+              fontWeight: 'bold',
+              boxShadow: '0 4px 20px rgba(0,255,136,0.3)',
+            }}
+          >
+            <span className="text-2xl">🕵️</span>
+            <div className="text-left">
+              <div className="text-base">Ask PI Thomas</div>
+              <div className="text-xs text-green-400/70 font-normal">AI Legal Assistant — Case Navigator</div>
+            </div>
+            <MessageCircle className="w-5 h-5 ml-2" />
+          </button>
         </div>
       </div>
 
