@@ -15,7 +15,19 @@ from datetime import datetime, timezone
 import shutil
 import mimetypes
 import base64
+from io import BytesIO
 from emergentintegrations.llm.chat import LlmChat, UserMessage
+
+# HEIC support for iPhone photos
+try:
+    import pillow_heif
+    from PIL import Image
+    pillow_heif.register_heif_opener()
+    HEIC_SUPPORT = True
+    logging.info("✅ HEIC support enabled (pillow-heif)")
+except ImportError:
+    HEIC_SUPPORT = False
+    logging.warning("⚠️ pillow-heif not available - HEIC files won't be converted")
 
 
 ROOT_DIR = Path(__file__).parent
