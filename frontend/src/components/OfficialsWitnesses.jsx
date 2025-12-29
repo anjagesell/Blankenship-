@@ -59,10 +59,16 @@ const officialsData = {
       color: '#8b5cf6',
       people: [
         { lastName: 'Gaither Jr.', firstName: 'James C.', role: 'District Attorney', title: '' },
+        { lastName: 'Van Buren', firstName: '', role: 'Assistant District Attorney / Prosecutor', title: '' },
         { lastName: 'Conrad', firstName: 'Scott D.', role: 'Attorney at Law', title: '' },
+        { lastName: 'Pearce', firstName: 'Herbert', role: 'Attorney for Defendant (Resentencing)', title: '' },
         { lastName: 'Rhoades Jr.', firstName: 'Jerry', role: 'Attorney at Law', title: '' },
-        { lastName: 'Eldred', firstName: 'Ed', role: 'Attorney at Law', title: '' },
-        { lastName: 'Montgomery', firstName: 'Mark', role: 'Attorney at Law', title: '' },
+        { lastName: 'Eldred', firstName: 'Ed', role: 'Appellate Counsel', title: '' },
+        { lastName: 'Montgomery', firstName: 'Mark', role: 'Appellate Counsel', title: '' },
+        { lastName: 'Curry', firstName: '', role: 'Defense Attorney (TPR Proceedings)', title: 'Ms.' },
+        { lastName: 'Reilly', firstName: 'Scott', role: 'Attorney', title: '' },
+        { lastName: 'de Torres', firstName: 'Ed', role: 'Attorney', title: '' },
+        { lastName: 'Adams', firstName: '', role: 'Attorney', title: '' },
         { lastName: 'Vaughan', firstName: 'Lauren', role: 'Attorney for Respondent', title: '' },
       ]
     },
@@ -73,6 +79,9 @@ const officialsData = {
       color: '#20c997',
       people: [
         { lastName: 'Walker', firstName: 'Amy', role: 'S.A.N.E. Nurse - Lake Norman ER', title: '' },
+        { lastName: 'Oshbar', firstName: 'Beth', role: 'Nurse Practitioner - Child Advocacy Center', title: '' },
+        { lastName: 'Opdyke', firstName: 'Adrienne', role: 'Forensic Interviewer', title: '' },
+        { lastName: 'Loudermelt (Wachsmuth)', firstName: 'Connie', role: 'Therapist', title: '' },
         { lastName: 'Pellegrino', firstName: '', role: 'Physician', title: 'Dr.' },
       ]
     },
@@ -97,7 +106,9 @@ const officialsData = {
       icon: User,
       color: '#f59e0b',
       people: [
-        { lastName: 'Christopher', firstName: 'Bobbi Jo', role: 'Witness - Statements & Text Messages', title: '' },
+        { lastName: 'Christopher', firstName: 'Bobbi Jo', role: 'Foster Parent / Witness', title: '' },
+        { lastName: 'Ladder', firstName: 'Megan', role: 'Bobbi Jo Christopher\'s Daughter', title: '' },
+        { lastName: 'Ladder', firstName: 'Christopher', role: 'Son-in-law', title: '' },
         { lastName: 'Osborne', firstName: '', role: 'Pastor', title: 'Pastor' },
         { lastName: 'Brown', firstName: 'Donna', role: 'Witness', title: '' },
         { lastName: 'Semmler', firstName: 'A.', role: 'Witness', title: 'Mrs.' },
