@@ -10,6 +10,7 @@ import RouteAnalysis from '../components/RouteAnalysis';
 import EmbeddedRouteMap from '../components/EmbeddedRouteMap';
 import ViolationsCascade from '../components/ViolationsCascade';
 import OfficialsWitnesses from '../components/OfficialsWitnesses';
+import DetectiveThomas from '../components/DetectiveThomas';
 
 // Icon mapping
 const iconMap = {
