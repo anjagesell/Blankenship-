@@ -197,7 +197,7 @@ The true evidence in these physical documents shows that **Zachary is very much 
             {/* Input */}
             <div
               className="p-4"
-              style={{ borderTop: '1px solid rgba(212,175,55,0.2)' }}
+              style={{ borderTop: '1px solid rgba(0,255,136,0.2)' }}
             >
               <div className="flex gap-2">
                 <input
@@ -207,7 +207,7 @@ The true evidence in these physical documents shows that **Zachary is very much 
                   onChange={(e) => setInput(e.target.value)}
                   onKeyPress={handleKeyPress}
                   placeholder="Ask about the case files..."
-                  className="flex-1 px-4 py-3 rounded-xl bg-white/10 text-white placeholder-gray-500 outline-none focus:ring-2 focus:ring-yellow-600/50 transition-all"
+                  className="flex-1 px-4 py-3 rounded-xl bg-white/10 text-white placeholder-gray-500 outline-none focus:ring-2 focus:ring-green-500/50 transition-all"
                   disabled={isLoading}
                 />
                 <button
@@ -215,7 +215,7 @@ The true evidence in these physical documents shows that **Zachary is very much 
                   disabled={isLoading || !input.trim()}
                   className="px-4 py-3 rounded-xl transition-all hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
                   style={{
-                    background: 'linear-gradient(145deg, #d4af37 0%, #b8962e 100%)',
+                    background: 'linear-gradient(145deg, #00ff88 0%, #00cc6a 100%)',
                   }}
                 >
                   <Send className="w-5 h-5 text-black" />
@@ -225,8 +225,6 @@ The true evidence in these physical documents shows that **Zachary is very much 
                 ⚖️ For Zachary, for Jacob, for Justice
               </p>
             </div>
-          </>
-        )}
       </div>
     </div>
   );
