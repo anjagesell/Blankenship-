@@ -80,6 +80,8 @@ const officialsData = {
         { lastName: 'Adams', firstName: '', role: 'Attorney', title: '' },
         { lastName: 'Vaughan', firstName: 'Lauren', role: 'Attorney for DSS', title: '' },
         { lastName: 'Butler', firstName: 'Terra', role: 'Legal Assistant', title: '' },
+        { lastName: 'Edwards', firstName: 'Nicole P.', role: 'Staff Attorney - NC Prisoner Legal Services', title: '' },
+        { lastName: 'Lippert', firstName: '', role: 'Attorney (Resentencing Hearing)', title: 'Mr.' },
       ]
     },
     {
