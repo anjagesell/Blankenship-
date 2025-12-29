@@ -99,54 +99,36 @@ The true evidence in these physical documents shows that **Zachary is very much 
       >
         {/* Header */}
         <div
-          className="px-4 py-3 flex items-center justify-between cursor-pointer"
+          className="sticky top-0 z-10 px-6 py-4 border-b"
           style={{
             background: 'linear-gradient(145deg, #2c2c4a 0%, #1a1a2e 100%)',
-            borderBottom: '1px solid rgba(212,175,55,0.3)',
+            borderColor: 'rgba(0,255,136,0.3)',
           }}
-          onClick={() => isMinimized && setIsMinimized(false)}
         >
-          <div className="flex items-center gap-3">
-            <div
-              className="p-2 rounded-lg"
-              style={{ background: 'rgba(212,175,55,0.2)' }}
-            >
-              <Shield className="w-5 h-5" style={{ color: '#d4af37' }} />
-            </div>
-            <div>
-              <h3
-                className="font-bold text-lg"
-                style={{ color: '#d4af37', fontFamily: 'Georgia, serif' }}
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div
+                className="p-2 rounded-lg"
+                style={{ background: 'rgba(0,255,136,0.2)' }}
               >
-                Detective Thomas
-              </h3>
-              {!isMinimized && (
-                <p className="text-xs text-gray-400">Legal AI Investigator</p>
-              )}
+                <Shield className="w-6 h-6" style={{ color: '#00ff88' }} />
+              </div>
+              <div>
+                <h3
+                  className="font-bold text-xl"
+                  style={{ color: '#00ff88', fontFamily: 'Georgia, serif' }}
+                >
+                  🕵️ PI Thomas
+                </h3>
+                <p className="text-xs text-gray-400">AI Legal Investigator — Ask me anything</p>
+              </div>
             </div>
-          </div>
-          <div className="flex items-center gap-2">
             <button
-              onClick={(e) => {
-                e.stopPropagation();
-                setIsMinimized(!isMinimized);
-              }}
-              className="p-1.5 rounded-lg transition-all hover:bg-white/10"
+              onClick={onClose}
+              className="p-2 rounded-full transition-all hover:scale-110"
+              style={{ background: 'rgba(0,255,136,0.2)' }}
             >
-              {isMinimized ? (
-                <Maximize2 className="w-4 h-4 text-gray-400" />
-              ) : (
-                <Minimize2 className="w-4 h-4 text-gray-400" />
-              )}
-            </button>
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                setIsOpen(false);
-              }}
-              className="p-1.5 rounded-lg transition-all hover:bg-white/10"
-            >
-              <X className="w-4 h-4 text-gray-400" />
+              <X className="w-6 h-6" style={{ color: '#00ff88' }} />
             </button>
           </div>
         </div>
