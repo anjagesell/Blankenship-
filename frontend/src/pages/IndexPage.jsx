@@ -34,6 +34,7 @@ const IndexPage = () => {
   const [showRouteAnalysis, setShowRouteAnalysis] = useState(false);
   const [showViolationsCascade, setShowViolationsCascade] = useState(false);
   const [showOfficialsWitnesses, setShowOfficialsWitnesses] = useState(false);
+  const [showDetectiveThomas, setShowDetectiveThomas] = useState(false);
 
   // Add keyboard shortcut - press 'D' to open diagram
   useEffect(() => {
