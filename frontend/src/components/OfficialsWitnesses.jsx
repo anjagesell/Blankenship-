@@ -109,6 +109,7 @@ const officialsData = {
         { lastName: 'Blankenship', firstName: 'Keith', role: 'Grandfather (Paternal)', title: '' },
         { lastName: 'Blankenship', firstName: 'Gabriele', role: 'Grandmother (Paternal)', title: '' },
         { lastName: 'Toppings', firstName: 'Vickie', role: 'Family Member', title: '' },
+        { lastName: 'Christopher', firstName: 'Bobbi Jo', role: 'Foster Parent', title: '' },
         { lastName: 'Christopher', firstName: 'Eddi', role: 'Family Member', title: '' },
         { lastName: 'Christopher', firstName: 'Lilly', role: 'Family Member', title: '' },
         { lastName: 'Ladder', firstName: 'Megan', role: 'Bobbi Jo Christopher\'s Daughter', title: '' },
@@ -121,7 +122,6 @@ const officialsData = {
       icon: User,
       color: '#f59e0b',
       people: [
-        { lastName: 'Christopher', firstName: 'Bobbi Jo', role: 'Foster Parent / Witness', title: '' },
         { lastName: 'Osborne', firstName: '', role: 'Pastor', title: 'Pastor' },
         { lastName: 'Brown', firstName: 'Donna', role: 'DSS Staff', title: '' },
       ]
