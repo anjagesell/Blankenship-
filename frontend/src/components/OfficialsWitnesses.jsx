@@ -107,7 +107,7 @@ const officialsData = {
       people: [
         { lastName: 'Blankenship', firstName: 'Zachary (Zack)', role: 'Defendant / Father', title: '' },
         { lastName: 'Blankenship', firstName: 'Tammy', role: 'Wife / Mother', title: '' },
-        { lastName: 'Blankenship', firstName: 'Jacob', role: 'Son', title: '' },
+        { lastName: 'Blankenship', firstName: 'Jacob', role: 'Younger Brother of Zachary', title: '' },
         { lastName: 'Blankenship', firstName: 'Rylie', role: 'Child', title: '' },
         { lastName: 'Blankenship', firstName: 'Keith', role: 'Grandfather (Paternal)', title: '' },
         { lastName: 'Blankenship', firstName: 'Gabriele', role: 'Grandmother (Paternal)', title: '' },
