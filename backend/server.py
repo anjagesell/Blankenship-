@@ -509,6 +509,18 @@ async def download_file(file_id: str):
             actual_mime = detect_actual_mime_type(file_path)
             if actual_mime:
                 media_type = actual_mime
+            
+            # Convert HEIC to JPEG for browser compatibility
+            if actual_mime == "image/heic" and HEIC_SUPPORT:
+                jpeg_bytes = convert_heic_to_jpeg(file_path)
+                if jpeg_bytes:
+                    cross_platform_headers["Content-Disposition"] = f'inline; filename="{file_record["filename"].rsplit(".", 1)[0]}.jpg"'
+                    return Response(
+                        content=jpeg_bytes,
+                        media_type="image/jpeg",
+                        headers=cross_platform_headers
+                    )
+            
             return FileResponse(
                 path=file_path,
                 media_type=media_type,
@@ -523,6 +535,18 @@ async def download_file(file_id: str):
             actual_mime = detect_actual_mime_type(upload_file)
             if actual_mime:
                 media_type = actual_mime
+            
+            # Convert HEIC to JPEG for browser compatibility
+            if actual_mime == "image/heic" and HEIC_SUPPORT:
+                jpeg_bytes = convert_heic_to_jpeg(upload_file)
+                if jpeg_bytes:
+                    cross_platform_headers["Content-Disposition"] = f'inline; filename="{file_record["filename"].rsplit(".", 1)[0]}.jpg"'
+                    return Response(
+                        content=jpeg_bytes,
+                        media_type="image/jpeg",
+                        headers=cross_platform_headers
+                    )
+            
             return FileResponse(
                 path=upload_file,
                 media_type=media_type,
