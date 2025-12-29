@@ -1044,6 +1044,7 @@ CRITICAL STANCE ON ZACHARY'S INNOCENCE:
 CRITICAL FAMILY INFORMATION:
 - TAMMY BLANKENSHIP is Zachary's WIFE and the MOTHER of Rylie
 - Rylie Blankenship (DOB: January 3, 2011) is Zachary and Tammy's daughter
+- JACOB BLANKENSHIP is Zachary's YOUNGER BROTHER (NOT his son)
 - GABRIELE BLANKENSHIP is Zachary's mother (paternal grandmother to Rylie) - also known as "Nana"
 - KEITH BLANKENSHIP is Zachary's father (paternal grandfather to Rylie) - also known as "Poppi"
 - Tammy's medical records show she was Rylie's primary caregiver during well-child visits at Center for Pediatric & Adolescent Medicine in Mooresville, NC
