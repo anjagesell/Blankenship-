@@ -102,9 +102,13 @@ const officialsData = {
         { lastName: 'Blankenship', firstName: 'Tammy', role: 'Wife / Mother', title: '' },
         { lastName: 'Blankenship', firstName: 'Jacob', role: 'Son', title: '' },
         { lastName: 'Blankenship', firstName: 'Rylie', role: 'Child', title: '' },
-        { lastName: 'Blankenship', firstName: 'Keith', role: 'Family Member', title: '' },
-        { lastName: 'Blankenship', firstName: 'Gabriele', role: 'Family Member', title: '' },
+        { lastName: 'Blankenship', firstName: 'Keith', role: 'Grandfather (Paternal)', title: '' },
+        { lastName: 'Blankenship', firstName: 'Gabriele', role: 'Grandmother (Paternal)', title: '' },
         { lastName: 'Toppings', firstName: 'Vickie', role: 'Family Member', title: '' },
+        { lastName: 'Christopher', firstName: 'Eddi', role: 'Family Member', title: '' },
+        { lastName: 'Christopher', firstName: 'Lilly', role: 'Family Member', title: '' },
+        { lastName: 'Ladder', firstName: 'Megan', role: 'Bobbi Jo Christopher\'s Daughter', title: '' },
+        { lastName: 'Ladder', firstName: 'Christopher', role: 'Son-in-law', title: '' },
       ]
     },
     {
@@ -114,8 +118,6 @@ const officialsData = {
       color: '#f59e0b',
       people: [
         { lastName: 'Christopher', firstName: 'Bobbi Jo', role: 'Foster Parent / Witness', title: '' },
-        { lastName: 'Latter', firstName: 'Megan', role: 'Bobbi Jo Christopher\'s Daughter / Adoptive Placement', title: '' },
-        { lastName: 'Latter', firstName: 'Christopher', role: 'Son-in-law / Adoptive Placement', title: '' },
         { lastName: 'Sweat', firstName: 'Jamie', role: 'Friend / Witness', title: '' },
         { lastName: 'Osborne', firstName: '', role: 'Pastor', title: 'Pastor' },
         { lastName: 'Brown', firstName: 'Donna', role: 'DSS Staff', title: '' },
