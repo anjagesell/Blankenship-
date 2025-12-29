@@ -35,6 +35,7 @@ const officialsData = {
         { lastName: 'Scerance', firstName: '', role: 'Catawba County Sheriff\'s Office', title: '' },
         { lastName: 'Scott', firstName: '', role: 'Law Enforcement Officer', title: '' },
         { lastName: 'Ishee', firstName: 'Todd', role: 'Prison Official - NC Dept. of Public Safety', title: '' },
+        { lastName: 'Hooks', firstName: 'Erik A.', role: 'Secretary - NC Dept. of Public Safety (Federal Habeas Respondent)', title: '' },
       ]
     },
     {
