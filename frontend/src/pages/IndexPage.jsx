@@ -645,6 +645,9 @@ const IndexPage = () => {
       {showOfficialsWitnesses && (
         <OfficialsWitnesses onClose={() => setShowOfficialsWitnesses(false)} />
       )}
+
+      {/* Detective Thomas AI Assistant */}
+      <DetectiveThomas />
     </div>
   );
 };
