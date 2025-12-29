@@ -24,6 +24,7 @@ const officialsData = {
       icon: Shield,
       color: '#0d6efd',
       people: [
+        { lastName: 'Reid', firstName: 'Coy', role: 'Sheriff - Catawba County', title: '' },
         { lastName: 'McCombs', firstName: 'Marcella', role: 'Senior Investigator - CCSO', title: 'Inv.' },
         { lastName: 'Scronce', firstName: 'Thad', role: 'Sergeant - CCSO', title: 'Sgt.' },
         { lastName: 'Fischer', firstName: '', role: 'Sergeant - Sheriff\'s Dept. Supervisor', title: 'Sgt.' },
@@ -49,6 +50,7 @@ const officialsData = {
         { lastName: 'Reitzel', firstName: '', role: 'CPS Social Worker', title: '' },
         { lastName: 'Punch', firstName: 'Charity', role: 'Social Worker', title: '' },
         { lastName: 'Sigmon', firstName: '', role: 'Social Worker', title: '' },
+        { lastName: 'Harper', firstName: 'Tania', role: 'Guardian ad Litem', title: '' },
         { lastName: 'Smith', firstName: 'Sydney', role: 'Guardian ad Litem', title: '' },
       ]
     },
@@ -66,11 +68,13 @@ const officialsData = {
         { lastName: 'Rhoades Jr.', firstName: 'Jerry', role: 'Attorney at Law', title: '' },
         { lastName: 'Eldred', firstName: 'Ed', role: 'Appellate Counsel', title: '' },
         { lastName: 'Montgomery', firstName: 'Mark', role: 'Appellate Counsel', title: '' },
+        { lastName: 'McKay', firstName: 'Mary', role: 'Attorney for the Mother', title: '' },
+        { lastName: 'de Torres', firstName: 'E.X.', role: 'Attorney for the Father', title: '' },
         { lastName: 'Curry', firstName: '', role: 'Defense Attorney (TPR Proceedings)', title: 'Ms.' },
         { lastName: 'Reilly', firstName: 'Scott', role: 'Attorney', title: '' },
-        { lastName: 'de Torres', firstName: 'Ed', role: 'Attorney', title: '' },
         { lastName: 'Adams', firstName: '', role: 'Attorney', title: '' },
-        { lastName: 'Vaughan', firstName: 'Lauren', role: 'Attorney for Respondent', title: '' },
+        { lastName: 'Vaughan', firstName: 'Lauren', role: 'Attorney for DSS', title: '' },
+        { lastName: 'Butler', firstName: 'Terra', role: 'Legal Assistant', title: '' },
       ]
     },
     {
@@ -110,10 +114,11 @@ const officialsData = {
       color: '#f59e0b',
       people: [
         { lastName: 'Christopher', firstName: 'Bobbi Jo', role: 'Foster Parent / Witness', title: '' },
-        { lastName: 'Ladder', firstName: 'Megan', role: 'Bobbi Jo Christopher\'s Daughter', title: '' },
-        { lastName: 'Ladder', firstName: 'Christopher', role: 'Son-in-law', title: '' },
+        { lastName: 'Latter', firstName: 'Megan', role: 'Bobbi Jo Christopher\'s Daughter / Adoptive Placement', title: '' },
+        { lastName: 'Latter', firstName: 'Christopher', role: 'Son-in-law / Adoptive Placement', title: '' },
+        { lastName: 'Sweat', firstName: 'Jamie', role: 'Friend / Witness', title: '' },
         { lastName: 'Osborne', firstName: '', role: 'Pastor', title: 'Pastor' },
-        { lastName: 'Brown', firstName: 'Donna', role: 'Witness', title: '' },
+        { lastName: 'Brown', firstName: 'Donna', role: 'DSS Staff', title: '' },
       ]
     },
   ]
