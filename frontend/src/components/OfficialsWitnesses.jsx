@@ -12,6 +12,8 @@ const officialsData = {
       people: [
         { lastName: 'Brady', firstName: 'Robert M.', role: 'District Court Judge', title: 'Hon.' },
         { lastName: 'Joe', firstName: 'Regina M.', role: 'District Court Judge', title: 'Judge' },
+        { lastName: 'Poovey', firstName: 'Nathaniel', role: 'Judge', title: 'Judge' },
+        { lastName: 'Bell', firstName: 'George', role: 'Judge', title: 'Judge' },
         { lastName: 'Bingham', firstName: 'Debra', role: 'Court Reporter', title: '' },
         { lastName: 'Rathbone', firstName: 'M. L.', role: 'Magistrate', title: '' },
       ]
@@ -22,9 +24,11 @@ const officialsData = {
       icon: Shield,
       color: '#0d6efd',
       people: [
-        { lastName: 'McCombs', firstName: 'Marcella', role: 'Senior Investigator', title: 'Inv.' },
+        { lastName: 'McCombs', firstName: 'Marcella', role: 'Senior Investigator - CCSO', title: 'Inv.' },
         { lastName: 'Scronce', firstName: 'Thad', role: 'Sergeant - CCSO', title: 'Sgt.' },
+        { lastName: 'Fischer', firstName: '', role: 'Sergeant - Sheriff\'s Dept. Supervisor', title: 'Sgt.' },
         { lastName: 'Coffey', firstName: '', role: 'Sheriff\'s Deputy', title: 'Officer' },
+        { lastName: 'Kisby', firstName: '', role: 'Law Enforcement Officer', title: 'Officer' },
         { lastName: 'Eckard', firstName: 'D.', role: 'Law Enforcement', title: '' },
         { lastName: 'Scerance', firstName: '', role: 'Catawba County Sheriff\'s Office', title: '' },
         { lastName: 'Scott', firstName: '', role: 'Law Enforcement Officer', title: '' },
@@ -36,13 +40,15 @@ const officialsData = {
       icon: Users,
       color: '#e74c3c',
       people: [
-        { lastName: 'Mecimore', firstName: 'Amber', role: 'CPS Social Worker', title: '' },
+        { lastName: 'Owen', firstName: 'Jennifer', role: 'CPS Supervisor', title: '' },
+        { lastName: 'Mecimore', firstName: 'Amber', role: 'CPS Lead Case Worker', title: '' },
         { lastName: 'Stock', firstName: 'Sherri', role: 'CPS Social Worker', title: '' },
-        { lastName: 'Owen', firstName: 'Jennifer', role: 'Social Worker III', title: '' },
-        { lastName: 'Frazier', firstName: 'Pam', role: 'CPS Social Worker', title: '' },
+        { lastName: 'Frazier', firstName: 'Pam', role: 'SW Iredell County DSS', title: '' },
         { lastName: 'Ingram', firstName: 'Jennifer', role: 'Social Worker - NC DSS', title: '' },
         { lastName: 'Barber', firstName: 'Lena', role: 'CPS Social Worker', title: '' },
         { lastName: 'Reitzel', firstName: '', role: 'CPS Social Worker', title: '' },
+        { lastName: 'Charity', firstName: '', role: 'Social Worker', title: '' },
+        { lastName: 'Sigmon', firstName: '', role: 'Social Worker', title: '' },
         { lastName: 'Smith', firstName: 'Sydney', role: 'Guardian ad Litem', title: '' },
       ]
     },
