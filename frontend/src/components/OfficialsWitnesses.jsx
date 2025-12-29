@@ -118,7 +118,6 @@ const officialsData = {
       color: '#f59e0b',
       people: [
         { lastName: 'Christopher', firstName: 'Bobbi Jo', role: 'Foster Parent / Witness', title: '' },
-        { lastName: 'Sweat', firstName: 'Jamie', role: 'Friend / Witness', title: '' },
         { lastName: 'Osborne', firstName: '', role: 'Pastor', title: 'Pastor' },
         { lastName: 'Brown', firstName: 'Donna', role: 'DSS Staff', title: '' },
       ]
