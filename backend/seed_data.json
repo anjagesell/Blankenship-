@@ -1195,5 +1195,19 @@
     "updated_at": "2025-12-29T12:56:23.386420+00:00",
     "created_by": "Detective Research",
     "last_edited_by": "Detective Research"
+  },
+  {
+    "id": "medchecks-rylie-2011-2013",
+    "month_key": "medchecks",
+    "date": "2011-2013",
+    "time": "N/A",
+    "witness": "Center for Pediatric & Adolescent Medicine, Mooresville NC",
+    "description": "Rylie Blankenship - Complete Pediatric Medical Records (Birth to Age 2)",
+    "evidence": "58 Medical Documents - Well-Child Visits, Lab Reports, Growth Charts, Developmental Screenings",
+    "notes": "**\ud83d\udccb RYLIE BLANKENSHIP - PEDIATRIC MEDICAL RECORDS (2011-2013)**\n\n**Patient:** Rylie Blankenship\n**DOB:** January 3, 2011\n**Provider:** Center for Pediatric & Adolescent Medicine, Mooresville, NC\n**Mother:** Tammy Blankenship\n\n---\n\n**\ud83d\udcc5 DOCUMENTED VISITS & RECORDS:**\n\n| Date | Type | Key Findings |\n|------|------|--------------|\n| **01/07/2011** | Birth - 1 Month Visit | Vacuum-assisted delivery, Poor weight gain, Jaundice |\n| **03/22/2011** | Progress Note | Constipation concerns |\n| **07/05/2011** | 6-Month Developmental Screening | Normal development |\n| **01/04/2012** | Blood Lead Screening | 2 \u00b5g/dL (Normal) |\n| **01/07/2013** | Blood Lead by ICP | 2.39 \u00b5g/dL (Normal) |\n| **01/04/2013** | 2-Year Well-Child Visit | Normal development |\n| **01/15/2013** | Acute Care Visit | Bowel movement concerns |\n\n---\n\n**\u26a0\ufe0f SIGNIFICANCE:** These records document Rylie's health BEFORE the accusations (Dec 2013). No abuse indicators were documented.\n\n**\u2696\ufe0f\ud83d\udc99 For Zachary, for Jacob, for Justice.**",
+    "created_at": "2025-12-29T18:04:38.110558+00:00",
+    "updated_at": "2025-12-29T18:04:38.110571+00:00",
+    "created_by": "Medical Records Import",
+    "last_edited_by": "Medical Records Import"
   }
 ]
