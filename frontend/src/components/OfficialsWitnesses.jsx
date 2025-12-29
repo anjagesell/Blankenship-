@@ -111,7 +111,6 @@ const officialsData = {
         { lastName: 'Ladder', firstName: 'Christopher', role: 'Son-in-law', title: '' },
         { lastName: 'Osborne', firstName: '', role: 'Pastor', title: 'Pastor' },
         { lastName: 'Brown', firstName: 'Donna', role: 'Witness', title: '' },
-        { lastName: 'Semmler', firstName: 'A.', role: 'Witness', title: 'Mrs.' },
       ]
     },
   ]
