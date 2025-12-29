@@ -47,7 +47,7 @@ const officialsData = {
         { lastName: 'Ingram', firstName: 'Jennifer', role: 'Social Worker - NC DSS', title: '' },
         { lastName: 'Barber', firstName: 'Lena', role: 'CPS Social Worker', title: '' },
         { lastName: 'Reitzel', firstName: '', role: 'CPS Social Worker', title: '' },
-        { lastName: 'Charity', firstName: '', role: 'Social Worker', title: '' },
+        { lastName: 'Punch', firstName: 'Charity', role: 'Social Worker', title: '' },
         { lastName: 'Sigmon', firstName: '', role: 'Social Worker', title: '' },
         { lastName: 'Smith', firstName: 'Sydney', role: 'Guardian ad Litem', title: '' },
       ]
