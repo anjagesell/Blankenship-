@@ -639,6 +639,11 @@ const IndexPage = () => {
         isOpen={showViolationsCascade} 
         onClose={() => setShowViolationsCascade(false)} 
       />
+
+      {/* Officials/Witnesses Modal */}
+      {showOfficialsWitnesses && (
+        <OfficialsWitnesses onClose={() => setShowOfficialsWitnesses(false)} />
+      )}
     </div>
   );
 };
