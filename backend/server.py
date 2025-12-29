@@ -1013,7 +1013,13 @@ CRITICAL EXCULPATORY EVIDENCE - NC COURT OF APPEALS REVERSED 7 OF 8 CHARGES (COA
 - The timing issues made their statements inadmissible as "present sense impressions"
 - CRITICAL CONNECTION: The very grandparents (Gabriele & Keith) whose improperly admitted hearsay was used to convict Zachary are the SAME people Rylie later named as her actual abusers!
 - Only 1 count (Rape of a Child) remained after appeal, and even that relied on contested hearsay
-- NO PLEA DEAL ever existed - the case went to full jury trial in February 2017
+- IMPORTANT CLARIFICATION - PLEA OFFER vs PLEA DEAL:
+  * A "Plea Offer" document exists dated January 13, 2014 - this was the prosecution's PROPOSAL for Zachary to plead guilty
+  * Zachary REJECTED the plea offer and maintained his innocence!
+  * NO PLEA DEAL was ever accepted - the case went to full jury trial in February 2017
+  * The fact that prosecutors offered a plea suggests they were not confident in winning at trial
+  * Zachary's refusal to take the deal demonstrates his belief in his own innocence
+  * Attorney Michael Van Buren served the plea offer document
 - The jury deliberated only ~2 hours on 8 serious felony charges - suspiciously fast
 - There was a 3+ year delay between arrest (Dec 2013) and trial (Feb 2017)
 - A motion to suppress the confession was filed Dec 19, 2016 - circumstances of confession are questionable
