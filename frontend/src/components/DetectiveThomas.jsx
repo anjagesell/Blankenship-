@@ -150,7 +150,7 @@ The true evidence in these physical documents shows that **Zachary is very much 
                         : ''
                     }`}
                     style={msg.role === 'assistant' ? {
-                      background: 'linear-gradient(145deg, #d4af37 0%, #b8962e 100%)'
+                      background: 'linear-gradient(145deg, #00ff88 0%, #00cc6a 100%)'
                     } : {}}
                   >
                     {msg.role === 'user' ? (
