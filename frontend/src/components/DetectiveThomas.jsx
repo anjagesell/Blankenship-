@@ -7,16 +7,13 @@ const DetectiveThomas = () => {
   const [messages, setMessages] = useState([
     {
       role: 'assistant',
-      content: `🕵️ Good day! I'm **Detective Thomas**, your legal investigator assistant for the Blankenship Archives.
+      content: `🕵️ **Hello Truth Seeker!**
 
-I've reviewed all **86 case entries** and **672 exhibits** in this archive. I can help you:
+I'm **Detective Thomas**, and I'm here to help you navigate the Blankenship Archives and answer any questions you might have.
 
-• Find specific documents by date, time, or person
-• Explain legal terminology and procedures
-• Point out timeline discrepancies
-• Navigate the evidence efficiently
+So go right ahead — ask me anything and I'll assist as I can. We can have a conversation about the case, the evidence, the timeline, or any specific documents you're looking for.
 
-**How can I assist your investigation today?**
+The true evidence in these physical documents shows that **Zachary is very much innocent**. Let's uncover the truth together.
 
 *For Zachary, for Jacob, for Justice.* ⚖️💙`
     }
