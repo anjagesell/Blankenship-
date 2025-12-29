@@ -87,45 +87,14 @@ The true evidence in these physical documents shows that **Zachary is very much 
       .replace(/\n/g, '<br/>');
   };
 
-  if (!isOpen) {
-    return (
-      <button
-        onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 z-[9999] p-4 rounded-full shadow-2xl transition-all hover:scale-110"
-        style={{
-          background: 'linear-gradient(145deg, #1a3a52 0%, #0d1f2d 100%)',
-          border: '3px solid #d4af37',
-          boxShadow: '0 0 30px rgba(212,175,55,0.4)',
-          animation: 'pulse 2s infinite',
-        }}
-        title="Ask Detective Thomas"
-      >
-        <div className="relative">
-          <Shield className="w-8 h-8" style={{ color: '#d4af37' }} />
-          <span className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full animate-ping" />
-          <span className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full" />
-        </div>
-      </button>
-    );
-  }
-
   return (
-    <div
-      className={`fixed z-[9999] transition-all duration-300 ${
-        isMinimized 
-          ? 'bottom-6 right-6 w-72' 
-          : 'bottom-6 right-6 w-96 sm:w-[450px]'
-      }`}
-      style={{
-        maxHeight: isMinimized ? 'auto' : 'calc(100vh - 100px)',
-      }}
-    >
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4" style={{ backgroundColor: 'rgba(0,0,0,0.85)' }}>
       <div
-        className="rounded-xl overflow-hidden shadow-2xl"
+        className="relative w-full max-w-2xl max-h-[85vh] overflow-hidden rounded-xl"
         style={{
           background: 'linear-gradient(145deg, #1a1a2e 0%, #16213e 100%)',
-          border: '2px solid #d4af37',
-          boxShadow: '0 0 40px rgba(212,175,55,0.3)',
+          border: '2px solid #00ff88',
+          boxShadow: '0 0 60px rgba(0,255,136,0.3)',
         }}
       >
         {/* Header */}
