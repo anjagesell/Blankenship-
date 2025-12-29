@@ -59,6 +59,7 @@ const officialsData = {
       color: '#8b5cf6',
       people: [
         { lastName: 'Gaither Jr.', firstName: 'James C.', role: 'District Attorney', title: '' },
+        { lastName: 'Lerner', firstName: 'David', role: 'District Attorney', title: '' },
         { lastName: 'Van Buren', firstName: '', role: 'Assistant District Attorney / Prosecutor', title: '' },
         { lastName: 'Conrad', firstName: 'Scott D.', role: 'Attorney at Law', title: '' },
         { lastName: 'Pearce', firstName: 'Herbert', role: 'Attorney for Defendant (Resentencing)', title: '' },
