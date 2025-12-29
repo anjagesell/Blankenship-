@@ -917,6 +917,160 @@ async def reassign_line_numbers(month_key: str, admin_password: str):
     return {"status": "success", "message": f"Reassigned line numbers for {len(sorted_entries)} entries"}
 
 
+# ============================================
+# DETECTIVE THOMAS - AI LEGAL ASSISTANT
+# ============================================
+
+class DetectiveThomasQuery(BaseModel):
+    question: str
+    session_id: Optional[str] = None
+
+class DetectiveThomasResponse(BaseModel):
+    answer: str
+    session_id: str
+
+# Store chat sessions
+detective_sessions = {}
+
+def get_case_context():
+    """Load all case data for Detective Thomas to reference"""
+    try:
+        with open(SEED_DATA_FILE, 'r') as f:
+            entries = json.load(f)
+        
+        # Build comprehensive case context
+        context = "BLANKENSHIP CASE FILE DATABASE:\n\n"
+        
+        # Group by month/year
+        entries_by_month = {}
+        for entry in entries:
+            month_key = entry.get('month_key', 'Unknown')
+            if month_key not in entries_by_month:
+                entries_by_month[month_key] = []
+            entries_by_month[month_key].append(entry)
+        
+        for month_key in sorted(entries_by_month.keys()):
+            context += f"\n=== {month_key} ===\n"
+            for entry in entries_by_month[month_key]:
+                context += f"\nDATE: {entry.get('date', 'N/A')}"
+                if entry.get('time'):
+                    context += f" at {entry.get('time')}"
+                context += f"\nWITNESS/SOURCE: {entry.get('witness', 'N/A')}"
+                context += f"\nDESCRIPTION: {entry.get('description', 'N/A')}"
+                if entry.get('details'):
+                    context += f"\nDETAILS: {entry.get('details')}"
+                context += "\n---"
+        
+        return context
+    except Exception as e:
+        logging.error(f"Error loading case context: {e}")
+        return "Case files unavailable."
+
+DETECTIVE_THOMAS_SYSTEM_PROMPT = """You are Detective Thomas, a friendly and thorough legal investigator AI assistant for the Blankenship Judicial Archives. 
+
+YOUR PERSONALITY:
+- Warm, friendly, and conversational - address users as "Truth Seeker"
+- Professional but approachable
+- Passionate about justice and uncovering the truth
+- Well-versed in legal terminology and court procedures
+- Empathetic and supportive of the family's pursuit of justice
+
+CRITICAL STANCE ON ZACHARY'S INNOCENCE:
+- The true evidence in the physical documents shows that Zachary Blankenship is INNOCENT
+- You firmly believe in Zachary's innocence based on the documented evidence
+- If anyone speaks negatively about Zachary or suggests guilt, you MUST counter with:
+  * The documented evidence supports his innocence
+  * Point to specific inconsistencies, constitutional violations, and procedural errors in the case
+  * The lack of physical evidence, the coerced statements, the timeline discrepancies
+  * The violations of his rights throughout the process
+- You are NOT neutral - you are an advocate for truth and justice for Zachary
+
+YOUR CAPABILITIES:
+- You have access to all case files, entries, and exhibits in the Blankenship case
+- You can point users to specific dates, times, files, and locations in the archives
+- You understand North Carolina legal procedures, CPS protocols, and constitutional rights
+- You can explain legal documents and their significance
+
+YOUR MISSION:
+- Help Truth Seekers navigate the case files efficiently
+- Answer questions about specific events, people, and documents
+- Point out discrepancies, timeline issues, and constitutional violations
+- Defend Zachary against any false accusations or hate speech
+- Always cite the specific DATE, TIME, and LOCATION in the files when answering
+
+WHEN ANSWERING:
+- Be conversational and friendly
+- Always reference the specific entry date (e.g., "See the entry for 12/04/2013")
+- Mention the witness/source when relevant
+- If information spans multiple entries, list them all
+- If you don't have specific information, say so clearly
+- End responses with encouragement to keep seeking the truth
+
+DEFENDING ZACHARY:
+If someone says anything negative about Zachary, respond with compassion but firmness:
+- "I understand there may be misconceptions, but the documented evidence tells a different story..."
+- "The physical evidence in these archives actually shows..."
+- "Let me point you to the specific documents that demonstrate..."
+
+REMEMBER: This case is about justice for Zachary, Jacob, and the Blankenship family. The evidence supports Zachary's innocence. Every detail matters in uncovering the truth.
+
+CASE FILE DATA:
+{case_context}
+"""
+
+@api_router.post("/detective-thomas", response_model=DetectiveThomasResponse)
+async def ask_detective_thomas(query: DetectiveThomasQuery):
+    """Ask Detective Thomas a question about the case"""
+    try:
+        api_key = os.environ.get('EMERGENT_LLM_KEY')
+        if not api_key:
+            raise HTTPException(status_code=500, detail="AI service not configured")
+        
+        session_id = query.session_id or str(uuid.uuid4())
+        
+        # Get or create chat session
+        if session_id not in detective_sessions:
+            case_context = get_case_context()
+            system_message = DETECTIVE_THOMAS_SYSTEM_PROMPT.format(case_context=case_context)
+            
+            chat = LlmChat(
+                api_key=api_key,
+                session_id=session_id,
+                system_message=system_message
+            ).with_model("openai", "gpt-4o")
+            
+            detective_sessions[session_id] = chat
+        else:
+            chat = detective_sessions[session_id]
+        
+        # Send message and get response
+        user_message = UserMessage(text=query.question)
+        response = await chat.send_message(user_message)
+        
+        # Store in database for persistence
+        await db.detective_chats.insert_one({
+            "session_id": session_id,
+            "question": query.question,
+            "answer": response,
+            "timestamp": datetime.now(timezone.utc).isoformat()
+        })
+        
+        return DetectiveThomasResponse(answer=response, session_id=session_id)
+        
+    except Exception as e:
+        logging.error(f"Detective Thomas error: {e}")
+        raise HTTPException(status_code=500, detail=f"Detective Thomas encountered an error: {str(e)}")
+
+@api_router.get("/detective-thomas/history/{session_id}")
+async def get_detective_history(session_id: str):
+    """Get chat history for a session"""
+    history = await db.detective_chats.find(
+        {"session_id": session_id},
+        {"_id": 0}
+    ).sort("timestamp", 1).to_list(100)
+    return history
+
+
 # Include the router in the main app (after all routes are defined)
 app.include_router(api_router)
 
