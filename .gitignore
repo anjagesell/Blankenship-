@@ -76,3 +76,7 @@ backend/temp_2020/2020.zip
 # Environment files
 *.env
 *.env.*
+-e 
+# Environment files
+*.env
+*.env.*
