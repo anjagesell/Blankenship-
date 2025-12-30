@@ -328,7 +328,7 @@ const EntryPage = () => {
               }}
             />
             <span className={`text-[11px] sm:text-xs font-semibold ${termsScrolled ? 'group-hover:text-yellow-400' : ''} transition-colors leading-relaxed`}>
-              I have read and agree to the Terms of Use Requirement, and I acknowledge that all content is legally protected evidence.
+              I have read and agree to the Terms of Use Requirement, and I acknowledge that all content is legally protected evidence. I understand and accept that my IP information has been registered upon entering this Website.
             </span>
           </label>
         </div>
