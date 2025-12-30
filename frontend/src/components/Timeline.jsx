@@ -13,9 +13,14 @@ const ExhibitViewer = ({ file, onClose }) => {
   
   if (!file) return null;
   
-  const fileType = file.file_type?.toLowerCase() || '';
+  // Handle both extension format (jpg) and MIME type format (image/jpeg)
+  let fileType = file.file_type?.toLowerCase() || '';
+  if (fileType.includes('/')) {
+    // Convert MIME type to extension (e.g., 'image/jpeg' -> 'jpeg')
+    fileType = fileType.split('/')[1];
+  }
   const isImage = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'heic', 'heif'].includes(fileType);
-  const isPdf = fileType === 'pdf';
+  const isPdf = fileType === 'pdf' || fileType === 'application/pdf';
   const fileUrl = `${BACKEND_URL}/api/file/${file.file_id}`;
   
   return (
