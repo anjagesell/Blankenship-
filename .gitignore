@@ -90,3 +90,7 @@ backend/temp_2020/2020.zip
 *.env.*
 backend/temp_dec/Dezember.zip
 backend/temp_dec/Dezember_1.zip
+-e 
+# Environment files
+*.env
+*.env.*
