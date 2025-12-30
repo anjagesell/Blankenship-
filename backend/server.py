@@ -644,6 +644,122 @@ async def get_file_info(file_id: str):
 
 
 # ============================================
+# FILE PERSISTENCE - MIGRATE TO MONGODB
+# ============================================
+
+@api_router.post("/admin/migrate-files-to-db")
+async def migrate_files_to_mongodb(admin_password: str = Form(...)):
+    """
+    ADMIN ONLY: Migrate all files from uploads folder to MongoDB.
+    This ensures files persist across deployments and forks.
+    Files will be stored as base64 in MongoDB.
+    """
+    verify_admin_password(admin_password)
+    
+    migrated = 0
+    skipped = 0
+    errors = []
+    
+    # Get all file records from database
+    file_records = await db.uploaded_files.find({}, {"_id": 0}).to_list(10000)
+    
+    for record in file_records:
+        file_id = record.get("file_id")
+        
+        # Skip if already has content in MongoDB
+        if "file_content" in record and record["file_content"]:
+            skipped += 1
+            continue
+        
+        # Try to find the file on disk
+        file_path = None
+        
+        # Check file_path from record
+        if "file_path" in record:
+            fp = Path(record["file_path"])
+            if fp.exists():
+                file_path = fp
+        
+        # Search in uploads directory
+        if not file_path:
+            for upload_file in UPLOAD_DIR.iterdir():
+                if file_id in upload_file.name:
+                    file_path = upload_file
+                    break
+        
+        if file_path and file_path.exists():
+            try:
+                # Read file and encode as base64
+                with open(file_path, 'rb') as f:
+                    content = f.read()
+                
+                # Check size (16MB limit for MongoDB documents)
+                if len(content) > 16 * 1024 * 1024:
+                    errors.append(f"{file_id}: File too large (>16MB)")
+                    continue
+                
+                content_b64 = base64.b64encode(content).decode('utf-8')
+                
+                # Update the database record with file content
+                await db.uploaded_files.update_one(
+                    {"file_id": file_id},
+                    {"$set": {
+                        "file_content": content_b64,
+                        "file_size": len(content),
+                        "migrated_at": datetime.now(timezone.utc).isoformat()
+                    }}
+                )
+                migrated += 1
+                logger.info(f"✅ Migrated file {file_id[:8]}... to MongoDB")
+                
+            except Exception as e:
+                errors.append(f"{file_id}: {str(e)}")
+        else:
+            errors.append(f"{file_id}: File not found on disk")
+    
+    return {
+        "status": "success",
+        "message": f"Migration complete. Files now stored in MongoDB and will persist across deployments.",
+        "migrated": migrated,
+        "skipped_already_in_db": skipped,
+        "errors": len(errors),
+        "error_details": errors[:20]  # Show first 20 errors
+    }
+
+@api_router.get("/admin/file-storage-status")
+async def get_file_storage_status(admin_password: str):
+    """
+    ADMIN ONLY: Check how many files are stored in MongoDB vs filesystem.
+    """
+    verify_admin_password(admin_password)
+    
+    # Count files with content in MongoDB
+    in_mongodb = await db.uploaded_files.count_documents({"file_content": {"$exists": True, "$ne": None}})
+    
+    # Count files without content (filesystem only)
+    filesystem_only = await db.uploaded_files.count_documents({
+        "$or": [
+            {"file_content": {"$exists": False}},
+            {"file_content": None}
+        ]
+    })
+    
+    # Count total files
+    total = await db.uploaded_files.count_documents({})
+    
+    # Count files in uploads folder
+    upload_files = len(list(UPLOAD_DIR.iterdir())) if UPLOAD_DIR.exists() else 0
+    
+    return {
+        "total_records": total,
+        "stored_in_mongodb": in_mongodb,
+        "filesystem_only": filesystem_only,
+        "files_in_uploads_folder": upload_files,
+        "persistence_status": "FULLY PERSISTENT" if filesystem_only == 0 else f"WARNING: {filesystem_only} files not in MongoDB - run migration!"
+    }
+
+
+# ============================================
 # TIMELINE DATA PERSISTENCE
 # ============================================
 
