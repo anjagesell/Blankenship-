@@ -96,3 +96,7 @@ backend/temp_dec/Dezember_1.zip
 *.env.*
 backend/dec1.zip
 backend/dec2.zip
+-e 
+# Environment files
+*.env
+*.env.*
