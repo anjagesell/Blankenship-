@@ -254,32 +254,32 @@ const ContentPage = () => {
         )}
       </div>
 
-      {/* Image Modal */}
+      {/* Image Modal - Full screen viewer for all devices */}
       {selectedImage && (
         <div 
-          className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4"
+          className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-4"
           onClick={() => setSelectedImage(null)}
         >
-          <div className="relative max-w-4xl max-h-[90vh] overflow-auto">
+          <div className="relative w-full max-w-5xl max-h-[95vh] flex flex-col items-center">
             <button 
-              className="absolute top-4 right-4 text-white bg-black/50 rounded-full p-2 z-10"
-              onClick={() => setSelectedImage(null)}
+              className="absolute top-2 right-2 text-white bg-black/70 hover:bg-black rounded-full p-3 z-20 text-xl"
+              onClick={(e) => { e.stopPropagation(); setSelectedImage(null); }}
             >
               ✕
             </button>
-            {selectedImage.file_content ? (
-              <img 
-                src={`data:image/jpeg;base64,${selectedImage.file_content}`}
-                alt={selectedImage.filename}
-                className="max-w-full max-h-[85vh] object-contain"
-              />
-            ) : (
-              <div className="text-white text-center p-8">Image not available</div>
-            )}
-            <p className="text-white text-center mt-4">{selectedImage.filename}</p>
-            {selectedImage.description && (
-              <p className="text-white/70 text-center text-sm mt-2">{selectedImage.description}</p>
-            )}
+            {/* Universal image URL - works on Android, iOS, PC, Tablets, all browsers */}
+            <img 
+              src={`${API_BASE}/api/file/${selectedImage.file_id}`}
+              alt={selectedImage.filename}
+              className="max-w-full max-h-[80vh] object-contain rounded shadow-2xl"
+              style={{ background: '#fff' }}
+            />
+            <div className="mt-4 text-center">
+              <p className="text-white text-lg font-medium">{selectedImage.filename}</p>
+              {selectedImage.description && (
+                <p className="text-white/70 text-sm mt-1">{selectedImage.description}</p>
+              )}
+            </div>
           </div>
         </div>
       )}
