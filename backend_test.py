@@ -10,7 +10,7 @@ from datetime import datetime
 import sys
 
 # Get backend URL from frontend .env
-BACKEND_URL = "https://evidence-tracker-12.preview.emergentagent.com/api"
+BACKEND_URL = "https://legal-timeline-3.preview.emergentagent.com/api"
 
 def test_api_health():
     """Test basic API connectivity"""
