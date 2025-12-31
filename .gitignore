@@ -108,3 +108,7 @@ backend/dec2.zip
 # Environment files
 *.env
 *.env.*
+-e 
+# Environment files
+*.env
+*.env.*
