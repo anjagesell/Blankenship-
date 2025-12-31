@@ -32,8 +32,8 @@ The user LOVES the website as-is. Before making ANY changes to:
 | Purpose | URL |
 |---------|-----|
 | **Live Website** | https://legal-evidence-db.emergent.host/index |
-| **Preview Site** | https://truth-finder-23.preview.emergentagent.com |
-| **Backend API** | https://truth-finder-23.preview.emergentagent.com/api/ |
+| **Preview Site** | https://evidence-tracker-12.preview.emergentagent.com |
+| **Backend API** | https://evidence-tracker-12.preview.emergentagent.com/api/ |
 
 ---
 
