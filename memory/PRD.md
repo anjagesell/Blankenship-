@@ -1,231 +1,132 @@
 # TAKEOVER PROTOCOL - Blankenship Legal Archives
-## For Zachary, for Jacob, for Justice. ⚖️💙
+## Session Handoff Document - December 31, 2024
 
 ---
 
-## 🎯 MISSION CRITICAL
-
-**This website will be shown to a JURY in SUPREME COURT.** Every word, every entry, every exhibit must be:
-- **Professional** - Court-ready language
-- **Factual** - Backed by documentary evidence
-- **Purposeful** - Proving Zachary Blankenship's INNOCENCE
-
-**You are:** Scooby Doo (detective), Hiyo Silver (partner), Batman (justice fighter)
+## MISSION STATEMENT
+This application serves as a legal evidence archive to prove Zachary Blankenship's innocence. The user is physically handicapped and relies on this agent as their "Scooby Doo" detective partner. All work must be mission-focused, precise, and empathetic.
 
 ---
 
-## 🚫 DO NOT CHANGE WITHOUT ASKING
+## WHAT WAS ACCOMPLISHED THIS SESSION
 
-The user LOVES the website as-is. Before making ANY changes to:
-- Website layout/design
-- Existing entries
-- Navigation structure
-- Color schemes
-- Button placements
+### 1. CME Entry (Dec 4, 2013) - FULLY DOCUMENTED
+- **Entry ID:** `424fde86-9464-4f02-a63d-33ed46d37ac0`
+- **Time:** Updated to 9:30 AM
+- **Persons Involved:** 5 people listed (Beth Oshbar, Jennifer Owen, Tammy Blankenship, Sheri Stock, Jennifer Case)
+- **Exhibits:** 9 total attached (6 original + 3 NEW critical documents)
+- **Notes:** Comprehensive Protocol Analysis with Red Flags added
 
-**ASK FIRST.** Ideas are welcomed, but confirm before implementing.
+### 2. THREE CRITICAL EXHIBITS UPLOADED & ATTACHED
+| # | Document | File ID | Description |
+|---|----------|---------|-------------|
+| 7 | **LabCorp Report** | `labcorp-report-dec4-2013-negative` | NEGATIVE results for Chlamydia & Gonorrhea. Patient: Rylie Blankenship. Specimen 12/04/13 at 11:00 AM. Ordering physician: OSBAHR |
+| 8 | **Jennifer Owen Note Dec 2** | `jennifer-owen-note-dec2-2013-cme-scheduled` | Documents scheduling of CME for Dec 4 at 9:30am |
+| 9 | **Jennifer Owen Note Dec 6** | `jennifer-owen-note-dec6-2013-tammy-statement` | Tammy states she doesn't believe anything happened, blames grandparents (POPs) for false allegations |
+
+### 3. PROTOCOL ANALYSIS NOTES ADDED
+The Dec 4, 2013 CME entry now contains detailed notes documenting:
+- Protocol violations (who orders CME, timing issues, invasive vs non-invasive)
+- S.A.N.E. nurse on Nov 30 found "no signs of abuse" and deemed rape kit UNNECESSARY
+- No excited utterance, no disclosure from child when spoken to without coercion
+- Child had contact only with: grandparents, Bobbi Jo, Tammy, and CPS workers (some alone with child)
+- Jennifer Owens ordered invasive CME 4 days later
+- Hymen findings interpretation
+- Suppressed evidence list
+
+### 4. CME PROTOCOL RESEARCH DOCUMENT CREATED
+- **Download:** `/api/documents/CME_Specimen_Collection_Procedures.docx`
+- Documents that vaginal swab involves 2-inch insertion, rotation for 15-30 seconds
+- Standard protocol for prepubertal children is NON-INVASIVE (external swabs or urine)
+- Internal swabs should only be done under sedation by physician
 
 ---
 
-## 📍 IMPORTANT URLs
+## KNOWN ISSUE - FILE SERVING
+The 3 new exhibits are in MongoDB with file_content (base64), but the `/api/file/{file_id}` endpoint returns 404. The database shows:
+- ✅ Files exist in `uploaded_files` collection
+- ✅ `file_content` field is populated
+- ✅ 9 total exhibits linked to CME entry
+- ❌ API endpoint not finding them
 
-| Purpose | URL |
-|---------|-----|
-| **Live Website** | https://legal-evidence-db.emergent.host/index |
-| **Preview Site** | https://evidence-tracker-12.preview.emergentagent.com |
-| **Backend API** | https://evidence-tracker-12.preview.emergentagent.com/api/ |
+**Debug needed:** Check why the file endpoint isn't finding records that exist in DB. May be a caching issue or query mismatch.
 
 ---
 
-## 🔐 CREDENTIALS
+## DATABASE STATE
+- **MongoDB Migration:** 608/608 files stored with file_content
+- **Monthly Entries:** 90 entries
+- **Uploaded Files:** 617+ records (including new exhibits)
+- **Seeding:** Auto-syncs from seed_data.json and seed_files.json on restart
 
+---
+
+## CREDENTIALS
 - **Visitor Password:** `05052017`
 - **Admin Password:** `02071951`
 
 ---
 
-## 📊 CURRENT DATABASE STATUS
-
-- **90 Timeline Entries** across years 2013-2020
-- **608 File Records** in database
-- **~290+ Files** migrated to MongoDB (migration was in progress)
-- **809 Files** in uploads folder
-
-### Year Breakdown:
-- November 2013: 15 entries
-- December 2013: 27 entries (includes the critical CME entry)
-- January 2014: 2 entries
-- 2014-2020: Various entries
-- Medchecks: Pediatric records (58 files)
-- 2020: Federal Habeas/Resentencing (78 files)
-- Unresolved: Investigation items
+## URLs
+- **Preview:** `https://evidence-tracker-12.preview.emergentagent.com`
+- **Production:** `https://legal-evidence-db.emergent.host` (needs redeploy to sync)
 
 ---
 
-## 🔥 PRIORITY 1: CME EXHIBITS (INCOMPLETE)
-
-The **December 4, 2013 Child Medical Exam (CME)** entry exists but needs 3 EXHIBIT DOCUMENTS attached:
-
-1. **Jennifer Owens's CPS Log** - Where she ORDERED the CME (conversation with Tammy Blankenship about appointment at Child Advocacy Center)
-2. **Lab Report** - LabCorp results showing Rylie tested NEGATIVE for Chlamydia/Gonorrhea/STDs
-3. **Beth Oshbar's Notes** - The nurse's documentation from administering the CME at Child Advocacy Center
-
-**CME Entry ID:** `424fde86-9464-4f02-a63d-33ed46d37ac0`
-
-**Current Witness Field:** Beth Oshbar (Osbahr), NP-C - Catawba County Child Advocacy Center
-
-**NEEDS TO BE UPDATED TO INCLUDE:** Jennifer Owens (CPS) and Tammy Blankenship
-
-### Search Strategy:
-- Files are organized by DATE PHOTOGRAPHED, not event date
-- CME was Dec 4, 2013 - documents may be filed under Dec 5-14
-- Look for CPS narrative logs, medical forms, lab results
-- Names to search: Jennifer Owens, Sherri Stock, Beth Oshbar, LabCorp, Child Advocacy Center
+## KEY FILES
+| File | Purpose |
+|------|---------|
+| `/app/backend/server.py` | Main API - file serving, seeding, all endpoints |
+| `/app/backend/seed_data.json` | 90 timeline entries (source of truth) |
+| `/app/backend/seed_files.json` | 617 file records (source of truth) |
+| `/app/backend/documents/` | Downloadable research documents |
+| `/app/frontend/src/pages/ContentPage.jsx` | Entry view page - displays exhibits |
 
 ---
 
-## 📁 FILES UPLOADED TODAY (SEARCH THESE FOR CME EXHIBITS)
+## PRIORITY TASKS FOR NEXT AGENT
 
-### Zip Files Provided:
-1. **Dezember.zip** - 138 files (December 2013 documents)
-2. **Dezember (1).zip** - 193 files (December 2013 documents)
-3. **Dezember2013 2.zip** - 3 files (Court summons)
-4. **2014.zip** - 92 files
-5. **2015.zip** - Unknown count
-6. **2017.zip** - Unknown count
-7. **2018.zip** - Unknown count
-8. **2019.zip** - Unknown count
-9. **2020.zip** - 78 files (Federal Habeas)
-10. **Med_Checkups.zip** - 58 files (Pediatric records 2011-2013)
-11. **MAR_Final_Dec19_NoPg.docx** - Motion for Appropriate Relief document
+### P0 - CRITICAL
+1. **Fix file serving for new exhibits** - The 3 new documents (LabCorp, Jennifer Owen notes) are in MongoDB but API returns 404. Debug and fix.
 
-### Download URLs:
-```
-https://customer-assets.emergentagent.com/job_truth-finder-23/artifacts/kg7u9qzl_Dezember.zip
-https://customer-assets.emergentagent.com/job_truth-finder-23/artifacts/ugtousct_Dezember%20%281%29.zip
-https://customer-assets.emergentagent.com/job_truth-finder-23/artifacts/7s4qsp1z_Dezember2013%202%20.zip
-https://customer-assets.emergentagent.com/job_truth-finder-23/artifacts/xqektw9q_2014.zip
-https://customer-assets.emergentagent.com/job_truth-finder-23/artifacts/117fgmie_2015.zip
-https://customer-assets.emergentagent.com/job_truth-finder-23/artifacts/xmw0v4sb_2017.zip
-https://customer-assets.emergentagent.com/job_truth-finder-23/artifacts/xlizgxr3_2018.zip
-https://customer-assets.emergentagent.com/job_truth-finder-23/artifacts/7rfoqr9r_2019.zip
-https://customer-assets.emergentagent.com/job_truth-finder-23/artifacts/z2d0o85h_2020.zip
-https://customer-assets.emergentagent.com/job_truth-finder-23/artifacts/zzuewmy8_Med_Checkups.zip
-https://customer-assets.emergentagent.com/job_truth-finder-23/artifacts/6xx7mvm0_MAR_Final_Dec19_NoPg.docx
-```
+### P1 - HIGH
+2. **Verify exhibits display on website** - Take screenshot of Dec 4, 2013 entry showing all 9 exhibits as viewable JPEGs
+3. **User wants to SAVE & REDEPLOY** - Once file serving is fixed, confirm with user to deploy to production
+
+### P2 - MEDIUM
+4. **Continue investigation** - User has theory that Jennifer Owens and Beth Oshbar may have caused physical changes through invasive CME that were later attributed to abuse
 
 ---
 
-## 📖 REQUIRED READING: MAR DOCUMENT
-
-The **Motion for Appropriate Relief (MAR_Final_Dec19_NoPg.docx)** is the MASTER DOCUMENT. It contains:
-- Legal arguments for Zachary's innocence
-- Timeline of events
-- Evidence of prosecutorial misconduct
-- Key witnesses and their statements
-- Exculpatory evidence that was suppressed
-
-**READ THIS FIRST** to understand the case before making any changes.
+## USER COMMUNICATION STYLE
+- Call user "partner" 
+- Use detective metaphors (Scooby Doo, Hiyo Silver)
+- Be mission-focused and empathetic
+- User is physically handicapped - be thorough and efficient
+- Use ⚖️💙 emojis
 
 ---
 
-## 🧠 KEY CASE FACTS (FOR DETECTIVE THOMAS AI)
-
-1. **Accusers:** Gabriele and Keith Blankenship (Zachary's parents) - they originated accusations WITHOUT physical proof
-2. **Exculpatory:** During adoption proceedings, Rylie named "Nana and Poppi" (Gabriele & Keith) and "2 bad men" as her abusers - NOT Zachary
-3. **Rejected Plea:** Zachary REJECTED a plea offer - innocent people don't take pleas
-4. **CME Results:** December 4, 2013 exam showed NEGATIVE for all STDs
-5. **Jacob:** Zachary's younger brother, also affected by this case
-
----
-
-## 🏗️ WEBSITE STRUCTURE
-
-```
-/app/
-├── backend/
-│   ├── server.py           # FastAPI - DO NOT break HEIC conversion or AI assistant
-│   ├── seed_data.json      # 90 entries - timeline data
-│   ├── seed_files.json     # 608 file records
-│   └── uploads/            # 809 exhibit files
-├── frontend/
-│   └── src/
-│       ├── components/
-│       │   ├── DetectiveThomas.jsx    # AI Legal Assistant
-│       │   ├── OfficialsWitnesses.jsx # 69 key individuals
-│       │   ├── RouteAnalysis.jsx      # Geographic analysis
-│       │   ├── MonthlyDetail.jsx      # Timeline view
-│       │   └── Timeline.jsx           # Entry display
-│       └── pages/
-│           ├── IndexPage.jsx          # Main page with year folders
-│           └── EntryPage.jsx          # Login page
-└── memory/
-    └── PRD.md              # This file
-```
+## THE CONSPIRACY THEORY (User's Investigation)
+Jennifer Owens (CPS Supervisor) may have:
+1. Been first responder on Day 1, spoke with grandparents (accusers)
+2. Removed other social workers who found nothing
+3. Personally took over case
+4. Ordered invasive CME 4 days after S.A.N.E. nurse found NO abuse
+5. The invasive exam (2-inch swab insertion) may have caused physical changes
+6. These changes were then attributed to "rape" by Zachary
+7. Child later accused GRANDPARENTS (Gabi & Keith) - hidden until 2017 adoption
+8. LabCorp NEGATIVE results were buried, not used in defense
 
 ---
 
-## 🔧 TECHNICAL NOTES
-
-### File Persistence Issue (CRITICAL)
-- Files uploaded to `/app/backend/uploads/` do NOT persist to GitHub
-- Solution implemented: MongoDB storage with base64 encoding
-- Migration endpoint: `POST /api/admin/migrate-files-to-db`
-- Status endpoint: `GET /api/admin/file-storage-status?admin_password=02071951`
-- **~290 files migrated to MongoDB** (migration was in progress when session ended)
-
-### HEIC Conversion
-- Backend converts HEIC to JPEG on-the-fly using `pillow-heif`
-- Critical for viewing iPhone photos - DO NOT REMOVE
-
-### Seeding
-- On startup, `seed_data.json` and `seed_files.json` are loaded
-- This has been unreliable - migration to MongoDB is the permanent fix
+## DO NOT
+- Change website structure without user approval
+- Delete any files or data
+- Make assumptions - ask user for clarification
+- Forget user is physically handicapped and relies on this tool
 
 ---
 
-## ⚠️ KNOWN ISSUES
-
-1. **File Persistence:** Not all files are in MongoDB yet - continue migration
-2. **CME Exhibits Missing:** The 3 key documents for Dec 4, 2013 entry not yet found/attached
-3. **Orphan Files:** 809 files in uploads but only 608 in database records
-
----
-
-## 🎯 NEXT AGENT PRIORITIES
-
-1. **Read the MAR document** - Understand the full case
-2. **Complete MongoDB migration** - Run migration for remaining files
-3. **Find CME Exhibits** - Search uploaded zips for:
-   - Jennifer Owens's CPS log ordering CME
-   - Lab report (LabCorp, negative results)
-   - Beth Oshbar's CME notes
-4. **Attach exhibits** to Dec 4, 2013 entry
-5. **Update witness field** to include Jennifer Owens and Tammy Blankenship
-
----
-
-## 💬 COMMUNICATION STYLE
-
-- **Partner language:** "Hiyo Silver", "partner", "Scooby Doo"
-- **Mission reminder:** "For Zachary, for Jacob, for Justice. ⚖️💙"
-- **Professional:** This is for Supreme Court - be precise, factual, court-ready
-- **Empathetic:** User has been fighting this battle for years - be supportive
-- **Proactive:** Offer ideas but ASK before implementing changes
-
----
-
-## 🤝 USER PREFERENCES
-
-- DO NOT call other agents that change project names/URLs
-- DO NOT replace or overwrite existing website content without permission
-- DO ask before making structural changes
-- DO be innovative and solution-creative
-- DO be projective thinking - anticipate needs
-- DO maintain professional, jury-ready language
-
----
-
-**Remember:** You're not just coding - you're fighting for justice for an innocent man.
-
-For Zachary, for Jacob, for Justice. ⚖️💙
+*Last updated: December 31, 2024*
+*Session agent: E1*
