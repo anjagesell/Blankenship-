@@ -98,8 +98,13 @@ const ContentPage = () => {
           Back to Index
         </button>
 
+        {loading ? (
+          <div className="text-center text-yellow-600 py-12">Loading entry...</div>
+        ) : !entry ? (
+          <div className="text-center text-yellow-600 py-12">Entry not found</div>
+        ) : (
         <div 
-          className="parchment-bg p-6 sm:p-10 md:p-12 rounded shadow-2xl"
+          className="parchment-bg p-6 sm:p-10 md:p-12 rounded shadow-2xl relative"
           style={{
             border: '3px solid #8b6914',
             boxShadow: `
@@ -125,41 +130,154 @@ const ContentPage = () => {
           ))}
 
           <div className="space-y-4 sm:space-y-6">
+            {/* Date and Time Header */}
             <div className="border-b pb-3 sm:pb-4" style={{ borderColor: '#8b6914' }}>
-              <p className="text-xs sm:text-sm mb-2" style={{ color: '#5D4037', fontFamily: 'Garamond, serif' }}>
-                {indexEntry?.date || 'Date not specified'}
-              </p>
+              <div className="flex items-center gap-4 mb-2">
+                <p className="text-xs sm:text-sm" style={{ color: '#5D4037', fontFamily: 'Garamond, serif' }}>
+                  {entry.date || 'Date not specified'}
+                </p>
+                {entry.time && (
+                  <p className="text-xs sm:text-sm flex items-center gap-1" style={{ color: '#5D4037', fontFamily: 'Garamond, serif' }}>
+                    <Clock className="w-3 h-3" />
+                    {entry.time}
+                  </p>
+                )}
+              </div>
               <h2 
                 className="text-2xl sm:text-3xl md:text-4xl font-bold"
                 style={{ fontFamily: 'Georgia, serif', color: '#3E2723' }}
               >
-                {entry.title}
+                {entry.description || 'Entry'}
               </h2>
             </div>
 
+            {/* Details Section */}
             <div className="prose prose-sm sm:prose-base md:prose-lg max-w-none">
               <p 
                 className="text-sm sm:text-base leading-relaxed whitespace-pre-wrap"
                 style={{ color: '#3E2723', fontFamily: 'Garamond, serif' }}
               >
-                {entry.content}
+                {entry.details || 'No details available.'}
               </p>
             </div>
 
-            <div 
-              className="mt-8 p-6 rounded border"
-              style={{
-                background: 'linear-gradient(145deg, rgba(139,69,19,0.1) 0%, rgba(139,69,19,0.05) 100%)',
-                borderColor: '#8b6914',
-              }}
-            >
-              <p className="text-sm italic" style={{ color: '#5D4037', fontFamily: 'Garamond, serif' }}>
-                Note: Content and photos for this entry will be added later.
-              </p>
-            </div>
+            {/* Persons Involved Section */}
+            {entry.witness && (
+              <div 
+                className="mt-6 p-4 rounded border"
+                style={{
+                  background: 'linear-gradient(145deg, rgba(139,69,19,0.08) 0%, rgba(139,69,19,0.03) 100%)',
+                  borderColor: '#8b6914',
+                }}
+              >
+                <h3 className="text-lg font-bold mb-3 flex items-center gap-2" style={{ color: '#3E2723', fontFamily: 'Georgia, serif' }}>
+                  <Users className="w-5 h-5" style={{ color: '#8b6914' }} />
+                  Persons Involved
+                </h3>
+                <div className="space-y-2">
+                  {entry.witness.split('\n').filter(w => w.trim()).map((person, idx) => (
+                    <p key={idx} className="text-sm" style={{ color: '#5D4037', fontFamily: 'Garamond, serif' }}>
+                      • {person}
+                    </p>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Exhibits Section */}
+            {files.length > 0 && (
+              <div 
+                className="mt-8 p-4 rounded border"
+                style={{
+                  background: 'linear-gradient(145deg, rgba(42,82,152,0.08) 0%, rgba(42,82,152,0.03) 100%)',
+                  borderColor: '#8b6914',
+                }}
+              >
+                <h3 className="text-lg font-bold mb-4 flex items-center gap-2" style={{ color: '#3E2723', fontFamily: 'Georgia, serif' }}>
+                  <FileImage className="w-5 h-5" style={{ color: '#8b6914' }} />
+                  Exhibits ({files.length} documents)
+                </h3>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                  {files.map((file, idx) => (
+                    <div 
+                      key={file.file_id}
+                      className="relative group cursor-pointer rounded overflow-hidden border"
+                      style={{ borderColor: '#8b6914', background: '#f5f0e1' }}
+                      onClick={() => setSelectedImage(file)}
+                    >
+                      <div className="aspect-square bg-amber-100 flex items-center justify-center">
+                        {file.file_content ? (
+                          <img 
+                            src={`data:image/jpeg;base64,${file.file_content}`}
+                            alt={file.filename}
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <FileImage className="w-12 h-12 text-amber-700/50" />
+                        )}
+                      </div>
+                      <div className="p-2 text-center">
+                        <p className="text-xs truncate" style={{ color: '#5D4037', fontFamily: 'Garamond, serif' }}>
+                          {file.filename}
+                        </p>
+                      </div>
+                      <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <span className="text-white text-sm">Click to view</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Notes Section */}
+            {entry.notes && (
+              <div 
+                className="mt-6 p-4 rounded border"
+                style={{
+                  background: 'linear-gradient(145deg, rgba(139,69,19,0.1) 0%, rgba(139,69,19,0.05) 100%)',
+                  borderColor: '#8b6914',
+                }}
+              >
+                <p className="text-sm italic" style={{ color: '#5D4037', fontFamily: 'Garamond, serif' }}>
+                  Note: {entry.notes}
+                </p>
+              </div>
+            )}
           </div>
         </div>
+        )}
       </div>
+
+      {/* Image Modal */}
+      {selectedImage && (
+        <div 
+          className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4"
+          onClick={() => setSelectedImage(null)}
+        >
+          <div className="relative max-w-4xl max-h-[90vh] overflow-auto">
+            <button 
+              className="absolute top-4 right-4 text-white bg-black/50 rounded-full p-2 z-10"
+              onClick={() => setSelectedImage(null)}
+            >
+              ✕
+            </button>
+            {selectedImage.file_content ? (
+              <img 
+                src={`data:image/jpeg;base64,${selectedImage.file_content}`}
+                alt={selectedImage.filename}
+                className="max-w-full max-h-[85vh] object-contain"
+              />
+            ) : (
+              <div className="text-white text-center p-8">Image not available</div>
+            )}
+            <p className="text-white text-center mt-4">{selectedImage.filename}</p>
+            {selectedImage.description && (
+              <p className="text-white/70 text-center text-sm mt-2">{selectedImage.description}</p>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
