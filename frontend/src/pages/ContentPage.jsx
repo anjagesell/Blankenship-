@@ -205,16 +205,21 @@ const ContentPage = () => {
                       style={{ borderColor: '#8b6914', background: '#f5f0e1' }}
                       onClick={() => setSelectedImage(file)}
                     >
-                      <div className="aspect-square bg-amber-100 flex items-center justify-center">
-                        {file.file_content ? (
-                          <img 
-                            src={`data:image/jpeg;base64,${file.file_content}`}
-                            alt={file.filename}
-                            className="w-full h-full object-cover"
-                          />
-                        ) : (
+                      <div className="aspect-square bg-amber-100 flex items-center justify-center overflow-hidden">
+                        {/* Universal image URL - works on ALL devices (Android, iOS, PC, Tablet) */}
+                        <img 
+                          src={`${API_BASE}/api/file/${file.file_id}`}
+                          alt={file.filename}
+                          className="w-full h-full object-cover"
+                          loading="lazy"
+                          onError={(e) => {
+                            e.target.style.display = 'none';
+                            e.target.nextSibling.style.display = 'flex';
+                          }}
+                        />
+                        <div className="hidden w-full h-full items-center justify-center">
                           <FileImage className="w-12 h-12 text-amber-700/50" />
-                        )}
+                        </div>
                       </div>
                       <div className="p-2 text-center">
                         <p className="text-xs truncate" style={{ color: '#5D4037', fontFamily: 'Garamond, serif' }}>
