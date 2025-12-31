@@ -1392,7 +1392,7 @@ async def seed_database():
             result = await db.monthly_entries.delete_many({"id": {"$in": duplicates_to_remove}})
             logging.info(f"Removed {result.deleted_count} duplicate entries")
         
-        # Seed monthly entries - add any missing entries
+        # Seed monthly entries - add missing OR update existing entries from seed file
         if SEED_DATA_FILE.exists():
             with open(SEED_DATA_FILE, 'r') as f:
                 seed_data = json.load(f)
@@ -1410,8 +1410,23 @@ async def seed_database():
                             entry['created_at'] = datetime.now(timezone.utc).isoformat()
                     await db.monthly_entries.insert_many(new_entries)
                     logging.info(f"Added {len(new_entries)} new entries!")
-                else:
-                    logging.info(f"All {len(seed_data)} entries already exist.")
+                
+                # Update existing entries from seed file (to sync any changes)
+                for entry in seed_data:
+                    if entry['id'] in existing_ids:
+                        await db.monthly_entries.update_one(
+                            {"id": entry['id']},
+                            {"$set": {
+                                "time": entry.get('time'),
+                                "witness": entry.get('witness'),
+                                "description": entry.get('description'),
+                                "details": entry.get('details'),
+                                "notes": entry.get('notes'),
+                                "evidence": entry.get('evidence'),
+                                "updated_at": datetime.now(timezone.utc).isoformat()
+                            }}
+                        )
+                logging.info(f"Synced {len(seed_data)} entries from seed file.")
         
         # Seed file records - add any missing files
         if SEED_FILES_FILE.exists():
