@@ -1414,17 +1414,14 @@ async def seed_database():
                 # Update existing entries from seed file (to sync any changes)
                 for entry in seed_data:
                     if entry['id'] in existing_ids:
+                        update_data = {"updated_at": datetime.now(timezone.utc).isoformat()}
+                        # Only update non-None fields
+                        for field in ['time', 'witness', 'description', 'details', 'notes', 'evidence']:
+                            if entry.get(field) is not None:
+                                update_data[field] = entry.get(field, '')
                         await db.monthly_entries.update_one(
                             {"id": entry['id']},
-                            {"$set": {
-                                "time": entry.get('time'),
-                                "witness": entry.get('witness'),
-                                "description": entry.get('description'),
-                                "details": entry.get('details'),
-                                "notes": entry.get('notes'),
-                                "evidence": entry.get('evidence'),
-                                "updated_at": datetime.now(timezone.utc).isoformat()
-                            }}
+                            {"$set": update_data}
                         )
                 logging.info(f"Synced {len(seed_data)} entries from seed file.")
         
