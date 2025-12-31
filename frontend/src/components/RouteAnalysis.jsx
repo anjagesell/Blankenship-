@@ -30,7 +30,7 @@ const routeData = {
       id: "C",
       name: "Zackary Blankenship's Home",
       address: "6718 Catfish Drive, Sherrills Ford, NC 28673",
-      description: "Victim's Residence - Catawba County",
+      description: "Alleged Victim's Residence - Catawba County",
       type: "residence",
       color: "#ffc107",
     },
