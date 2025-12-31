@@ -1,19 +1,44 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getEntryContent, indexEntries } from '../mock';
-import { ArrowLeft, Scale } from 'lucide-react';
+import { ArrowLeft, Scale, FileImage, Download, Users, Clock } from 'lucide-react';
+
+const API_BASE = process.env.REACT_APP_BACKEND_URL || '';
 
 const ContentPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const entry = getEntryContent(id);
-  const indexEntry = indexEntries.find(e => e.id === parseInt(id));
+  const [entry, setEntry] = useState(null);
+  const [files, setFiles] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedImage, setSelectedImage] = useState(null);
 
   useEffect(() => {
-    document.title = `Blankenship - ${indexEntry?.header || 'Entry'}`;
-    // Force scroll to top when page loads
+    const fetchEntry = async () => {
+      try {
+        // Fetch entry data from monthly entries
+        const entriesRes = await fetch(`${API_BASE}/api/monthly/12-2013`);
+        const entries = await entriesRes.json();
+        const foundEntry = entries.find(e => e.id === id);
+        
+        if (foundEntry) {
+          setEntry(foundEntry);
+          document.title = `Blankenship - ${foundEntry.description || 'Entry'}`;
+        }
+
+        // Fetch files for this entry
+        const filesRes = await fetch(`${API_BASE}/api/files/${id}`);
+        const filesData = await filesRes.json();
+        setFiles(filesData || []);
+      } catch (error) {
+        console.error('Error fetching entry:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchEntry();
     window.scrollTo(0, 0);
-  }, [indexEntry]);
+  }, [id]);
 
   return (
     <div 
