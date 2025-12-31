@@ -9,7 +9,8 @@
     "evidence": "Timecard of Big Lots Mooresville",
     "notes": "Tammy overslept and ran late for work. She was supposed to bring Rylie to Gabriele Blankenship's home for babysitting, as usual. However, since Zachary was home and both he and Rylie were still asleep, Tammy decided not to take her \u2014 a natural reaction given the circumstances. Already running late and under stress, Tammy forgot to call Gabriele to inform her she wasn't bringing Rylie. **[CONTEXT: Explains why child was home with father that morning.]**",
     "created_at": "2025-12-27T17:31:43.708601+00:00",
-    "updated_at": "2025-12-27T17:31:43.708631+00:00"
+    "updated_at": "2025-12-27T17:31:43.708631+00:00",
+    "details": ""
   },
   {
     "id": "77b2b24a-5e17-48e6-abb3-f80f116aa929",
@@ -21,7 +22,8 @@
     "evidence": "Report PAB120",
     "notes": "Medical findings: Hymen intact. No distress. GU exam unremarkable. **No evidence of trauma or abuse.**",
     "created_at": "2025-12-27T17:31:43.836582+00:00",
-    "updated_at": "2025-12-27T17:31:43.836596+00:00"
+    "updated_at": "2025-12-27T17:31:43.836596+00:00",
+    "details": ""
   },
   {
     "id": "2007f02a-4d1f-4f37-866a-6ab696aea8a2",
@@ -33,7 +35,8 @@
     "evidence": "Ori # NC0180000",
     "notes": "Officer reports Nurse stated: 'Rylie seems fine, sees no signs of sexual assault. After speaking with Rylie alone, no signs of abuse.' Keith B. claims it is 'nothing unusual' for Rylie to be naked from waist down. Rylie allegedly said 'dad put his thing on her butt.' Keith B. claims he has not spoken to Tammy B. nor Zachary since leaving the house. **[INCONSISTENCY: Keith has their phone number and DID see both parents after leaving the residence.]**",
     "created_at": "2025-12-27T17:31:43.952021+00:00",
-    "updated_at": "2025-12-27T17:31:43.952036+00:00"
+    "updated_at": "2025-12-27T17:31:43.952036+00:00",
+    "details": ""
   },
   {
     "id": "b7acb15e-8ef7-40ba-8141-e3e375fd4ee8",
@@ -45,7 +48,8 @@
     "evidence": "Narrative Notes of CPS.",
     "notes": "CPS Sherri Stock reports to Deputy Coffey: 'Child has a burn (severity unknown) and allegedly disclosed sexual abuse.' **[NOTE: \"Allegedly disclosed\" \u2014 no direct witness to disclosure at this point.]**",
     "created_at": "2025-12-27T17:31:44.019428+00:00",
-    "updated_at": "2025-12-27T17:31:44.019448+00:00"
+    "updated_at": "2025-12-27T17:31:44.019448+00:00",
+    "details": ""
   },
   {
     "id": "035ae7a5-620e-4b8b-808a-751f05bae98c",
@@ -57,7 +61,8 @@
     "evidence": "Narrative Notes of CPS",
     "notes": "Documentation establishes chain of communication between CPS workers regarding case information. **[CHAIN OF CUSTODY: Verbal information transfer documented.]**",
     "created_at": "2025-12-27T17:31:44.086663+00:00",
-    "updated_at": "2025-12-27T17:31:44.086678+00:00"
+    "updated_at": "2025-12-27T17:31:44.086678+00:00",
+    "details": ""
   },
   {
     "id": "dc90150a-78b6-421a-adac-65244d4e7f63",
@@ -69,7 +74,8 @@
     "evidence": "CPS Intake Report",
     "notes": "Defense received only partial documents. However, on page 1, the **Perpetrator is listed as Tammy B., NOT Zachary B.** \u2014 yet this document was presented as proof of crime. Rylie allegedly stated another version: 'Daddy put his weiner on my cushy.' CPS Jennifer Owens learns Z. Blankenship is handicapped with ADHD, blind in one eye, and has learning disabilities. When asked if child was in danger, CPS answered: **'No.'** **[KEY EVIDENCE: Wrong perpetrator listed. Multiple versions of child's statement.]**",
     "created_at": "2025-12-27T17:31:44.200852+00:00",
-    "updated_at": "2025-12-27T17:31:44.200866+00:00"
+    "updated_at": "2025-12-27T17:31:44.200866+00:00",
+    "details": ""
   },
   {
     "id": "1cbc5dd3-e61c-4947-b2bb-fe2b1aebef0d",
@@ -81,7 +87,8 @@
     "evidence": "CPS Narrative Log",
     "notes": "SW Mecimore spoke with S.A.N.E. Nurse Amy Walker regarding the reason grandparents Keith and Gabriele Blankenship brought Rylie to ER. Grandparents confirm Rylie being without diaper is normal due to potty training. Child allegedly said: 'Daddy put his weenie on my butt.' **S.A.N.E. Nurse Walker: After completing exam, sees NO signs of abuse. When asked questions, child disclosed NO abuse.** **[KEY EVIDENCE: Medical professional found no signs of abuse; child made no disclosure during exam.]**",
     "created_at": "2025-12-27T17:31:44.274368+00:00",
-    "updated_at": "2025-12-27T17:31:44.274381+00:00"
+    "updated_at": "2025-12-27T17:31:44.274381+00:00",
+    "details": ""
   },
   {
     "id": "636072ef-c275-4ff8-a1f8-d09b1d8df3c7",
@@ -93,7 +100,8 @@
     "evidence": "Narrative Log",
     "notes": "CPS Pam Frazier states she has **no concerns** during home visit. Child made **no disclosure** to SW. SW noted grandparents made a point to mention: (1) Father stays on computer frequently, and (2) When grandparents visited his home, they were 'yelled at to wait a minute' when they knocked. **[NOTE: No concerns documented, yet grandparents' comments treated as suspicious.]**",
     "created_at": "2025-12-27T17:31:44.452020+00:00",
-    "updated_at": "2025-12-27T17:31:44.452033+00:00"
+    "updated_at": "2025-12-27T17:31:44.452033+00:00",
+    "details": ""
   },
   {
     "id": "6f5eb348-9dcf-46dd-a4d3-529887b08c8d",
@@ -105,7 +113,8 @@
     "evidence": "CPS Narrative log",
     "notes": "CPS Sherri Stock and SW Mecimore arrange home visit for 6:30 PM with Tammy Blankenship, specifically noting: **'The father will be at work.'** CPS Sherri Stock agrees to initiate 'the investigation' with mother only. **[CONCERN: Investigation deliberately scheduled when father absent.]**",
     "created_at": "2025-12-27T17:31:44.517972+00:00",
-    "updated_at": "2025-12-27T17:31:44.517984+00:00"
+    "updated_at": "2025-12-27T17:31:44.517984+00:00",
+    "details": ""
   },
   {
     "id": "e5770ca4-4e4e-41f7-864a-5c32790ee0c5",
@@ -117,7 +126,8 @@
     "evidence": "CPS Narrative Log",
     "notes": "SW Sherri Stock interrogates Tammy B., then leaves. Returns later with directives from Supervisor SW Reitzel to interview the 2-year-old child **alone**. SW Stock takes child into room alone \u2014 **no recordings, no witnesses for interpretation.** When asked if she is scared of anyone: **'No.'** When asked if anyone hurts her, child allegedly answers: **'My Daddy puts his weenie inside my coochie.'** **[CRITICAL \u2014 LANGUAGE Origin and content:]** Up to this point, Rylie had NEVER used the word 'inside' and 'coochie' with others. Also key  is 'length of sentence structure'  which SW Sherri Stock attributes to that of Rylie. This is the word used by **grandmother Gabriele Blankenship** to refer to vagina \u2014 stemming from the Alan Jackson song 'Way Down Yonder on the Chattahoochee' ('...hotter than a hoochie coochie') which Gabriele sang with her sons in the late 1980s. Additionally 'this origin clarification had been given to Bobbi Jo Christopher in a personal phone call of hers to Europe as the person made the argument that the verbiage Rylie is allegedly using by multiple people doesn't fit.' 'Something is off' and then suddenly the word 'coochie' is predominant. **[KEY EVIDENCE: Child's language traced to grandmother, NOT father. No recording exists. No witness present.]**",
     "created_at": "2025-12-27T17:31:44.579645+00:00",
-    "updated_at": "2025-12-27T17:31:44.579660+00:00"
+    "updated_at": "2025-12-27T17:31:44.579660+00:00",
+    "details": ""
   },
   {
     "id": "323b8e82-86cd-4b50-b12d-e87185d383ce",
@@ -129,7 +139,8 @@
     "evidence": "CPS Narrative Log",
     "notes": "Keith Blankenship tells CPS Mecimore that he and Gabriele have no CPS history nor criminal history, and offers permanent placement in their home. **[CONTRADICTION \u2014 FACTUAL ERROR:]** Keith and Gabriele DO have criminal history in Europe. They were investigated for Gabriele's drug addiction and for having abused their two sons before fleeing to the USA in 1998. Keith denies any sexual abuse of or by Zachary. **[KEY EVIDENCE: False statement made to CPS regarding criminal history.]**",
     "created_at": "2025-12-27T17:31:44.650927+00:00",
-    "updated_at": "2025-12-27T17:31:44.650946+00:00"
+    "updated_at": "2025-12-27T17:31:44.650946+00:00",
+    "details": ""
   },
   {
     "id": "10fdebeb-dd99-459f-863f-246a9001e73c",
@@ -141,7 +152,8 @@
     "evidence": "CPS Narrative Log",
     "notes": "SW Amber Mecimore's sole inquiry was to 'build a case' \u2014 asking if Nurse Amy Walker used a scope during the genital exam. Nurse Walker said no. **Nurse reiterates:** Rylie made **no disclosure** of being hurt when pointing to body parts, including genitalia. **[KEY EVIDENCE: CPS focused on building case despite medical professional finding no evidence.]**",
     "created_at": "2025-12-27T17:31:44.716198+00:00",
-    "updated_at": "2025-12-27T17:31:44.716209+00:00"
+    "updated_at": "2025-12-27T17:31:44.716209+00:00",
+    "details": ""
   },
   {
     "id": "fbd99e58-93df-47ac-a9a5-c9c997d2e3ef",
@@ -153,7 +165,8 @@
     "evidence": "CPS Narrative Log",
     "notes": "**Under Color of Law:** SW Sheri Stock arranged to pick Zachary up from work prematurely. She interrogated him, aiming to elicit self-incrimination. Zachary **denied all allegations**. He expressed willingness to work with Law Enforcement and SW to find the truth. SW Stock drove him home from his employment. **[CONCERN: Interrogation conducted without legal counsel; designed to pressure confession.]**",
     "created_at": "2025-12-27T17:31:44.778510+00:00",
-    "updated_at": "2025-12-27T17:31:44.778528+00:00"
+    "updated_at": "2025-12-27T17:31:44.778528+00:00",
+    "details": ""
   },
   {
     "id": "5e39baa0-66f1-4a32-bd12-26234f6a2cd8",
@@ -165,7 +178,8 @@
     "evidence": "CPS Narrative Log",
     "notes": "Tammy and child Rylie are instructed to leave their home. **No Contact Order** issued against Zachary. **[ACTION: Family separated based on unverified allegations; no physical evidence of abuse.]**",
     "created_at": "2025-12-27T17:31:44.840060+00:00",
-    "updated_at": "2025-12-27T17:31:44.840074+00:00"
+    "updated_at": "2025-12-27T17:31:44.840074+00:00",
+    "details": ""
   },
   {
     "id": "06c684ae-2483-4698-ae42-d3f07e6f87ad",
@@ -179,7 +193,8 @@
     "created_at": "2025-12-28T16:08:20.088564+00:00",
     "updated_at": "2025-12-28T16:08:20.088575+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "a709204c-96c5-4c66-b1ee-e752c6468eed",
@@ -193,7 +208,8 @@
     "created_at": "2025-12-28T17:27:37.855296+00:00",
     "updated_at": "2025-12-28T17:27:37.855308+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "bf3075da-a19c-4869-aed3-8fc797143627",
@@ -205,7 +221,8 @@
     "evidence": "Narrative Log",
     "notes": "No additional information documented from this contact.",
     "created_at": "2025-12-27T17:31:44.339424+00:00",
-    "updated_at": "2025-12-27T17:31:44.339440+00:00"
+    "updated_at": "2025-12-27T17:31:44.339440+00:00",
+    "details": ""
   },
   {
     "id": "093b6ed0-ea8c-4c8b-a3e8-6f1aaef102d2",
@@ -219,7 +236,8 @@
     "created_at": "2025-12-28T19:43:34.848458+00:00",
     "updated_at": "2025-12-28T19:43:34.848458+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "c54db346-7ebd-4304-b4f2-7b48f892623e",
@@ -233,7 +251,8 @@
     "created_at": "2025-12-28T19:43:34.848458+00:00",
     "updated_at": "2025-12-28T19:43:34.848458+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "04e1222e-a444-437c-a46a-2bf5484165d8",
@@ -247,7 +266,8 @@
     "created_at": "2025-12-28T19:43:34.848458+00:00",
     "updated_at": "2025-12-28T19:43:34.848458+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "2a4f79c0-cde2-452e-a82f-83178df684fe",
@@ -261,7 +281,8 @@
     "created_at": "2025-12-28T19:43:34.848458+00:00",
     "updated_at": "2025-12-28T19:43:34.848458+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "1e19efe3-88da-41a7-9fec-d0a1320c337b",
@@ -275,7 +296,8 @@
     "created_at": "2025-12-28T19:43:34.848458+00:00",
     "updated_at": "2025-12-28T19:43:34.848458+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "94db8635-8eff-421d-ba70-ee6dc8da9b57",
@@ -289,7 +311,8 @@
     "created_at": "2025-12-28T19:43:34.848458+00:00",
     "updated_at": "2025-12-28T19:43:34.848458+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "4e40ca7e-d16f-4d80-bb7b-73d3f4881fdf",
@@ -303,7 +326,8 @@
     "created_at": "2025-12-28T19:43:34.848458+00:00",
     "updated_at": "2025-12-28T19:43:34.848458+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "d6e50b2b-5124-4149-ad41-3d5c843ef2d9",
@@ -317,7 +341,8 @@
     "created_at": "2025-12-28T19:43:34.848458+00:00",
     "updated_at": "2025-12-28T19:43:34.848458+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "df8cc89b-bfdd-4e84-9cdf-225be4cd772f",
@@ -331,7 +356,8 @@
     "created_at": "2025-12-28T19:43:34.848458+00:00",
     "updated_at": "2025-12-28T19:43:34.848458+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "93eb39da-d71c-4039-bdf4-8f00f26ea766",
@@ -345,7 +371,8 @@
     "created_at": "2025-12-28T19:43:34.848458+00:00",
     "updated_at": "2025-12-28T19:43:34.848458+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "da4e5989-a3fb-49f5-9602-2132bef9290f",
@@ -359,7 +386,8 @@
     "created_at": "2025-12-28T19:43:34.848458+00:00",
     "updated_at": "2025-12-28T19:43:34.848458+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "91c95cf8-e715-4adf-930d-b624812aea39",
@@ -373,7 +401,8 @@
     "created_at": "2025-12-28T19:43:34.848458+00:00",
     "updated_at": "2025-12-28T19:43:34.848458+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "d09a1788-97da-4e34-a3b2-9b37ec6d21ac",
@@ -387,7 +416,8 @@
     "created_at": "2025-12-28T19:43:34.848458+00:00",
     "updated_at": "2025-12-28T19:43:34.848458+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "bbf17157-346a-4eb5-8e92-021699592fd0",
@@ -401,7 +431,8 @@
     "created_at": "2025-12-28T19:43:34.848458+00:00",
     "updated_at": "2025-12-28T19:43:34.848458+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "6f292313-9aa0-4a21-8ebd-41dbc06ff707",
@@ -415,7 +446,8 @@
     "created_at": "2025-12-28T19:43:34.848458+00:00",
     "updated_at": "2025-12-28T19:43:34.848458+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "3acf7364-eede-4f00-b3eb-b808e73c7e08",
@@ -429,7 +461,8 @@
     "created_at": "2025-12-28T21:25:52.902320+00:00",
     "updated_at": "2025-12-28T21:25:52.902320+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "8199673a-6e9b-4bf4-9877-14641b3e26da",
@@ -443,7 +476,8 @@
     "created_at": "2025-12-28T21:25:52.902320+00:00",
     "updated_at": "2025-12-28T21:25:52.902320+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "d941a61c-1919-4167-9ebf-1c92f9124238",
@@ -457,7 +491,8 @@
     "created_at": "2025-12-28T21:25:52.902320+00:00",
     "updated_at": "2025-12-28T21:25:52.902320+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "882700ee-c1c4-4b9e-b4fc-e56cb188c068",
@@ -471,7 +506,8 @@
     "created_at": "2025-12-28T21:25:52.902320+00:00",
     "updated_at": "2025-12-28T21:25:52.902320+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "2be1c84c-ff2f-49f7-9c20-49d1fc78944c",
@@ -485,7 +521,8 @@
     "created_at": "2025-12-28T21:25:52.902320+00:00",
     "updated_at": "2025-12-28T21:25:52.902320+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "8a99dc27-5b1d-4e20-b837-a974d5d80a2a",
@@ -499,7 +536,8 @@
     "created_at": "2025-12-28T21:25:52.902320+00:00",
     "updated_at": "2025-12-28T21:25:52.902320+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "9a71e76a-a6cd-4176-8cf3-a323a9deabee",
@@ -513,7 +551,8 @@
     "created_at": "2025-12-28T21:25:52.902320+00:00",
     "updated_at": "2025-12-28T21:25:52.902320+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "5d5b87b5-a412-4c51-be52-63a14586d267",
@@ -527,7 +566,8 @@
     "created_at": "2025-12-28T21:25:52.902320+00:00",
     "updated_at": "2025-12-28T21:25:52.902320+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "87d49c55-027e-4587-9a88-9079ee30ae65",
@@ -541,7 +581,8 @@
     "created_at": "2025-12-28T21:25:52.902320+00:00",
     "updated_at": "2025-12-28T21:25:52.902320+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "99ceb17f-7a57-4ab7-8f4b-efb14b91cb5a",
@@ -555,7 +596,8 @@
     "created_at": "2025-12-28T21:25:52.902320+00:00",
     "updated_at": "2025-12-28T21:25:52.902320+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "ecb45170-346d-4150-a73f-a01f64b38726",
@@ -569,7 +611,8 @@
     "created_at": "2025-12-28T21:25:52.902320+00:00",
     "updated_at": "2025-12-28T21:25:52.902320+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "00368f9a-bc9d-4d61-91fd-330e2a9cc15a",
@@ -583,7 +626,8 @@
     "created_at": "2025-12-28T21:25:52.902320+00:00",
     "updated_at": "2025-12-28T21:25:52.902320+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "014e2ba7-90b7-4a58-8005-bcec1ba7ca99",
@@ -597,7 +641,8 @@
     "created_at": "2025-12-28T21:33:05.853031+00:00",
     "updated_at": "2025-12-28T21:33:05.853031+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "f7ac2aa2-ea4c-4952-9c3c-93ebd2c38e9a",
@@ -611,7 +656,8 @@
     "created_at": "2025-12-28T21:33:05.853031+00:00",
     "updated_at": "2025-12-28T21:33:05.853031+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "0dc582b9-d586-452a-844d-4ff36ac7316c",
@@ -625,7 +671,8 @@
     "created_at": "2025-12-28T21:33:05.853031+00:00",
     "updated_at": "2025-12-28T21:33:05.853031+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "e435e5d5-20a6-4b69-87f1-5f18e35ae348",
@@ -639,7 +686,8 @@
     "created_at": "2025-12-28T21:33:05.853031+00:00",
     "updated_at": "2025-12-28T21:33:05.853031+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "821ed0bd-5b3a-4054-aa48-caf3a16930cf",
@@ -653,7 +701,8 @@
     "created_at": "2025-12-28T21:33:05.853031+00:00",
     "updated_at": "2025-12-28T21:33:05.853031+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "b3a6ac0b-43a9-4d6b-b1c6-7647dc3a63dc",
@@ -667,7 +716,8 @@
     "created_at": "2025-12-28T21:33:05.853031+00:00",
     "updated_at": "2025-12-28T21:33:05.853031+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "5e3d0482-b898-4838-9bd8-7d45ec7af8e6",
@@ -681,7 +731,8 @@
     "created_at": "2025-12-28T21:40:59.711684+00:00",
     "updated_at": "2025-12-28T21:40:59.711684+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "3b733144-090a-4a60-90d1-b72e16d8136a",
@@ -695,7 +746,8 @@
     "created_at": "2025-12-28T21:40:59.711684+00:00",
     "updated_at": "2025-12-28T21:40:59.711684+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "0fd3bd4d-f19d-4b0f-9c7a-8ad6cbee1de6",
@@ -709,7 +761,8 @@
     "created_at": "2025-12-28T21:47:51.879952+00:00",
     "updated_at": "2025-12-28T21:47:51.879952+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "27a05ea0-a44f-470b-b4e8-c176dcc948ba",
@@ -723,7 +776,8 @@
     "created_at": "2025-12-28T21:47:51.879952+00:00",
     "updated_at": "2025-12-28T21:47:51.879952+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "c1db867d-25b4-4643-9be9-a9a322b09cd3",
@@ -737,7 +791,8 @@
     "created_at": "2025-12-28T21:47:51.879952+00:00",
     "updated_at": "2025-12-28T21:47:51.879952+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "007ba06a-1904-42c7-8179-02f63704f8b6",
@@ -751,7 +806,8 @@
     "created_at": "2025-12-28T21:47:51.879952+00:00",
     "updated_at": "2025-12-28T21:47:51.879952+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "01bb9080-d338-48ec-b219-b3cc71eeed3f",
@@ -765,7 +821,8 @@
     "created_at": "2025-12-28T21:47:51.879952+00:00",
     "updated_at": "2025-12-28T21:47:51.879952+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "9b91b2ce-8b96-4013-9000-35b3b772c08e",
@@ -779,7 +836,8 @@
     "created_at": "2025-12-28T21:47:51.879952+00:00",
     "updated_at": "2025-12-28T21:47:51.879952+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "c7369cb4-1141-45e1-a14f-4a7961b1ad6a",
@@ -793,7 +851,8 @@
     "created_at": "2025-12-28T21:47:51.879952+00:00",
     "updated_at": "2025-12-28T21:47:51.879952+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "424fde86-9464-4f02-a63d-33ed46d37ac0",
@@ -802,7 +861,9 @@
     "time": "9:30 AM",
     "witness": "Beth Oshbar (Osbahr), NP-C - Catawba County Child Advocacy Center (Examiner)\nJennifer Owen - CPS Social Worker (Created forensic interview report, ordered CME)\nTammy Blankenship - Mother (Present during examination, provided caregiver narrative)\nSheri Stock - DSS/Law Enforcement (Present during interview)\nJennifer Case - Present during physical examination",
     "description": "Child Medical Examination (CME) - Invasive Gynecological Specimen Collection",
-    "details": "Child Medical Examination conducted at Catawba County Child Advocacy Center. Beth Oshbar, NP-C performed invasive gynecological specimen collection on Rylie Blankenship (age 3) for Chlamydia and Gonorrhea testing. Specimens sent to LabCorp. Results: NEGATIVE for both Chlamydia and Gonorrhea.\n\nINVESTIGATIVE QUESTIONS:\n1. Was Beth Oshbar certified in Pediatrics or Women's Health NP specialty?\n2. Who was her supervising/collaborating physician as required by NC law?\n3. Was parental consent obtained from either parent before invasive specimen collection?\n4. Why was invasive testing performed when S.A.N.E. Nurse Amy Walker at Lake Norman (Nov 30, 2013) found \"no signs of abuse, no assault, no disclosure\" and deemed a rape kit UNNECESSARY just 4 days earlier?\n5. What is the medical/legal justification for the \"floppy hymen\" notation - an unscientific term?\n6. Was the 10% chart review by supervising physician conducted as required by NC Board of Nursing?\n\nNOTE: This examination was performed by the State's agent WITHOUT the father's knowledge or consent."
+    "details": "Child Medical Examination conducted at Catawba County Child Advocacy Center. Beth Oshbar, NP-C performed invasive gynecological specimen collection on Rylie Blankenship (age 3) for Chlamydia and Gonorrhea testing. Specimens sent to LabCorp. Results: NEGATIVE for both Chlamydia and Gonorrhea.\n\nINVESTIGATIVE QUESTIONS:\n1. Was Beth Oshbar certified in Pediatrics or Women's Health NP specialty?\n2. Who was her supervising/collaborating physician as required by NC law?\n3. Was parental consent obtained from either parent before invasive specimen collection?\n4. Why was invasive testing performed when S.A.N.E. Nurse Amy Walker at Lake Norman (Nov 30, 2013) found \"no signs of abuse, no assault, no disclosure\" and deemed a rape kit UNNECESSARY just 4 days earlier?\n5. What is the medical/legal justification for the \"floppy hymen\" notation - an unscientific term?\n6. Was the 10% chart review by supervising physician conducted as required by NC Board of Nursing?\n\nNOTE: This examination was performed by the State's agent WITHOUT the father's knowledge or consent.",
+    "evidence": "",
+    "notes": ""
   },
   {
     "id": "17b03921-20d6-49e0-91a3-18527d1ccb12",
@@ -816,7 +877,8 @@
     "created_at": "2025-12-28T23:33:25.194370+00:00",
     "updated_at": "2025-12-28T23:33:25.194370+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "e6ffcb3e-71dc-4646-96ce-7be04272daf3",
@@ -830,7 +892,8 @@
     "created_at": "2025-12-28T23:33:25.194370+00:00",
     "updated_at": "2025-12-28T23:33:25.194370+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "f6a96a9e-baef-48ce-85c1-8b0318ed25a2",
@@ -844,7 +907,8 @@
     "created_at": "2025-12-28T23:33:25.194370+00:00",
     "updated_at": "2025-12-28T23:33:25.194370+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "aaae64bb-5d18-4428-b7d6-26caf0ff1229",
@@ -858,7 +922,8 @@
     "created_at": "2025-12-28T23:33:25.194370+00:00",
     "updated_at": "2025-12-28T23:33:25.194370+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "237ab1c2-e30d-4bba-bb5a-89631dc9fde1",
@@ -872,7 +937,8 @@
     "created_at": "2025-12-28T23:33:25.194370+00:00",
     "updated_at": "2025-12-28T23:33:25.194370+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "015a3f06-62e5-445f-b4a4-07f3bba88b56",
@@ -886,7 +952,8 @@
     "created_at": "2025-12-28T23:33:25.194370+00:00",
     "updated_at": "2025-12-28T23:33:25.194370+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "6c0f8ce3-7b6e-4a20-9b3c-e41a22182eca",
@@ -900,7 +967,8 @@
     "created_at": "2025-12-28T23:33:25.194370+00:00",
     "updated_at": "2025-12-28T23:33:25.194370+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "3bd78efb-a789-4c31-94ea-3d8b1c5aa678",
@@ -914,7 +982,8 @@
     "created_at": "2025-12-28T23:33:25.194370+00:00",
     "updated_at": "2025-12-28T23:33:25.194370+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "4461248b-5c3e-41fe-8fbc-ff44cd9fcace",
@@ -928,7 +997,8 @@
     "created_at": "2025-12-28T23:33:25.194370+00:00",
     "updated_at": "2025-12-28T23:33:25.194370+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "dae1f7c6-884f-4a82-b779-62730e1ce270",
@@ -942,7 +1012,8 @@
     "created_at": "2025-12-28T23:33:25.194370+00:00",
     "updated_at": "2025-12-28T23:33:25.194370+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "247386db-9695-4dec-aaa1-38bc6e60f589",
@@ -956,7 +1027,8 @@
     "created_at": "2025-12-28T23:33:25.194370+00:00",
     "updated_at": "2025-12-28T23:33:25.194370+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "86546f98-8d24-4197-9c2c-caec37754eb3",
@@ -970,7 +1042,8 @@
     "created_at": "2025-12-28T23:33:25.194370+00:00",
     "updated_at": "2025-12-28T23:33:25.194370+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "60889bbb-9b9f-441f-94c6-f03ca0b44357",
@@ -984,7 +1057,8 @@
     "created_at": "2025-12-28T23:33:25.194370+00:00",
     "updated_at": "2025-12-28T23:33:25.194370+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "01692f2c-bf60-4b58-a93d-e48781063264",
@@ -998,7 +1072,8 @@
     "created_at": "2025-12-28T23:33:25.194370+00:00",
     "updated_at": "2025-12-28T23:33:25.194370+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "ee507f45-4d72-4dd6-b336-9bcb82f2e777",
@@ -1012,7 +1087,8 @@
     "created_at": "2025-12-28T23:33:25.194370+00:00",
     "updated_at": "2025-12-28T23:33:25.194370+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "40a5d887-ba7c-4e4d-80ec-1f43b210da62",
@@ -1026,7 +1102,8 @@
     "created_at": "2025-12-28T23:33:25.194370+00:00",
     "updated_at": "2025-12-28T23:33:25.194370+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "2195ce74-3780-4759-ada3-33b2637b44ca",
@@ -1040,7 +1117,8 @@
     "created_at": "2025-12-28T23:33:25.194370+00:00",
     "updated_at": "2025-12-28T23:33:25.194370+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "3a7f6d27-4a32-449e-84f2-f74671f8d5d7",
@@ -1054,7 +1132,8 @@
     "created_at": "2025-12-28T23:33:25.194370+00:00",
     "updated_at": "2025-12-28T23:33:25.194370+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "fb3aa47a-e836-46e4-a999-7b4e46bcffd0",
@@ -1068,7 +1147,8 @@
     "created_at": "2025-12-28T23:33:25.194370+00:00",
     "updated_at": "2025-12-28T23:33:25.194370+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "18d0f3bc-e377-4b8f-818a-6356d57c7cb3",
@@ -1082,7 +1162,8 @@
     "created_at": "2025-12-28T23:33:25.194370+00:00",
     "updated_at": "2025-12-28T23:33:25.194370+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "f55859d3-1838-4b05-8e3d-46394cc91f9e",
@@ -1096,7 +1177,8 @@
     "created_at": "2025-12-28T23:33:25.194370+00:00",
     "updated_at": "2025-12-28T23:33:25.194370+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "c39a7a1d-5a69-470b-aa85-45f06dcb911c",
@@ -1110,7 +1192,8 @@
     "created_at": "2025-12-28T23:33:25.194370+00:00",
     "updated_at": "2025-12-28T23:33:25.194370+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "7a13ec13-25cc-45ed-8529-03bae3c7cb1e",
@@ -1124,7 +1207,8 @@
     "created_at": "2025-12-28T23:33:25.194370+00:00",
     "updated_at": "2025-12-28T23:33:25.194370+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "ca299fbe-d50e-4ed6-b548-d92d6e82bbef",
@@ -1138,7 +1222,8 @@
     "created_at": "2025-12-28T23:33:25.194370+00:00",
     "updated_at": "2025-12-28T23:33:25.194370+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "578e7eaa-109e-414f-a3a0-dcde78b92601",
@@ -1152,7 +1237,8 @@
     "created_at": "2025-12-28T23:33:25.194370+00:00",
     "updated_at": "2025-12-28T23:33:25.194370+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "94497779-bbb1-4953-9a4e-df308be6b9c1",
@@ -1166,7 +1252,8 @@
     "created_at": "2025-12-28T23:33:25.194370+00:00",
     "updated_at": "2025-12-28T23:33:25.194370+00:00",
     "created_by": "System",
-    "last_edited_by": "System"
+    "last_edited_by": "System",
+    "details": ""
   },
   {
     "id": "court-records-research-2024",
@@ -1180,7 +1267,8 @@
     "created_at": "2025-12-29T12:48:11.902147+00:00",
     "updated_at": "2025-12-29T13:08:54.179329+00:00",
     "created_by": "Detective Research",
-    "last_edited_by": "Detective Research"
+    "last_edited_by": "Detective Research",
+    "details": ""
   },
   {
     "id": "interrogation-research-2024",
@@ -1194,7 +1282,8 @@
     "created_at": "2025-12-29T12:56:23.386410+00:00",
     "updated_at": "2025-12-29T12:56:23.386420+00:00",
     "created_by": "Detective Research",
-    "last_edited_by": "Detective Research"
+    "last_edited_by": "Detective Research",
+    "details": ""
   },
   {
     "id": "medchecks-rylie-2011-2013",
@@ -1208,7 +1297,8 @@
     "created_at": "2025-12-29T18:04:38.110558+00:00",
     "updated_at": "2025-12-29T19:46:47.591592+00:00",
     "created_by": "Medical Records Import",
-    "last_edited_by": "Medical Records Import"
+    "last_edited_by": "Medical Records Import",
+    "details": ""
   },
   {
     "id": "2020-federal-habeas-resentencing",
@@ -1222,6 +1312,7 @@
     "created_at": "2025-12-29T18:18:39.546903+00:00",
     "updated_at": "2025-12-29T19:46:47.591614+00:00",
     "created_by": "2020 Document Import",
-    "last_edited_by": "2020 Document Import"
+    "last_edited_by": "2020 Document Import",
+    "details": ""
   }
 ]
