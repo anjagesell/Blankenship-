@@ -4776,5 +4776,59 @@
     "upload_date": "2025-12-29T18:04:10.526775+00:00",
     "entry_id": "medchecks-rylie-2011-2013",
     "file_path": "/app/backend/uploads/858e6856-13f6-4aa3-8af3-5e84eb318943_IMG_1026.jpg"
+  },
+  {
+    "file_id": "1c16e26e-3c11-4762-a446-3c7612ef67a6",
+    "filename": "CME_Interview_Notes_Beth_Oshbar_Dec4_2013.jpg",
+    "original_filename": "17665183453563409038580036770964.jpg",
+    "file_type": "image/jpeg",
+    "entry_id": "424fde86-9464-4f02-a63d-33ed46d37ac0",
+    "description": "Beth Oshbar NP-C Interview Notes from CAPC - Dec 4, 2013 CME",
+    "created_at": "2025-12-31T00:24:57.993219+00:00"
+  },
+  {
+    "file_id": "40386223-be7e-4b6f-b58d-794a25d5c588",
+    "filename": "CME_Exam_Notes_Beth_Oshbar_Dec4_2013.jpg",
+    "original_filename": "1766518435356802032089646800832.jpg",
+    "file_type": "image/jpeg",
+    "entry_id": "424fde86-9464-4f02-a63d-33ed46d37ac0",
+    "description": "Beth Oshbar NP-C Examination Notes - Dec 4, 2013 CME",
+    "created_at": "2025-12-31T00:24:57.993244+00:00"
+  },
+  {
+    "file_id": "d65a52a1-f595-41ad-a39c-7400db71d6ed",
+    "filename": "Jennifer_Owen_CPS_Documentation_Dec4_2013.jpg",
+    "original_filename": "17665191219303826248424155920143.jpg",
+    "file_type": "image/jpeg",
+    "entry_id": "424fde86-9464-4f02-a63d-33ed46d37ac0",
+    "description": "Jennifer Owen (CPS Social Worker) Documentation - Dec 4, 2013",
+    "created_at": "2025-12-31T00:24:57.993249+00:00"
+  },
+  {
+    "file_id": "38ab6e70-7364-4941-a621-0e1573c2cc40",
+    "filename": "CMEP_Medical_Report_Dec4_2013.jpg",
+    "original_filename": "17665187041125389654084010848802.jpg",
+    "file_type": "image/jpeg",
+    "entry_id": "424fde86-9464-4f02-a63d-33ed46d37ac0",
+    "description": "CMEP Medical Report - Physical Examination Dec 4, 2013",
+    "created_at": "2025-12-31T00:24:57.993253+00:00"
+  },
+  {
+    "file_id": "9b40007f-f203-4ade-abbe-501e4fde44e5",
+    "filename": "Forensic_Interview_Report_Jennifer_Owen_Dec4_2013.jpg",
+    "original_filename": "17665179752827857107324378433572.jpg",
+    "file_type": "image/jpeg",
+    "entry_id": "424fde86-9464-4f02-a63d-33ed46d37ac0",
+    "description": "Forensic Interview Report - Created by Jennifer Owen, Examiner Beth Osbahr NP-BC",
+    "created_at": "2025-12-31T00:24:57.993355+00:00"
+  },
+  {
+    "file_id": "8794c13b-d096-4527-aa72-bfced5f0ead1",
+    "filename": "CME_Physical_Exam_Female_Genital_Dec4_2013.jpg",
+    "original_filename": "1766518664521415497609893826162.jpg",
+    "file_type": "image/jpeg",
+    "entry_id": "424fde86-9464-4f02-a63d-33ed46d37ac0",
+    "description": "CME Physical Examination - Female Genital Examination Notes Dec 4, 2013",
+    "created_at": "2025-12-31T00:24:57.993366+00:00"
   }
 ]
