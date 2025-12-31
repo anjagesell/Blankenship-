@@ -4830,5 +4830,29 @@
     "entry_id": "424fde86-9464-4f02-a63d-33ed46d37ac0",
     "description": "CME Physical Examination - Female Genital Examination Notes Dec 4, 2013",
     "created_at": "2025-12-31T00:24:57.993366+00:00"
+  },
+  {
+    "file_id": "labcorp-report-dec4-2013-negative",
+    "filename": "LabCorp_Report_NEGATIVE_Dec4_2013.jpg",
+    "file_type": "image/jpeg",
+    "entry_id": "424fde86-9464-4f02-a63d-33ed46d37ac0",
+    "description": "LabCorp STD Test Results - NEGATIVE for Chlamydia & Gonorrhea. Patient: Rylie Blankenship. Specimen collected 12/04/13 at 11:00 AM. Ordering physician: OSBAHR.",
+    "created_at": "2025-12-31T11:44:37.369544+00:00"
+  },
+  {
+    "file_id": "jennifer-owen-note-dec2-2013-cme-scheduled",
+    "filename": "Jennifer_Owen_CPS_Note_Dec2_2013_CME_Scheduled.jpg",
+    "file_type": "image/jpeg",
+    "entry_id": "424fde86-9464-4f02-a63d-33ed46d37ac0",
+    "description": "Jennifer Owen CPS Narrative 12/2/2013 - Documents scheduling of CME for Dec 4 at 9:30am.",
+    "created_at": "2025-12-31T11:44:37.369573+00:00"
+  },
+  {
+    "file_id": "jennifer-owen-note-dec6-2013-tammy-statement",
+    "filename": "Jennifer_Owen_CPS_Note_Dec6_2013_Tammy_Statement.jpg",
+    "file_type": "image/jpeg",
+    "entry_id": "424fde86-9464-4f02-a63d-33ed46d37ac0",
+    "description": "Jennifer Owen CPS Narrative 12/6/2013 - Tammy states grandparents (POPs) made false allegations.",
+    "created_at": "2025-12-31T11:44:37.369578+00:00"
   }
 ]
