@@ -124,3 +124,4 @@ backend/dec2.zip
 # Environment files
 *.env
 *.env.*
+backend/transcription/audio_catawba.mp3
