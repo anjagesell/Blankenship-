@@ -1,0 +1,3 @@
+<analysis>
+User uploaded 1 full audio in assets. Audio has been placed in segments now. Requires precision. User needs the audio transcribed using true wording, verbatim. Each declared who speaking lined individually, as transcription should be. If there is no notice, speaking or such then declare as 'silence' and 'declare how long the silence is'. Rylie is spelled 'Rylie' not spelled Raleigh. Marcella McCombs lead Interogator, not Marcello.. Sargent Scronce is male Interogator. Zachary Blankenship is Defendant. No double wording please. 
+</analysis>
